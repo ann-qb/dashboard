@@ -1,12 +1,21 @@
 import './App.css';
-// import CreatePassword from './pages/Login/CreatePassword/component';
+
 // import DisplayMessage from './pages/Login/DisplayMessage';
-// import OneTimePassword from './pages/Login/OneTimePassword';
+import GlobalStyle from './GlobalStyleSheet/globalStyleSheet';
+import styled from 'styled-components'
+import LoginCard from './components/LoginCards'
+
+
 
 function App() {
-	return <>{/* <CreatePassword />
-			<DisplayMessage />
-			<OneTimePassword /> */}</>;
+
+	return (
+		<div>
+			<GlobalStyle />
+			<LoginCard cardHeader="Create New Password" cardType="password" buttonText='Create'/>
+		</div>
+	);
 }
+
 
 export default App;
