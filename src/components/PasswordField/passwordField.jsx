@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-/** Expected props 
+/** Expected props
  * ------------------------
  * width
  * margin
  * height
-*/
+ */
 
 const PasswordField = (props) => {
-
-  //------------- Styles --------------//
+	//------------- Styles --------------//
 	const InputField = styled.input`
 		width: 100%;
 		height: 100%;
@@ -19,8 +18,8 @@ const PasswordField = (props) => {
 	const InputDiv = styled.div`
 		position: relative;
 		width: ${props.width};
-    margin: ${props.margin};
-    height:${props.height}
+		margin: ${props.margin};
+		height: ${props.height};
 	`;
 
 	const eyeIconStyle = {
@@ -32,7 +31,7 @@ const PasswordField = (props) => {
 		cursor: 'pointer',
 	};
 
-  //------------- States --------------//
+	//------------- States --------------//
 	const [passwordState, setPasswordState] = useState({
 		fieldType: 'password',
 		eyeIcon: true,
@@ -40,8 +39,7 @@ const PasswordField = (props) => {
 
 	const [fieldContent, setFieldContent] = useState(null);
 
-
-  //------------- Methods --------------//
+	//------------- Methods --------------//
 	const changePasswordState = () => {
 		if (passwordState.fieldType === 'password') {
 			setPasswordState({
