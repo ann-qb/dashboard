@@ -8,7 +8,7 @@ import styled from 'styled-components';
  * height
  */
 
-const PasswordField = (props) => {
+export default function PasswordField(props) {
 	//------------- Styles --------------//
 	const InputField = styled.input`
 		width: 100%;
@@ -76,6 +76,6 @@ const PasswordField = (props) => {
 			/>
 		</InputDiv>
 	);
-};
+}
 
-export default PasswordField;
+

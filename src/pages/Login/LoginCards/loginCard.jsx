@@ -9,7 +9,7 @@ import PasswordField from '../PasswordField';
  * buttonText
  */
 
-const LoginCard = (props) => {
+export default function LoginCard(props){
 	//------------- Styles --------------//
 	const Card = styled.div`
 		width: 30%;
@@ -55,4 +55,4 @@ const LoginCard = (props) => {
 	);
 };
 
-export default LoginCard;
+
