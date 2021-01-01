@@ -1,2 +1,2 @@
-import DisplayMessage from './component';
+import DisplayMessage from './displayMessage';
 export default DisplayMessage;
