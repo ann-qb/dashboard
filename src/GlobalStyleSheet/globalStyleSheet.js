@@ -84,7 +84,26 @@ const GlobalStyle = createGlobalStyle`
     background-color:#fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19);
   }
+
+  .navigationText{
+    font-family: 'Poppins', sans-serif;
+    color:${SECONDARY_DARK};
+  }
   
+  .navLinks{
+    padding:5px;
+    padding-left:15px;
+    cursor:pointer;
+    transition: all 0.2s ease;
+  }
+
+  .navLinks:hover{
+    background-color:${FADED_PURPLE};
+  }
+
+  .activeNavLink{
+    background-color:${FADED_PURPLE};
+  }
   
 
 
