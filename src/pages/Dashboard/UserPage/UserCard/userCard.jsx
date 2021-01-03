@@ -21,13 +21,12 @@ export default function UserCard(props) {
 		margin: 10px 0;
 		padding: 10px 10px;
 	`;
-  
-  const UserTabs = styled.div`
-    width:100%;
-    display:flex;
-    height:100%
-    
-  `;
+
+	const UserTabs = styled.div`
+		width: 100%;
+		display: flex;
+		height: 100%;
+	`;
 
 	const DetailsTabs = styled.div`
 		width: 25%;
@@ -41,31 +40,31 @@ export default function UserCard(props) {
 		color: ${textColor};
 		background-color: ${bgColor};
 		border-radius: 50px 50px 50px 50px;
-  `;
+	`;
 
-  const AdminTabs = styled.div`
+	const AdminTabs = styled.div`
     float:left;
   display:flex;
   background-color: ${bgColor}
   align-item: center;
   justify-content: center;
-  `
+  `;
 
-  const iconStyle={
-    color:'#000',
-    fontSize:'120%',
-    margin:'5px',
-    cursor:'pointer'
-  }
-  
-  const createAdminTaskTabs = ()=>{
-    return (
+	const iconStyle = {
+		color: '#000',
+		fontSize: '120%',
+		margin: '5px',
+		cursor: 'pointer',
+	};
+
+	const createAdminTaskTabs = () => {
+		return (
 			<AdminTabs>
 				<ion-icon style={iconStyle} name="create-outline"></ion-icon>
 				<ion-icon style={iconStyle} name="trash-outline"></ion-icon>
 			</AdminTabs>
 		);
-  }
+	};
 
 	return (
 		<CardContainer>

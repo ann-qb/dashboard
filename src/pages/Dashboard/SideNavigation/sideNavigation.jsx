@@ -19,6 +19,17 @@ export default function SideNavigation(props) {
 		font-size: 80%;
 	`;
 
+	const NavLinksDiv = styled.div`
+		display: flex;
+		align-items: center;
+	`;
+
+	const iconStyle = {
+		color: '#74788d',
+		fontSize: '115%',
+		marginRight: '10px',
+	};
+
 	const changeSelection = (e) => {
 		const clickedDiv = e.target.closest('div');
 		let currentSelectedLink = document.querySelector('.activeNavLink');
@@ -32,17 +43,22 @@ export default function SideNavigation(props) {
 			<LogoText>Logo Text</LogoText>
 			<div>
 				<SubTittles className="navigationText">MENU</SubTittles>
-				<div className="navLinks activeNavLink" onClick={changeSelection}>
+
+				<NavLinksDiv className="navLinks activeNavLink" onClick={changeSelection}>
+					<ion-icon style={iconStyle} name="people-outline"></ion-icon>
 					<p className="navigationText">Users</p>
-				</div>
+				</NavLinksDiv>
 
 				<SubTittles className="navigationText">UTILITY</SubTittles>
-				<div className="navLinks" onClick={changeSelection}>
+
+				<NavLinksDiv className="navLinks" onClick={changeSelection}>
+					<ion-icon style={iconStyle} name="settings-outline"></ion-icon>
 					<p className="navigationText ">Settings</p>
-				</div>
-				<div className="navLinks" onClick={changeSelection}>
+				</NavLinksDiv>
+				<NavLinksDiv className="navLinks" onClick={changeSelection}>
+					<ion-icon style={iconStyle} name="log-out-outline"></ion-icon>
 					<p className="navigationText ">Logout</p>
-				</div>
+				</NavLinksDiv>
 			</div>
 		</NavBar>
 	);
