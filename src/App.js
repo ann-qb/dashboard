@@ -2,10 +2,9 @@ import './App.css';
 
 // import DisplayMessage from './pages/Login/DisplayMessage';
 import GlobalStyle from './GlobalStyleSheet/globalStyleSheet';
-import styled from 'styled-components';
 import LoginPage from './pages/Login';
-import Card from './pages/Login/DisplayMessage';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import DashboardPage from './pages/Dashboard';
 
 function App() {
 	return (
@@ -19,7 +18,9 @@ function App() {
 					<Route path={'/login'}>
 						<LoginPage />
 					</Route>
-					<Route path={'/dashboard'}></Route>
+					<Route path={'/dashboard'}>
+						<DashboardPage />
+					</Route>
 				</Switch>
 			</Router>
 		</div>

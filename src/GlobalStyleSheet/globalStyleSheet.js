@@ -7,7 +7,7 @@ const PRIMARY_DARK = '#343a40',
 	FADED_DARK = '#eccecf';
 const SECONDARY_DARK = '#74788d',
 	FADED_SECONDARY_DARK = '#dcdde2';
-const GREEN = '34c38f',
+const GREEN = '#34c38f',
 	FADED_GREEN = '#ccf0e8';
 const BLUE = '#50a5f1',
 	FADED_BLUE = '#d3e8fb';
@@ -27,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     background-color: #f5f6f8;
     color: #464648;
-    font-size: 18px;
+    font-size: 16px;
     text-rendering: optimizeLegibility;
   }
 
@@ -44,7 +44,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   p,a,button{
-    font-family: 'PT Serif', serif;
+    font-family: 'Poppins', sans-serif;
     font-size:100%;
   }
 
@@ -57,6 +57,11 @@ const GlobalStyle = createGlobalStyle`
   input[type="password"]::-ms-reveal,
   input[type="password"]::-ms-clear {
     display: none !important;
+  }
+
+  .icons{
+    font-size:100%
+    color:#000;
   }
 
   button{
@@ -84,7 +89,38 @@ const GlobalStyle = createGlobalStyle`
     background-color:#fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19);
   }
+
+  .mainHeader{
+    position:absolute;
+    top:0;
+    right:0;
+    width:85vw;
+  }
+
+  .navigationText{
+    font-family: 'Poppins', sans-serif;
+    color:${SECONDARY_DARK};
+  }
   
+  .navLinks{
+    padding:5px;
+    padding-left:20px;
+    cursor:pointer;
+    transition: all 0.2s ease;
+  }
+
+  .navLinks:hover{
+    background-color:${FADED_PURPLE};
+  }
+
+  .activeNavLink{
+    background-color:${FADED_PURPLE};
+  }
+
+  .pageHeaders{
+    font-size:120%;
+
+  }
   
 
 
