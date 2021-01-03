@@ -4,7 +4,7 @@ import './App.css';
 import GlobalStyle from './GlobalStyleSheet/globalStyleSheet';
 import styled from 'styled-components'
 import LoginPage from './pages/Login'
-import Card from './pages/Login/DisplayMessage'
+import DashboardPage from './pages/Dashboard'
 
 
 
@@ -13,7 +13,7 @@ function App() {
 	return (
 		<div>
       <GlobalStyle />
-      <LoginPage/>
+      <DashboardPage/>
 		</div>
 	);
 }
