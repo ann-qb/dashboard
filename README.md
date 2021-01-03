@@ -4,8 +4,8 @@
 ## Technology used
   * React
 
-## Description
-A React dashboard application.
+## About the app
+A React dashboard application that is capable of handling roles.
 
 ## Dummy site
 > Not implemented yet.
