@@ -15,5 +15,5 @@
 
 ## Dummy site
 > Not implemented yet.
-
-`For more information visit the [wiki](https://github.com/ann-qb/dashboard/wiki)`
+---
+> For more information visit the [wiki](https://github.com/ann-qb/dashboard/wiki)
