@@ -9,7 +9,7 @@ import { Redirect } from 'react-router-dom';
 export default function Login(props) {
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
-	const [errorMessage, setErrorMessage] = useState('');
+	const [errorMessage, setErrorMessage] = useState(null);
 	// Get from store
 	const status = 'Active';
 	const validateValue = (cardHeader, fieldValue) => {

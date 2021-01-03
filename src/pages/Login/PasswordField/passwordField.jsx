@@ -48,6 +48,14 @@ export default function PasswordField(props) {
 		props.onChange(e);
 	};
 
+	if (props.error) {
+		var errorField = {
+			border: '1px solid #f46a6a',
+		};
+	} else {
+		var errorField = null;
+	}
+
 	return (
 		<InputDiv>
 			{passwordShown ? (
@@ -60,6 +68,7 @@ export default function PasswordField(props) {
 			{console.log('FC' + props.fieldContent)}
 			<InputField
 				id="passwordInputField"
+				style={errorField}
 				type={passwordShown ? 'text' : 'password'}
 				value={fieldContent}
 				onChange={saveFieldContent}

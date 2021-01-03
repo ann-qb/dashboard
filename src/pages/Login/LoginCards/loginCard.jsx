@@ -26,6 +26,11 @@ const AlertText = styled.p`
 	font-size: 80%;
 `;
 
+const ErrorText = styled.p`
+	font-size: 80%;
+	color: #f46a6a;
+`;
+
 /** Expected props
  * --------------------
  * cardHeader
@@ -41,11 +46,21 @@ export default function LoginCard(props) {
 		setFieldValue(e.target.value);
 	};
 
+	if (props.errorMessage) {
+		var errorField = {
+			border: '1px solid #f46a6a',
+		};
+		var passwordError = true;
+	} else {
+		var errorField = null;
+		var passwordError = false;
+	}
+
 	return (
 		<Card className="cards">
 			<p>{props.cardHeader}</p>
-			<FieldMaker {...{ ...props, fieldValue, setValue }} />
-			<p>{props.errorMessage}</p>
+			<FieldMaker {...{ ...props, fieldValue, setValue, errorField, passwordError }} />
+			<ErrorText>{props.errorMessage}</ErrorText>
 			<SubmitButton className="button-primary" onClick={() => props.onSubmit(props.cardHeader, fieldValue)}>
 				{props.buttonText}
 			</SubmitButton>
@@ -57,13 +72,19 @@ const FieldMaker = (props) => {
 	if (props.cardType === 'password' || props.cardType === 'new password') {
 		return (
 			<>
-				<PasswordField margin="10px 0 5px 0" height="30px" value={props.fieldValue} onChange={props.setValue} />
+				<PasswordField
+					margin="10px 0 5px 0"
+					height="30px"
+					value={props.fieldValue}
+					onChange={props.setValue}
+					isError={props.passwordError}
+				/>
 				{props.cardType === 'new password' ? (
 					<AlertText>Make sure to re check the password before submitting</AlertText>
 				) : null}
 			</>
 		);
 	} else {
-		return <Input type={props.cardType} value={props.fieldValue} onChange={props.setValue} />;
+		return <Input style={props.errorField} type={props.cardType} value={props.fieldValue} onChange={props.setValue} />;
 	}
 };
