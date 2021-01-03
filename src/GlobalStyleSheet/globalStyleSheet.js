@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    background-color: #fff;
+    background-color: #f5f6f8;
     color: #464648;
     font-size: 18px;
     text-rendering: optimizeLegibility;
@@ -37,13 +37,57 @@ const GlobalStyle = createGlobalStyle`
     background: transparent;
   }
 
+  /*------------ Reused Styles ---------------*/
+
   h1,h2,h3,h4,h5{
     font-family: 'Poppins', sans-serif;
   }
 
   p,a,button{
     font-family: 'PT Serif', serif;
+    font-size:100%;
   }
+
+  input{
+    padding: 5px;
+    outline: none;
+    border-radius: 4px;
+    border: 1px solid #000;
+  }
+  input[type="password"]::-ms-reveal,
+  input[type="password"]::-ms-clear {
+    display: none !important;
+  }
+
+  button{
+    padding:5px;
+  }
+
+  .button-primary{
+    background-color:${PRIMARY_PURPLE};
+    color:#fff;
+    border: 1px solid ${PRIMARY_PURPLE};
+    outline: none;
+    cursor:pointer;
+    padding:5px 10px;
+    transition: all ease 0.2s;
+  }
+  .button-primary:hover{
+    color:${PRIMARY_PURPLE};
+    background-color:${FADED_PURPLE};
+    border: 1px solid ${FADED_PURPLE};
+  }
+
+  .cards{
+    padding:10px;
+    border-radius: 4px;
+    background-color:#fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19);
+  }
+  
+  
+
+
 `;
 
 export default GlobalStyle;
