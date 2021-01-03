@@ -1,11 +1,15 @@
-import Footer from '../../components/Footer';
 import SideNavigation from './SideNavigation'
+import Content from './Content'
 
 export default function Dashboard(props) {
+  const style ={
+    width:'100%',
+    display:'flex',
+  }
 	return (
-		<div>
-      <SideNavigation/>
-			<Footer />
+		<div style={style}>
+			<SideNavigation />
+			<Content />
 		</div>
 	);
 }

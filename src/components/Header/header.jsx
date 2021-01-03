@@ -17,9 +17,26 @@ export default function Header(props){
 		font-family: 'Poppins', sans-serif;
 	`;
 
+	const ActionDiv = styled.div`
+	display:flex;
+	padding:0 10px;
+		margin-right:10px;
+		height:100%;
+		align-items:center;
+	`
+
+	const generateHeaderActions = ()=>{
+		return (
+			<ActionDiv>
+				<p>{props.userData.firstName}</p>
+			</ActionDiv>
+		);
+	}
+
   return (
 		<HeaderBar>
 			<LogoText>Dashboard</LogoText>
+			{props.userData? generateHeaderActions(): null}
 		</HeaderBar>
 	);
 }

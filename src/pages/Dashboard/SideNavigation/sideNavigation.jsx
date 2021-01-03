@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export default function SideNavigation(props) {
 	const NavBar = styled.div`
-		position: absolute;
-		left: 0;
+		z-index: 99;
+		padding-top: 10px;
 		width: 15vw;
 		height: 100vh;
 		background-color: #fff;
@@ -11,7 +11,7 @@ export default function SideNavigation(props) {
 	`;
 
 	const LogoText = styled.h3`
-		margin: 10px 0 30px 10px;
+		margin: 0 0 30px 10px;
 	`;
 
 	const SubTittles = styled.p`
@@ -29,14 +29,14 @@ export default function SideNavigation(props) {
 
 	return (
 		<NavBar>
-			<LogoText>Dashboard</LogoText>
+			<LogoText>Logo Text</LogoText>
 			<div>
-				<SubTittles className="navigationText">Menu</SubTittles>
+				<SubTittles className="navigationText">MENU</SubTittles>
 				<div className="navLinks activeNavLink" onClick={changeSelection}>
 					<p className="navigationText">Users</p>
 				</div>
 
-				<SubTittles className="navigationText">Utility</SubTittles>
+				<SubTittles className="navigationText">UTILITY</SubTittles>
 				<div className="navLinks" onClick={changeSelection}>
 					<p className="navigationText ">Settings</p>
 				</div>

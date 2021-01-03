@@ -27,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     background-color: #f5f6f8;
     color: #464648;
-    font-size: 18px;
+    font-size: 16px;
     text-rendering: optimizeLegibility;
   }
 
@@ -85,6 +85,13 @@ const GlobalStyle = createGlobalStyle`
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19);
   }
 
+  .mainHeader{
+    position:absolute;
+    top:0;
+    right:0;
+    width:85vw;
+  }
+
   .navigationText{
     font-family: 'Poppins', sans-serif;
     color:${SECONDARY_DARK};
@@ -92,7 +99,7 @@ const GlobalStyle = createGlobalStyle`
   
   .navLinks{
     padding:5px;
-    padding-left:15px;
+    padding-left:20px;
     cursor:pointer;
     transition: all 0.2s ease;
   }
