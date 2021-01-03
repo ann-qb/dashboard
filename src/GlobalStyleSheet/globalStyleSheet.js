@@ -7,7 +7,7 @@ const PRIMARY_DARK = '#343a40',
 	FADED_DARK = '#eccecf';
 const SECONDARY_DARK = '#74788d',
 	FADED_SECONDARY_DARK = '#dcdde2';
-const GREEN = '34c38f',
+const GREEN = '#34c38f',
 	FADED_GREEN = '#ccf0e8';
 const BLUE = '#50a5f1',
 	FADED_BLUE = '#d3e8fb';
@@ -44,7 +44,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   p,a,button{
-    font-family: 'PT Serif', serif;
+    font-family: 'Poppins', sans-serif;
     font-size:100%;
   }
 
@@ -57,6 +57,11 @@ const GlobalStyle = createGlobalStyle`
   input[type="password"]::-ms-reveal,
   input[type="password"]::-ms-clear {
     display: none !important;
+  }
+
+  .icons{
+    font-size:100%
+    color:#000;
   }
 
   button{
@@ -110,6 +115,11 @@ const GlobalStyle = createGlobalStyle`
 
   .activeNavLink{
     background-color:${FADED_PURPLE};
+  }
+
+  .pageHeaders{
+    font-size:120%;
+
   }
   
 

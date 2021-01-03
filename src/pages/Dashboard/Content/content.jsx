@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import Header from '../../../components/Header'
+import UserPage from '../UserPage'
 
 export default function Content(props){
   const ContentContainer = styled.div`
@@ -15,6 +16,7 @@ export default function Content(props){
   return (
 		<ContentContainer>
 			<Header userData={mockUserData} />
+      <UserPage/>
 		</ContentContainer>
 	);
 }
