@@ -7,7 +7,7 @@ export default function PrivateRoute({ children, allowedRoles = [], ...rest }) {
 	const { loggedIn } = useSelector((state) => state.loginSlice);
 	const { role } = useSelector((state) => state.loginSlice);
 	let authorised = true;
-	if (allowedRoles.length !== 0) authorised = allowedRoles.find(role);
+	if (allowedRoles.length !== 0) authorised = allowedRoles.includes(role);
 	return (
 		<Route
 			{...rest}
