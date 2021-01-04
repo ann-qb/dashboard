@@ -121,6 +121,10 @@ const GlobalStyle = createGlobalStyle`
     font-size:120%;
 
   }
+
+  .modal{
+    z-index: 99999;
+  }
   
 
 

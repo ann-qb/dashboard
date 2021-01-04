@@ -1,8 +1,15 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import ShowIfAuth from '../../../../components/ShowIfAuth';
+import EditPopup from '../../../../components/EditPopup';
+
+
 
 export default function UserCard(props) {
 	const status = 'active';
+
+	const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
+	const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
 
 	if (status === 'active') {
 		var bgColor = '#ccf0e8';
@@ -58,11 +65,21 @@ export default function UserCard(props) {
 		cursor: 'pointer',
 	};
 
+	const generateModal = (e) => {
+		if (e.target.id === 'edit_icon') {
+			setEditPopupIsOpen(true);
+		}
+	};
+
+	const closeModal = () => {
+		setEditPopupIsOpen(false);
+	};
+
 	const CreateAdminTaskTabs = () => {
 		return (
 			<AdminTabs>
-				<ion-icon style={iconStyle} name="create-outline"></ion-icon>
-				<ion-icon style={iconStyle} name="trash-outline"></ion-icon>
+				<ion-icon id="edit_icon" style={iconStyle} name="create-outline" onClick={generateModal}></ion-icon>
+				<ion-icon id="delete_icon" style={iconStyle} name="trash-outline"></ion-icon>
 			</AdminTabs>
 		);
 	};
@@ -84,6 +101,9 @@ export default function UserCard(props) {
 			<ShowIfAuth role={props.role}>
 				<CreateAdminTaskTabs />
 			</ShowIfAuth>
+
+			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeModal}/>
+				
 		</CardContainer>
 	);
 }

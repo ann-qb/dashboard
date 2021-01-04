@@ -3,7 +3,6 @@ import UserCard from './UserCard';
 
 export default function UserPage(props) {
 	const PageContainer = styled.div`
-		margin-left: 10px;
 		padding: 15px;
 	`;
 	const AddButton = styled.button`

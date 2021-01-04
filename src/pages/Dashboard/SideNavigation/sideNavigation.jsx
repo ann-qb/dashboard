@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export default function SideNavigation(props) {
 	const NavBar = styled.div`
-		z-index: 99;
 		padding-top: 10px;
 		width: 15vw;
 		height: 100vh;

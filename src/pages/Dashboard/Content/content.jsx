@@ -5,7 +5,6 @@ import UserPage from '../UserPage';
 export default function Content(props) {
 	const ContentContainer = styled.div`
 		width: 100%;
-		margin-left: -10px;
 	`;
 
 	const mockUserData = {
