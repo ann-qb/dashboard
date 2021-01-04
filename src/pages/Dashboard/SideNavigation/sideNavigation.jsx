@@ -1,35 +1,35 @@
 import styled from 'styled-components';
 
+/**---------------- Styles ------------------*/
+const NavBar = styled.div`
+	width: 15vw;
+	height: 100vh;
+	padding-top: 10px;
+	background-color: #fff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19);
+`;
+
+const LogoText = styled.h3`
+	margin: 0 0 30px 10px;
+`;
+
+const SubTittles = styled.p`
+	margin: 10px 0 10px 10px;
+	font-size: 80%;
+`;
+
+const NavLinksDiv = styled.div`
+	display: flex;
+	align-items: center;
+`;
+
+const iconStyle = {
+	fontSize: '115%',
+	marginRight: '10px',
+	color: '#74788d',
+};
+
 export default function SideNavigation(props) {
-	const NavBar = styled.div`
-		z-index: 99;
-		padding-top: 10px;
-		width: 15vw;
-		height: 100vh;
-		background-color: #fff;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19);
-	`;
-
-	const LogoText = styled.h3`
-		margin: 0 0 30px 10px;
-	`;
-
-	const SubTittles = styled.p`
-		margin: 10px 0 10px 10px;
-		font-size: 80%;
-	`;
-
-	const NavLinksDiv = styled.div`
-		display: flex;
-		align-items: center;
-	`;
-
-	const iconStyle = {
-		color: '#74788d',
-		fontSize: '115%',
-		marginRight: '10px',
-	};
-
 	const changeSelection = (e) => {
 		const clickedDiv = e.target.closest('div');
 		let currentSelectedLink = document.querySelector('.activeNavLink');

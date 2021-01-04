@@ -1,8 +1,14 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import ShowIfAuth from '../../../../components/ShowIfAuth';
+import EditPopup from '../../../../components/Popups/EditPopup';
+import DeleteConfirmPopup from '../../../../components/Popups/DeleteConfirmPopup';
 
 export default function UserCard(props) {
 	const status = 'active';
+
+	const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
+	const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
 
 	if (status === 'active') {
 		var bgColor = '#ccf0e8';
@@ -15,17 +21,21 @@ export default function UserCard(props) {
 		var textColor = '#f46a6a';
 	}
 
+	/**---------------- Styles ------------------*/
+	/** (Styles are kept within the function as some of them are dynamic) */
 	const CardContainer = styled.div`
-		width: 100%;
-		background-color: #fff;
 		display: flex;
+		width: 100%;
+
 		margin: 10px 0;
 		padding: 10px 10px;
+		background-color: #fff;
 	`;
 
 	const UserTabs = styled.div`
-		width: 100%;
 		display: flex;
+		width: 100%;
+
 		height: 100%;
 	`;
 
@@ -34,35 +44,53 @@ export default function UserCard(props) {
 	`;
 
 	const StatusText = styled.p`
-		border: 1px solid ${textColor};
 		width: fit-content;
 		padding: 2px 5px;
 		font-size: 70%;
+
+		border-radius: 50px 50px 50px 50px;
+		border: 1px solid ${textColor};
 		color: ${textColor};
 		background-color: ${bgColor};
-		border-radius: 50px 50px 50px 50px;
 	`;
 
 	const AdminTabs = styled.div`
-    float:left;
-  display:flex;
-  background-color: ${bgColor}
-  align-item: center;
-  justify-content: center;
-  `;
+		float: left;
+		display: flex;
+		align-item: center;
+		justify-content: center;
+		background-color: ${bgColor};
+	`;
 
 	const iconStyle = {
-		color: '#000',
 		fontSize: '120%',
 		margin: '5px',
+		color: '#000',
 		cursor: 'pointer',
+	};
+
+	const generateModal = (e) => {
+		if (e.target.id === 'edit_icon') {
+			setEditPopupIsOpen(true);
+		} else if (e.target.id === 'delete_icon') {
+			console.warn('Delete Modal');
+			setDeletePopupIsOpen(true);
+		}
+	};
+
+	const closeEditModal = () => {
+		setEditPopupIsOpen(false);
+	};
+
+	const closeDeleteModal = () => {
+		setDeletePopupIsOpen(false);
 	};
 
 	const CreateAdminTaskTabs = () => {
 		return (
 			<AdminTabs>
-				<ion-icon style={iconStyle} name="create-outline"></ion-icon>
-				<ion-icon style={iconStyle} name="trash-outline"></ion-icon>
+				<ion-icon id="edit_icon" style={iconStyle} name="create-outline" onClick={generateModal}></ion-icon>
+				<ion-icon id="delete_icon" style={iconStyle} name="trash-outline" onClick={generateModal}></ion-icon>
 			</AdminTabs>
 		);
 	};
@@ -84,6 +112,9 @@ export default function UserCard(props) {
 			<ShowIfAuth role={props.role}>
 				<CreateAdminTaskTabs />
 			</ShowIfAuth>
+
+			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} />
+			<DeleteConfirmPopup isOpen={deletePopupIsOpen} onRequestClose={closeDeleteModal} />
 		</CardContainer>
 	);
 }
