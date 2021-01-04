@@ -1,2 +1,2 @@
-import ShowIfAuth from './component';
+import ShowIfAuth from './showIfAuth';
 export default ShowIfAuth;
