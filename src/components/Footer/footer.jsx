@@ -19,6 +19,7 @@ const FooterText = styled.p`
 	font-size: 70%;
 `;
 
+
 export default function Footer() {
 	return (
 		<FooterBar>

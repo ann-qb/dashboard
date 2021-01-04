@@ -4,6 +4,8 @@ export default function DisplayMessage(props) {
 
 	const Card = styled.div`
 		width: 30%;
+		display:flex;
+		justify-content:center;
 		position: absolute;
 		padding: 20px 10px;
 		top: 50%;
