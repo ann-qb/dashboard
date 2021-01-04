@@ -66,16 +66,17 @@ const GlobalStyle = createGlobalStyle`
 
   button{
     padding:5px;
+    outline: none;
+    cursor:pointer;
+    padding:5px 10px;
+    transition: all ease 0.2s;
   }
 
   .button-primary{
     background-color:${PRIMARY_PURPLE};
     color:#fff;
     border: 1px solid ${PRIMARY_PURPLE};
-    outline: none;
-    cursor:pointer;
-    padding:5px 10px;
-    transition: all ease 0.2s;
+    
   }
   .button-primary:hover{
     color:${PRIMARY_PURPLE};
@@ -87,15 +88,33 @@ const GlobalStyle = createGlobalStyle`
     background-color:#fff;
     color:${PRIMARY_PURPLE};
     border: 1px solid ${PRIMARY_PURPLE};
-    outline: none;
-    cursor:pointer;
-    padding:5px 10px;
-    transition: all ease 0.2s;
   }
   .button-secondary:hover{
     color:${PRIMARY_PURPLE};
     background-color:${FADED_PURPLE};
     border: 1px solid ${FADED_PURPLE};
+  }
+
+   .button-danger{
+    background-color:${RED};
+    color:#fff;
+    border: 1px solid ${RED};
+  }
+  .button-danger:hover{
+    color:${RED};
+    background-color:${FADED_RED};
+    border: 1px solid ${FADED_RED};
+  }
+
+   .button-danger-secondary{
+    background-color:#fff;
+    color:${RED};
+    border: 1px solid ${RED};
+  }
+  .button-danger-secondary:hover{
+    color:${RED};
+    background-color:${FADED_RED};
+    border: 1px solid ${FADED_RED};
   }
 
   .cards{

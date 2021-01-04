@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import ShowIfAuth from '../../../../components/ShowIfAuth';
 import EditPopup from '../../../../components/Popups/EditPopup';
+import DeleteConfirmPopup from '../../../../components/Popups/DeleteConfirmPopup';
 
 export default function UserCard(props) {
 	const status = 'active';
@@ -67,17 +68,26 @@ export default function UserCard(props) {
 		if (e.target.id === 'edit_icon') {
 			setEditPopupIsOpen(true);
 		}
+		else if(e.target.id === 'delete_icon'){
+			console.warn('Delete Modal')
+			setDeletePopupIsOpen(true)
+		}
 	};
 
-	const closeModal = () => {
+
+	const closeEditModal = () => {
 		setEditPopupIsOpen(false);
 	};
+
+	const closeDeleteModal = ()=>{
+		setDeletePopupIsOpen(false)
+	}
 
 	const CreateAdminTaskTabs = () => {
 		return (
 			<AdminTabs>
 				<ion-icon id="edit_icon" style={iconStyle} name="create-outline" onClick={generateModal}></ion-icon>
-				<ion-icon id="delete_icon" style={iconStyle} name="trash-outline"></ion-icon>
+				<ion-icon id="delete_icon" style={iconStyle} name="trash-outline" onClick={generateModal}></ion-icon>
 			</AdminTabs>
 		);
 	};
@@ -100,7 +110,8 @@ export default function UserCard(props) {
 				<CreateAdminTaskTabs />
 			</ShowIfAuth>
 
-			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeModal} />
+			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} />
+			<DeleteConfirmPopup isOpen={deletePopupIsOpen} onRequestClose={closeDeleteModal}/>
 		</CardContainer>
 	);
 }
