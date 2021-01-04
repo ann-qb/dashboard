@@ -5,6 +5,7 @@ import GlobalStyle from './GlobalStyleSheet/globalStyleSheet';
 import LoginPage from './pages/Login';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import DashboardPage from './pages/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 	return (
@@ -18,9 +19,9 @@ function App() {
 					<Route path={'/login'}>
 						<LoginPage />
 					</Route>
-					<Route path={'/dashboard'}>
+					<PrivateRoute path={'/dashboard'}>
 						<DashboardPage />
-					</Route>
+					</PrivateRoute>
 				</Switch>
 			</Router>
 		</div>
