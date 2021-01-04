@@ -4,12 +4,18 @@ import Footer from '../../components/Footer';
 import DisplayMessage from './DisplayMessage/displayMessage';
 import { useState } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../slices/login.slice';
 
-export default function Login(props) {
+export default function Login() {
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState(null);
+	const location = useLocation();
+	const history = useHistory();
+	const dispatch = useDispatch();
+	let { from } = location.state || { from: { pathname: '/dashboard' } };
 	// Get from store
 	const status = 'Active';
 	const validateValue = (cardHeader, fieldValue) => {
@@ -54,6 +60,7 @@ export default function Login(props) {
 					if (response.status === 200) {
 						console.log(response.data);
 						// dispatch to store
+						dispatch(login());
 						setPassword(fieldValue);
 					} else {
 						console.log('Password is incorrect/ Something went wrong pswd');
@@ -68,7 +75,8 @@ export default function Login(props) {
 	return (
 		<div>
 			<Header />
-
+			{console.log(history)}
+			{console.log(location)}
 			{!userName ? (
 				<LoginCard
 					cardHeader="Username"
@@ -84,7 +92,7 @@ export default function Login(props) {
 			) : status === 'Inactive' ? (
 				<DisplayMessage message="Inactive" />
 			) : status === 'Active' && password ? (
-				<Redirect to={'/dashboard'} />
+				<Redirect to={from.pathname} />
 			) : (
 				<DisplayMessage message="User does not exist" />
 			)}

@@ -22,6 +22,9 @@ function App() {
 					<PrivateRoute path="/dashboard">
 						<DashboardPage />
 					</PrivateRoute>
+					<PrivateRoute path="/randompage">
+						<h3>Hi there!</h3>
+					</PrivateRoute>
 				</Switch>
 			</Router>
 		</div>
