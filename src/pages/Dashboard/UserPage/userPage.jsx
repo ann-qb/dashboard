@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import UserCard from './UserCard';
+import ShowIfAuth from '../../../components/ShowIfAuth'
 
 export default function UserPage(props) {
 	const PageContainer = styled.div`
@@ -20,7 +21,10 @@ export default function UserPage(props) {
 	return (
 		<PageContainer>
 			<p className="pageHeaders">Users</p>
-			<AddButton className="button-primary">+ Add Users</AddButton>
+			<ShowIfAuth role="ADMIN">
+				<AddButton className="button-primary">+ Add Users</AddButton>
+			</ShowIfAuth>
+
 			{createCards()}
 		</PageContainer>
 	);
