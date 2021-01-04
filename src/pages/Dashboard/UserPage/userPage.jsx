@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 import UserCard from './UserCard';
-import ShowIfAuth from '../../../components/ShowIfAuth'
+import ShowIfAuth from '../../../components/ShowIfAuth';
+
+/**---------------- Styles ------------------*/
+const PageContainer = styled.div`
+	padding: 15px;
+`;
+const AddButton = styled.button`
+	margin: 15px 0;
+`;
 
 export default function UserPage(props) {
-	const PageContainer = styled.div`
-		padding: 15px;
-	`;
-	const AddButton = styled.button`
-		margin: 15px 0;
-	`;
 	const createCards = () => {
 		return (
 			<>

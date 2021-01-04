@@ -18,16 +18,16 @@ export default function PasswordField(props) {
 	const InputDiv = styled.div`
 		position: relative;
 		width: ${props.width};
-		margin: ${props.margin};
 		height: ${props.height};
+		margin: ${props.margin};
 	`;
 
 	const eyeIconStyle = {
 		position: 'absolute',
 		top: '50%',
 		right: '5px',
-		transform: 'translate(-50%,-50%)',
 		color: '#000',
+		transform: 'translate(-50%,-50%)',
 		cursor: 'pointer',
 	};
 

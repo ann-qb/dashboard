@@ -4,10 +4,10 @@ import PasswordField from '../PasswordField';
 
 //------------- Styles --------------//
 const Card = styled.div`
-	width: 30%;
 	position: absolute;
 	top: 50%;
 	left: 50%;
+	width: 30%;
 	transform: translate(-50%, -50%);
 `;
 
@@ -16,10 +16,10 @@ const SubmitButton = styled.button`
 `;
 
 const Input = styled.input`
-	margin: 10px 0 5px 0;
-	height: 30px;
 	display: block;
+	height: 30px;
 	width: 100%;
+	margin: 10px 0 5px 0;
 `;
 
 const AlertText = styled.p`
