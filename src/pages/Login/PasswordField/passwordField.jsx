@@ -32,44 +32,44 @@ export default function PasswordField(props) {
 	};
 
 	//------------- States --------------//
-	const [passwordState, setPasswordState] = useState({
-		fieldType: 'password',
-		eyeIcon: true,
-	});
-
-	const [fieldContent, setFieldContent] = useState(null);
+	const [passwordShown, setPasswordShown] = useState(false);
+	const [fieldContent, setFieldContent] = useState(props.fieldValue);
 
 	//------------- Methods --------------//
 	const changePasswordState = () => {
-		if (passwordState.fieldType === 'password') {
-			setPasswordState({
-				fieldType: 'text',
-				eyeIcon: false,
-			});
-		} else {
-			setPasswordState({
-				fieldType: 'password',
-				eyeIcon: true,
-			});
-		}
+		setPasswordShown(passwordShown ? false : true);
 	};
 
-	const saveFieldContent = () => {
+	const saveFieldContent = (e) => {
+		// Doesn't work without this
 		let field = document.querySelector('#passwordInputField');
 		setFieldContent(field.value);
+		// Why is this not enough?
+		props.onChange(e);
 	};
+
+	if (props.error) {
+		var errorField = {
+			border: '1px solid #f46a6a',
+		};
+	} else {
+		var errorField = null;
+	}
 
 	return (
 		<InputDiv>
-			{passwordState.eyeIcon ? (
+			{passwordShown ? (
 				<ion-icon style={eyeIconStyle} name="eye-outline" onClick={changePasswordState}></ion-icon>
 			) : (
 				<ion-icon style={eyeIconStyle} name="eye-off-outline" onClick={changePasswordState}></ion-icon>
 			)}
-
+			{console.log('Rerender')}
+			{console.log('FV' + props.fieldValue)}
+			{console.log('FC' + props.fieldContent)}
 			<InputField
 				id="passwordInputField"
-				type={passwordState.fieldType}
+				style={errorField}
+				type={passwordShown ? 'text' : 'password'}
 				value={fieldContent}
 				onChange={saveFieldContent}
 				autoFocus
@@ -77,5 +77,3 @@ export default function PasswordField(props) {
 		</InputDiv>
 	);
 }
-
-

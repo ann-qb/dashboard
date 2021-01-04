@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ShowIfAuth from '../../../../components/ShowIfAuth';
 
 export default function UserCard(props) {
 	const status = 'active';
@@ -57,7 +58,7 @@ export default function UserCard(props) {
 		cursor: 'pointer',
 	};
 
-	const createAdminTaskTabs = () => {
+	const CreateAdminTaskTabs = () => {
 		return (
 			<AdminTabs>
 				<ion-icon style={iconStyle} name="create-outline"></ion-icon>
@@ -80,7 +81,9 @@ export default function UserCard(props) {
 				</DetailsTabs>
 			</UserTabs>
 
-			{props.role === 'admin' ? createAdminTaskTabs() : null}
+			<ShowIfAuth role={props.role}>
+				<CreateAdminTaskTabs />
+			</ShowIfAuth>
 		</CardContainer>
 	);
 }
