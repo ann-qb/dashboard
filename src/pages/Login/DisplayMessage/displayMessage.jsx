@@ -1,18 +1,18 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+
+/**---------------- Styles ------------------*/
+const Card = styled.div`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: flex;
+	justify-content: center;
+	width: 30%;
+	padding: 20px 10px;
+	transform: translate(-50%, -50%);
+`;
 
 export default function DisplayMessage(props) {
-
-	const Card = styled.div`
-		width: 30%;
-		display:flex;
-		justify-content:center;
-		position: absolute;
-		padding: 20px 10px;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-	`;
-
 	return (
 		<Card className="cards">
 			<p>{props.message}</p>

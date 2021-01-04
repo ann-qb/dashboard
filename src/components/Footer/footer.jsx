@@ -6,7 +6,7 @@ const FooterBar = styled.div`
 	bottom: 0;
 	left: 0;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
 	height: 5vh;
 	width: 100%;

@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
 import styled from 'styled-components';
 
+/**---------------- Styles ------------------*/
 const SuperFieldWrapper = styled.div`
 	display: flex;
 	width: 100%;
@@ -11,8 +12,9 @@ const SubFieldWrapper = styled.div`
 `;
 
 const SingleFieldGroup = styled.div`
-	margin-bottom: 10px;
 	width: 100%;
+	margin-bottom: 10px;
+
 	padding: 0 5px;
 `;
 
@@ -34,10 +36,10 @@ export default function EditModal(props) {
 			top: '50%',
 			left: '50%',
 			height: 'fit-content',
-			transform: 'translate(-50%,-50%)',
 			width: '500px',
 			border: 'none',
 			boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19)',
+			transform: 'translate(-50%,-50%)',
 		},
 	};
 	console.log('Modal called');
