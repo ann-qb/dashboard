@@ -12,7 +12,7 @@ export default function UserPage(props) {
 	const createCards = () => {
 		return (
 			<>
-				<UserCard role="admin" />
+				<UserCard role="ADMIN" />
 				<UserCard role="user" />
 			</>
 		);

@@ -5,5 +5,5 @@ export default function ShowIfAuth(props) {
 	// const { role } = useSelector((state) => state.loginSlice);
 	const allowedRoles = ['ADMIN'];
 
-	if (allowedRoles.includes(props.role)) return props.children;
+	return allowedRoles.includes(props.role) ? props.children : null;
 }
