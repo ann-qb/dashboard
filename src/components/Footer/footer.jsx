@@ -9,7 +9,7 @@ export default function Footer(){
 		background-color: #fff;
 		width: 100%;
 		box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
-		justify-content: space-between;
+		justify-content: center;
     align-items: center;
     bottom:0;
     left:0;
