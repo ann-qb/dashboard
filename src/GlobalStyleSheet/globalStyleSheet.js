@@ -37,7 +37,9 @@ const GlobalStyle = createGlobalStyle`
     background: transparent;
   }
 
+  /*------------------------------------------*/
   /*------------ Reused Styles ---------------*/
+  /*------------------------------------------*/
 
   h1,h2,h3,h4,h5{
     font-family: 'Poppins', sans-serif;
@@ -59,10 +61,14 @@ const GlobalStyle = createGlobalStyle`
     display: none !important;
   }
 
+  /*------------Icons ---------------*/
+
   .icons{
     font-size:100%
     color:#000;
   }
+
+  /*------------ Buttons ---------------*/
 
   button{
     padding:5px;
@@ -71,6 +77,8 @@ const GlobalStyle = createGlobalStyle`
     padding:5px 10px;
     transition: all ease 0.2s;
   }
+
+  /*-- Primary Button --*/
 
   .button-primary{
     background-color:${PRIMARY_PURPLE};
@@ -84,6 +92,8 @@ const GlobalStyle = createGlobalStyle`
     border: 1px solid ${FADED_PURPLE};
   }
 
+  /*-- Secondary Button --*/
+
   .button-secondary{
     background-color:#fff;
     color:${PRIMARY_PURPLE};
@@ -95,7 +105,9 @@ const GlobalStyle = createGlobalStyle`
     border: 1px solid ${FADED_PURPLE};
   }
 
-   .button-danger{
+  /*-- Danger Button --*/
+
+  .button-danger{
     background-color:${RED};
     color:#fff;
     border: 1px solid ${RED};
@@ -105,6 +117,8 @@ const GlobalStyle = createGlobalStyle`
     background-color:${FADED_RED};
     border: 1px solid ${FADED_RED};
   }
+
+  /*-- Danger secondary Button --*/
 
    .button-danger-secondary{
     background-color:#fff;
@@ -116,6 +130,8 @@ const GlobalStyle = createGlobalStyle`
     background-color:${FADED_RED};
     border: 1px solid ${FADED_RED};
   }
+
+  /*------------ Cards ---------------*/
 
   .cards{
     padding:10px;
@@ -130,6 +146,8 @@ const GlobalStyle = createGlobalStyle`
     right:0;
     width:85vw;
   }
+
+  /*------------ Navigation (side) ---------------*/
 
   .navigationText{
     font-family: 'Poppins', sans-serif;
@@ -151,16 +169,11 @@ const GlobalStyle = createGlobalStyle`
     background-color:${FADED_PURPLE};
   }
 
+  /*------------ dashboard main header ---------------*/
+
   .pageHeaders{
     font-size:120%;
-
   }
-
-  .modal{
-    z-index: 99999;
-  }
-  
-
 
 `;
 
