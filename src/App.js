@@ -13,13 +13,13 @@ function App() {
 			<GlobalStyle />
 			<Router>
 				<Switch>
-					<Route path={'/'} exact>
+					<Route path="/" exact>
 						<LoginPage />
 					</Route>
-					<Route path={'/login'}>
+					<Route path="/login">
 						<LoginPage />
 					</Route>
-					<PrivateRoute path={'/dashboard'}>
+					<PrivateRoute path="/dashboard">
 						<DashboardPage />
 					</PrivateRoute>
 				</Switch>
