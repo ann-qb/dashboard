@@ -83,6 +83,21 @@ const GlobalStyle = createGlobalStyle`
     border: 1px solid ${FADED_PURPLE};
   }
 
+  .button-secondary{
+    background-color:#fff;
+    color:${PRIMARY_PURPLE};
+    border: 1px solid ${PRIMARY_PURPLE};
+    outline: none;
+    cursor:pointer;
+    padding:5px 10px;
+    transition: all ease 0.2s;
+  }
+  .button-secondary:hover{
+    color:${PRIMARY_PURPLE};
+    background-color:${FADED_PURPLE};
+    border: 1px solid ${FADED_PURPLE};
+  }
+
   .cards{
     padding:10px;
     border-radius: 4px;

@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import ShowIfAuth from '../../../../components/ShowIfAuth';
-import EditPopup from '../../../../components/EditPopup';
-
-
+import EditPopup from '../../../../components/Popups/EditPopup';
 
 export default function UserCard(props) {
 	const status = 'active';
@@ -102,8 +100,7 @@ export default function UserCard(props) {
 				<CreateAdminTaskTabs />
 			</ShowIfAuth>
 
-			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeModal}/>
-				
+			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeModal} />
 		</CardContainer>
 	);
 }

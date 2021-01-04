@@ -11,10 +11,10 @@ const SubFieldWrapper = styled.div`
 `;
 
 const SingleFieldGroup = styled.div`
-  margin-bottom:10px;
-  width:100%;
-  padding:0 5px;
-`
+	margin-bottom: 10px;
+	width: 100%;
+	padding: 0 5px;
+`;
 
 const ButtonWrapper = styled.div`
 	display: flex;
@@ -23,17 +23,17 @@ const ButtonWrapper = styled.div`
 `;
 
 const Input = styled.input`
-  width:100%;
-  height:30px;
-`
+	width: 100%;
+	height: 30px;
+`;
 
 export default function EditModal(props) {
 	const modalStyle = {
 		overlay: {},
 		content: {
 			top: '50%',
-      left: '50%',
-      height:'fit-content',
+			left: '50%',
+			height: 'fit-content',
 			transform: 'translate(-50%,-50%)',
 			width: '500px',
 			border: 'none',
@@ -68,9 +68,11 @@ export default function EditModal(props) {
 			</SuperFieldWrapper>
 
 			<ButtonWrapper>
-				<button style={{ marginRight: '10px' }}>Submit</button>
-				<button style={{ marginLeft: '10px' }} onClick={props.onRequestClose}>
+				<button style={{ marginRight: '10px' }} className="button-secondary" onClick={props.onRequestClose}>
 					Cancel
+				</button>
+				<button style={{ marginLeft: '10px' }} className="button-primary">
+					Submit
 				</button>
 			</ButtonWrapper>
 		</Modal>
