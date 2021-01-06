@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Logo from '../../Assets/Images/logo_black.png'
+import Logo from '../../assets/Images/logo_black.png';
 
 /**---------------- Styles ------------------*/
 const HeaderBar = styled.div`
@@ -32,9 +32,9 @@ const iconStyle = {
 };
 
 const LogoImage = styled.img`
-	height:90%;
-	width:auto;
-`
+	height: 90%;
+	width: auto;
+`;
 
 export default function Header(props) {
 	const generateHeaderActions = () => {
