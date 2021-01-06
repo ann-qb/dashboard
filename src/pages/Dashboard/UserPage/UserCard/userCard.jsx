@@ -46,10 +46,10 @@ export default function UserCard(props) {
 	const StatusText = styled.p`
 		width: fit-content;
 		padding: 2px 5px;
-		font-size: 70%;
-
-		border-radius: 50px 50px 50px 50px;
-		border: 1px solid ${textColor};
+		font-size: 65%;
+		// border-radius: 10px 10px 10px 10px;
+		border-radius: 5px;
+		border: none;
 		color: ${textColor};
 		background-color: ${bgColor};
 	`;
