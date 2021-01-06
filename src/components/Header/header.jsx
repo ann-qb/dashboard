@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Logo from '../../assets/Images/logo_black.png';
 
 
 /**---------------- Styles ------------------*/
