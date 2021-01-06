@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Logo from '../../assets/Images/logo_black.png';
 
 
 /**---------------- Styles ------------------*/
@@ -31,6 +32,7 @@ const iconStyle = {
 	fontSize: '95%',
 	color: '#000',
 };
+
 
 const SearchBox = styled.div`
 display:flex;
@@ -74,4 +76,3 @@ export default function Header(props) {
 	);
 }
 
-// <ion-icon style={searchIconStyle} name="search-outline"></ion-icon>
