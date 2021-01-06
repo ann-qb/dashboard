@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Logo from '../../../Assets/Images/logo_black.png';
+import Logo from '../../../Assets/Images/logo_icon.png';
 
 /**---------------- Styles ------------------*/
 const NavBar = styled.div`
@@ -30,6 +30,13 @@ const iconStyle = {
 	color: '#9398a4',
 };
 
+const LogoContainer = styled.div`
+	display: flex;
+	align-items: center;
+	width: 100%;
+	margin-bottom:20px;
+`;
+
 const LogoImage = styled.img`
 	height: 40px;
 	width: auto;
@@ -46,15 +53,16 @@ export default function SideNavigation(props) {
 
 	return (
 		<NavBar>
-			<LogoImage src={Logo} />
+			<LogoContainer className="blackFont">
+				<LogoImage src={Logo} />
+				<h3>Oddy</h3>
+			</LogoContainer>
 			<div>
 				<SubTittles className="navigationText">MENU</SubTittles>
 
 				<NavLinksDiv className="navLinks activeNavLink" onClick={changeSelection}>
-					<span className="navIcons">
-						<ion-icon class="navIcons" style={iconStyle} name="people-outline"></ion-icon>
-					</span>
-					<p className="navigationText">Users</p>
+					<ion-icon class="navIcons" style={iconStyle} name="clipboard-outline"></ion-icon>
+					<p className="navigationText">Dashboard</p>
 				</NavLinksDiv>
 
 				<SubTittles className="navigationText">UTILITY</SubTittles>
