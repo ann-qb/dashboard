@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ProfilePic from '../../Assets/Images/profilePic_small.png'
 
 
 /**---------------- Styles ------------------*/
@@ -28,7 +29,7 @@ const ActionDiv = styled.div`
 
 const iconStyle = {
 	padding: '0 5px',
-	fontSize: '95%',
+	fontSize: '70%',
 	color: '#000',
 };
 
@@ -50,11 +51,22 @@ const searchIconStyle = {
 	color: '#74788d',
 };
 
+const ProfilePicBox = styled.div`
+	height: 30px;
+	width: 30px;
+	background-image: url(${ProfilePic});
+	background-position:center;
+	background-size:cover;
+	border-radius:50%;
+	margin-right:10px;
+`;
+
 
 export default function Header(props) {
 	const generateHeaderActions = () => {
 		return (
 			<ActionDiv>
+				<ProfilePicBox />
 				<p>{props.userData.firstName}</p>
 				<ion-icon style={iconStyle} name="chevron-down-outline"></ion-icon>
 			</ActionDiv>
