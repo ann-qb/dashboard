@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import PasswordField from '../PasswordField';
-import Logo from '../../../Assets/Images/logo_black.png';
+import Logo from '../../../assets/Images/logo_black.png';
 
 //------------- Styles --------------//
 const Card = styled.div`
