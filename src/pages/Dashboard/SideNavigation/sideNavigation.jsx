@@ -3,11 +3,11 @@ import Logo from '../../../Assets/Images/logo_black.png'
 
 /**---------------- Styles ------------------*/
 const NavBar = styled.div`
-	width: 15vw;
+	width: 250px;
 	height: 100vh;
 	padding-top: 10px;
 	background-color: #fff;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19);
+	box-shadow: 0 2px 4px rgba(15, 34, 58, 0.12);
 `;
 
 const LogoText = styled.h3`
@@ -27,7 +27,7 @@ const NavLinksDiv = styled.div`
 const iconStyle = {
 	fontSize: '115%',
 	marginRight: '10px',
-	color: '#74788d',
+	color: '#9398a4',
 };
 
 const LogoImage = styled.img`
@@ -46,12 +46,14 @@ export default function SideNavigation(props) {
 
 	return (
 		<NavBar>
-			<LogoImage src={Logo}/>
+			<LogoImage src={Logo} />
 			<div>
 				<SubTittles className="navigationText">MENU</SubTittles>
 
 				<NavLinksDiv className="navLinks activeNavLink" onClick={changeSelection}>
-					<ion-icon style={iconStyle} name="people-outline"></ion-icon>
+					<span className="navIcons">
+						<ion-icon class="navIcons" style={iconStyle} name="people-outline"></ion-icon>
+					</span>
 					<p className="navigationText">Users</p>
 				</NavLinksDiv>
 
@@ -70,3 +72,5 @@ export default function SideNavigation(props) {
 	);
 }
 
+//<ion-icon style={iconStyle} name="settings-outline"></ion-icon>
+//style={iconStyle}

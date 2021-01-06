@@ -59,7 +59,6 @@ export default function UserCard(props) {
 		display: flex;
 		align-item: center;
 		justify-content: center;
-		background-color: ${bgColor};
 	`;
 
 	const iconStyle = {

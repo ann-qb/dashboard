@@ -61,6 +61,23 @@ const GlobalStyle = createGlobalStyle`
     display: none !important;
   }
 
+  ::-webkit-input-placeholder { /* Edge */
+  color: '#74788d;
+  font-size:110%;
+  font-family: 'Poppins', sans-serif;
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: '#74788d;
+    font-size:110%;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  ::placeholder {
+    color: #74788d;
+    font-size:110%;
+    font-family: 'Poppins', sans-serif;
+  }
   /*------------Icons ---------------*/
 
   .icons{
@@ -149,9 +166,16 @@ const GlobalStyle = createGlobalStyle`
 
   /*------------ Navigation (side) ---------------*/
 
+  .navIcons{
+    font-size: '115%',
+    margin-right: '10px',
+    color: '#9398a4',
+    transition: all 0.2s ease;
+  }
+
   .navigationText{
     font-family: 'Poppins', sans-serif;
-    color:${SECONDARY_DARK};
+    color:#9398a4;
   }
   
   .navLinks{
@@ -162,11 +186,19 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .navLinks:hover{
-    background-color:${FADED_PURPLE};
+    background-color:#f3f8fb;
+  }
+  .navLinks:hover .navigationText,
+  .navLinks:hover .navIcons{
+    color:${PRIMARY_PURPLE};
   }
 
   .activeNavLink{
-    background-color:${FADED_PURPLE};
+    background-color:#f3f8fb;
+  }
+
+  .activeNavLink .navigationText{
+    color:${PRIMARY_PURPLE};
   }
 
   /*------------ dashboard main header ---------------*/
