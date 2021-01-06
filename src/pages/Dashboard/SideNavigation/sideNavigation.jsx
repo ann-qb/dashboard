@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Logo from '../../../Assets/Images/logo_black.png'
 
 /**---------------- Styles ------------------*/
 const NavBar = styled.div`
@@ -29,6 +30,11 @@ const iconStyle = {
 	color: '#74788d',
 };
 
+const LogoImage = styled.img`
+	height: 40px;
+	width: auto;
+`;
+
 export default function SideNavigation(props) {
 	const changeSelection = (e) => {
 		const clickedDiv = e.target.closest('div');
@@ -40,7 +46,7 @@ export default function SideNavigation(props) {
 
 	return (
 		<NavBar>
-			<LogoText>Logo Text</LogoText>
+			<LogoImage src={Logo}/>
 			<div>
 				<SubTittles className="navigationText">MENU</SubTittles>
 
@@ -63,3 +69,5 @@ export default function SideNavigation(props) {
 		</NavBar>
 	);
 }
+
+//<LogoText>Logo Text</LogoText>
