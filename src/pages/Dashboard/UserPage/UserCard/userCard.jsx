@@ -51,7 +51,6 @@ export default function UserCard(props) {
 		height:fit-content;
 		padding: 2px 5px;
 		font-size: 65%;
-		// border-radius: 10px 10px 10px 10px;
 		border-radius: 5px;
 		border: none;
 		color: ${textColor};
