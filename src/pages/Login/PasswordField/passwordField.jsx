@@ -72,6 +72,7 @@ export default function PasswordField(props) {
 				type={passwordShown ? 'text' : 'password'}
 				value={fieldContent}
 				onChange={saveFieldContent}
+				placeholder='Password'
 				autoFocus
 			/>
 		</InputDiv>

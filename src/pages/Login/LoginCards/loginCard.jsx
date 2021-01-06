@@ -1,25 +1,31 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import PasswordField from '../PasswordField';
+import Logo from '../../../Assets/Images/logo_black.png';
 
 //------------- Styles --------------//
 const Card = styled.div`
 	position: absolute;
-	top: 50%;
+	top: 45%;
 	left: 50%;
-	width: 30%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 350px;
+	padding: 15px 20px !important;
+	text-align: center;
 	transform: translate(-50%, -50%);
 `;
 
 const SubmitButton = styled.button`
-	margin: 10px 0 5px 0;
+	margin-right: 0;
 `;
 
 const Input = styled.input`
 	display: block;
-	height: 30px;
+	height: 40px;
 	width: 100%;
-	margin: 10px 0 5px 0;
+	margin: 20px 0 5px 0;
 `;
 
 const AlertText = styled.p`
@@ -31,11 +37,32 @@ const ErrorText = styled.p`
 	color: #f46a6a;
 `;
 
+const StyledLogo = styled.img`
+	width: 90px;
+	height: auto;
+	text-align: center;
+`;
+
+const ButtonHolder = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	margin-top: 10px;
+`;
+
+const SideLink = styled.p`
+	color: #5673e8;
+	cursor: pointer;
+	font-size: 80%;
+`;
+
 /** Expected props
  * --------------------
  * cardHeader
  * cardType (password, text, number, new password)
  * buttonText
+ * sideButton text
  */
 export default function LoginCard(props) {
 	//------------- State --------------//
@@ -58,12 +85,27 @@ export default function LoginCard(props) {
 
 	return (
 		<Card className="cards">
-			<p>{props.cardHeader}</p>
+			<span>
+				<StyledLogo src={Logo} />
+			</span>
+
+			{props.cardType !== 'new password' ? (
+				<>
+					<p style={{ fontSize: '150%', marginTop: '10px' }}>Log In</p>
+					<p style={{ fontSize: '85%' }}>to continue</p>
+				</>
+			) : (
+				<p style={{ fontSize: '150%', marginTop: '10px' }}>Create Password</p>
+			)}
+
 			<FieldMaker {...{ ...props, fieldValue, setValue, errorField, passwordError }} />
 			<ErrorText>{props.errorMessage}</ErrorText>
-			<SubmitButton className="button-primary" onClick={() => props.onSubmit(props.cardHeader, fieldValue)}>
-				{props.buttonText}
-			</SubmitButton>
+			<ButtonHolder>
+				<SideLink>{props.sideLinkText}</SideLink>
+				<SubmitButton className="button-primary" onClick={() => props.onSubmit(props.cardHeader, fieldValue)}>
+					{props.buttonText}
+				</SubmitButton>
+			</ButtonHolder>
 		</Card>
 	);
 }
@@ -74,7 +116,7 @@ const FieldMaker = (props) => {
 			<>
 				<PasswordField
 					margin="10px 0 5px 0"
-					height="30px"
+					height="40px"
 					value={props.fieldValue}
 					onChange={props.setValue}
 					isError={props.passwordError}
@@ -85,6 +127,26 @@ const FieldMaker = (props) => {
 			</>
 		);
 	} else {
-		return <Input style={props.errorField} type={props.cardType} value={props.fieldValue} onChange={props.setValue} />;
+		return (
+			<Input
+				style={props.errorField}
+				type={props.cardType}
+				value={props.fieldValue}
+				onChange={props.setValue}
+				placeholder={props.cardHeader}
+			/>
+		);
 	}
 };
+
+/**
+ * 
+ * <Card className="cards">
+			<p>{props.cardHeader}</p>
+			<FieldMaker {...{ ...props, fieldValue, setValue, errorField, passwordError }} />
+			<ErrorText>{props.errorMessage}</ErrorText>
+			<SubmitButton className="button-primary" onClick={() => props.onSubmit(props.cardHeader, fieldValue)}>
+				{props.buttonText}
+			</SubmitButton>
+		</Card>
+ */

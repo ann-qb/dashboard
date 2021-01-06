@@ -70,4 +70,3 @@ export default function SideNavigation(props) {
 	);
 }
 
-//<LogoText>Logo Text</LogoText>
