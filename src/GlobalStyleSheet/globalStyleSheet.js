@@ -51,7 +51,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   input{
-    padding: 5px;
+    padding: 10px;
     outline: none;
     border-radius: 4px;
     border: 1px solid #000;
@@ -137,7 +137,7 @@ const GlobalStyle = createGlobalStyle`
     padding:10px;
     border-radius: 4px;
     background-color:#fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19);
+    box-shadow: 0 2px 4px rgba(15,34,58,.12);
   }
 
   .mainHeader{

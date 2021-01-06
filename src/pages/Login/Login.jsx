@@ -74,7 +74,6 @@ export default function Login() {
 	};
 	return (
 		<div>
-			<Header />
 			{console.log(history)}
 			{console.log(location)}
 			{!userName ? (
@@ -83,10 +82,17 @@ export default function Login() {
 					cardType="text"
 					errorMessage={errorMessage}
 					buttonText="Next"
+					sideLinkText="New User?"
 					onSubmit={validateValue}
 				/>
 			) : status === 'Active' && !password ? (
-				<LoginCard cardHeader="Password" cardType="password" buttonText="Submit" onSubmit={validateValue} />
+				<LoginCard
+					cardHeader="Password"
+					cardType="password"
+					buttonText="Submit"
+					sideLinkText="Forgot password?"
+					onSubmit={validateValue}
+				/>
 			) : status === 'Pending' ? (
 				<DisplayMessage message="Pending" />
 			) : status === 'Inactive' ? (
