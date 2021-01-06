@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Logo from '../../../Assets/Images/logo_black.png'
+import Logo from '../../../assets/Images/logo_black.png';
 
 /**---------------- Styles ------------------*/
 const NavBar = styled.div`
@@ -72,5 +72,3 @@ export default function SideNavigation(props) {
 	);
 }
 
-//<ion-icon style={iconStyle} name="settings-outline"></ion-icon>
-//style={iconStyle}
