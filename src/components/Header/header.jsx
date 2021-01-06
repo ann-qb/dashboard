@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Logo from '../../Assets/Images/logo_black.png'
 
 /**---------------- Styles ------------------*/
 const HeaderBar = styled.div`
@@ -30,6 +31,11 @@ const iconStyle = {
 	color: '#000',
 };
 
+const LogoImage = styled.img`
+	height:90%;
+	width:auto;
+`
+
 export default function Header(props) {
 	const generateHeaderActions = () => {
 		return (
@@ -42,8 +48,10 @@ export default function Header(props) {
 
 	return (
 		<HeaderBar>
-			<LogoText>Dashboard</LogoText>
+			{props.userData ? <LogoText>Dashboard</LogoText> : <LogoImage src={Logo} />}
 			{props.userData ? generateHeaderActions() : null}
 		</HeaderBar>
 	);
 }
+
+// <LogoText>Dashboard</LogoText>
