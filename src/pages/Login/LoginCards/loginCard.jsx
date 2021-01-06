@@ -12,7 +12,7 @@ const Card = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	width: 350px;
-	padding: 15px 20px !important;
+	padding: 35px 20px !important;
 	text-align: center;
 	transform: translate(-50%, -50%);
 `;
@@ -35,10 +35,11 @@ const AlertText = styled.p`
 const ErrorText = styled.p`
 	font-size: 80%;
 	color: #f46a6a;
+	width:fit-content;
 `;
 
 const StyledLogo = styled.img`
-	width: 90px;
+	width: 120px;
 	height: auto;
 	text-align: center;
 `;
@@ -83,6 +84,16 @@ export default function LoginCard(props) {
 		var passwordError = false;
 	}
 
+	const changeInputBorderOnFocus = (e) => {
+		const field = e.target;
+		field.style.border = '1px solid #5673E8';
+	};
+
+	const changeInputBorderOnBlur = (e) => {
+		const field = e.target;
+		field.style.border = '1px solid #000';
+	};
+
 	return (
 		<Card className="cards">
 			<span>
@@ -91,14 +102,28 @@ export default function LoginCard(props) {
 
 			{props.cardType !== 'new password' ? (
 				<>
-					<p style={{ fontSize: '150%', marginTop: '10px' }}>Log In</p>
-					<p style={{ fontSize: '85%' }}>to continue</p>
+					<p style={{ fontSize: '150%', marginTop: '10px' }} className="blackFont">
+						Sign In
+					</p>
+					<p style={{ fontSize: '85%' }} className="blackFont">
+						to continue
+					</p>
 				</>
 			) : (
 				<p style={{ fontSize: '150%', marginTop: '10px' }}>Create Password</p>
 			)}
 
-			<FieldMaker {...{ ...props, fieldValue, setValue, errorField, passwordError }} />
+			<FieldMaker
+				{...{
+					...props,
+					fieldValue,
+					setValue,
+					errorField,
+					passwordError,
+					changeInputBorderOnFocus,
+					changeInputBorderOnBlur,
+				}}
+			/>
 			<ErrorText>{props.errorMessage}</ErrorText>
 			<ButtonHolder>
 				<SideLink>{props.sideLinkText}</SideLink>
@@ -129,6 +154,8 @@ const FieldMaker = (props) => {
 	} else {
 		return (
 			<Input
+				onFocus={props.changeInputBorderOnFocus}
+				onBlur={props.changeInputBorderOnBlur}
 				style={props.errorField}
 				type={props.cardType}
 				value={props.fieldValue}
@@ -139,14 +166,3 @@ const FieldMaker = (props) => {
 	}
 };
 
-/**
- * 
- * <Card className="cards">
-			<p>{props.cardHeader}</p>
-			<FieldMaker {...{ ...props, fieldValue, setValue, errorField, passwordError }} />
-			<ErrorText>{props.errorMessage}</ErrorText>
-			<SubmitButton className="button-primary" onClick={() => props.onSubmit(props.cardHeader, fieldValue)}>
-				{props.buttonText}
-			</SubmitButton>
-		</Card>
- */
