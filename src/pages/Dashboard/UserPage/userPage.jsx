@@ -28,6 +28,13 @@ const HeaderTab = styled.div`
 	width:25%;
 `
 
+const EmptyDivToCompensateProfilePic = styled.div`
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	margin-right: 30px;
+`;
+
 export default function UserPage(props) {
 	const createCards = () => {
 		return (
@@ -46,9 +53,10 @@ export default function UserPage(props) {
 			</ShowIfAuth>
 
 			<UserCardHeadWrapper>
+				
 				<UserCardHeaders>
 					<HeaderTab>
-						<p className="blackFont">Name</p>
+						<p className="blackFont">User</p>
 					</HeaderTab>
 					<HeaderTab>
 						<p className="blackFont">Email</p>

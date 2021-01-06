@@ -3,6 +3,7 @@ import { useState } from 'react';
 import ShowIfAuth from '../../../../components/ShowIfAuth';
 import EditPopup from '../../../../components/Popups/EditPopup';
 import DeleteConfirmPopup from '../../../../components/Popups/DeleteConfirmPopup';
+import ProfilePic from '../../../../Assets/Images/profilePic_small.png';
 
 export default function UserCard(props) {
 	const status = 'active';
@@ -40,11 +41,14 @@ export default function UserCard(props) {
 	`;
 
 	const DetailsTabs = styled.div`
+		display:flex;
+		align-items:center;
 		width: 25%;
 	`;
 
 	const StatusText = styled.p`
 		width: fit-content;
+		height:fit-content;
 		padding: 2px 5px;
 		font-size: 65%;
 		// border-radius: 10px 10px 10px 10px;
@@ -67,6 +71,16 @@ export default function UserCard(props) {
 		color: '#000',
 		cursor: 'pointer',
 	};
+
+	const ProfilePicHolder = styled.span`
+		height: 30px;
+		width: 30px;
+		background-image: url(${ProfilePic});
+		background-position: center;
+		background-size: cover;
+		border-radius: 50%;
+		margin-right: 10px;
+	`;
 
 	const generateModal = (e) => {
 		if (e.target.id === 'edit_icon') {
@@ -98,6 +112,7 @@ export default function UserCard(props) {
 		<CardContainer>
 			<UserTabs>
 				<DetailsTabs>
+					<ProfilePicHolder />
 					<p>Full Name</p>
 				</DetailsTabs>
 				<DetailsTabs>
