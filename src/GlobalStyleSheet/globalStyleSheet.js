@@ -26,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     background-color: #f5f6f8;
-    color: #464648;
+    color: #74788d;
     font-size: 16px;
     text-rendering: optimizeLegibility;
   }
@@ -93,6 +93,7 @@ const GlobalStyle = createGlobalStyle`
     cursor:pointer;
     padding:5px 10px;
     transition: all ease 0.2s;
+    font-size:90% !important;
   }
 
   /*-- Primary Button --*/
@@ -206,7 +207,10 @@ const GlobalStyle = createGlobalStyle`
   .pageHeaders{
     font-size:120%;
   }
-
+  
+  .blackFont{
+    color:${PRIMARY_DARK} !important;
+  }
 `;
 
 export default GlobalStyle;
