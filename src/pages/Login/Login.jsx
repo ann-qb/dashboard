@@ -12,6 +12,8 @@ export default function Login() {
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState(null);
+	const [preLoaderEnabled, setPreLoaderEnabled] = useState(false)
+
 	const location = useLocation();
 	const history = useHistory();
 	const dispatch = useDispatch();
@@ -24,6 +26,7 @@ export default function Login() {
 			//regex validation
 			if (fieldValue.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
 				//api call
+				setPreLoaderEnabled(true)
 				const checkUserNameExists = async () => {
 					try {
 						const response = await axios.post(
@@ -36,11 +39,14 @@ export default function Login() {
 							console.log(response.data);
 							// dispatch to store
 							setUserName(fieldValue);
+							setPreLoaderEnabled(false);
 						} else {
 							console.log('Something went wrong username');
+							setPreLoaderEnabled(false);
 						}
 					} catch (error) {
 						console.log(error);
+						setPreLoaderEnabled(false);
 					}
 				};
 				checkUserNameExists();
@@ -84,6 +90,7 @@ export default function Login() {
 					buttonText="Next"
 					sideLinkText="New User?"
 					onSubmit={validateValue}
+					loading={preLoaderEnabled}
 				/>
 			) : status === 'Active' && !password ? (
 				<LoginCard
@@ -92,6 +99,7 @@ export default function Login() {
 					buttonText="Submit"
 					sideLinkText="Forgot password?"
 					onSubmit={validateValue}
+					loading={preLoaderEnabled}
 				/>
 			) : status === 'Pending' ? (
 				<DisplayMessage message="Pending" />

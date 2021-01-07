@@ -1,20 +1,37 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import {css, jsx} from '@emotion/react'
 import PasswordField from '../PasswordField';
 import Logo from '../../../Assets/Images/logo_black.png';
+import {BarLoader} from 'react-spinners'
 
 //------------- Styles --------------//
-const Card = styled.div`
+const CardContainer = styled.div`
 	position: absolute;
 	top: 45%;
 	left: 50%;
+	width: 350px;
+	height: fit-content;
+	transform: translate(-50%, -50%);
+`;
+const Card = styled.div`
+	// position: absolute;
+	// top: 45%;
+	// left: 50%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	width: 350px;
+	width: 100%;
 	padding: 35px 20px !important;
 	text-align: center;
-	transform: translate(-50%, -50%);
+	// transform: translate(-50%, -50%);
+`;
+
+const BarLoaderContainer = styled.div`
+	width: 100%;
+	height: fit-content;
+	display: flex;
+	// justify-content: center;
 `;
 
 const SubmitButton = styled.button`
@@ -58,6 +75,7 @@ const SideLink = styled.p`
 	font-size: 80%;
 `;
 
+
 /** Expected props
  * --------------------
  * cardHeader
@@ -95,43 +113,48 @@ export default function LoginCard(props) {
 	};
 
 	return (
-		<Card className="cards">
-			<span>
-				<StyledLogo src={Logo} />
-			</span>
+		<CardContainer>
+			<BarLoaderContainer>
+				<BarLoader css={StyledBarLoader} color="#5673E8" loading={props.loading} />
+			</BarLoaderContainer>
+			<Card className="cards">
+				<span>
+					<StyledLogo src={Logo} />
+				</span>
 
-			{props.cardType !== 'new password' ? (
-				<>
-					<p style={{ fontSize: '150%', marginTop: '10px' }} className="blackFont">
-						Sign In
-					</p>
-					<p style={{ fontSize: '85%' }} className="blackFont">
-						to continue
-					</p>
-				</>
-			) : (
-				<p style={{ fontSize: '150%', marginTop: '10px' }}>Create Password</p>
-			)}
+				{props.cardType !== 'new password' ? (
+					<>
+						<p style={{ fontSize: '150%', marginTop: '10px' }} className="blackFont">
+							Sign In
+						</p>
+						<p style={{ fontSize: '85%' }} className="blackFont">
+							to continue
+						</p>
+					</>
+				) : (
+					<p style={{ fontSize: '150%', marginTop: '10px' }}>Create Password</p>
+				)}
 
-			<FieldMaker
-				{...{
-					...props,
-					fieldValue,
-					setValue,
-					errorField,
-					passwordError,
-					changeInputBorderOnFocus,
-					changeInputBorderOnBlur,
-				}}
-			/>
-			<ErrorText>{props.errorMessage}</ErrorText>
-			<ButtonHolder>
-				<SideLink>{props.sideLinkText}</SideLink>
-				<SubmitButton className="button-primary" onClick={() => props.onSubmit(props.cardHeader, fieldValue)}>
-					{props.buttonText}
-				</SubmitButton>
-			</ButtonHolder>
-		</Card>
+				<FieldMaker
+					{...{
+						...props,
+						fieldValue,
+						setValue,
+						errorField,
+						passwordError,
+						changeInputBorderOnFocus,
+						changeInputBorderOnBlur,
+					}}
+				/>
+				<ErrorText>{props.errorMessage}</ErrorText>
+				<ButtonHolder>
+					<SideLink>{props.sideLinkText}</SideLink>
+					<SubmitButton className="button-primary" onClick={() => props.onSubmit(props.cardHeader, fieldValue)}>
+						{props.buttonText}
+					</SubmitButton>
+				</ButtonHolder>
+			</Card>
+		</CardContainer>
 	);
 }
 
@@ -166,3 +189,6 @@ const FieldMaker = (props) => {
 	}
 };
 
+const StyledBarLoader = css`
+	width: 100%;
+`;
