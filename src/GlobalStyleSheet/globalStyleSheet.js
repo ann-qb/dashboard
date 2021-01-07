@@ -217,13 +217,13 @@ const GlobalStyle = createGlobalStyle`
     position:absolute;
     top:20px;
     right:20px;
-    display:flex;
     align-items:center;
     height:80px;
     width:250px;
     padding:15px;
     border-radius:5px;
     opacity:0.8;
+    transition:all 0.5s ease;
   }
 `;
 

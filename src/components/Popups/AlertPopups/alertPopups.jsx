@@ -1,6 +1,25 @@
 import styled from 'styled-components';
 
+/**
+ * USAGE
+ * -----------------
+ * import the component: [import AlertPopup from '.__path__/components/Popups/AlertPopups';]
+ * Pass message to be displayed as 'message.
+ * Pass type of alert prop as 'alertType'
+ * 
+ * create a state variable and pass its value as 'display' props to show or hide the alert.
+ * 
+ * In order to close the alert after 3 sec, copy and paste this function in the component where the AlertPopup is called:
+ * if(alertDisplay){
+		setTimeout(() => {
+			setAlertDisplay(false)
+		}, 3000);
+	}
+	[Replace 'setAlertDisplay' to your setState function and 'alertDisplay' to your state variable]
+ */
+
 export default function AlertPopup(props) {
+
 	let backgroundColor, borderColor;
 
 	// Setup background color based on type of alert
@@ -32,8 +51,8 @@ export default function AlertPopup(props) {
 	};
 
 	// Set type of display based on props
-	let display = 'none';
-	props.display ? (display = 'block') : (display = 'none');
+	let display = 'none'
+	props.display ? (display = 'flex') : (display = 'none');
 
 	const AlertWrapper = styled.div`
 		display: ${display};

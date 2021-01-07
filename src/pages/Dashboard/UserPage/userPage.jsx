@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import UserCard from './UserCard';
+import {useState} from 'react'
 import ShowIfAuth from '../../../components/ShowIfAuth';
 import AlertPopup from '../../../components/Popups/AlertPopups';
 
@@ -37,6 +38,7 @@ const EmptyDivToCompensateProfilePic = styled.div`
 `;
 
 export default function UserPage(props) {
+	const [alertDisplay, setAlertDisplay] = useState(false);
 
 	const createCards = () => {
 		return (
@@ -47,16 +49,28 @@ export default function UserPage(props) {
 		);
 	};
 
+	const test = () => {
+		setAlertDisplay(true);
+	};
+
+	// Additional function to be written wherever AlertPopup component is used
+	if(alertDisplay){
+		setTimeout(() => {
+			setAlertDisplay(false)
+		}, 3000);
+	}
+
 	return (
 		<PageContainer>
-			<AlertPopup alertType='warning' message="User Added Successfully" />
+			<AlertPopup alertType="warning" message="User Added Successfully" display={alertDisplay} />
 			<p className="pageHeaders blackFont">Users</p>
 			<ShowIfAuth role="ADMIN">
-				<AddButton className="button-primary">+ Add Users</AddButton>
+				<AddButton className="button-primary" onClick={test}>
+					+ Add Users
+				</AddButton>
 			</ShowIfAuth>
 
 			<UserCardHeadWrapper>
-				
 				<UserCardHeaders>
 					<HeaderTab>
 						<p className="blackFont">User</p>
