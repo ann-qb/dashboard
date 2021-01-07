@@ -1,5 +1,5 @@
 import './App.css';
-import './components/Icons/icons'
+import './components/Icons/icons';
 import GlobalStyle from './GlobalStyleSheet/globalStyleSheet';
 import LoginPage from './pages/Login';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
@@ -17,6 +17,11 @@ function App() {
 					</Route>
 					<Route path="/login">
 						<LoginPage />
+					</Route>
+					<Route path="/forgot-password">
+						{/* Should be forgot password component */}
+						{/* <ForgotPassword /> */}
+						<h3>Forgot password</h3>
 					</Route>
 					<PrivateRoute path="/dashboard">
 						<DashboardPage />
