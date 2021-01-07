@@ -39,10 +39,10 @@ export default function EditModal(props) {
 	let MOCK_USER_DATA;
 	if (!props.data) {
 		MOCK_USER_DATA = {
-			firstname: ' ',
-			lastname: ' ',
-			status: ' ',
-			email: ' ',
+			firstname: null,
+			lastname: null,
+			status: null,
+			email: null,
 		};
 	} else {
 		MOCK_USER_DATA = { ...props.data };
