@@ -3,6 +3,8 @@ import Logo from '../../../Assets/Images/logo_icon.png';
 
 /**---------------- Styles ------------------*/
 const NavBar = styled.div`
+	top:0;
+	left:0;
 	width: 250px;
 	height: 100vh;
 	padding-top: 10px;

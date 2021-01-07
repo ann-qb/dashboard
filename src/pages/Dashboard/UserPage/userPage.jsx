@@ -8,6 +8,8 @@ import EditPopup from '../../../components/Popups/EditPopup';
 /**---------------- Styles ------------------*/
 const PageContainer = styled.div`
 	padding: 15px;
+	height:90vh;
+	overflow:scroll;
 `;
 const AddButton = styled.button`
 	margin: 15px 0;
@@ -47,6 +49,38 @@ export default function UserPage(props) {
 			<>
 				<UserCard role="ADMIN" />
 				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+				<UserCard role="user" />
+
 			</>
 		);
 	};
