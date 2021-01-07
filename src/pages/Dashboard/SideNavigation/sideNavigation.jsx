@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Logo from '../../../Assets/Images/logo_icon.png';
+import Logo from '../../../assets/Images/logo_icon.png';
 
 /**---------------- Styles ------------------*/
 const NavBar = styled.div`

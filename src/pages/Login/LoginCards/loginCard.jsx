@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import {css, jsx} from '@emotion/react'
+import { css, jsx } from '@emotion/react';
 import PasswordField from '../PasswordField';
-import Logo from '../../../Assets/Images/logo_black.png';
-import {BarLoader} from 'react-spinners'
+import Logo from '../../../assets/Images/logo_black.png';
+import { BarLoader } from 'react-spinners';
 
 //------------- Styles --------------//
 const CardContainer = styled.div`
@@ -52,7 +52,7 @@ const AlertText = styled.p`
 const ErrorText = styled.p`
 	font-size: 80%;
 	color: #f46a6a;
-	width:fit-content;
+	width: fit-content;
 `;
 
 const StyledLogo = styled.img`
@@ -74,7 +74,6 @@ const SideLink = styled.p`
 	cursor: pointer;
 	font-size: 80%;
 `;
-
 
 /** Expected props
  * --------------------
@@ -115,26 +114,24 @@ export default function LoginCard(props) {
 	return (
 		<CardContainer>
 			<BarLoaderContainer>
-				<BarLoader css={StyledBarLoader} color="#5673E8" loading={props.loading} />
-			</BarLoaderContainer>
+				<BarLoader css={StyledBarLoader} color="#5673E8" loading={props.loading} />{' '}
+			</BarLoaderContainer>{' '}
 			<Card className="cards">
 				<span>
-					<StyledLogo src={Logo} />
+					<StyledLogo src={Logo} />{' '}
 				</span>
-
 				{props.cardType !== 'new password' ? (
 					<>
 						<p style={{ fontSize: '150%', marginTop: '10px' }} className="blackFont">
-							Sign In
-						</p>
+							Sign In{' '}
+						</p>{' '}
 						<p style={{ fontSize: '85%' }} className="blackFont">
-							to continue
-						</p>
+							to continue{' '}
+						</p>{' '}
 					</>
 				) : (
-					<p style={{ fontSize: '150%', marginTop: '10px' }}>Create Password</p>
+					<p style={{ fontSize: '150%', marginTop: '10px' }}> Create Password </p>
 				)}
-
 				<FieldMaker
 					{...{
 						...props,
@@ -145,15 +142,16 @@ export default function LoginCard(props) {
 						changeInputBorderOnFocus,
 						changeInputBorderOnBlur,
 					}}
-				/>
-				<ErrorText>{props.errorMessage}</ErrorText>
+				/>{' '}
+				<ErrorText> {props.errorMessage} </ErrorText>{' '}
 				<ButtonHolder>
-					<SideLink>{props.sideLinkText}</SideLink>
+					<SideLink> {props.sideLinkText} </SideLink>{' '}
 					<SubmitButton className="button-primary" onClick={() => props.onSubmit(props.cardHeader, fieldValue)}>
-						{props.buttonText}
-					</SubmitButton>
-				</ButtonHolder>
-			</Card>
+						{' '}
+						{props.buttonText}{' '}
+					</SubmitButton>{' '}
+				</ButtonHolder>{' '}
+			</Card>{' '}
 		</CardContainer>
 	);
 }
@@ -168,10 +166,10 @@ const FieldMaker = (props) => {
 					value={props.fieldValue}
 					onChange={props.setValue}
 					isError={props.passwordError}
-				/>
+				/>{' '}
 				{props.cardType === 'new password' ? (
-					<AlertText>Make sure to re check the password before submitting</AlertText>
-				) : null}
+					<AlertText> Make sure to re check the password before submitting </AlertText>
+				) : null}{' '}
 			</>
 		);
 	} else {

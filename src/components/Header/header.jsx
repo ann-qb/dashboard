@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ProfilePic from '../../Assets/Images/profilePic_small.png'
+import ProfilePic from '../../assets/Images/profilePic_small.png'
 
 
 /**---------------- Styles ------------------*/

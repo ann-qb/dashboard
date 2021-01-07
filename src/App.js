@@ -1,6 +1,5 @@
 import './App.css';
 import './components/Icons/icons'
-// import DisplayMessage from './pages/Login/DisplayMessage';
 import GlobalStyle from './GlobalStyleSheet/globalStyleSheet';
 import LoginPage from './pages/Login';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';

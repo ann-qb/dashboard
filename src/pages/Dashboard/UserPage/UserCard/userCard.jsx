@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ShowIfAuth from '../../../../components/ShowIfAuth';
 import EditPopup from '../../../../components/Popups/EditPopup';
 import DeleteConfirmPopup from '../../../../components/Popups/DeleteConfirmPopup';
-import ProfilePic from '../../../../Assets/Images/profilePic_small.png';
+import ProfilePic from '../../../../assets/Images/profilePic_small.png';
 
 const MOCK_USER_DATA = {
 	firstname: 'Ann',
