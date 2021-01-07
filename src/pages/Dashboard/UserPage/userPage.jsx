@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import UserCard from './UserCard';
 import ShowIfAuth from '../../../components/ShowIfAuth';
+import AlertPopup from '../../../components/Popups/AlertPopups';
 
 /**---------------- Styles ------------------*/
 const PageContainer = styled.div`
@@ -36,6 +37,7 @@ const EmptyDivToCompensateProfilePic = styled.div`
 `;
 
 export default function UserPage(props) {
+
 	const createCards = () => {
 		return (
 			<>
@@ -47,6 +49,7 @@ export default function UserPage(props) {
 
 	return (
 		<PageContainer>
+			<AlertPopup alertType='warning' message="User Added Successfully" />
 			<p className="pageHeaders blackFont">Users</p>
 			<ShowIfAuth role="ADMIN">
 				<AddButton className="button-primary">+ Add Users</AddButton>

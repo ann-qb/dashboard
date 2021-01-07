@@ -11,7 +11,7 @@ const GREEN = '#34c38f',
 	FADED_GREEN = '#ccf0e8';
 const BLUE = '#50a5f1',
 	FADED_BLUE = '#d3e8fb';
-const YELLOW = 'f1b44c',
+const YELLOW = '#f1b44c',
 	FADED_YELLOW = '#Fbecd2';
 const RED = '#f46a6a',
 	FADED_RED = '#fcdada';
@@ -210,6 +210,20 @@ const GlobalStyle = createGlobalStyle`
   
   .blackFont{
     color:${PRIMARY_DARK} !important;
+  }
+
+  /*------------ Popup Alert ---------------*/
+  .alertWrapper{
+    position:absolute;
+    top:20px;
+    right:20px;
+    display:flex;
+    align-items:center;
+    height:80px;
+    width:250px;
+    padding:15px;
+    border-radius:5px;
+    opacity:0.8;
   }
 `;
 
