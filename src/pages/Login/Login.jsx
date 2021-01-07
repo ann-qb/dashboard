@@ -46,7 +46,6 @@ export default function Login() {
 						}
 					} catch (error) {
 						console.log(error);
-						setUserName(fieldValue);
 						setPreLoaderEnabled(false);
 					}
 				};
@@ -55,6 +54,7 @@ export default function Login() {
 				setErrorMessage('Please enter a valid email id');
 			}
 		} else if (cardHeader === 'Password') {
+			setPreLoaderEnabled(true);
 			const loginAPICall = async () => {
 				try {
 					const response = await axios.post(
@@ -69,11 +69,14 @@ export default function Login() {
 						// dispatch to store
 						dispatch(login());
 						setPassword(fieldValue);
+						setPreLoaderEnabled(false);
 					} else {
 						console.log('Password is incorrect/ Something went wrong pswd');
+						setPreLoaderEnabled(false);
 					}
 				} catch (error) {
 					console.log(error);
+					setPreLoaderEnabled(false);
 				}
 			};
 			loginAPICall();
