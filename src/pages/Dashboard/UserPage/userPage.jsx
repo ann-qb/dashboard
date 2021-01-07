@@ -51,35 +51,6 @@ export default function UserPage(props) {
 				<UserCard role="user" />
 				<UserCard role="user" />
 				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
 
 			</>
 		);
