@@ -5,6 +5,13 @@ import EditPopup from '../../../../components/Popups/EditPopup';
 import DeleteConfirmPopup from '../../../../components/Popups/DeleteConfirmPopup';
 import ProfilePic from '../../../../Assets/Images/profilePic_small.png';
 
+const MOCK_USER_DATA = {
+	firstname: 'Ann',
+	lastname: 'Susan',
+	status: 'Active',
+	email: 'anns@qburst.com',
+};
+
 export default function UserCard(props) {
 	const status = 'active';
 
@@ -41,14 +48,14 @@ export default function UserCard(props) {
 	`;
 
 	const DetailsTabs = styled.div`
-		display:flex;
-		align-items:center;
+		display: flex;
+		align-items: center;
 		width: 25%;
 	`;
 
 	const StatusText = styled.p`
 		width: fit-content;
-		height:fit-content;
+		height: fit-content;
 		padding: 2px 5px;
 		font-size: 65%;
 		border-radius: 5px;
@@ -126,7 +133,7 @@ export default function UserCard(props) {
 				<CreateAdminTaskTabs />
 			</ShowIfAuth>
 
-			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} />
+			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} data={MOCK_USER_DATA} />
 			<DeleteConfirmPopup isOpen={deletePopupIsOpen} onRequestClose={closeDeleteModal} />
 		</CardContainer>
 	);

@@ -3,6 +3,7 @@ import UserCard from './UserCard';
 import {useState} from 'react'
 import ShowIfAuth from '../../../components/ShowIfAuth';
 import AlertPopup from '../../../components/Popups/AlertPopups';
+import EditPopup from '../../../components/Popups/EditPopup';
 
 /**---------------- Styles ------------------*/
 const PageContainer = styled.div`
@@ -39,6 +40,7 @@ const EmptyDivToCompensateProfilePic = styled.div`
 
 export default function UserPage(props) {
 	const [alertDisplay, setAlertDisplay] = useState(false);
+	const [addUserPopup, setAddUserPopup] = useState(false)
 
 	const createCards = () => {
 		return (
@@ -49,23 +51,32 @@ export default function UserPage(props) {
 		);
 	};
 
-	const test = () => {
+	const openAddUserPopup = ()=>{
+		setAddUserPopup(true)
+	}
+
+	const closeAddUserPopup =()=>{
+		setAddUserPopup(false)
+	}
+
+	const showAlertPopup = () => {
 		setAlertDisplay(true);
+		setAddUserPopup(false);
 	};
 
 	// Additional function to be written wherever AlertPopup component is used
 	if(alertDisplay){
 		setTimeout(() => {
 			setAlertDisplay(false)
-		}, 3000);
+		}, 5000);
 	}
 
 	return (
 		<PageContainer>
-			<AlertPopup alertType="warning" message="User Added Successfully" display={alertDisplay} />
+			<AlertPopup alertType="success" message="User Added Successfully" display={alertDisplay} />
 			<p className="pageHeaders blackFont">Users</p>
 			<ShowIfAuth role="ADMIN">
-				<AddButton className="button-primary" onClick={test}>
+				<AddButton className="button-primary" onClick={openAddUserPopup}>
 					+ Add Users
 				</AddButton>
 			</ShowIfAuth>
@@ -89,6 +100,8 @@ export default function UserPage(props) {
 			</UserCardHeadWrapper>
 
 			{createCards()}
+
+			<EditPopup isOpen={addUserPopup} onRequestClose={closeAddUserPopup} onSubmit={showAlertPopup} />
 		</PageContainer>
 	);
 }

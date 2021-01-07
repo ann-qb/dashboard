@@ -50,12 +50,13 @@ const GlobalStyle = createGlobalStyle`
     font-size:100%;
   }
 
-  input{
+  input,select{
     padding: 10px;
     outline: none;
     border-radius: 4px;
     border: 1px solid #000;
   }
+  select{padding:0 !important}
   input[type="password"]::-ms-reveal,
   input[type="password"]::-ms-clear {
     display: none !important;

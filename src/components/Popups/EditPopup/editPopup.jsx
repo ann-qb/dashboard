@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 /**---------------- Styles ------------------*/
 const SuperFieldWrapper = styled.div`
-	display: flex;
 	width: 100%;
 `;
 
 const SubFieldWrapper = styled.div`
-	width: 50%;
+	width: 100%;
+	display: flex;
 `;
 
 const SingleFieldGroup = styled.div`
@@ -29,7 +29,25 @@ const Input = styled.input`
 	height: 30px;
 `;
 
+const Select = styled.select`
+	width: 100%;
+	height: 30px;
+`;
+
 export default function EditModal(props) {
+	// Error handiling if no data props is received
+	let MOCK_USER_DATA;
+	if (!props.data) {
+		MOCK_USER_DATA = {
+			firstname: ' ',
+			lastname: ' ',
+			status: ' ',
+			email: ' ',
+		};
+	} else {
+		MOCK_USER_DATA = { ...props.data };
+	}
+
 	const modalStyle = {
 		overlay: {},
 		content: {
@@ -49,22 +67,31 @@ export default function EditModal(props) {
 				<SubFieldWrapper>
 					<SingleFieldGroup>
 						<p>First name</p>
-						<Input type="text" />
+						<Input type="text" value={MOCK_USER_DATA.firstname} />
 					</SingleFieldGroup>
 					<SingleFieldGroup>
 						<p>Last name</p>
-						<Input type="text" />
+						<Input type="text" value={MOCK_USER_DATA.lastname} />
 					</SingleFieldGroup>
 				</SubFieldWrapper>
 
 				<SubFieldWrapper>
 					<SingleFieldGroup>
 						<p>Email</p>
-						<Input type="text" />
+						<Input type="email" value={MOCK_USER_DATA.email} />
 					</SingleFieldGroup>
 					<SingleFieldGroup>
 						<p>Status</p>
-						<Input type="text" />
+						<Select name="status" id="status_dropdown">
+							{props.data ? (
+								<>
+									<option value="active">Active</option>
+									<option value="inactive">Inactive</option>
+								</>
+							) : (
+								<option value="active">Pending</option>
+							)}
+						</Select>
 					</SingleFieldGroup>
 				</SubFieldWrapper>
 			</SuperFieldWrapper>
@@ -73,7 +100,7 @@ export default function EditModal(props) {
 				<button style={{ marginRight: '10px' }} className="button-secondary" onClick={props.onRequestClose}>
 					Cancel
 				</button>
-				<button style={{ marginLeft: '10px' }} className="button-primary">
+				<button style={{ marginLeft: '10px' }} className="button-primary" onClick={props.onSubmit}>
 					Submit
 				</button>
 			</ButtonWrapper>
