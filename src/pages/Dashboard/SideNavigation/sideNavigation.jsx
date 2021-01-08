@@ -1,10 +1,12 @@
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Logo from '../../../assets/Images/logo_icon.png';
+import { onLogout } from './../../../slices/login.slice';
 
 /**---------------- Styles ------------------*/
 const NavBar = styled.div`
-	top:0;
-	left:0;
+	top: 0;
+	left: 0;
 	width: 270px;
 	height: 100vh;
 	padding-top: 10px;
@@ -36,7 +38,7 @@ const LogoContainer = styled.div`
 	display: flex;
 	align-items: center;
 	width: 100%;
-	margin-bottom:20px;
+	margin-bottom: 20px;
 `;
 
 const LogoImage = styled.img`
@@ -45,6 +47,7 @@ const LogoImage = styled.img`
 `;
 
 export default function SideNavigation(props) {
+	const dispatch = useDispatch();
 	const changeSelection = (e) => {
 		const clickedDiv = e.target.closest('div');
 		let currentSelectedLink = document.querySelector('.activeNavLink');
@@ -59,7 +62,7 @@ export default function SideNavigation(props) {
 				<LogoImage src={Logo} />
 				<h3>Oddy</h3>
 			</LogoContainer>
-			<div style={{marginLeft:'10px'}}>
+			<div style={{ marginLeft: '10px' }}>
 				<SubTittles className="navigationText">MENU</SubTittles>
 
 				<NavLinksDiv className="navLinks activeNavLink" onClick={changeSelection}>
@@ -73,7 +76,12 @@ export default function SideNavigation(props) {
 					<ion-icon style={iconStyle} name="settings-outline"></ion-icon>
 					<p className="navigationText ">Settings</p>
 				</NavLinksDiv>
-				<NavLinksDiv className="navLinks" onClick={changeSelection}>
+				<NavLinksDiv
+					className="navLinks"
+					onClick={(e) => {
+						changeSelection(e);
+						dispatch(onLogout());
+					}}>
 					<ion-icon style={iconStyle} name="log-out-outline"></ion-icon>
 					<p className="navigationText ">Logout</p>
 				</NavLinksDiv>
@@ -81,4 +89,3 @@ export default function SideNavigation(props) {
 		</NavBar>
 	);
 }
-
