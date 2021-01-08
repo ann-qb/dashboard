@@ -15,16 +15,14 @@ const CardContainer = styled.div`
 `;
 
 const Card = styled.div`
-	// position: absolute;
-	// top: 45%;
-	// left: 50%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	width: 100%;
 	padding: 35px 20px !important;
 	text-align: center;
-	// transform: translate(-50%, -50%);
+	
+	backdrop-filter: blur(6px) !important;
 `;
 
 const BarLoaderContainer = styled.div`

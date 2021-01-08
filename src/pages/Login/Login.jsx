@@ -106,7 +106,7 @@ export default function Login() {
 	};
 
 	return (
-		<div>
+		<div id="login_background">
 			{showUsername ? (
 				<LoginCard
 					cardHeader="Username"
