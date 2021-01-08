@@ -71,10 +71,17 @@ export default function UserCard(props) {
 		justify-content: center;
 	`;
 
-	const iconStyle = {
+	const editIconStyle = {
 		fontSize: '120%',
 		margin: '5px',
 		color: '#000',
+		cursor: 'pointer',
+	};
+
+	const deleteIconStyle = {
+		fontSize: '120%',
+		margin: '5px',
+		color: '#f46a6a',
 		cursor: 'pointer',
 	};
 
@@ -108,8 +115,8 @@ export default function UserCard(props) {
 	const CreateAdminTaskTabs = () => {
 		return (
 			<AdminTabs>
-				<ion-icon id="edit_icon" style={iconStyle} name="create-outline" onClick={generateModal}></ion-icon>
-				<ion-icon id="delete_icon" style={iconStyle} name="trash-outline" onClick={generateModal}></ion-icon>
+				<ion-icon id="edit_icon" style={editIconStyle} name="create-outline" onClick={generateModal}></ion-icon>
+				<ion-icon id="delete_icon" style={deleteIconStyle} name="trash-outline" onClick={generateModal}></ion-icon>
 			</AdminTabs>
 		);
 	};

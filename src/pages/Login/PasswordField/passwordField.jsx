@@ -20,6 +20,7 @@ export default function PasswordField(props) {
 		width: ${props.width};
 		height: ${props.height};
 		margin: ${props.margin};
+		margin-top:20px;
 	`;
 
 	const eyeIconStyle = {

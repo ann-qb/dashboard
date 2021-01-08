@@ -124,7 +124,7 @@ export default function LoginCard(props) {
 
 				{props.cardType !== 'new password' ? (
 					<>
-						<p style={{ fontSize: '150%', marginTop: '10px' }} className="blackFont">
+						<p style={{ fontSize: '150%', marginTop: '10px', fontWeight:'500' }} className="blackFont">
 							Sign In
 						</p>
 						<p style={{ fontSize: '85%' }} className="blackFont">
@@ -184,6 +184,7 @@ const FieldMaker = (props) => {
 				value={props.fieldValue}
 				onChange={props.setValue}
 				placeholder={props.cardHeader}
+				autoFocus
 			/>
 		);
 	}
