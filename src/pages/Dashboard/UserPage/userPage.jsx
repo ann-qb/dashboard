@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import UserCard from './UserCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ShowIfAuth from '../../../components/ShowIfAuth';
 import AlertPopup from '../../../components/Popups/AlertPopups';
 import EditPopup from '../../../components/Popups/EditPopup';
+import { onGetUserList } from '../../../slices/userlist.slice';
+import { useDispatch, useSelector } from 'react-redux';
 
 /**---------------- Styles ------------------*/
 const PageContainer = styled.div`
@@ -45,13 +47,20 @@ export default function UserPage(props) {
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [addUserPopup, setAddUserPopup] = useState(false);
 
+	const { userList } = useSelector((state) => state.userListSlice);
+	const dispatch = useDispatch();
+	useEffect(() => dispatch(onGetUserList()), []);
+
 	const createCards = () => {
 		return (
 			<>
-				<UserCard role="admin" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
+				{userList.map((each) => (
+					<UserCard key={each.id} data={each} />
+				))}
+				{/* <UserCard />
+				<UserCard />
+				<UserCard />
+				<UserCard /> */}
 			</>
 		);
 	};

@@ -6,15 +6,10 @@ import UserPage from '../UserPage';
 const ContentContainer = styled.div`
 	width: 100%;
 `;
-export default function Content(props) {
-	const mockUserData = {
-		username: 'thejuss@qburst.com',
-		firstName: 'Thejus',
-		lastName: 'Satheesan',
-	};
+export default function Content() {
 	return (
 		<ContentContainer>
-			<Header userData={mockUserData} />
+			<Header />
 			<UserPage />
 		</ContentContainer>
 	);
