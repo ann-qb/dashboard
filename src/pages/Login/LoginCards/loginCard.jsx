@@ -34,9 +34,7 @@ const BarLoaderContainer = styled.div`
 	// justify-content: center;
 `;
 
-const StyledBarLoader = css`
-	width: 100%;
-`;
+
 
 const SubmitButton = styled.button`
 	margin-right: 0;
@@ -180,3 +178,7 @@ const FieldMaker = (props) => {
 		);
 	}
 };
+
+const StyledBarLoader = css`
+	width: 100%;
+`;
