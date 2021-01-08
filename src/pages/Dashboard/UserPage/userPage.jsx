@@ -80,7 +80,7 @@ export default function UserPage(props) {
 		<PageContainer>
 			<AlertPopup alertType="success" message="User Added Successfully" display={alertDisplay} />
 			<p className="pageHeaders blackFont">Users</p>
-			<ShowIfAuth role="ADMIN">
+			<ShowIfAuth allowedRoles={['admin']}>
 				<AddButton className="button-primary" onClick={openAddUserPopup}>
 					+ Add Users
 				</AddButton>
@@ -99,7 +99,7 @@ export default function UserPage(props) {
 					</HeaderTab>
 				</UserCardHeaders>
 
-				<ShowIfAuth role="ADMIN">
+				<ShowIfAuth allowedRoles={['admin']}>
 					<p className="blackFont">Actions</p>
 				</ShowIfAuth>
 			</UserCardHeadWrapper>

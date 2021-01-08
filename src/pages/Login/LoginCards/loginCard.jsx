@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import PasswordField from '../PasswordField';
 import Logo from '../../../assets/Images/logo_black.png';
 import { BarLoader } from 'react-spinners';
@@ -14,6 +13,7 @@ const CardContainer = styled.div`
 	height: fit-content;
 	transform: translate(-50%, -50%);
 `;
+
 const Card = styled.div`
 	// position: absolute;
 	// top: 45%;
@@ -32,6 +32,10 @@ const BarLoaderContainer = styled.div`
 	height: fit-content;
 	display: flex;
 	// justify-content: center;
+`;
+
+const StyledBarLoader = css`
+	width: 100%;
 `;
 
 const SubmitButton = styled.button`
@@ -83,14 +87,6 @@ const SideLink = styled.p`
  * sideButton text
  */
 export default function LoginCard(props) {
-	//------------- State --------------//
-	const [fieldValue, setFieldValue] = useState('');
-
-	//------------- Methods --------------//
-	const setValue = (e) => {
-		setFieldValue(e.target.value);
-	};
-
 	if (props.errorMessage) {
 		var errorField = {
 			border: '1px solid #f46a6a',
@@ -114,20 +110,20 @@ export default function LoginCard(props) {
 	return (
 		<CardContainer>
 			<BarLoaderContainer>
-				<BarLoader css={StyledBarLoader} color="#5673E8" loading={props.loading} />{' '}
-			</BarLoaderContainer>{' '}
+				<BarLoader css={StyledBarLoader} color="#5673E8" loading={props.loading} />
+			</BarLoaderContainer>
 			<Card className="cards">
 				<span>
-					<StyledLogo src={Logo} />{' '}
+					<StyledLogo src={Logo} />
 				</span>
 				{props.cardType !== 'new password' ? (
 					<>
 						<p style={{ fontSize: '150%', marginTop: '10px' }} className="blackFont">
-							Sign In{' '}
-						</p>{' '}
+							Sign In
+						</p>
 						<p style={{ fontSize: '85%' }} className="blackFont">
-							to continue{' '}
-						</p>{' '}
+							to continue
+						</p>
 					</>
 				) : (
 					<p style={{ fontSize: '150%', marginTop: '10px' }}> Create Password </p>
@@ -135,23 +131,20 @@ export default function LoginCard(props) {
 				<FieldMaker
 					{...{
 						...props,
-						fieldValue,
-						setValue,
 						errorField,
 						passwordError,
 						changeInputBorderOnFocus,
 						changeInputBorderOnBlur,
 					}}
-				/>{' '}
-				<ErrorText> {props.errorMessage} </ErrorText>{' '}
+				/>
+				<ErrorText> {props.errorMessage} </ErrorText>
 				<ButtonHolder>
-					<SideLink> {props.sideLinkText} </SideLink>{' '}
-					<SubmitButton className="button-primary" onClick={() => props.onSubmit(props.cardHeader, fieldValue)}>
-						{' '}
-						{props.buttonText}{' '}
-					</SubmitButton>{' '}
-				</ButtonHolder>{' '}
-			</Card>{' '}
+					<SideLink> {props.sideLinkText} </SideLink>
+					<SubmitButton className="button-primary" disabled={props.disableSubmit} onClick={() => props.onClick()}>
+						{props.buttonText}
+					</SubmitButton>
+				</ButtonHolder>
+			</Card>
 		</CardContainer>
 	);
 }
@@ -163,13 +156,13 @@ const FieldMaker = (props) => {
 				<PasswordField
 					margin="10px 0 5px 0"
 					height="40px"
-					value={props.fieldValue}
-					onChange={props.setValue}
+					value={props.value}
+					onChange={props.onChange}
 					isError={props.passwordError}
-				/>{' '}
+				/>
 				{props.cardType === 'new password' ? (
-					<AlertText> Make sure to re check the password before submitting </AlertText>
-				) : null}{' '}
+					<AlertText> Please make sure to double check the password before submitting! </AlertText>
+				) : null}
 			</>
 		);
 	} else {
@@ -179,14 +172,11 @@ const FieldMaker = (props) => {
 				onBlur={props.changeInputBorderOnBlur}
 				style={props.errorField}
 				type={props.cardType}
-				value={props.fieldValue}
-				onChange={props.setValue}
+				value={props.value}
+				onChange={props.onChange}
 				placeholder={props.cardHeader}
+				autoFocus
 			/>
 		);
 	}
 };
-
-const StyledBarLoader = css`
-	width: 100%;
-`;

@@ -129,7 +129,7 @@ export default function UserCard(props) {
 				</DetailsTabs>
 			</UserTabs>
 
-			<ShowIfAuth role={props.role}>
+			<ShowIfAuth allowedRoles={['admin']}>
 				<CreateAdminTaskTabs />
 			</ShowIfAuth>
 
