@@ -1,13 +1,15 @@
 import styled from 'styled-components';
-import Logo from '../../../assets/Images/logo_black.png';
+import Logo from '../../../assets/Images/logo_icon.png';
 
 /**---------------- Styles ------------------*/
 const NavBar = styled.div`
-	width: 15vw;
+	top:0;
+	left:0;
+	width: 250px;
 	height: 100vh;
 	padding-top: 10px;
 	background-color: #fff;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19);
+	box-shadow: 0 2px 4px rgba(15, 34, 58, 0.12);
 `;
 
 const LogoText = styled.h3`
@@ -27,8 +29,15 @@ const NavLinksDiv = styled.div`
 const iconStyle = {
 	fontSize: '115%',
 	marginRight: '10px',
-	color: '#74788d',
+	color: '#9398a4',
 };
+
+const LogoContainer = styled.div`
+	display: flex;
+	align-items: center;
+	width: 100%;
+	margin-bottom:20px;
+`;
 
 const LogoImage = styled.img`
 	height: 40px;
@@ -46,13 +55,16 @@ export default function SideNavigation(props) {
 
 	return (
 		<NavBar>
-			<LogoImage src={Logo} />
+			<LogoContainer className="blackFont">
+				<LogoImage src={Logo} />
+				<h3>Oddy</h3>
+			</LogoContainer>
 			<div>
 				<SubTittles className="navigationText">MENU</SubTittles>
 
 				<NavLinksDiv className="navLinks activeNavLink" onClick={changeSelection}>
-					<ion-icon style={iconStyle} name="people-outline"></ion-icon>
-					<p className="navigationText">Users</p>
+					<ion-icon class="navIcons" style={iconStyle} name="clipboard-outline"></ion-icon>
+					<p className="navigationText">Dashboard</p>
 				</NavLinksDiv>
 
 				<SubTittles className="navigationText">UTILITY</SubTittles>
@@ -70,4 +82,3 @@ export default function SideNavigation(props) {
 	);
 }
 
-//<LogoText>Logo Text</LogoText>

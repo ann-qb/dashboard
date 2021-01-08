@@ -8,8 +8,7 @@ const modalStyle = {
 		top: '50%',
 		left: '50%',
 		height: 'fit-content',
-		width: '500px',
-
+		width: '300px',
 		border: 'none',
 		boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19)',
 		transform: 'translate(-50%,-50%)',
@@ -31,7 +30,7 @@ const P = styled.p`
 const ButtonWrapper = styled.div`
 	display: flex;
 	width: fit-content;
-	margin: 10px auto 0 auto;
+	margin: 10px auto 10px auto;
 `;
 
 const iconStyle = {
@@ -47,11 +46,11 @@ export default function DeleteModal(props) {
 				<P>Delete User?</P>
 			</TextWrapper>
 			<ButtonWrapper>
-				<button style={{ marginRight: '10px' }} className="button-danger-secondary" onClick={props.onRequestClose}>
-					Cancel
-				</button>
-				<button style={{ marginLeft: '10px' }} className="button-danger">
+				<button style={{ marginRight: '10px' }} className="button-danger">
 					Delete
+				</button>
+				<button style={{ marginLeft: '10px' }} className="button-danger-secondary" onClick={props.onRequestClose}>
+					Cancel
 				</button>
 			</ButtonWrapper>
 		</Modal>

@@ -3,6 +3,14 @@ import { useState } from 'react';
 import ShowIfAuth from '../../../../components/ShowIfAuth';
 import EditPopup from '../../../../components/Popups/EditPopup';
 import DeleteConfirmPopup from '../../../../components/Popups/DeleteConfirmPopup';
+import ProfilePic from '../../../../assets/Images/profilePic_small.png';
+
+const MOCK_USER_DATA = {
+	firstname: 'Ann',
+	lastname: 'Susan',
+	status: 'Active',
+	email: 'anns@qburst.com',
+};
 
 export default function UserCard(props) {
 	const status = 'active';
@@ -40,16 +48,18 @@ export default function UserCard(props) {
 	`;
 
 	const DetailsTabs = styled.div`
+		display: flex;
+		align-items: center;
 		width: 25%;
 	`;
 
 	const StatusText = styled.p`
 		width: fit-content;
+		height: fit-content;
 		padding: 2px 5px;
-		font-size: 70%;
-
-		border-radius: 50px 50px 50px 50px;
-		border: 1px solid ${textColor};
+		font-size: 65%;
+		border-radius: 5px;
+		border: none;
 		color: ${textColor};
 		background-color: ${bgColor};
 	`;
@@ -59,7 +69,6 @@ export default function UserCard(props) {
 		display: flex;
 		align-item: center;
 		justify-content: center;
-		background-color: ${bgColor};
 	`;
 
 	const iconStyle = {
@@ -68,6 +77,16 @@ export default function UserCard(props) {
 		color: '#000',
 		cursor: 'pointer',
 	};
+
+	const ProfilePicHolder = styled.span`
+		height: 30px;
+		width: 30px;
+		background-image: url(${ProfilePic});
+		background-position: center;
+		background-size: cover;
+		border-radius: 50%;
+		margin-right: 10px;
+	`;
 
 	const generateModal = (e) => {
 		if (e.target.id === 'edit_icon') {
@@ -99,6 +118,7 @@ export default function UserCard(props) {
 		<CardContainer>
 			<UserTabs>
 				<DetailsTabs>
+					<ProfilePicHolder />
 					<p>Full Name</p>
 				</DetailsTabs>
 				<DetailsTabs>
@@ -109,11 +129,11 @@ export default function UserCard(props) {
 				</DetailsTabs>
 			</UserTabs>
 
-			<ShowIfAuth role={props.role}>
+			<ShowIfAuth allowedRoles={['admin']}>
 				<CreateAdminTaskTabs />
 			</ShowIfAuth>
 
-			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} />
+			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} data={MOCK_USER_DATA} />
 			<DeleteConfirmPopup isOpen={deletePopupIsOpen} onRequestClose={closeDeleteModal} />
 		</CardContainer>
 	);

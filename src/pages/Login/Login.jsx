@@ -1,106 +1,151 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 import LoginCard from './LoginCards';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import DisplayMessage from './DisplayMessage/displayMessage';
-import { useState } from 'react';
-import axios from 'axios';
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login } from '../../slices/login.slice';
+import { onLogin, onVerifyUserName, resetStatus, updateErrorMessage } from './../../slices/login.slice';
 
 export default function Login() {
+	const history = useHistory();
+	const location = useLocation();
+	const dispatch = useDispatch();
+
+	const [showUsername, setShowUsername] = useState(true);
+	const [showPassword, setShowPassword] = useState(false);
+	const [displayMessage, setDisplayMessage] = useState(false);
+
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
-	const [errorMessage, setErrorMessage] = useState(null);
-	const location = useLocation();
-	const history = useHistory();
-	const dispatch = useDispatch();
-	let { from } = location.state || { from: { pathname: '/dashboard' } };
-	// Get from store
-	const status = 'Active';
-	const validateValue = (cardHeader, fieldValue) => {
-		console.log(cardHeader, fieldValue);
-		if (cardHeader === 'Username') {
-			//regex validation
-			if (fieldValue.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
-				//api call
-				const checkUserNameExists = async () => {
-					try {
-						const response = await axios.post(
-							'https://f2066c2c-3359-41dd-a269-a14d820ac25a.mock.pstmn.io/tempmockserver/userexists',
-							{
-								username: fieldValue,
-							}
-						);
-						if (response.status === 200) {
-							console.log(response.data);
-							// dispatch to store
-							setUserName(fieldValue);
-						} else {
-							console.log('Something went wrong username');
-						}
-					} catch (error) {
-						console.log(error);
-					}
-				};
-				checkUserNameExists();
+	const [error, setError] = useState('');
+	const [disableSubmit, setDisableSubmit] = useState(true);
+	const [showLoading, setShowLoading] = useState(false);
+	const [message, setMessage] = useState('');
+
+	const { loggedUser, status, verifiedUser, errorMessage } = useSelector((state) => state.loginSlice);
+
+	useEffect(() => {
+		const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		if (currentUser !== null) {
+			dispatch(onLogin(currentUser));
+		}
+	}, []);
+
+	useEffect(() => {
+		if ((status === 'idle' || status === 'success') && loggedUser !== null) {
+			dispatch(resetStatus());
+			dispatch(updateErrorMessage({errorMessage: ''}))
+			history.replace(location?.state?.from || '/dashboard');
+		}
+	}, [status, loggedUser]);
+
+	// useEffect(() => {
+	// if (status === 'idle' && loggedUser) {
+	// history.replace('/dashoard');
+	// }
+	// }, [status, loggedUser]);
+
+	useEffect(() => {
+		status === 'loading' ? setShowLoading(true) : setShowLoading(false);
+	}, [status]);
+
+	// optimize
+	// for username/password/display message rendering
+	useEffect(() => {
+		if (status === 'success' && verifiedUser === 'active') {
+			setShowUsername(false);
+			setShowPassword(true);
+			setDisplayMessage(false);
+			setMessage('');
+			// setdisableSubmit(false);
+			dispatch(resetStatus());
+		} else if (status === 'success' && verifiedUser === 'pending') {
+			setMessage(
+				'User account status is PENDING. Please follow the instructions in the email sent to your registered email id to login.'
+			);
+			setShowUsername(false);
+			setShowPassword(false);
+			setDisplayMessage(true);
+			dispatch(resetStatus());
+		} else if (status === 'success' && verifiedUser === 'inactive') {
+			// message = 'User account status is INACTIVE. Please contact the admin for further details.';
+			setShowUsername(false);
+			setShowPassword(false);
+			setDisplayMessage(true);
+			dispatch(resetStatus());
+		} else if (status === 'success' && verifiedUser === 'nonexistant') {
+			setMessage('User account not found.');
+			setShowUsername(false);
+			setShowPassword(false);
+			setDisplayMessage(true);
+			dispatch(resetStatus());
+		}
+	}, [status, verifiedUser]);
+
+	const validateSubmit = () => {
+		//for username
+		if (showUsername && !showPassword) {
+			const emailPattern = new RegExp('^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$', 'g');
+			if (userName.match(emailPattern)) {
+				dispatch(onVerifyUserName({ userName }));
 			} else {
-				setErrorMessage('Please enter a valid email id');
+				setError('This email id is not valid');
 			}
-		} else if (cardHeader === 'Password') {
-			const loginAPICall = async () => {
-				try {
-					const response = await axios.post(
-						'https://f2066c2c-3359-41dd-a269-a14d820ac25a.mock.pstmn.io/tempmockserver/login',
-						{
-							username: userName,
-							password: fieldValue,
-						}
-					);
-					if (response.status === 200) {
-						console.log(response.data);
-						// dispatch to store
-						dispatch(login());
-						setPassword(fieldValue);
-					} else {
-						console.log('Password is incorrect/ Something went wrong pswd');
-					}
-				} catch (error) {
-					console.log(error);
-				}
-			};
-			loginAPICall();
+		}
+
+		// for password
+		if (!showUsername && showPassword) {
+			console.log(password);
+			console.log(password.length);
+			if (password.length) {
+				console.log(password);
+				dispatch(onLogin({ userName, password }));
+			}
 		}
 	};
+
+	const onHandleUserNameChange = (e) => {
+		const value = e.target.value;
+		setUserName(value);
+		userName.trim.length ? setDisableSubmit(false) : setDisableSubmit(true);
+	};
+
+	const onHandlePasswordChange = (e) => {
+		const value = e.target.value;
+		setPassword(value);
+		password.trim.length ? setDisableSubmit(false) : setDisableSubmit(true);
+	};
+
 	return (
 		<div>
-			<Header />
-			{console.log(history)}
-			{console.log(location)}
-			{!userName ? (
+			{showUsername ? (
 				<LoginCard
 					cardHeader="Username"
 					cardType="text"
-					errorMessage={errorMessage}
+					value={userName}
+					onChange={onHandleUserNameChange}
+					errorMessage={error}
+					sideLinkText="New User?"
 					buttonText="Next"
-					onSubmit={validateValue}
+					buttonDisabled={disableSubmit}
+					onClick={validateSubmit}
+					loading={showLoading}
 				/>
-			) : status === 'Active' && !password ? (
-				<LoginCard cardHeader="Password" cardType="password" buttonText="Submit" onSubmit={validateValue} />
-			) : status === 'Pending' ? (
-				<DisplayMessage message="Pending" />
-			) : status === 'Inactive' ? (
-				<DisplayMessage message="Inactive" />
-			) : status === 'Active' && password ? (
-				<Redirect to={from.pathname} />
-			) : (
-				<DisplayMessage message="User does not exist" />
-			)}
-
-			{/* <LoginCard cardHeader="Password" cardType="new password" buttonText="Save password" /> */}
-			{/* <LoginCard cardHeader="OTP" cardType="text" buttonText="Submit" /> */}
-
-			<Footer />
+			) : null}
+			{showPassword ? (
+				<LoginCard
+					cardHeader="Password"
+					cardType="password"
+					value={password}
+					onChange={onHandlePasswordChange}
+					errorMessage={errorMessage}
+					sideLinkText="Forgot password?"
+					buttonText="Submit"
+					buttonDisabled={disableSubmit}
+					onClick={validateSubmit}
+					loading={showLoading}
+				/>
+			) : null}
+			{displayMessage ? <DisplayMessage message={message} /> : null}
 		</div>
 	);
 }

@@ -11,7 +11,7 @@ const GREEN = '#34c38f',
 	FADED_GREEN = '#ccf0e8';
 const BLUE = '#50a5f1',
 	FADED_BLUE = '#d3e8fb';
-const YELLOW = 'f1b44c',
+const YELLOW = '#f1b44c',
 	FADED_YELLOW = '#Fbecd2';
 const RED = '#f46a6a',
 	FADED_RED = '#fcdada';
@@ -26,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     background-color: #f5f6f8;
-    color: #464648;
+    color: #74788d;
     font-size: 16px;
     text-rendering: optimizeLegibility;
   }
@@ -50,17 +50,35 @@ const GlobalStyle = createGlobalStyle`
     font-size:100%;
   }
 
-  input{
-    padding: 5px;
+  input,select{
+    padding: 10px;
     outline: none;
     border-radius: 4px;
     border: 1px solid #000;
   }
+  select{padding:0 !important}
   input[type="password"]::-ms-reveal,
   input[type="password"]::-ms-clear {
     display: none !important;
   }
 
+  ::-webkit-input-placeholder { /* Edge */
+  color: '#74788d;
+  font-size:110%;
+  font-family: 'Poppins', sans-serif;
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: '#74788d;
+    font-size:110%;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  ::placeholder {
+    color: #74788d;
+    font-size:110%;
+    font-family: 'Poppins', sans-serif;
+  }
   /*------------Icons ---------------*/
 
   .icons{
@@ -76,6 +94,7 @@ const GlobalStyle = createGlobalStyle`
     cursor:pointer;
     padding:5px 10px;
     transition: all ease 0.2s;
+    font-size:90% !important;
   }
 
   /*-- Primary Button --*/
@@ -137,7 +156,7 @@ const GlobalStyle = createGlobalStyle`
     padding:10px;
     border-radius: 4px;
     background-color:#fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19);
+    box-shadow: 0 2px 4px rgba(15,34,58,.12);
   }
 
   .mainHeader{
@@ -149,9 +168,16 @@ const GlobalStyle = createGlobalStyle`
 
   /*------------ Navigation (side) ---------------*/
 
+  .navIcons{
+    font-size: '115%',
+    margin-right: '10px',
+    color: '#9398a4',
+    transition: all 0.2s ease;
+  }
+
   .navigationText{
     font-family: 'Poppins', sans-serif;
-    color:${SECONDARY_DARK};
+    color:#9398a4;
   }
   
   .navLinks{
@@ -162,11 +188,19 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .navLinks:hover{
-    background-color:${FADED_PURPLE};
+    background-color:#f3f8fb;
+  }
+  .navLinks:hover .navigationText,
+  .navLinks:hover .navIcons{
+    color:${PRIMARY_PURPLE};
   }
 
   .activeNavLink{
-    background-color:${FADED_PURPLE};
+    background-color:#f3f8fb;
+  }
+
+  .activeNavLink .navigationText{
+    color:${PRIMARY_PURPLE};
   }
 
   /*------------ dashboard main header ---------------*/
@@ -174,7 +208,24 @@ const GlobalStyle = createGlobalStyle`
   .pageHeaders{
     font-size:120%;
   }
+  
+  .blackFont{
+    color:${PRIMARY_DARK} !important;
+  }
 
+  /*------------ Popup Alert ---------------*/
+  .alertWrapper{
+    position:absolute;
+    top:20px;
+    right:20px;
+    align-items:center;
+    height:80px;
+    width:250px;
+    padding:15px;
+    border-radius:5px;
+    opacity:0.8;
+    transition:all 0.5s ease;
+  }
 `;
 
 export default GlobalStyle;
