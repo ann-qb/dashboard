@@ -86,6 +86,7 @@ export default function Login() {
 		if (showUsername && !showPassword) {
 			const emailPattern = new RegExp('^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$', 'g');
 			if (userName.match(emailPattern)) {
+				setShowLoading(true);
 				dispatch(onVerifyUserName({ userName }));
 			} else {
 				setError('This email id is not valid');
@@ -98,6 +99,7 @@ export default function Login() {
 			console.log(password.length);
 			if (password.length) {
 				console.log(password);
+				setShowLoading(true);
 				dispatch(onLogin({ userName, password }));
 			}
 		}
