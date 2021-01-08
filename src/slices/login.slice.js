@@ -10,11 +10,11 @@ const loginSlice = createSlice({
 		login(state, action) {
 			state.loggedUser = action.payload.loggedUser;
 			state.role = action.payload.role;
-            state.status = 'success';
-            if(!localStorage.getItem('currentUser')) {
-                localStorage.setItem('currentUser', JSON.stringify({ loggedUser: state.loggedUser, role: state.role }));
-                // Handle reset token expiry
-            }
+			state.status = 'success';
+			if (!localStorage.getItem('currentUser')) {
+				localStorage.setItem('currentUser', JSON.stringify({ loggedUser: state.loggedUser, role: state.role }));
+				// Handle reset token expiry
+			}
 		},
 		logout(state) {
 			state = initialState;
@@ -41,18 +41,15 @@ export const { login, logout, resetStatus, updateStatus, updateVerifiedUser, upd
 export default loginSlice.reducer;
 
 export const onVerifyUserName = (data) => async (dispatch) => {
-    // reset
+	// reset
 	dispatch(resetStatus());
 	// dispatch loading start
-	dispatch(updateStatus('loading'));
+	dispatch(updateStatus({status: 'loading'}));
 	// try-catch fetch API
 	try {
-		const response = await axios.post(
-			'http://localhost:3000/user/check',
-			{
-				email: data.userName,
-			}
-		);
+		const response = await axios.post('http://localhost:3000/user/check', {
+			email: data.userName,
+		});
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
@@ -65,7 +62,6 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 			}
 		} else {
 			console.log('Something went wrong while checking username!');
-			dispatch(updateStatus('success')); // to indicate API call was a success
 		}
 	} catch (error) {
 		console.log(error);
@@ -74,42 +70,35 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 			dispatch(updateVerifiedUser({ verifiedUserStatus: 'nonexistant' }));
 		}
 	}
-	// dispatch loading end - not necessary as it's handled by the other actions dispatched
-	// update status - not necessary as it's handled by the other actions dispatched
+	// dispatch(resetStatus()); // to indicate API call is over
 };
 
 export const onLogin = (data) => async (dispatch) => {
-    console.log(data)
 	// reset
 	dispatch(resetStatus());
 	// dispatch loading start
-	dispatch(updateStatus('loading'));
+	dispatch(updateStatus({status: 'loading'}));
 	// try-catch fetch API
 	try {
-		const response = await axios.post(
-			'http://localhost:3000/user/login',
-			{
-				email: data.userName,
-				password: data.password,
-			}
-		);
+		const response = await axios.post('http://localhost:3000/user/login', {
+			email: data.userName,
+			password: data.password,
+		});
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
 			dispatch(login(response.data));
 		} else {
 			console.log('Something went wrong during login attempt!');
-			dispatch(updateStatus('success')); // to indicate API call was a success
 		}
 	} catch (error) {
 		console.log(error);
 		if (error?.response?.status === 401) {
 			console.log('Incorrect password');
-			dispatch(updateErrorMessage({errorMessage: 'Incorrect password'}));
+			dispatch(updateErrorMessage({ errorMessage: 'Incorrect password' }));
 		}
 	}
-	// dispatch loading end - not necessary as it's handled by the other actions dispatched
-	// update status - not necessary as it's handled by the other actions dispatched
+	// dispatch(resetStatus()); // to indicate API call is over
 };
 
 export const onLogout = (data) => async (dispatch, getState) => {
@@ -118,25 +107,21 @@ export const onLogout = (data) => async (dispatch, getState) => {
 	// reset
 	dispatch(resetStatus());
 	// dispatch loading start
-	dispatch(updateStatus('loading'));
+	dispatch(updateStatus({status: 'loading'}));
 	// try-catch fetch API
 	try {
-		const response = await axios.post(
-			'http://localhost:3000/user/logout',
-			{
-				token: state.loginSlice.loggedUser.token,
-			}
-		);
+		const response = await axios.post('http://localhost:3000/user/logout', {
+			token: state.loginSlice.loggedUser.token,
+		});
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
 			dispatch(logout());
 		} else {
 			console.log('Something went wrong while logging out!');
-			dispatch(updateStatus('success')); // to indicate API call was a success
 		}
 	} catch (error) {
 		console.log(error);
-		dispatch(updateStatus('success')); // to indicate API call was a success
 	}
+	// dispatch(resetStatus()); // to indicate API call is over
 };
