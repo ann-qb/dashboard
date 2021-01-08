@@ -151,6 +151,15 @@ const GlobalStyle = createGlobalStyle`
     border: 1px solid ${FADED_RED};
   }
 
+  /*-- Disabled Button --*/
+  button:disabled,
+  button[disabled]{
+    background-color:${SECONDARY_DARK} !important;
+    color:#fff !important;
+    border: 1px solid ${SECONDARY_DARK} !important;
+    
+  }
+
   /*------------ Cards ---------------*/
 
   .cards{
