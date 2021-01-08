@@ -27,28 +27,22 @@ export default function Login() {
 		const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		if (currentUser !== null) {
 			dispatch(login(currentUser));
+			dispatch(resetStatus());
 		}
 	}, []);
 
 	useEffect(() => {
-		if ((status === 'idle' || status === 'success') && loggedUser !== null) {
+		if (status === 'idle' && loggedUser !== null) {
 			dispatch(resetStatus());
-			dispatch(updateErrorMessage({errorMessage: ''}))
+			dispatch(updateErrorMessage({ errorMessage: '' }));
 			history.replace(location?.state?.from || '/dashboard');
 		}
 	}, [status, loggedUser]);
-
-	// useEffect(() => {
-	// if (status === 'idle' && loggedUser) {
-	// history.replace('/dashoard');
-	// }
-	// }, [status, loggedUser]);
 
 	useEffect(() => {
 		status === 'loading' ? setShowLoading(true) : setShowLoading(false);
 	}, [status]);
 
-	// optimize
 	// for username/password/display message rendering
 	useEffect(() => {
 		if (status === 'success' && verifiedUser === 'active') {
@@ -56,7 +50,6 @@ export default function Login() {
 			setShowPassword(true);
 			setDisplayMessage(false);
 			setMessage('');
-			// setdisableSubmit(false);
 			dispatch(resetStatus());
 		} else if (status === 'success' && verifiedUser === 'pending') {
 			setMessage(
@@ -67,7 +60,7 @@ export default function Login() {
 			setDisplayMessage(true);
 			dispatch(resetStatus());
 		} else if (status === 'success' && verifiedUser === 'inactive') {
-			// message = 'User account status is INACTIVE. Please contact the admin for further details.';
+			setMessage('User account status is INACTIVE. Please contact the admin for further details.');
 			setShowUsername(false);
 			setShowPassword(false);
 			setDisplayMessage(true);
@@ -94,10 +87,7 @@ export default function Login() {
 
 		// for password
 		if (!showUsername && showPassword) {
-			console.log(password);
-			console.log(password.length);
-			if (password.length) {
-				console.log(password);
+			if (password.trim().length) {
 				dispatch(onLogin({ userName, password }));
 			}
 		}
@@ -106,13 +96,13 @@ export default function Login() {
 	const onHandleUserNameChange = (e) => {
 		const value = e.target.value;
 		setUserName(value);
-		userName.trim.length ? setDisableSubmit(false) : setDisableSubmit(true);
+		value.trim().length ? setDisableSubmit(false) : setDisableSubmit(true);
 	};
 
 	const onHandlePasswordChange = (e) => {
 		const value = e.target.value;
 		setPassword(value);
-		password.trim.length ? setDisableSubmit(false) : setDisableSubmit(true);
+		password.trim().length ? setDisableSubmit(false) : setDisableSubmit(true);
 	};
 
 	return (

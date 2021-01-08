@@ -140,7 +140,7 @@ export default function LoginCard(props) {
 				<ErrorText> {props.errorMessage} </ErrorText>
 				<ButtonHolder>
 					<SideLink> {props.sideLinkText} </SideLink>
-					<SubmitButton className="button-primary" disabled={props.disableSubmit} onClick={() => props.onClick()}>
+					<SubmitButton className="button-primary" disabled={props.buttonDisabled} onClick={() => props.onClick()}>
 						{props.buttonText}
 					</SubmitButton>
 				</ButtonHolder>
