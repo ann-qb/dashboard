@@ -42,11 +42,12 @@ const GlobalStyle = createGlobalStyle`
   /*------------------------------------------*/
 
   h1,h2,h3,h4,h5{
-    font-family: 'Poppins', sans-serif;
+    // font-family: 'Poppins', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
   }
 
   p,a,button{
-    font-family: 'Poppins', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-size:100%;
   }
 
@@ -65,19 +66,19 @@ const GlobalStyle = createGlobalStyle`
   ::-webkit-input-placeholder { /* Edge */
   color: '#74788d;
   font-size:110%;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   }
 
   :-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: '#74788d;
     font-size:110%;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
   }
 
   ::placeholder {
     color: #74788d;
     font-size:110%;
-    font-family: 'Poppins', sans-serif;
+   font-family: 'IBM Plex Sans', sans-serif;
   }
   /*------------Icons ---------------*/
 
@@ -176,7 +177,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .navigationText{
-    font-family: 'Poppins', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     color:#9398a4;
   }
   
@@ -190,8 +191,8 @@ const GlobalStyle = createGlobalStyle`
   .navLinks:hover{
     background-color:#f3f8fb;
   }
-  .navLinks:hover .navigationText,
-  .navLinks:hover .navIcons{
+  .navLinks:hover .navigationText
+  {
     color:${PRIMARY_PURPLE};
   }
 
@@ -199,7 +200,8 @@ const GlobalStyle = createGlobalStyle`
     background-color:#f3f8fb;
   }
 
-  .activeNavLink .navigationText{
+  .activeNavLink .navigationText,
+  .activeNavLink .md{
     color:${PRIMARY_PURPLE};
   }
 
@@ -207,6 +209,8 @@ const GlobalStyle = createGlobalStyle`
 
   .pageHeaders{
     font-size:120%;
+    font-weight:500;
+    letter-spacing: 1px;
   }
   
   .blackFont{
@@ -226,6 +230,11 @@ const GlobalStyle = createGlobalStyle`
     opacity:0.8;
     transition:all 0.5s ease;
   }
+
+ .navLinks:hover .md{
+    color:${PRIMARY_PURPLE};
+  }
+
 `;
 
 export default GlobalStyle;

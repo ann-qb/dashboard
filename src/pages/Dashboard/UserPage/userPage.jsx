@@ -12,13 +12,14 @@ const PageContainer = styled.div`
 	overflow:scroll;
 `;
 const AddButton = styled.button`
-	margin: 15px 0;
+	margin-top: 15px;
 `;
 
 const UserCardHeadWrapper = styled.div`
 	display: flex;
 	width: 100%;
 	margin: 8px 0;
+	margin-top:15px;
 	padding: 0 10px;
 	// background-color: #fff;
 `;
@@ -41,6 +42,7 @@ const EmptyDivToCompensateProfilePic = styled.div`
 `;
 
 export default function UserPage(props) {
+	const ROLE = 'USER'
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [addUserPopup, setAddUserPopup] = useState(false)
 

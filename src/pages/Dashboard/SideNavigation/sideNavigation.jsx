@@ -5,7 +5,7 @@ import Logo from '../../../assets/Images/logo_icon.png';
 const NavBar = styled.div`
 	top:0;
 	left:0;
-	width: 250px;
+	width: 270px;
 	height: 100vh;
 	padding-top: 10px;
 	background-color: #fff;
@@ -59,7 +59,7 @@ export default function SideNavigation(props) {
 				<LogoImage src={Logo} />
 				<h3>Oddy</h3>
 			</LogoContainer>
-			<div>
+			<div style={{marginLeft:'10px'}}>
 				<SubTittles className="navigationText">MENU</SubTittles>
 
 				<NavLinksDiv className="navLinks activeNavLink" onClick={changeSelection}>

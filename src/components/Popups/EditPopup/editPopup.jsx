@@ -27,11 +27,13 @@ const ButtonWrapper = styled.div`
 const Input = styled.input`
 	width: 100%;
 	height: 30px;
+	margin-top:5px;
 `;
 
 const Select = styled.select`
 	width: 100%;
 	height: 30px;
+	margin-top: 5px;;
 `;
 
 export default function EditModal(props) {
@@ -65,9 +67,9 @@ export default function EditModal(props) {
 		<Modal style={modalStyle} isOpen={props.isOpen} onRequestClose={props.onRequestClose}>
 			<SuperFieldWrapper>
 				<SubFieldWrapper>
-					<SingleFieldGroup>
+					<SingleFieldGroup style={{ marginRight: '10px' }}>
 						<p>First name</p>
-						<Input type="text" value={MOCK_USER_DATA.firstname} />
+						<Input type="text" value={MOCK_USER_DATA.firstname} autoFocus/>
 					</SingleFieldGroup>
 					<SingleFieldGroup>
 						<p>Last name</p>
@@ -76,7 +78,7 @@ export default function EditModal(props) {
 				</SubFieldWrapper>
 
 				<SubFieldWrapper>
-					<SingleFieldGroup>
+					<SingleFieldGroup style={{ marginRight: '10px' }}>
 						<p>Email</p>
 						<Input type="email" value={MOCK_USER_DATA.email} />
 					</SingleFieldGroup>
