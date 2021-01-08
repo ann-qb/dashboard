@@ -47,12 +47,9 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 	dispatch(updateStatus('loading'));
 	// try-catch fetch API
 	try {
-		const response = await axios.post(
-			'https://f3935f0fb62c.ngrok.io/user/check',
-			{
-				email: data.userName,
-			}
-		);
+		const response = await axios.post('http://localhost:3000/user/check', {
+			email: data.userName,
+		});
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
@@ -87,7 +84,7 @@ export const onLogin = (data) => async (dispatch) => {
 	// try-catch fetch API
 	try {
 		const response = await axios.post(
-			'https://f3935f0fb62c.ngrok.io/user/login',
+			'http://localhost:3000/user/login',
 			{
 				email: data.userName,
 				password: data.password,
@@ -121,12 +118,9 @@ export const onLogout = (data) => async (dispatch, getState) => {
 	dispatch(updateStatus('loading'));
 	// try-catch fetch API
 	try {
-		const response = await axios.post(
-			'https://f3935f0fb62c.ngrok.io/user/logout',
-			{
-				token: state.loginSlice.loggedUser.token,
-			}
-		);
+		const response = await axios.post('http://localhost:3000/user/logout', {
+			token: state.loginSlice.loggedUser.token,
+		});
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
