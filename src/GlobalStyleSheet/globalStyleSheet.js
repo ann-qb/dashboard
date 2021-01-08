@@ -209,6 +209,8 @@ const GlobalStyle = createGlobalStyle`
 
   .pageHeaders{
     font-size:120%;
+    font-weight:500;
+    letter-spacing: 1px;
   }
   
   .blackFont{
