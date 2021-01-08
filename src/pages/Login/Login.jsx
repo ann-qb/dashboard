@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import LoginCard from './LoginCards';
 import DisplayMessage from './DisplayMessage/displayMessage';
-import { onLogin, onVerifyUserName, resetStatus, updateErrorMessage } from './../../slices/login.slice';
+import { login, onLogin, onVerifyUserName, resetStatus, updateErrorMessage } from './../../slices/login.slice';
 
 export default function Login() {
 	const history = useHistory();
@@ -26,7 +26,7 @@ export default function Login() {
 	useEffect(() => {
 		const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		if (currentUser !== null) {
-			dispatch(onLogin(currentUser));
+			dispatch(login(currentUser));
 		}
 	}, []);
 
