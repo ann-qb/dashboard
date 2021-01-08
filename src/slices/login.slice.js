@@ -48,7 +48,7 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 	// try-catch fetch API
 	try {
 		const response = await axios.post(
-			'https://f3935f0fb62c.ngrok.io/user/check',
+			'http://localhost:3000/user/check',
 			{
 				email: data.userName,
 			}
@@ -69,7 +69,7 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 		}
 	} catch (error) {
 		console.log(error);
-		if (error.response.status === 400) {
+		if (error?.response?.status === 400) {
 			console.log(error.response.data);
 			dispatch(updateVerifiedUser({ verifiedUserStatus: 'nonexistant' }));
 		}
@@ -87,7 +87,7 @@ export const onLogin = (data) => async (dispatch) => {
 	// try-catch fetch API
 	try {
 		const response = await axios.post(
-			'https://f3935f0fb62c.ngrok.io/user/login',
+			'http://localhost:3000/user/login',
 			{
 				email: data.userName,
 				password: data.password,
@@ -103,7 +103,7 @@ export const onLogin = (data) => async (dispatch) => {
 		}
 	} catch (error) {
 		console.log(error);
-		if (error.response.status === 401) {
+		if (error?.response?.status === 401) {
 			console.log('Incorrect password');
 			dispatch(updateErrorMessage({errorMessage: 'Incorrect password'}));
 		}
@@ -122,7 +122,7 @@ export const onLogout = (data) => async (dispatch, getState) => {
 	// try-catch fetch API
 	try {
 		const response = await axios.post(
-			'https://f3935f0fb62c.ngrok.io/user/logout',
+			'http://localhost:3000/user/logout',
 			{
 				token: state.loginSlice.loggedUser.token,
 			}
