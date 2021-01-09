@@ -3,6 +3,8 @@ import Header from '../../components/Header'
 import NotFoundImg from '../../assets/Images/404.png'
 import ServerDownImg from '../../assets/Images/server_down.png'
 import UnknownImg from '../../assets/Images/unknown_error.png';
+import { Redirect,useHistory } from 'react-router-dom';
+
 
 const PageWrapper = styled.div`
   height:90vh;
@@ -30,6 +32,7 @@ const ErrorMessage = styled.p`
 
 
 export default function ErrorPage(props){
+  const history = useHistory();
   let imageSrc, errorMessage
   if(props.errorType === '404') {
     imageSrc = NotFoundImg;
@@ -44,6 +47,10 @@ export default function ErrorPage(props){
     errorMessage = "Sorry! Something unexpected just happened.";
   }
 
+  const redirectToLoginPage = ()=>{
+    history.push('/login')
+  }
+
 
   return (
 		<>
@@ -51,7 +58,7 @@ export default function ErrorPage(props){
 			<PageWrapper>
 				<ErrorImage src={imageSrc} />
 				<ErrorMessage>{errorMessage}</ErrorMessage>
-				<button style={{ marginTop: '25px' }} className="button-primary">
+				<button style={{ marginTop: '25px' }} className="button-primary" onClick={redirectToLoginPage}>
 					Let's take you back
 				</button>
 			</PageWrapper>
