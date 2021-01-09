@@ -21,8 +21,6 @@ const Card = styled.div`
 	width: 100%;
 	padding: 35px 20px !important;
 	text-align: center;
-	
-	backdrop-filter: blur(6px) !important;
 `;
 
 const BarLoaderContainer = styled.div`

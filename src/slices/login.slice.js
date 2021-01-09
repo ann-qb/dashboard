@@ -47,17 +47,17 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 	dispatch(updateStatus({status: 'loading'}));
 	// try-catch fetch API
 	try {
-		const response = await axios.post('http://localhost:3000/user/check', {
+		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/check', {
 			email: data.userName,
 		});
 		if (response.status === 200) {
-			console.log(response.data);
+			console.log(response.data.message);
 			// dispatch to store
-			if (response.data === 'pending') {
+			if (response.data.message === 'pending') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'pending' }));
-			} else if (response.data === 'user exist') {
+			} else if (response.data.message === 'user exist') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'active' }));
-			} else if (response.data === 'inactive') {
+			} else if (response.data.message === 'inactive') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'inactive' }));
 			}
 		} else {
@@ -80,7 +80,7 @@ export const onLogin = (data) => async (dispatch) => {
 	dispatch(updateStatus({status: 'loading'}));
 	// try-catch fetch API
 	try {
-		const response = await axios.post('http://localhost:3000/user/login', {
+		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/login', {
 			email: data.userName,
 			password: data.password,
 		});
@@ -110,7 +110,7 @@ export const onLogout = (data) => async (dispatch, getState) => {
 	dispatch(updateStatus({status: 'loading'}));
 	// try-catch fetch API
 	try {
-		const response = await axios.post('http://localhost:3000/user/logout', {
+		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/logout', {
 			token: state.loginSlice.loggedUser.token,
 		});
 		if (response.status === 200) {

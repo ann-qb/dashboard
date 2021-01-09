@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfilePic from '../../assets/Images/profilePic_small.png'
+import DropdownMenu from './DropdownMenu'
 
 
 /**---------------- Styles ------------------*/
@@ -67,11 +68,15 @@ export default function Header(props) {
 		return (
 			<ActionDiv>
 				<ProfilePicBox />
-				<p>{props.userData.firstName}</p>
-				<ion-icon style={iconStyle} name="chevron-down-outline"></ion-icon>
+				<DropdownMenu menuHeader={props.userData.firstName} action={dropdownActions}/>
 			</ActionDiv>
 		);
 	};
+
+	const dropdownActions = (e)=>{
+		const clickedDiv = e.target.closest('div')
+		alert(clickedDiv.id)
+	}
 
 	return (
 		<HeaderBar>
@@ -87,3 +92,5 @@ export default function Header(props) {
 	);
 }
 
+// <p>{props.userData.firstName}</p>
+// <ion-icon style={iconStyle} name="chevron-down-outline"></ion-icon>
