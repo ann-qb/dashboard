@@ -68,7 +68,7 @@ export default function Header(props) {
 		return (
 			<ActionDiv>
 				<ProfilePicBox />
-				<DropdownMenu menuHeader={props.userData.firstName} action={dropdownActions}/>
+				<DropdownMenu menuHeader={props.userData.firstName} role='USER' action={dropdownActions}/>
 			</ActionDiv>
 		);
 	};

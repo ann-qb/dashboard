@@ -54,12 +54,19 @@ export default function Dropdown(props) {
 				<DropdownHeadText>{props.menuHeader}</DropdownHeadText>
 				<ion-icon name="chevron-down-outline"></ion-icon>
 			</HeaderWrapper>
-			{isOpen ? (
+			{isOpen && props.role !== 'ADMIN' ? (
 				<DroppedContent>
 					<DroppedButtonWrapper id="edit" onClick={props.action}>
 						<ion-icon style={{ marginRight: '8px' }} name="create-outline"></ion-icon>
 						<p>Edit Profile</p>
 					</DroppedButtonWrapper>
+					<DroppedButtonWrapper id="logOut" onClick={props.action}>
+						<ion-icon style={{ marginRight: '8px' }} name="log-out-outline"></ion-icon>
+						<p>Log Out</p>
+					</DroppedButtonWrapper>
+				</DroppedContent>
+			) : isOpen ? (
+				<DroppedContent>
 					<DroppedButtonWrapper id="logOut" onClick={props.action}>
 						<ion-icon style={{ marginRight: '8px' }} name="log-out-outline"></ion-icon>
 						<p>Log Out</p>
