@@ -86,6 +86,7 @@ export default function PasswordField(props) {
 				value={fieldContent}
 				onChange={saveFieldContent}
 				placeholder="Password"
+				onKeyDown={props.onKeydown}
 				autoFocus
 			/>
 		</InputDiv>
