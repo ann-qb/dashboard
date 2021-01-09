@@ -52,7 +52,7 @@ export default function Dropdown(props) {
 		<DropdownWrapper onClick={toggleDropdown}>
 			<HeaderWrapper>
 				<DropdownHeadText>{props.menuHeader}</DropdownHeadText>
-				<ion-icon name="chevron-down-outline"></ion-icon>
+				{isOpen ? <ion-icon name="chevron-up-outline"></ion-icon> : <ion-icon name="chevron-down-outline"></ion-icon>}
 			</HeaderWrapper>
 			{isOpen && props.role !== 'ADMIN' ? (
 				<DroppedContent>
