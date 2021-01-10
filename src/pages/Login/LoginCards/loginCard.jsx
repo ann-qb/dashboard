@@ -142,7 +142,7 @@ export default function LoginCard(props) {
 					<AlertText> Please make sure to double check the password before submitting! </AlertText>
 				) : null}
 				<ButtonHolder>
-					<SideLink> {props.sideLinkText} </SideLink>
+					<SideLink onClick={props.sideLinkOnClick}> {props.sideLinkText} </SideLink>
 					<SubmitButton className="button-primary" disabled={props.buttonDisabled} onClick={() => props.onClick()}>
 						{props.buttonText}
 					</SubmitButton>

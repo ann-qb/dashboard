@@ -23,20 +23,20 @@ export default function SetPasswordPage(props) {
 	};
 
 	const submitPassword = () => {
-    // history.push('/dashboard')
+    history.push('/dashboard')
     console.log(location)
   };
 
-  const onSetPassword = (data)=>async(dispatch)=>{
-    setShowLoading(true)
-    const response = await axios.post(`http://user-dashboard.qburst.build:3002/user/password${location.search}`),{
-      password:data.password
-    }
-    if(response.status === 200){
-      setShowLoading(false)
-      dispatch(login(response.data))
-    }
-  }
+  // const onSetPassword = (data)=>async(dispatch)=>{
+  //   setShowLoading(true)
+  //   const response = await axios.post(`http://user-dashboard.qburst.build:3002/user/password${location.search}`),{
+  //     password:data.password
+  //   }
+  //   if(response.status === 200){
+  //     setShowLoading(false)
+  //     dispatch(login(response.data))
+  //   }
+  // }
 
 	// Query data
 	const action = query.get('action');
