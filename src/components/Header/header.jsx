@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfilePic from '../../assets/Images/profilePic_small.png'
+import DropdownMenu from './DropdownMenu'
+import { useDispatch } from 'react-redux';
+import {onLogout} from '../../slices/login.slice'
 
 
 /**---------------- Styles ------------------*/
@@ -63,15 +66,22 @@ const ProfilePicBox = styled.div`
 
 
 export default function Header(props) {
+	const dispatch = useDispatch();
 	const generateHeaderActions = () => {
 		return (
 			<ActionDiv>
 				<ProfilePicBox />
-				<p>{props.userData.firstName}</p>
-				<ion-icon style={iconStyle} name="chevron-down-outline"></ion-icon>
+				<DropdownMenu menuHeader={props.userData.firstName} role='USER' action={dropdownActions}/>
 			</ActionDiv>
 		);
 	};
+
+	const dropdownActions = (e)=>{
+		const clickedDiv = e.target.closest('div')
+		if(clickedDiv.id === 'logOut'){
+			dispatch(onLogout());
+		}
+	}
 
 	return (
 		<HeaderBar>
@@ -87,3 +97,5 @@ export default function Header(props) {
 	);
 }
 
+// <p>{props.userData.firstName}</p>
+// <ion-icon style={iconStyle} name="chevron-down-outline"></ion-icon>

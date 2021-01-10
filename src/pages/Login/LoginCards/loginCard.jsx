@@ -15,16 +15,12 @@ const CardContainer = styled.div`
 `;
 
 const Card = styled.div`
-	// position: absolute;
-	// top: 45%;
-	// left: 50%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	width: 100%;
 	padding: 35px 20px !important;
 	text-align: center;
-	// transform: translate(-50%, -50%);
 `;
 
 const BarLoaderContainer = styled.div`
@@ -33,8 +29,6 @@ const BarLoaderContainer = styled.div`
 	display: flex;
 	// justify-content: center;
 `;
-
-
 
 const SubmitButton = styled.button`
 	margin-right: 0;
@@ -105,6 +99,12 @@ export default function LoginCard(props) {
 		field.style.border = '1px solid #000';
 	};
 
+	const activateButton = (e) => {
+		if (e.keyCode === 13) {
+			props.onClick();
+		}
+	};
+
 	return (
 		<CardContainer>
 			<BarLoaderContainer>
@@ -116,7 +116,7 @@ export default function LoginCard(props) {
 				</span>
 				{props.cardType !== 'new password' ? (
 					<>
-						<p style={{ fontSize: '150%', marginTop: '10px', fontWeight:'500' }} className="blackFont">
+						<p style={{ fontSize: '150%', marginTop: '10px', fontWeight: '500' }} className="blackFont">
 							Sign In
 						</p>
 						<p style={{ fontSize: '85%' }} className="blackFont">
@@ -133,6 +133,7 @@ export default function LoginCard(props) {
 						passwordError,
 						changeInputBorderOnFocus,
 						changeInputBorderOnBlur,
+						activateButton,
 					}}
 				/>
 				<ErrorText> {props.errorMessage} </ErrorText>
@@ -157,6 +158,7 @@ const FieldMaker = (props) => {
 					value={props.value}
 					onChange={props.onChange}
 					isError={props.passwordError}
+					onKeydown={props.activateButton}
 				/>
 				{props.cardType === 'new password' ? (
 					<AlertText> Please make sure to double check the password before submitting! </AlertText>
@@ -173,6 +175,7 @@ const FieldMaker = (props) => {
 				value={props.value}
 				onChange={props.onChange}
 				placeholder={props.cardHeader}
+				onKeyDown={props.activateButton}
 				autoFocus
 			/>
 		);

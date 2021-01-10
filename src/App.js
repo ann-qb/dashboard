@@ -5,6 +5,7 @@ import LoginPage from './pages/Login';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import DashboardPage from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+import ErrorPage from './pages/ErrorPage'
 
 function App() {
 	return (
@@ -27,7 +28,7 @@ function App() {
 						<DashboardPage />
 					</PrivateRoute>
 					<PrivateRoute path="/randompage">
-						<h3>Hi there!</h3>
+						<ErrorPage errorType='100'/>
 					</PrivateRoute>
 				</Switch>
 			</Router>
