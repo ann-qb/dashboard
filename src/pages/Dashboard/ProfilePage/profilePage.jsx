@@ -1,31 +1,32 @@
-import styled from 'styled-components'
-import {useState} from 'react'
-import CreateNewPassword from '../../../components/Popups/CreateNewPassword'
-import ProfilePic from '../../../assets/Images/profilePic_large.png'
+import styled from 'styled-components';
+import { useState } from 'react';
+import CreateNewPassword from '../../../components/Popups/CreateNewPassword';
+import EditPopup from '../../../components/Popups/EditPopup';
+import ProfilePic from '../../../assets/Images/profilePic_large.png';
 
 const PageContainer = styled.div`
 	padding: 25px;
-  height: 90vh;
+	height: 90vh;
 	overflow: scroll;
 `;
 
 const ProfileCardWrapper = styled.div`
-  display:flex;
-  justify-content:space-between;
-  width:100%;
-  // height:95%;
-  margin-top:20px;
-`
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	// height:95%;
+	margin-top: 20px;
+`;
 
 const RoleText = styled.p`
-  width:fit-content;
-  margin:10px auto;
-  font-size:110%;
-  color:#000;
-`
+	width: fit-content;
+	margin: 10px auto;
+	font-size: 110%;
+	color: #000;
+`;
 const SeparationLine = styled.hr`
-  border: 1px solid #dcdde2;
-  margin:15px 0;
+	border: 1px solid #dcdde2;
+	margin: 15px 0;
 `;
 
 const ProfileDetailsWrapper = styled.div`
@@ -48,39 +49,45 @@ const ProfilePicContainer = styled.div`
 	background-size: cover;
 `;
 const PictureAreaWrapper = styled.div`
-  width:300px;
-  padding:10px;
-`
+	width: 300px;
+	padding: 10px;
+`;
 const DetailsAreaWrapper = styled.div`
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  width:100%;
-  margin-left:25px;
-  padding:10px;
-`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+	margin-left: 25px;
+	padding: 10px;
+`;
 const DetailsLabel = styled.div`
-  display:flex;
-  justify-content:space-between;
-  width:100%;
-  margin-bottom:5px;
-`
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-bottom: 5px;
+`;
 const DetailsText = styled.p`
-  color:#000;
-  font-size:110%;
-  margin-bottom:20px;
-`
+	color: #000;
+	font-size: 110%;
+	margin-bottom: 20px;
+`;
+const iconStyle = {
+	cursor: 'pointer',
+};
 
+export default function ProfilePage(props) {
+	const [createPassIsOpen, setCreatePassIsOpen] = useState(false);
+	const [editDetailsIsOpen, setEditDetailsIsOpen] = useState(false);
 
-
-export default function ProfilePage(props){
-  const [createPassIsOpen, setCreatePassIsOpen] = useState(false)
-
-  const openCreatePasswordModal =()=>{
-    setCreatePassIsOpen(true)
+	const openCreatePasswordModal = () => {
+		setCreatePassIsOpen(true);
+  };
+  
+  const editDetailsModal = ()=>{
+    setEditDetailsIsOpen(true)
   }
 
-  return (
+	return (
 		<PageContainer>
 			<p className="pageHeaders blackFont">Profile</p>
 			<ProfileCardWrapper>
@@ -93,7 +100,7 @@ export default function ProfilePage(props){
 					<DetailsAreaWrapper>
 						<DetailsLabel>
 							<p>Name</p>
-							<ion-icon name="pencil-outline"></ion-icon>
+							<ion-icon style={iconStyle} name="pencil-outline" onClick={editDetailsModal}></ion-icon>
 						</DetailsLabel>
 						<DetailsText>Firstname Lastname</DetailsText>
 
@@ -120,6 +127,7 @@ export default function ProfilePage(props){
 					setCreatePassIsOpen(false);
 				}}
 			/>
+      <EditPopup isOpen={editDetailsIsOpen} onRequestClose={()=>{setEditDetailsIsOpen(false)}} role='USER'/>
 		</PageContainer>
 	);
 }

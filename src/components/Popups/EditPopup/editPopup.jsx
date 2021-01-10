@@ -37,6 +37,10 @@ const Select = styled.select`
 `;
 
 export default function EditModal(props) {
+	let selectDisabled
+	if(props.role!=='ADMIN') selectDisabled=true
+	else selectDisabled = false
+
 	// Error handiling if no data props is received
 	let MOCK_USER_DATA;
 	if (!props.data) {
@@ -84,7 +88,7 @@ export default function EditModal(props) {
 					</SingleFieldGroup>
 					<SingleFieldGroup>
 						<p>Status</p>
-						<Select name="status" id="status_dropdown">
+						<Select name="status" id="status_dropdown" disabled={selectDisabled}>
 							{props.data ? (
 								<>
 									<option value="active">Active</option>
