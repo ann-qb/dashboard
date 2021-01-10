@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import LoginBackdrop from '../assets/Images/backdrop.png'
 
 /**------ Colors ------*/
 const PRIMARY_PURPLE = '#5673E8',
@@ -157,6 +158,7 @@ const GlobalStyle = createGlobalStyle`
     background-color:${SECONDARY_DARK} !important;
     color:#fff !important;
     border: 1px solid ${SECONDARY_DARK} !important;
+    cursor: no-drop !important;
     
   }
 
@@ -212,6 +214,14 @@ const GlobalStyle = createGlobalStyle`
   .activeNavLink .navigationText,
   .activeNavLink .md{
     color:${PRIMARY_PURPLE};
+  }
+
+  /*------------ Login page background ---------------*/
+  #login_background{
+    background-image:url(${LoginBackdrop});
+    background-position:center;
+    background-size:cover;
+    height:100vh;
   }
 
   /*------------ dashboard main header ---------------*/

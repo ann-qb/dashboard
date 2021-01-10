@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfilePic from '../../assets/Images/profilePic_small.png';
 import { useSelector } from 'react-redux';
+import DropdownMenu from './DropdownMenu'
+import { useDispatch } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
+import {onLogout} from '../../slices/login.slice'
+
 
 /**---------------- Styles ------------------*/
 const HeaderBar = styled.div`
@@ -62,15 +67,30 @@ const ProfilePicBox = styled.div`
 
 export default function Header() {
 	const { loggedUser } = useSelector((state) => state.loginSlice);
+
+	const history = useHistory()
+	const dispatch = useDispatch();
+	
 	const generateHeaderActions = () => {
 		return (
 			<ActionDiv>
 				<ProfilePicBox />
-				<p style={{ textTransform: 'capitalize' }}>{loggedUser.firstname + ' ' + loggedUser.lastname}</p>
-				<ion-icon style={iconStyle} name="chevron-down-outline"></ion-icon>
+				{/* <p style={{ textTransform: 'capitalize' }}>{loggedUser.firstname + ' ' + loggedUser.lastname}</p>
+				<ion-icon style={iconStyle} name="chevron-down-outline"></ion-icon> */}
+				<DropdownMenu menuHeader={loggedUser.firstName} role='USER' action={dropdownActions}/>
 			</ActionDiv>
 		);
 	};
+
+	const dropdownActions = (e)=>{
+		const clickedDiv = e.target.closest('div')
+		if(clickedDiv.id === 'logOut'){
+			dispatch(onLogout());
+		}
+		else if(clickedDiv.id === 'profile'){
+			history.push('/dashboard/profile')
+		}
+	}
 
 	return (
 		<HeaderBar>
@@ -85,3 +105,6 @@ export default function Header() {
 		</HeaderBar>
 	);
 }
+
+// <p>{props.userData.firstName}</p>
+// <ion-icon style={iconStyle} name="chevron-down-outline"></ion-icon>

@@ -57,6 +57,10 @@ export default function EditModal(props) {
 		setUserData({ ...userData, [e.target.name]: e.target.value });
 	};
 
+	let selectDisabled
+	if(props.role!=='ADMIN') selectDisabled=true
+	else selectDisabled = false
+
 	const cancelEdit = () => {
 		setUserData(userObj);
 		setFirstnameError('');
@@ -134,7 +138,7 @@ export default function EditModal(props) {
 					</SingleFieldGroup>
 					<SingleFieldGroup>
 						<p>Status</p>
-						<Select name="status" id="status_dropdown" value={userData.status} onChange={handleInputChange}>
+						<Select name="status" id="status_dropdown" value={userData.status} onChange={handleInputChange} disabled={selectDisabled}>
 							{props.data && props.data.status !== 'pending' ? (
 								<>
 									<option value="active">Active</option>

@@ -5,6 +5,8 @@ import LoginPage from './pages/Login';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import DashboardPage from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+import ErrorPage from './pages/ErrorPage'
+import SetPasswordPage from './pages/SetPasswordPage'
 
 function App() {
 	return (
@@ -23,11 +25,14 @@ function App() {
 						{/* <ForgotPassword /> */}
 						<h3>Forgot password</h3>
 					</Route>
+					<Route path='/set-password'>
+					<SetPasswordPage/>
+					</Route>
 					<PrivateRoute path="/dashboard">
 						<DashboardPage />
 					</PrivateRoute>
 					<PrivateRoute path="/randompage">
-						<h3>Hi there!</h3>
+						<ErrorPage errorType='100'/>
 					</PrivateRoute>
 				</Switch>
 			</Router>
