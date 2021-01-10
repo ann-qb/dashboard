@@ -37,13 +37,17 @@ export default function PasswordField(props) {
 	const [fieldContent, setFieldContent] = useState(props.fieldValue);
 
 	//------------- Methods --------------//
+	let fieldId;
+	if (props.id) fieldId = props.id;
+	else fieldId = 'passwordInputField';
+
 	const changePasswordState = () => {
 		setPasswordShown(passwordShown ? false : true);
 	};
 
 	const saveFieldContent = (e) => {
 		// Doesn't work without this
-		let field = document.querySelector('#passwordInputField');
+		let field = document.querySelector(`#${fieldId}`);
 		setFieldContent(field.value);
 		// Why is this not enough?
 		props.onChange(e);
@@ -67,6 +71,7 @@ export default function PasswordField(props) {
 		var errorField = null;
 	}
 
+
 	return (
 		<InputDiv>
 			{passwordShown ? (
@@ -80,7 +85,7 @@ export default function PasswordField(props) {
 			<InputField
 				onFocus={changeInputBorderOnFocus}
 				onBlur={changeInputBorderOnBlur}
-				id="passwordInputField"
+				id={fieldId}
 				style={errorField}
 				type={passwordShown ? 'text' : 'password'}
 				value={fieldContent}
