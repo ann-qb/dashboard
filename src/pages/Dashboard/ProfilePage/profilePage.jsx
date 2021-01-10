@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import PasswordField from '../../Login/PasswordField'
+import {useState} from 'react'
+import CreateNewPassword from '../../../components/Popups/CreateNewPassword'
 import ProfilePic from '../../../assets/Images/profilePic_large.png'
 
 const PageContainer = styled.div`
@@ -73,6 +74,12 @@ const DetailsText = styled.p`
 
 
 export default function ProfilePage(props){
+  const [createPassIsOpen, setCreatePassIsOpen] = useState(false)
+
+  const openCreatePasswordModal =()=>{
+    setCreatePassIsOpen(true)
+  }
+
   return (
 		<PageContainer>
 			<p className="pageHeaders blackFont">Profile</p>
@@ -100,10 +107,19 @@ export default function ProfilePage(props){
 							<p>Status</p>
 						</DetailsLabel>
 						<DetailsText>status</DetailsText>
-            <button className="button-primary">Change password</button>
+						<button className="button-primary" onClick={openCreatePasswordModal}>
+							Change password
+						</button>
 					</DetailsAreaWrapper>
 				</ProfileDetailsWrapper>
 			</ProfileCardWrapper>
+
+			<CreateNewPassword
+				open={createPassIsOpen}
+				close={() => {
+					setCreatePassIsOpen(false);
+				}}
+			/>
 		</PageContainer>
 	);
 }
