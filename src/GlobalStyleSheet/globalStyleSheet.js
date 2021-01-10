@@ -221,7 +221,6 @@ const GlobalStyle = createGlobalStyle`
     background-image:url(${LoginBackdrop});
     background-position:center;
     background-size:cover;
-    opacity:0.7;
     height:100vh;
   }
 
