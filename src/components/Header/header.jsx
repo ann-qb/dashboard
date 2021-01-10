@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfilePic from '../../assets/Images/profilePic_small.png'
 import DropdownMenu from './DropdownMenu'
+import { useDispatch } from 'react-redux';
+import {onLogout} from '../../slices/login.slice'
 
 
 /**---------------- Styles ------------------*/
@@ -64,6 +66,7 @@ const ProfilePicBox = styled.div`
 
 
 export default function Header(props) {
+	const dispatch = useDispatch();
 	const generateHeaderActions = () => {
 		return (
 			<ActionDiv>
@@ -75,7 +78,9 @@ export default function Header(props) {
 
 	const dropdownActions = (e)=>{
 		const clickedDiv = e.target.closest('div')
-		alert(clickedDiv.id)
+		if(clickedDiv.id === 'logOut'){
+			dispatch(onLogout());
+		}
 	}
 
 	return (

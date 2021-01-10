@@ -55,11 +55,11 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
-			if (response.data === 'pending') {
+			if (response.data.message === 'pending') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'pending' }));
-			} else if (response.data === 'user exist') {
+			} else if (response.data.message === 'user exist') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'active' }));
-			} else if (response.data === 'inactive') {
+			} else if (response.data.message === 'inactive') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'inactive' }));
 			}
 		} else {
