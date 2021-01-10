@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import fetch from './../utils/axios';
 
 const initialState = { verifiedUser: null, loggedUser: null, role: null, status: 'idle', errorMessage: '' };
 
@@ -19,6 +20,7 @@ const loginSlice = createSlice({
 		logout(state) {
 			state = initialState;
 			localStorage.removeItem('currentUser');
+			return state;
 		},
 		resetStatus(state) {
 			state.status = 'idle';
@@ -44,20 +46,20 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 	// reset
 	dispatch(resetStatus());
 	// dispatch loading start
-	dispatch(updateStatus({status: 'loading'}));
+	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
 		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/check', {
 			email: data.userName,
 		});
 		if (response.status === 200) {
-			console.log(response.data.message);
+			console.log(response.data);
 			// dispatch to store
-			if (response.data.message === 'pending') {
+			if (response.data === 'pending') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'pending' }));
-			} else if (response.data.message === 'user exist') {
+			} else if (response.data === 'user exist') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'active' }));
-			} else if (response.data.message === 'inactive') {
+			} else if (response.data === 'inactive') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'inactive' }));
 			}
 		} else {
@@ -77,7 +79,7 @@ export const onLogin = (data) => async (dispatch) => {
 	// reset
 	dispatch(resetStatus());
 	// dispatch loading start
-	dispatch(updateStatus({status: 'loading'}));
+	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
 		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/login', {
@@ -101,18 +103,14 @@ export const onLogin = (data) => async (dispatch) => {
 	// dispatch(resetStatus()); // to indicate API call is over
 };
 
-export const onLogout = (data) => async (dispatch, getState) => {
-	const state = getState();
-	console.log(state);
+export const onLogout = () => async (dispatch) => {
 	// reset
 	dispatch(resetStatus());
 	// dispatch loading start
-	dispatch(updateStatus({status: 'loading'}));
+	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/logout', {
-			token: state.loginSlice.loggedUser.token,
-		});
+		const response = await fetch.post('http://user-dashboard.qburst.build:3002/user/logout');
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
@@ -123,5 +121,5 @@ export const onLogout = (data) => async (dispatch, getState) => {
 	} catch (error) {
 		console.log(error);
 	}
-	// dispatch(resetStatus()); // to indicate API call is over
+	dispatch(resetStatus()); // to indicate API call is over
 };

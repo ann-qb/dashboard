@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import UserCard from './UserCard';
-import {useState} from 'react'
+import { useState } from 'react';
 import ShowIfAuth from '../../../components/ShowIfAuth';
 import AlertPopup from '../../../components/Popups/AlertPopups';
 import EditPopup from '../../../components/Popups/EditPopup';
@@ -8,8 +8,8 @@ import EditPopup from '../../../components/Popups/EditPopup';
 /**---------------- Styles ------------------*/
 const PageContainer = styled.div`
 	padding: 15px;
-	height:90vh;
-	overflow:scroll;
+	height: 90vh;
+	overflow: scroll;
 `;
 const AddButton = styled.button`
 	margin-top: 15px;
@@ -19,7 +19,7 @@ const UserCardHeadWrapper = styled.div`
 	display: flex;
 	width: 100%;
 	margin: 8px 0;
-	margin-top:15px;
+	margin-top: 15px;
 	padding: 0 10px;
 	// background-color: #fff;
 `;
@@ -31,8 +31,8 @@ const UserCardHeaders = styled.div`
 `;
 
 const HeaderTab = styled.div`
-	width:25%;
-`
+	width: 25%;
+`;
 
 const EmptyDivToCompensateProfilePic = styled.div`
 	width: 30px;
@@ -42,29 +42,27 @@ const EmptyDivToCompensateProfilePic = styled.div`
 `;
 
 export default function UserPage(props) {
-	const ROLE = 'USER'
 	const [alertDisplay, setAlertDisplay] = useState(false);
-	const [addUserPopup, setAddUserPopup] = useState(false)
+	const [addUserPopup, setAddUserPopup] = useState(false);
 
 	const createCards = () => {
 		return (
 			<>
-				<UserCard role="ADMIN" />
+				<UserCard role="admin" />
 				<UserCard role="user" />
 				<UserCard role="user" />
 				<UserCard role="user" />
-
 			</>
 		);
 	};
 
-	const openAddUserPopup = ()=>{
-		setAddUserPopup(true)
-	}
+	const openAddUserPopup = () => {
+		setAddUserPopup(true);
+	};
 
-	const closeAddUserPopup =()=>{
-		setAddUserPopup(false)
-	}
+	const closeAddUserPopup = () => {
+		setAddUserPopup(false);
+	};
 
 	const showAlertPopup = () => {
 		setAlertDisplay(true);
@@ -72,9 +70,9 @@ export default function UserPage(props) {
 	};
 
 	// Additional function to be written wherever AlertPopup component is used
-	if(alertDisplay){
+	if (alertDisplay) {
 		setTimeout(() => {
-			setAlertDisplay(false)
+			setAlertDisplay(false);
 		}, 5000);
 	}
 
