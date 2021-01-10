@@ -43,6 +43,7 @@ const Input = styled.input`
 
 const AlertText = styled.p`
 	font-size: 80%;
+	text-align:left;
 `;
 
 const ErrorText = styled.p`
@@ -137,8 +138,11 @@ export default function LoginCard(props) {
 					}}
 				/>
 				<ErrorText> {props.errorMessage} </ErrorText>
+				{props.cardType === 'new password' ? (
+					<AlertText> Please make sure to double check the password before submitting! </AlertText>
+				) : null}
 				<ButtonHolder>
-					<SideLink> {props.sideLinkText} </SideLink>
+					<SideLink onClick={props.sideLinkOnClick}> {props.sideLinkText} </SideLink>
 					<SubmitButton className="button-primary" disabled={props.buttonDisabled} onClick={() => props.onClick()}>
 						{props.buttonText}
 					</SubmitButton>
@@ -160,9 +164,7 @@ const FieldMaker = (props) => {
 					isError={props.passwordError}
 					onKeydown={props.activateButton}
 				/>
-				{props.cardType === 'new password' ? (
-					<AlertText> Please make sure to double check the password before submitting! </AlertText>
-				) : null}
+				
 			</>
 		);
 	} else {

@@ -74,6 +74,15 @@ export default function Login() {
 		}
 	}, [status, verifiedUser]);
 
+	const takeBackToLoginFromDisplayMessage = ()=>{
+		setMessage('');
+		setShowUsername(true);
+		setUserName(null);
+		setDisableSubmit(true);
+		setShowPassword(false);
+		setDisplayMessage(false);
+	}
+
 	const validateSubmit = () => {
 		//for username
 		if (showUsername && !showPassword) {
@@ -105,6 +114,26 @@ export default function Login() {
 		password.trim().length ? setDisableSubmit(false) : setDisableSubmit(true);
 	};
 
+	// Side link buttons
+	const displayNewUserMessage = ()=>{
+		setMessage('Please check you inbox to find a mail or contact admin');
+		setShowUsername(false);
+		setShowPassword(false);
+		setDisplayMessage(true);
+	}
+
+	const generateForgotPassword= ()=>{
+		// API call to generate link
+		displayForgotPasswordMessage()
+	}
+
+	const displayForgotPasswordMessage = ()=>{
+		setMessage('Please check you inbox to find a mail to reset the password');
+		setShowUsername(false);
+		setShowPassword(false);
+		setDisplayMessage(true);
+	}
+
 	return (
 		<div id="login_background">
 			{showUsername ? (
@@ -115,6 +144,7 @@ export default function Login() {
 					onChange={onHandleUserNameChange}
 					errorMessage={error}
 					sideLinkText="New User?"
+					sideLinkOnClick={displayNewUserMessage}
 					buttonText="Next"
 					buttonDisabled={disableSubmit}
 					onClick={validateSubmit}
@@ -129,13 +159,14 @@ export default function Login() {
 					onChange={onHandlePasswordChange}
 					errorMessage={errorMessage}
 					sideLinkText="Forgot password?"
+					sideLinkOnClick={generateForgotPassword}
 					buttonText="Submit"
 					buttonDisabled={disableSubmit}
 					onClick={validateSubmit}
 					loading={showLoading}
 				/>
 			) : null}
-			{displayMessage ? <DisplayMessage message={message} /> : null}
+			{displayMessage ? <DisplayMessage message={message} onClick={takeBackToLoginFromDisplayMessage} /> : null}
 		</div>
 	);
 }

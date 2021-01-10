@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfilePic from '../../assets/Images/profilePic_small.png'
 import DropdownMenu from './DropdownMenu'
 import { useDispatch } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
 import {onLogout} from '../../slices/login.slice'
 
 
@@ -66,6 +67,7 @@ const ProfilePicBox = styled.div`
 
 
 export default function Header(props) {
+	const history = useHistory()
 	const dispatch = useDispatch();
 	const generateHeaderActions = () => {
 		return (
@@ -80,6 +82,9 @@ export default function Header(props) {
 		const clickedDiv = e.target.closest('div')
 		if(clickedDiv.id === 'logOut'){
 			dispatch(onLogout());
+		}
+		else if(clickedDiv.id === 'profile'){
+			history.push('/dashboard/profile')
 		}
 	}
 

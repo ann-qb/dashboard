@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import DashboardPage from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import ErrorPage from './pages/ErrorPage'
+import SetPasswordPage from './pages/SetPasswordPage'
 
 function App() {
 	return (
@@ -23,6 +24,9 @@ function App() {
 						{/* Should be forgot password component */}
 						{/* <ForgotPassword /> */}
 						<h3>Forgot password</h3>
+					</Route>
+					<Route path='/set-password'>
+					<SetPasswordPage/>
 					</Route>
 					<PrivateRoute path="/dashboard">
 						<DashboardPage />
