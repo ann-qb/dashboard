@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import Modal from 'react-modal';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { onAddUser, onEditUser } from '../../../slices/userlist.slice';
 
 /**---------------- Styles ------------------*/
 const SuperFieldWrapper = styled.div`
@@ -27,29 +30,73 @@ const ButtonWrapper = styled.div`
 const Input = styled.input`
 	width: 100%;
 	height: 30px;
-	margin-top:5px;
+	margin-top: 5px;
 `;
 
 const Select = styled.select`
 	width: 100%;
 	height: 30px;
-	margin-top: 5px;;
+	margin-top: 5px; ;
 `;
 
 export default function EditModal(props) {
-	// Error handiling if no data props is received
-	let MOCK_USER_DATA;
-	if (!props.data) {
-		MOCK_USER_DATA = {
-			firstname: null,
-			lastname: null,
-			status: null,
-			email: null,
-		};
-	} else {
-		MOCK_USER_DATA = { ...props.data };
-	}
+	const dispatch = useDispatch();
+	const userObj = {
+		firstname: props?.data?.firstname || '',
+		lastname: props?.data?.lastname || '',
+		status: props?.data?.status || 'pending',
+		email: props?.data?.email || '',
+	};
 
+	const [userData, setUserData] = useState({ ...userObj });
+	const [firstnameError, setFirstnameError] = useState('');
+	const [lastnameError, setLastnameError] = useState('');
+	const [emailError, setEmailError] = useState('');
+
+	const handleInputChange = (e) => {
+		setUserData({ ...userData, [e.target.name]: e.target.value });
+	};
+
+	const cancelEdit = () => {
+		setUserData(userObj);
+		setFirstnameError('');
+		setLastnameError('');
+		setEmailError('');
+	};
+
+	const validateData = () => {
+		const emailPattern = new RegExp('^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$', 'g');
+		let errorFlag = false;
+		if (userData.firstname?.trim().length === 0) {
+			setFirstnameError('This field is required');
+			errorFlag = true;
+		} else {
+			setFirstnameError('');
+		}
+		if (userData.lastname?.trim().length === 0) {
+			setLastnameError('This field is required');
+			errorFlag = true;
+		} else {
+			setLastnameError('');
+		}
+		if (!userData.email?.match(emailPattern)) {
+			setEmailError('Please enter a valid email id');
+			errorFlag = true;
+		} else {
+			setEmailError('');
+		}
+		if (!errorFlag) {
+			// dispatch
+			if (props.data) {
+				// edit user
+				dispatch(onEditUser({ userData: { ...userData }, id: props.data.id }));
+			} else {
+				// add user
+				dispatch(onAddUser({ userData: { ...userData } }));
+				setUserData(userObj);
+			}
+		}
+	};
 	const modalStyle = {
 		overlay: {},
 		content: {
@@ -69,29 +116,32 @@ export default function EditModal(props) {
 				<SubFieldWrapper>
 					<SingleFieldGroup style={{ marginRight: '10px' }}>
 						<p>First name</p>
-						<Input type="text" value={MOCK_USER_DATA.firstname} autoFocus/>
+						<Input type="text" name="firstname" value={userData.firstname} onChange={handleInputChange} autoFocus />
+						<p>{firstnameError}</p>
 					</SingleFieldGroup>
 					<SingleFieldGroup>
 						<p>Last name</p>
-						<Input type="text" value={MOCK_USER_DATA.lastname} />
+						<Input type="text" name="lastname" value={userData.lastname} onChange={handleInputChange} />
+						<p>{lastnameError}</p>
 					</SingleFieldGroup>
 				</SubFieldWrapper>
 
 				<SubFieldWrapper>
 					<SingleFieldGroup style={{ marginRight: '10px' }}>
 						<p>Email</p>
-						<Input type="email" value={MOCK_USER_DATA.email} />
+						<Input type="email" name="email" value={userData.email} onChange={handleInputChange} />
+						<p>{emailError}</p>
 					</SingleFieldGroup>
 					<SingleFieldGroup>
 						<p>Status</p>
-						<Select name="status" id="status_dropdown">
-							{props.data ? (
+						<Select name="status" id="status_dropdown" value={userData.status} onChange={handleInputChange}>
+							{props.data && props.data.status !== 'pending' ? (
 								<>
 									<option value="active">Active</option>
 									<option value="inactive">Inactive</option>
 								</>
 							) : (
-								<option value="active">Pending</option>
+								<option value="pending">Pending</option>
 							)}
 						</Select>
 					</SingleFieldGroup>
@@ -99,10 +149,22 @@ export default function EditModal(props) {
 			</SuperFieldWrapper>
 
 			<ButtonWrapper>
-				<button style={{ marginRight: '10px' }} className="button-secondary" onClick={props.onRequestClose}>
+				<button
+					style={{ marginRight: '10px' }}
+					className="button-secondary"
+					onClick={() => {
+						cancelEdit();
+						props.onRequestClose();
+					}}>
 					Cancel
 				</button>
-				<button style={{ marginLeft: '10px' }} className="button-primary" onClick={props.onSubmit}>
+				<button
+					style={{ marginLeft: '10px' }}
+					className="button-primary"
+					onClick={() => {
+						validateData();
+						//props.onSubmit();
+					}}>
 					Submit
 				</button>
 			</ButtonWrapper>

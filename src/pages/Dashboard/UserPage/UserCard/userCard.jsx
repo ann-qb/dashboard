@@ -1,9 +1,11 @@
-import styled, { css } from 'styled-components';
-import { useState } from 'react';
+import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import ShowIfAuth from '../../../../components/ShowIfAuth';
 import EditPopup from '../../../../components/Popups/EditPopup';
 import DeleteConfirmPopup from '../../../../components/Popups/DeleteConfirmPopup';
 import ProfilePic from '../../../../assets/Images/profilePic_small.png';
+import AlertPopup from '../../../../components/Popups/AlertPopups';
+import { useSelector } from 'react-redux';
 
 /**---------------- Styles ------------------*/
 const CardContainer = styled.div`
@@ -72,9 +74,41 @@ const ProfilePicHolder = styled.span`
 
 export default function UserCard(props) {
 	const { data } = props;
+	const { status } = useSelector((state) => state.userListSlice);
 
+	const [alertDisplay, setAlertDisplay] = useState(false);
+	const [alertType, setAlertType] = useState('');
+	const [alertMessage, setAlertMessage] = useState('');
 	const [editPopupIsOpen, setEditPopupIsOpen] = useState(false);
 	const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
+
+	useEffect(() => {
+		if (editPopupIsOpen && status === 'edit user success') {
+			setAlertType('success');
+			setAlertMessage('User details updated successfully!');
+			showAlertPopup();
+		} else if (editPopupIsOpen && status === 'edit user failed') {
+			setAlertType('error');
+			setAlertMessage('Could not update user details');
+			showAlertPopup();
+		} else if (deletePopupIsOpen && status === 'delete user success') {
+			setDeletePopupIsOpen(false);
+		} else if (deletePopupIsOpen && status === 'delete user failed') {
+			setDeletePopupIsOpen(false);
+		}
+	}, [editPopupIsOpen, deletePopupIsOpen, status]);
+
+	const showAlertPopup = () => {
+		setAlertDisplay(true);
+		setEditPopupIsOpen(false);
+	};
+
+	// Additional function to be written wherever AlertPopup component is used
+	if (alertDisplay) {
+		setTimeout(() => {
+			setAlertDisplay(false);
+		}, 5000);
+	}
 
 	let bgColor, textColor;
 	if (data.status === 'active') {
@@ -113,6 +147,7 @@ export default function UserCard(props) {
 
 	return (
 		<CardContainer>
+			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
 			<UserTabs>
 				<DetailsTabs>
 					<ProfilePicHolder />
@@ -133,7 +168,7 @@ export default function UserCard(props) {
 			</ShowIfAuth>
 
 			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} data={data} />
-			<DeleteConfirmPopup isOpen={deletePopupIsOpen} onRequestClose={closeDeleteModal} />
+			<DeleteConfirmPopup id={data.id} isOpen={deletePopupIsOpen} onRequestClose={closeDeleteModal} />
 		</CardContainer>
 	);
 }

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import Modal from 'react-modal';
+import { onDeleteUser } from '../../../slices/userlist.slice';
+import { useDispatch } from 'react-redux';
 
 /**---------------- Styles ------------------*/
 const modalStyle = {
@@ -39,6 +41,7 @@ const iconStyle = {
 };
 
 export default function DeleteModal(props) {
+	const dispatch = useDispatch();
 	return (
 		<Modal style={modalStyle} isOpen={props.isOpen} onRequestClose={props.onRequestClose}>
 			<TextWrapper>
@@ -46,7 +49,10 @@ export default function DeleteModal(props) {
 				<P>Delete User?</P>
 			</TextWrapper>
 			<ButtonWrapper>
-				<button style={{ marginRight: '10px' }} className="button-danger">
+				<button
+					style={{ marginRight: '10px' }}
+					className="button-danger"
+					onClick={() => (dispatch(onDeleteUser({ id: props.id })))}>
 					Delete
 				</button>
 				<button style={{ marginLeft: '10px' }} className="button-danger-secondary" onClick={props.onRequestClose}>
