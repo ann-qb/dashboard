@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ProfilePic from '../../assets/Images/profilePic_small.png'
+import ProfilePic from '../../assets/Images/profilePic_small.png';
+import { useSelector } from 'react-redux';
 import DropdownMenu from './DropdownMenu'
 import { useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
@@ -37,9 +38,8 @@ const iconStyle = {
 	color: '#000',
 };
 
-
 const SearchBox = styled.div`
-display:flex;
+	display: flex;
 	width: 25%;
 	height: 100%;
 	padding: 10px 15px;
@@ -47,7 +47,7 @@ display:flex;
 `;
 const SearchInput = styled.input`
 	border: none;
-	width:100%;
+	width: 100%;
 `;
 const searchIconStyle = {
 	paddingTop: '5px',
@@ -59,21 +59,24 @@ const ProfilePicBox = styled.div`
 	height: 30px;
 	width: 30px;
 	background-image: url(${ProfilePic});
-	background-position:center;
-	background-size:cover;
-	border-radius:50%;
-	margin-right:10px;
+	background-position: center;
+	background-size: cover;
+	border-radius: 50%;
+	margin-right: 10px;
 `;
 
+export default function Header() {
+	const { loggedUser } = useSelector((state) => state.loginSlice);
 
-export default function Header(props) {
 	const history = useHistory()
 	const dispatch = useDispatch();
+	
 	const generateHeaderActions = () => {
 		return (
 			<ActionDiv>
 				<ProfilePicBox />
-				<DropdownMenu menuHeader={props.userData.firstName} role='USER' action={dropdownActions}/>
+				<p style={{ textTransform: 'capitalize' }}>{loggedUser.firstname + ' ' + loggedUser.lastname}</p>
+				<DropdownMenu menuHeader={loggedUser.firstName} role='USER' action={dropdownActions}/>
 			</ActionDiv>
 		);
 	};
@@ -97,7 +100,7 @@ export default function Header(props) {
 
 				<SearchInput type="text" placeholder="Search..." />
 			</SearchBox>
-			{props.userData ? generateHeaderActions() : null}
+			{loggedUser ? generateHeaderActions() : null}
 		</HeaderBar>
 	);
 }

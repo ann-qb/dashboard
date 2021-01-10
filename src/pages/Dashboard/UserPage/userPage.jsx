@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import UserCard from './UserCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ShowIfAuth from '../../../components/ShowIfAuth';
 import AlertPopup from '../../../components/Popups/AlertPopups';
 import EditPopup from '../../../components/Popups/EditPopup';
+import { onGetUserList } from '../../../slices/userlist.slice';
+import { useDispatch, useSelector } from 'react-redux';
 
 /**---------------- Styles ------------------*/
 const PageContainer = styled.div`
@@ -43,15 +45,45 @@ const EmptyDivToCompensateProfilePic = styled.div`
 
 export default function UserPage(props) {
 	const [alertDisplay, setAlertDisplay] = useState(false);
+	const [alertType, setAlertType] = useState('');
+	const [alertMessage, setAlertMessage] = useState('');
 	const [addUserPopup, setAddUserPopup] = useState(false);
+
+	const { userList, status } = useSelector((state) => state.userListSlice);
+	const dispatch = useDispatch();
+
+	useEffect(() => dispatch(onGetUserList()), []);
+
+	useEffect(() => {
+		if (addUserPopup && status === 'add user success') {
+			setAlertType('success');
+			setAlertMessage('User added successfully!');
+			showAlertPopup();
+		} else if (addUserPopup && status === 'add user failed') {
+			setAlertType('error');
+			setAlertMessage('Could not add user');
+			showAlertPopup();
+		}
+	}, [addUserPopup, status]);
+
+	useEffect(() => {
+		if (status === 'delete user success') {
+			setAlertType('success');
+			setAlertMessage('User deleted successfully!');
+			showAlertPopup();
+		} else if (status === 'delete user failed') {
+			setAlertType('error');
+			setAlertMessage('Could not delete user');
+			showAlertPopup();
+		}
+	}, [status]);
 
 	const createCards = () => {
 		return (
 			<>
-				<UserCard role="admin" />
-				<UserCard role="user" />
-				<UserCard role="user" />
-				<UserCard role="user" />
+				{userList.map((each) => (
+					<UserCard key={each.id} data={each} />
+				))}
 			</>
 		);
 	};
@@ -78,7 +110,7 @@ export default function UserPage(props) {
 
 	return (
 		<PageContainer>
-			<AlertPopup alertType="success" message="User Added Successfully" display={alertDisplay} />
+			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
 			<p className="pageHeaders blackFont">Users</p>
 			<ShowIfAuth allowedRoles={['admin']}>
 				<AddButton className="button-primary" onClick={openAddUserPopup}>
@@ -106,7 +138,7 @@ export default function UserPage(props) {
 
 			{createCards()}
 
-			<EditPopup isOpen={addUserPopup} onRequestClose={closeAddUserPopup} onSubmit={showAlertPopup} />
+			<EditPopup isOpen={addUserPopup} onRequestClose={closeAddUserPopup} />
 		</PageContainer>
 	);
 }
