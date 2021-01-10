@@ -75,8 +75,7 @@ export default function Header() {
 		return (
 			<ActionDiv>
 				<ProfilePicBox />
-				{/* <p style={{ textTransform: 'capitalize' }}>{loggedUser.firstname + ' ' + loggedUser.lastname}</p>
-				<ion-icon style={iconStyle} name="chevron-down-outline"></ion-icon> */}
+				<p style={{ textTransform: 'capitalize' }}>{loggedUser.firstname + ' ' + loggedUser.lastname}</p>
 				<DropdownMenu menuHeader={loggedUser.firstName} role='USER' action={dropdownActions}/>
 			</ActionDiv>
 		);

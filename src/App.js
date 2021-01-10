@@ -1,12 +1,12 @@
 import './App.css';
 import './components/Icons/icons';
 import GlobalStyle from './GlobalStyleSheet/globalStyleSheet';
-import LoginPage from './pages/Login';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import DashboardPage from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
-import ErrorPage from './pages/ErrorPage'
-import SetPasswordPage from './pages/SetPasswordPage'
+import LoginPage from './pages/Login';
+import DashboardPage from './pages/Dashboard';
+import ErrorPage from './pages/ErrorPage';
+import SetPasswordPage from './pages/SetPasswordPage';
 
 function App() {
 	return (
@@ -20,19 +20,14 @@ function App() {
 					<Route path="/login">
 						<LoginPage />
 					</Route>
-					<Route path="/forgot-password">
-						{/* Should be forgot password component */}
-						{/* <ForgotPassword /> */}
-						<h3>Forgot password</h3>
-					</Route>
-					<Route path='/set-password'>
-					<SetPasswordPage/>
+					<Route path="/user/set-password">
+						<SetPasswordPage />
 					</Route>
 					<PrivateRoute path="/dashboard">
 						<DashboardPage />
 					</PrivateRoute>
-					<PrivateRoute path="/randompage">
-						<ErrorPage errorType='100'/>
+					<PrivateRoute path="/errorpage">
+						<ErrorPage errorType="100" />
 					</PrivateRoute>
 				</Switch>
 			</Router>

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import CreateNewPassword from '../../../components/Popups/CreateNewPassword';
 import EditPopup from '../../../components/Popups/EditPopup';
 import ProfilePic from '../../../assets/Images/profilePic_large.png';
+import { useSelector } from 'react-redux';
 
 const PageContainer = styled.div`
 	padding: 25px;
@@ -23,6 +24,7 @@ const RoleText = styled.p`
 	margin: 10px auto;
 	font-size: 110%;
 	color: #000;
+	text-transform: capitalize;
 `;
 const SeparationLine = styled.hr`
 	border: 1px solid #dcdde2;
@@ -70,6 +72,7 @@ const DetailsText = styled.p`
 	color: #000;
 	font-size: 110%;
 	margin-bottom: 20px;
+	text-transform: capitalize;
 `;
 const iconStyle = {
 	cursor: 'pointer',
@@ -79,13 +82,15 @@ export default function ProfilePage(props) {
 	const [createPassIsOpen, setCreatePassIsOpen] = useState(false);
 	const [editDetailsIsOpen, setEditDetailsIsOpen] = useState(false);
 
+	const { loggedUser, role } = useSelector((state) => state.loginSlice);
+
 	const openCreatePasswordModal = () => {
 		setCreatePassIsOpen(true);
-  };
-  
-  const editDetailsModal = ()=>{
-    setEditDetailsIsOpen(true)
-  }
+	};
+
+	const editDetailsModal = () => {
+		setEditDetailsIsOpen(true);
+	};
 
 	return (
 		<PageContainer>
@@ -94,7 +99,7 @@ export default function ProfilePage(props) {
 				<ProfileDetailsWrapper className="cards">
 					<PictureAreaWrapper>
 						<ProfilePicContainer />
-						<RoleText>User</RoleText>
+						<RoleText>{role}</RoleText>
 					</PictureAreaWrapper>
 
 					<DetailsAreaWrapper>
@@ -102,18 +107,20 @@ export default function ProfilePage(props) {
 							<p>Name</p>
 							<ion-icon style={iconStyle} name="pencil-outline" onClick={editDetailsModal}></ion-icon>
 						</DetailsLabel>
-						<DetailsText>Firstname Lastname</DetailsText>
+						<DetailsText>{loggedUser.firstname + ' ' + loggedUser.lastname}</DetailsText>
 
 						<DetailsLabel>
 							<p>Email</p>
-							<ion-icon name="pencil-outline"></ion-icon>
 						</DetailsLabel>
-						<DetailsText>email@email.com</DetailsText>
+						<DetailsText style={{ textTransform: 'none' }}>{loggedUser.email}</DetailsText>
 
+						{/* Kinda redundant - pending and inactive users can't see it
+						Admins won't edit it for themselves
+						Users can't edit it */}
 						<DetailsLabel>
 							<p>Status</p>
 						</DetailsLabel>
-						<DetailsText>status</DetailsText>
+						<DetailsText>{loggedUser.status}</DetailsText>
 						<button className="button-primary" onClick={openCreatePasswordModal}>
 							Change password
 						</button>
@@ -127,7 +134,14 @@ export default function ProfilePage(props) {
 					setCreatePassIsOpen(false);
 				}}
 			/>
-      <EditPopup isOpen={editDetailsIsOpen} onRequestClose={()=>{setEditDetailsIsOpen(false)}} role='USER'/>
+			<EditPopup
+				isOpen={editDetailsIsOpen}
+				onRequestClose={() => {
+					setEditDetailsIsOpen(false);
+				}}
+				data={loggedUser}
+				editSelf={true}
+			/>
 		</PageContainer>
 	);
 }

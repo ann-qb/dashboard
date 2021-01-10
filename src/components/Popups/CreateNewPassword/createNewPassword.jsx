@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import PasswordField from '../../../pages/Login/PasswordField'
+import PasswordField from '../../../pages/Login/PasswordField';
 import Modal from 'react-modal';
 import { useState } from 'react';
 
@@ -17,41 +17,41 @@ const modalStyle = {
 };
 
 const HeadText = styled.p`
-  color:#000;
-  font-size:110%;
-`
+	color: #000;
+	font-size: 110%;
+`;
 const Button = styled.button`
-  margin-top:25px;
-  width:100%;
-`
+	margin-top: 25px;
+	width: 100%;
+`;
 
 export default function CreateNewPassword(props) {
-	const [oldPass, setOldPass] = useState(null);
-  
-  const validateOldPassword =()=>{
-    setOldPass('OldPass')
-  }
+	const [oldPassword, setOldPassword] = useState('');
 
-  const uploadNewPassword =()=>{
-    setOldPass(null)
-    props.close()
-  }
+	const validateOldPassword = () => {
+		setOldPassword('OldPass');
+	};
 
-	if (oldPass) {
+	const uploadNewPassword = () => {
+		setOldPassword(null);
+		props.close();
+	};
+
+	if (oldPassword) {
 		return (
 			<Modal style={modalStyle} isOpen={props.open}>
-				<HeadText>NewPass</HeadText>
+				<HeadText>New Password</HeadText>
 				<PasswordField onChange={() => null} />
 				<Button className="button-primary" onClick={uploadNewPassword}>
-					Close
+					Save
 				</Button>
 			</Modal>
 		);
 	} else {
 		return (
 			<Modal style={modalStyle} isOpen={props.open}>
-				<HeadText>OldPass</HeadText>
-				<PasswordField onChange={() => null}/>
+				<HeadText>Current Password</HeadText>
+				<PasswordField onChange={() => null} />
 				<Button className="button-primary" onClick={validateOldPassword}>
 					Next
 				</Button>

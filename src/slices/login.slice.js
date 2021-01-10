@@ -49,17 +49,17 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/check', {
+		const response = await axios.post('http://localhost:3000/user/check', {
 			email: data.userName,
 		});
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
-			if (response.data.message === 'pending') {
+			if (response.data === 'pending') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'pending' }));
-			} else if (response.data.message === 'user exist') {
+			} else if (response.data === 'user exist') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'active' }));
-			} else if (response.data.message === 'inactive') {
+			} else if (response.data === 'inactive') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'inactive' }));
 			}
 		} else {
@@ -82,7 +82,7 @@ export const onLogin = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/login', {
+		const response = await axios.post('http://localhost:3000/user/login', {
 			email: data.userName,
 			password: data.password,
 		});
@@ -110,7 +110,7 @@ export const onLogout = () => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await fetch.post('http://user-dashboard.qburst.build:3002/user/logout');
+		const response = await fetch.post('http://localhost:3000/user/logout');
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
@@ -120,6 +120,31 @@ export const onLogout = () => async (dispatch) => {
 		}
 	} catch (error) {
 		console.log(error);
+	}
+	dispatch(resetStatus()); // to indicate API call is over
+};
+
+export const onSetPassword = (data) => async (dispatch) => {
+	// reset
+	dispatch(resetStatus());
+	// dispatch loading start
+	dispatch(updateStatus({ status: 'loading' }));
+	// try-catch fetch API
+	try {
+		const response = await axios.put(`http://localhost:3000/password?${data.query}`, {
+			password: data.password,
+		});
+		console.log(response);
+		console.log(response.data);
+		if (response.status === 200) {
+			dispatch(updateStatus({ status: 'success' }));
+			dispatch(login(response.data));
+		} else {
+			console.log('Something went wrong while setting the password.');
+		}
+	} catch (error) {
+		console.log(error);
+		console.log(error.response);
 	}
 	dispatch(resetStatus()); // to indicate API call is over
 };

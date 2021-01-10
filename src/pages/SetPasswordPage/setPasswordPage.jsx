@@ -1,18 +1,30 @@
 import LoginCard from '../Login/LoginCards';
 import { useLocation, useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { onSetPassword } from '../../slices/login.slice';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function SetPasswordPage(props) {
-  const history = useHistory();
-  const location = useLocation();
-	const [errorMessage, setErrorMessage] = useState(null);
+	const history = useHistory();
+	const location = useLocation();
+	const dispatch = useDispatch();
+
 	const [showLoading, setShowLoading] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 	const [disableSubmit, setDisableSubmit] = useState(true);
 	const [password, setPassword] = useState('');
 
-	// Meathods
+	const { status } = useSelector((state) => state.loginSlice);
+	useEffect(() => {
+		status === 'loading' ? setShowLoading(true) : setShowLoading(false);
+		if (status === 'success') {
+			history.replace('/dashboard');
+		}
+	}, [status]);
+
+	// Methods
 	const useQuery = () => {
-		return new URLSearchParams(useLocation().search);
+		return new URLSearchParams(location.search);
 	};
 	let query = useQuery();
 
@@ -23,20 +35,8 @@ export default function SetPasswordPage(props) {
 	};
 
 	const submitPassword = () => {
-    history.push('/dashboard')
-    console.log(location)
-  };
-
-  // const onSetPassword = (data)=>async(dispatch)=>{
-  //   setShowLoading(true)
-  //   const response = await axios.post(`http://user-dashboard.qburst.build:3002/user/password${location.search}`),{
-  //     password:data.password
-  //   }
-  //   if(response.status === 200){
-  //     setShowLoading(false)
-  //     dispatch(login(response.data))
-  //   }
-  // }
+		dispatch(onSetPassword({ password, query }));
+	};
 
 	// Query data
 	const action = query.get('action');

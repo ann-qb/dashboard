@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Modal from 'react-modal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { onAddUser, onEditUser } from '../../../slices/userlist.slice';
 
@@ -41,6 +41,8 @@ const Select = styled.select`
 
 export default function EditModal(props) {
 	const dispatch = useDispatch();
+	const { role } = useSelector((state) => state.loginSlice);
+
 	const userObj = {
 		firstname: props?.data?.firstname || '',
 		lastname: props?.data?.lastname || '',
@@ -57,9 +59,9 @@ export default function EditModal(props) {
 		setUserData({ ...userData, [e.target.name]: e.target.value });
 	};
 
-	let selectDisabled
-	if(props.role!=='ADMIN') selectDisabled=true
-	else selectDisabled = false
+	let selectDisabled;
+	if (role !== 'admin') selectDisabled = true;
+	else selectDisabled = false;
 
 	const cancelEdit = () => {
 		setUserData(userObj);
@@ -92,13 +94,18 @@ export default function EditModal(props) {
 		if (!errorFlag) {
 			// dispatch
 			if (props.data) {
-				// edit user
-				dispatch(onEditUser({ userData: { ...userData }, id: props.data.id }));
+				if (props.editSelf) {
+					dispatch(onEditUser({ userData: { ...userData } }));
+				} else {
+					// edit user
+					dispatch(onEditUser({ userData: { ...userData }, id: props.data.id }));
+				}
 			} else {
 				// add user
 				dispatch(onAddUser({ userData: { ...userData } }));
 				setUserData(userObj);
 			}
+			setUserData(userObj);
 		}
 	};
 	const modalStyle = {
@@ -138,7 +145,12 @@ export default function EditModal(props) {
 					</SingleFieldGroup>
 					<SingleFieldGroup>
 						<p>Status</p>
-						<Select name="status" id="status_dropdown" value={userData.status} onChange={handleInputChange} disabled={selectDisabled}>
+						<Select
+							name="status"
+							id="status_dropdown"
+							value={userData.status}
+							onChange={handleInputChange}
+							disabled={selectDisabled}>
 							{props.data && props.data.status !== 'pending' ? (
 								<>
 									<option value="active">Active</option>

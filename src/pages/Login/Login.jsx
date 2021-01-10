@@ -74,15 +74,6 @@ export default function Login() {
 		}
 	}, [status, verifiedUser]);
 
-	const takeBackToLoginFromDisplayMessage = ()=>{
-		setMessage('');
-		setShowUsername(true);
-		setUserName(null);
-		setDisableSubmit(true);
-		setShowPassword(false);
-		setDisplayMessage(false);
-	}
-
 	const validateSubmit = () => {
 		//for username
 		if (showUsername && !showPassword) {
@@ -115,24 +106,33 @@ export default function Login() {
 	};
 
 	// Side link buttons
-	const displayNewUserMessage = ()=>{
+	const displayNewUserMessage = () => {
 		setMessage('Please check you inbox to find a mail or contact admin');
 		setShowUsername(false);
 		setShowPassword(false);
 		setDisplayMessage(true);
-	}
+	};
 
-	const generateForgotPassword= ()=>{
+	const generateForgotPassword = () => {
 		// API call to generate link
-		displayForgotPasswordMessage()
-	}
+		displayForgotPasswordMessage();
+	};
 
-	const displayForgotPasswordMessage = ()=>{
+	const displayForgotPasswordMessage = () => {
 		setMessage('Please check you inbox to find a mail to reset the password');
 		setShowUsername(false);
 		setShowPassword(false);
 		setDisplayMessage(true);
-	}
+	};
+
+	const takeBackToLoginFromDisplayMessage = () => {
+		setMessage('');
+		setShowUsername(true);
+		setUserName(null);
+		setDisableSubmit(true);
+		setShowPassword(false);
+		setDisplayMessage(false);
+	};
 
 	return (
 		<div id="login_background">

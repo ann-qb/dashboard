@@ -54,7 +54,7 @@ export const onAddUser = (data) => async (dispatch) => {
 		const response = await fetch.post('http://localhost:3000/user', {
 			...data.userData,
 			role: 'user',
-			link: 'http://localhost:3000/user/set-password',
+			link: 'http://localhost:3001/user/set-password',
 		});
 		console.log(response);
 		if (response.status === 201) {
@@ -80,20 +80,17 @@ export const onAddUser = (data) => async (dispatch) => {
 	dispatch(resetStatus());
 };
 
-export const onEditUser = (data) => async (dispatch, getState) => {
+export const onEditUser = (data) => async (dispatch) => {
 	// reset
 	dispatch(resetStatus());
 	// loading
 	dispatch(updateStatus({ status: 'loading' }));
-	const state = getState();
 	// try-catch // onGetUserList
 	try {
-		const response = await fetch.put(
-			state.loginSlice.role === 'admin' ? `http://localhost:3000/user/${data.id}` : 'http://localhost:3000/user',
-			{
-				...data.userData,
-			}
-		);
+		const response = await fetch.put(data.id ? `http://localhost:3000/user/${data.id}` : 'http://localhost:3000/user', {
+			...data.userData,
+		});
+		console.log(response.data);
 		if (response.status === 200) {
 			dispatch(updateStatus({ status: 'edit user success' }));
 			dispatch(onGetUserList());

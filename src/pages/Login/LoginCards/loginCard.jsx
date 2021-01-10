@@ -43,7 +43,7 @@ const Input = styled.input`
 
 const AlertText = styled.p`
 	font-size: 80%;
-	text-align:left;
+	text-align: left;
 `;
 
 const ErrorText = styled.p`
@@ -164,7 +164,6 @@ const FieldMaker = (props) => {
 					isError={props.passwordError}
 					onKeydown={props.activateButton}
 				/>
-				
 			</>
 		);
 	} else {
