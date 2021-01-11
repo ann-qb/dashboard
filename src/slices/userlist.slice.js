@@ -30,14 +30,17 @@ export const onGetUserList = () => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch // storeUserList
 	try {
-		const response = await fetch.get('http://localhost:3000/user');
+		const response = await fetch.get('http://user-dashboard.qburst.build:3002/user');
+		console.log(response);
+		console.log(response.data);
 		if (response.status === 200) {
-			dispatch(storeUserList({ userList: response.data }));
+			dispatch(storeUserList({ userList: response.data.data }));
 		} else {
 			console.log('Failed to fetch user list');
 		}
 	} catch (error) {
 		console.log(error);
+		console.log(error.response);
 	}
 	// end loading
 	// reset
@@ -51,7 +54,7 @@ export const onAddUser = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch // onGetUserList
 	try {
-		const response = await fetch.post('http://localhost:3000/user', {
+		const response = await fetch.post('http://user-dashboard.qburst.build:3002/user', {
 			...data.userData,
 			role: 'user',
 			link: 'http://localhost:3001/user/set-password',
@@ -87,9 +90,14 @@ export const onEditUser = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch // onGetUserList
 	try {
-		const response = await fetch.put(data.id ? `http://localhost:3000/user/${data.id}` : 'http://localhost:3000/user', {
-			...data.userData,
-		});
+		const response = await fetch.put(
+			data.id
+				? `http://user-dashboard.qburst.build:3002/user/${data.id}`
+				: 'http://user-dashboard.qburst.build:3002/user',
+			{
+				...data.userData,
+			}
+		);
 		console.log(response.data);
 		if (response.status === 200) {
 			dispatch(updateStatus({ status: 'edit user success' }));
@@ -121,7 +129,7 @@ export const onDeleteUser = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch // onGetUserList
 	try {
-		const response = await fetch.delete(`http://localhost:3000/user/delete/${data.id}`);
+		const response = await fetch.delete(`http://user-dashboard.qburst.build:3002/user/delete/${data.id}`);
 		console.log(response);
 		console.log(response.data);
 		if (response.status === 200) {

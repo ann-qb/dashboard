@@ -3,7 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import LoginCard from './LoginCards';
 import DisplayMessage from './DisplayMessage/displayMessage';
-import { login, onLogin, onVerifyUserName, resetStatus, updateErrorMessage } from './../../slices/login.slice';
+import {
+	login,
+	onForgotPassword,
+	onLogin,
+	onVerifyUserName,
+	resetStatus,
+	updateErrorMessage,
+} from './../../slices/login.slice';
 
 export default function Login() {
 	const history = useHistory();
@@ -41,6 +48,12 @@ export default function Login() {
 
 	useEffect(() => {
 		status === 'loading' ? setShowLoading(true) : setShowLoading(false);
+		if (status === 'password reset email sent') {
+			setMessage('A link to reset the password has been sent to your registered email id');
+			setShowUsername(false);
+			setShowPassword(false);
+			setDisplayMessage(true);
+		}
 	}, [status]);
 
 	// for username/password/display message rendering
@@ -107,28 +120,29 @@ export default function Login() {
 
 	// Side link buttons
 	const displayNewUserMessage = () => {
-		setMessage('Please check you inbox to find a mail or contact admin');
+		setMessage('Please check your inbox to find a mail with login instructions or contact admin');
 		setShowUsername(false);
 		setShowPassword(false);
 		setDisplayMessage(true);
 	};
 
-	const generateForgotPassword = () => {
+	const generatePasswordResetEmail = () => {
 		// API call to generate link
-		displayForgotPasswordMessage();
+		dispatch(onForgotPassword({ email: userName }));
+		// displayForgotPasswordMessage();
 	};
 
-	const displayForgotPasswordMessage = () => {
-		setMessage('Please check you inbox to find a mail to reset the password');
-		setShowUsername(false);
-		setShowPassword(false);
-		setDisplayMessage(true);
-	};
+	// const displayForgotPasswordMessage = () => {
+	// 	setMessage('A link to reset the password has been sent to your registered email id');
+	// 	setShowUsername(false);
+	// 	setShowPassword(false);
+	// 	setDisplayMessage(true);
+	// };
 
 	const takeBackToLoginFromDisplayMessage = () => {
 		setMessage('');
+		setUserName('');
 		setShowUsername(true);
-		setUserName(null);
 		setDisableSubmit(true);
 		setShowPassword(false);
 		setDisplayMessage(false);
@@ -159,7 +173,7 @@ export default function Login() {
 					onChange={onHandlePasswordChange}
 					errorMessage={errorMessage}
 					sideLinkText="Forgot password?"
-					sideLinkOnClick={generateForgotPassword}
+					sideLinkOnClick={generatePasswordResetEmail}
 					buttonText="Submit"
 					buttonDisabled={disableSubmit}
 					onClick={validateSubmit}
