@@ -120,10 +120,10 @@ export default function UserPage(props) {
 
 			<UserCardHeadWrapper>
 				<UserCardHeaders>
-					<HeaderTab>
+					<HeaderTab style={{ width: '30%' }}>
 						<p className="blackFont">User</p>
 					</HeaderTab>
-					<HeaderTab>
+					<HeaderTab style={{ width: '50%' }}>
 						<p className="blackFont">Email</p>
 					</HeaderTab>
 					<HeaderTab>

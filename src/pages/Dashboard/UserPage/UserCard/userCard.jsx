@@ -15,12 +15,18 @@ const CardContainer = styled.div`
 	margin: 10px 0;
 	padding: 10px 10px;
 	background-color: #fff;
+
+	// -youbkit-touch-callout: none; 
+	// -youbkit-user-select: none;   
+	// -moz-user-select: none;	   
+	// -ms-user-select: none;		
+	// user-select: none;			
+								  
 `;
 
 const UserTabs = styled.div`
 	display: flex;
 	width: 100%;
-
 	height: 100%;
 `;
 
@@ -28,6 +34,7 @@ const DetailsTabs = styled.div`
 	display: flex;
 	align-items: center;
 	width: 25%;
+	height:100%;
 `;
 
 const StatusText = styled.p`
@@ -64,13 +71,19 @@ const deleteIconStyle = {
 
 const ProfilePicHolder = styled.span`
 	height: 30px;
-	width: 30px;
+	width: 35px;
 	background-image: url(${ProfilePic});
 	background-position: center;
 	background-size: cover;
 	border-radius: 50%;
 	margin-right: 10px;
 `;
+
+const DetailsText=styled.p`
+	width:100%;
+	margin-right:10px;
+	overflow:scroll;
+`
 
 export default function UserCard(props) {
 	const { data } = props;
@@ -149,12 +162,12 @@ export default function UserCard(props) {
 		<CardContainer>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
 			<UserTabs>
-				<DetailsTabs>
+				<DetailsTabs style={{ width: '30%' }}>
 					<ProfilePicHolder />
-					<p>{data.firstname + ' ' + data.lastname}</p>
+					<DetailsText>{data.firstname + ' ' + data.lastname}</DetailsText>
 				</DetailsTabs>
-				<DetailsTabs>
-					<p>{data.email}</p>
+				<DetailsTabs style={{ width: '50%' }}>
+					<DetailsText>{data.email}</DetailsText>
 				</DetailsTabs>
 				<DetailsTabs>
 					<StatusText bgColor={bgColor} textColor={textColor}>
@@ -172,3 +185,4 @@ export default function UserCard(props) {
 		</CardContainer>
 	);
 }
+//style={{ backgroundColor: '#0000ff' }}
