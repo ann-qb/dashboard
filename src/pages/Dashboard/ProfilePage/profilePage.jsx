@@ -22,6 +22,11 @@ const ProfileCardWrapper = styled.div`
 const RoleText = styled.p`
 	width: fit-content;
 	margin: 10px auto;
+	text-transform: capitalize;
+`;
+const NameText = styled.p`
+	width: fit-content;
+	margin: 10px auto;
 	font-size: 110%;
 	color: #000;
 	text-transform: capitalize;
@@ -99,6 +104,7 @@ export default function ProfilePage(props) {
 				<ProfileDetailsWrapper className="cards">
 					<PictureAreaWrapper>
 						<ProfilePicContainer />
+						<NameText>Ann</NameText>
 						<RoleText>{role}</RoleText>
 					</PictureAreaWrapper>
 
@@ -141,6 +147,7 @@ export default function ProfilePage(props) {
 				}}
 				data={loggedUser}
 				editSelf={true}
+				title="Edit Profile"
 			/>
 		</PageContainer>
 	);
