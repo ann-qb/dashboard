@@ -125,7 +125,9 @@ export default function UserPage(props) {
 	}
 
 	// Spinner div style (dynamic display)
-	let display = 'flex'
+	let display = 'flex';
+	showLoading ? display = 'flex' : display = 'none'
+	
 	const SpinnerDiv = styled.div`
 		display: ${display};
 		align-items: center;
@@ -164,14 +166,15 @@ export default function UserPage(props) {
 			</UserCardHeadWrapper>
 
 			<SpinnerDiv>
-				<BounceLoader size={100} color={'#5673E8'} loading={true} />
+				<BounceLoader size={100} color={'#5673E8'} loading={showLoading} />
 			</SpinnerDiv>
+			{createCards()}
 
 			<EditPopup isOpen={addUserPopup} onRequestClose={closeAddUserPopup} title="Add User" />
 		</PageContainer>
 	);
 }
-//{createCards()}
+//
 const StyledBarLoader = css`
 	width:100%;
 	display: block;
