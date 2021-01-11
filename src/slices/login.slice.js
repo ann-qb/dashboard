@@ -135,7 +135,7 @@ export const onSetPassword = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await axios.put(`http://user-dashboard.qburst.build:3002/password?${data.query}`, {
+		const response = await axios.put(`http://user-dashboard.qburst.build:3002/user/password?${data.query}`, {
 			password: data.password,
 		});
 		console.log(response);

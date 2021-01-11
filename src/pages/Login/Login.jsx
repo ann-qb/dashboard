@@ -114,7 +114,10 @@ export default function Login() {
 
 	const onHandlePasswordChange = (e) => {
 		const value = e.target.value;
-		setPassword(value);
+		if (value !== undefined) {
+			console.log(value);
+			setPassword(value);
+		}
 		password.trim().length ? setDisableSubmit(false) : setDisableSubmit(true);
 	};
 

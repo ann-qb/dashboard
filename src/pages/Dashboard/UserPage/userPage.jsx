@@ -108,7 +108,7 @@ export default function UserPage(props) {
 
 	const showAlertPopup = () => {
 		setAlertDisplay(true);
-		setAddUserPopup(false);
+		// setAddUserPopup(false);
 	};
 
 	// Additional function to be written wherever AlertPopup component is used

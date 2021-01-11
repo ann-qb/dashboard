@@ -95,7 +95,7 @@ export default function EditModal(props) {
 			// dispatch
 			if (props.data) {
 				if (props.editSelf) {
-					const { status, rest } = { ...userData };
+					const { status, ...rest } = userData;
 					dispatch(onEditUser({ userData: { ...rest } }));
 				} else {
 					// edit user
@@ -180,7 +180,7 @@ export default function EditModal(props) {
 					className="button-primary"
 					onClick={() => {
 						validateData();
-						//props.onRequestClose();
+						props.onRequestClose();
 						//props.onSubmit();
 					}}>
 					Submit
