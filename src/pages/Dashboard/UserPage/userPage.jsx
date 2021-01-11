@@ -11,7 +11,7 @@ import { css } from '@emotion/react';
 
 /**---------------- Styles ------------------*/
 const PageContainer = styled.div`
-	position:relative;
+	position: relative;
 	padding: 15px;
 	height: 90vh;
 	overflow: scroll;
@@ -46,8 +46,6 @@ const EmptyDivToCompensateProfilePic = styled.div`
 	margin-right: 30px;
 `;
 
-
-
 export default function UserPage(props) {
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
@@ -57,7 +55,6 @@ export default function UserPage(props) {
 
 	const { userList, status } = useSelector((state) => state.userListSlice);
 	const dispatch = useDispatch();
-
 
 	useEffect(() => dispatch(onGetUserList()), []);
 
@@ -95,13 +92,7 @@ export default function UserPage(props) {
 	}, [status]);
 
 	const createCards = () => {
-		return (
-			<>
-				{userList.map((each) => (
-					<UserCard key={each.id} data={each} />
-				))}
-			</>
-		);
+		return <> {!showLoading ? userList.map((each) => <UserCard key={each.id} data={each} />) : null}</>;
 	};
 
 	const openAddUserPopup = () => {
@@ -126,8 +117,8 @@ export default function UserPage(props) {
 
 	// Spinner div style (dynamic display)
 	let display = 'flex';
-	showLoading ? display = 'flex' : display = 'none'
-	
+	showLoading ? (display = 'flex') : (display = 'none');
+
 	const SpinnerDiv = styled.div`
 		display: ${display};
 		align-items: center;
@@ -176,7 +167,7 @@ export default function UserPage(props) {
 }
 //
 const StyledBarLoader = css`
-	width:100%;
+	width: 100%;
 	display: block;
 	margin: 0 auto;
 	width: 100%;
