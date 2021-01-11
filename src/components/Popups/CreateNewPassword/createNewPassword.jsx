@@ -39,7 +39,7 @@ export default function CreateNewPassword(props) {
 
 	if (oldPassword) {
 		return (
-			<Modal style={modalStyle} isOpen={props.open}>
+			<Modal style={modalStyle} isOpen={props.open} onRequestClose={props.close}>
 				<HeadText>New Password</HeadText>
 				<PasswordField onChange={() => null} />
 				<Button className="button-primary" onClick={uploadNewPassword}>

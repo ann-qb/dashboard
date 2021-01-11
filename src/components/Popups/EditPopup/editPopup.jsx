@@ -105,7 +105,8 @@ export default function EditModal(props) {
 			// dispatch
 			if (props.data) {
 				if (props.editSelf) {
-					dispatch(onEditUser({ userData: { ...userData } }));
+					const { status, rest } = { ...userData };
+					dispatch(onEditUser({ userData: { ...rest } }));
 				} else {
 					// edit user
 					dispatch(onEditUser({ userData: { ...userData }, id: props.data.id }));
@@ -162,8 +163,7 @@ export default function EditModal(props) {
 							id="status_dropdown"
 							value={userData.status}
 							onChange={handleInputChange}
-							disabled={selectDisabled}
-						>
+							disabled={selectDisabled && props.editSelf}>
 							{props.data && props.data.status !== 'pending' ? (
 								<>
 									<option value="active">Active</option>

@@ -8,7 +8,7 @@ export default function SetPasswordPage(props) {
 	const history = useHistory();
 	const location = useLocation();
 	const dispatch = useDispatch();
-
+	console.log(location)
 	const [showLoading, setShowLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [disableSubmit, setDisableSubmit] = useState(true);

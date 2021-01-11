@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import fetch from './../utils/axios';
+import { login } from './login.slice';
 
 const initialState = { userList: [], status: 'idle' };
 
@@ -27,7 +28,7 @@ export const onGetUserList = () => async (dispatch) => {
 	// reset
 	dispatch(resetStatus());
 	// loading
-	dispatch(updateStatus({ status: 'loading' }));
+	dispatch(updateStatus({ status: 'loading user list' }));
 	// try-catch // storeUserList
 	try {
 		const response = await fetch.get('http://user-dashboard.qburst.build:3002/user');
@@ -43,6 +44,7 @@ export const onGetUserList = () => async (dispatch) => {
 		console.log(error.response);
 	}
 	// end loading
+	dispatch(updateStatus({ status: 'loading user list over' }));
 	// reset
 	dispatch(resetStatus());
 };
@@ -83,7 +85,9 @@ export const onAddUser = (data) => async (dispatch) => {
 	dispatch(resetStatus());
 };
 
-export const onEditUser = (data) => async (dispatch) => {
+export const onEditUser = (data) => async (dispatch, getState) => {
+	const state = getState();
+	const { loggedUser, role } = state.loginSlice;
 	// reset
 	dispatch(resetStatus());
 	// loading
@@ -101,6 +105,9 @@ export const onEditUser = (data) => async (dispatch) => {
 		console.log(response.data);
 		if (response.status === 200) {
 			dispatch(updateStatus({ status: 'edit user success' }));
+			if (data.id === loggedUser.id) {
+				dispatch(login({ loggedUser: { ...loggedUser, ...data.userData }, role }));
+			}
 			dispatch(onGetUserList());
 			// notification display
 		} else {

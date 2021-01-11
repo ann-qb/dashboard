@@ -12,10 +12,7 @@ const loginSlice = createSlice({
 			state.loggedUser = action.payload.loggedUser;
 			state.role = action.payload.role;
 			state.status = 'success';
-			if (!localStorage.getItem('currentUser')) {
-				localStorage.setItem('currentUser', JSON.stringify({ loggedUser: state.loggedUser, role: state.role }));
-				// Handle reset token expiry
-			}
+			localStorage.setItem('currentUser', JSON.stringify({ loggedUser: state.loggedUser, role: state.role }));
 		},
 		logout(state) {
 			state = initialState;
