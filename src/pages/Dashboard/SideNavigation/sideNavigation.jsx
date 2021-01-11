@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import {useHistory,useLocation} from 'react-router-dom'
 import styled from 'styled-components';
 import Logo from '../../../assets/Images/logo_icon.png';
 import { onLogout } from './../../../slices/login.slice';
@@ -47,6 +48,7 @@ const LogoImage = styled.img`
 `;
 
 export default function SideNavigation(props) {
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const changeSelection = (e) => {
 		const clickedDiv = e.target.closest('div');
@@ -54,6 +56,7 @@ export default function SideNavigation(props) {
 		currentSelectedLink.classList.remove('activeNavLink');
 
 		clickedDiv.classList.add('activeNavLink');
+		if(clickedDiv.id === 'dashboard') history.push('/dashboard')
 	};
 
 	return (
@@ -65,7 +68,7 @@ export default function SideNavigation(props) {
 			<div style={{ marginLeft: '10px' }}>
 				<SubTittles className="navigationText">MENU</SubTittles>
 
-				<NavLinksDiv className="navLinks activeNavLink" onClick={changeSelection}>
+				<NavLinksDiv id="dashboard" className="navLinks activeNavLink" onClick={changeSelection}>
 					<ion-icon class="navIcons" style={iconStyle} name="clipboard-outline"></ion-icon>
 					<p className="navigationText">Dashboard</p>
 				</NavLinksDiv>

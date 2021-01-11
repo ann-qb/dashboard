@@ -5,6 +5,16 @@ import styled from 'styled-components';
 import { onAddUser, onEditUser } from '../../../slices/userlist.slice';
 
 /**---------------- Styles ------------------*/
+const Title=styled.p`
+	padding-left:5px;
+	font-size:120%;
+	font-weight:500;
+	color:#000;
+`
+const SeparatorLine = styled.hr`
+	margin: 10px 0;
+	border: 1px solid #dcdde2;;
+`;
 const SuperFieldWrapper = styled.div`
 	width: 100%;
 `;
@@ -124,6 +134,8 @@ export default function EditModal(props) {
 	console.log('Modal called');
 	return (
 		<Modal style={modalStyle} isOpen={props.isOpen} onRequestClose={props.onRequestClose}>
+			<Title>{props.title}</Title>
+			<SeparatorLine />
 			<SuperFieldWrapper>
 				<SubFieldWrapper>
 					<SingleFieldGroup style={{ marginRight: '10px' }}>
@@ -172,7 +184,8 @@ export default function EditModal(props) {
 					onClick={() => {
 						cancelEdit();
 						props.onRequestClose();
-					}}>
+					}}
+				>
 					Cancel
 				</button>
 				<button
@@ -182,7 +195,8 @@ export default function EditModal(props) {
 						validateData();
 						props.onRequestClose();
 						//props.onSubmit();
-					}}>
+					}}
+				>
 					Submit
 				</button>
 			</ButtonWrapper>

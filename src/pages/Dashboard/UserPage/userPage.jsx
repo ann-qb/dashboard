@@ -6,9 +6,12 @@ import AlertPopup from '../../../components/Popups/AlertPopups';
 import EditPopup from '../../../components/Popups/EditPopup';
 import { onGetUserList } from '../../../slices/userlist.slice';
 import { useDispatch, useSelector } from 'react-redux';
+import { BounceLoader } from 'react-spinners';
+import { css } from '@emotion/react';
 
 /**---------------- Styles ------------------*/
 const PageContainer = styled.div`
+	position:relative;
 	padding: 15px;
 	height: 90vh;
 	overflow: scroll;
@@ -43,6 +46,8 @@ const EmptyDivToCompensateProfilePic = styled.div`
 	margin-right: 30px;
 `;
 
+
+
 export default function UserPage(props) {
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
@@ -52,6 +57,7 @@ export default function UserPage(props) {
 
 	const { userList, status } = useSelector((state) => state.userListSlice);
 	const dispatch = useDispatch();
+
 
 	useEffect(() => dispatch(onGetUserList()), []);
 
@@ -118,6 +124,19 @@ export default function UserPage(props) {
 		}, 5000);
 	}
 
+	// Spinner div style (dynamic display)
+	let display = 'flex';
+	showLoading ? display = 'flex' : display = 'none'
+	
+	const SpinnerDiv = styled.div`
+		display: ${display};
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 200px;
+		margin: auto 0;
+	`;
+
 	return (
 		<PageContainer>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
@@ -130,10 +149,10 @@ export default function UserPage(props) {
 
 			<UserCardHeadWrapper>
 				<UserCardHeaders>
-					<HeaderTab>
+					<HeaderTab style={{ width: '30%' }}>
 						<p className="blackFont">User</p>
 					</HeaderTab>
-					<HeaderTab>
+					<HeaderTab style={{ width: '50%' }}>
 						<p className="blackFont">Email</p>
 					</HeaderTab>
 					<HeaderTab>
@@ -146,9 +165,24 @@ export default function UserPage(props) {
 				</ShowIfAuth>
 			</UserCardHeadWrapper>
 
+			<SpinnerDiv>
+				<BounceLoader size={100} color={'#5673E8'} loading={showLoading} />
+			</SpinnerDiv>
 			{createCards()}
 
-			<EditPopup isOpen={addUserPopup} onRequestClose={closeAddUserPopup} />
+			<EditPopup isOpen={addUserPopup} onRequestClose={closeAddUserPopup} title="Add User" />
 		</PageContainer>
 	);
 }
+//
+const StyledBarLoader = css`
+	width:100%;
+	display: block;
+	margin: 0 auto;
+	width: 100%;
+`;
+/**
+position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%); */
