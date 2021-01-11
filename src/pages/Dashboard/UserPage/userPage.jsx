@@ -48,11 +48,21 @@ export default function UserPage(props) {
 	const [alertType, setAlertType] = useState('');
 	const [alertMessage, setAlertMessage] = useState('');
 	const [addUserPopup, setAddUserPopup] = useState(false);
+	const [showLoading, setShowLoading] = useState(false);
 
 	const { userList, status } = useSelector((state) => state.userListSlice);
 	const dispatch = useDispatch();
 
 	useEffect(() => dispatch(onGetUserList()), []);
+
+	useEffect(() => {
+		if (status === 'loading user list') {
+			setShowLoading(true);
+		} else if (status === 'loading user list over') {
+			setShowLoading(false);
+		}
+		// status === 'loading' ? setShowPopupLoading(true) : setShowPopupLoading(false);
+	}, [status]);
 
 	useEffect(() => {
 		if (addUserPopup && status === 'add user success') {
