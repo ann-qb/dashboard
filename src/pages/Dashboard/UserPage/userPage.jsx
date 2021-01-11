@@ -138,7 +138,7 @@ export default function UserPage(props) {
 
 			{createCards()}
 
-			<EditPopup isOpen={addUserPopup} onRequestClose={closeAddUserPopup} />
+			<EditPopup isOpen={addUserPopup} onRequestClose={closeAddUserPopup} title='Add User'/>
 		</PageContainer>
 	);
 }

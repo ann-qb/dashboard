@@ -180,7 +180,7 @@ export default function UserCard(props) {
 				<CreateAdminTaskTabs />
 			</ShowIfAuth>
 
-			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} data={data} />
+			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} data={data} title="Edit User"/>
 			<DeleteConfirmPopup id={data.id} isOpen={deletePopupIsOpen} onRequestClose={closeDeleteModal} />
 		</CardContainer>
 	);
