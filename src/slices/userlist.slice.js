@@ -31,13 +31,16 @@ export const onGetUserList = () => async (dispatch) => {
 	// try-catch // storeUserList
 	try {
 		const response = await fetch.get('http://user-dashboard.qburst.build:3002/user');
+		console.log(response);
+		console.log(response.data);
 		if (response.status === 200) {
-			dispatch(storeUserList({ userList: response.data }));
+			dispatch(storeUserList({ userList: response.data.data }));
 		} else {
 			console.log('Failed to fetch user list');
 		}
 	} catch (error) {
 		console.log(error);
+		console.log(error.response);
 	}
 	// end loading
 	// reset

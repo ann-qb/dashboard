@@ -179,6 +179,7 @@ export default function EditModal(props) {
 					className="button-primary"
 					onClick={() => {
 						validateData();
+						//props.onRequestClose();
 						//props.onSubmit();
 					}}>
 					Submit

@@ -95,12 +95,13 @@ export const onLogin = (data) => async (dispatch) => {
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
-			dispatch(login(response.data));
+			dispatch(login(response.data.data));
 		} else {
 			console.log('Something went wrong during login attempt!');
 		}
 	} catch (error) {
 		console.log(error);
+		console.log(error.response);
 		if (error?.response?.status === 401) {
 			console.log('Incorrect password');
 			dispatch(updateErrorMessage({ errorMessage: 'Incorrect password' }));
@@ -147,6 +148,33 @@ export const onSetPassword = (data) => async (dispatch) => {
 			dispatch(login(response.data));
 		} else {
 			console.log('Something went wrong while setting the password.');
+		}
+	} catch (error) {
+		console.log(error);
+		console.log(error.response);
+	}
+	dispatch(resetStatus()); // to indicate API call is over
+};
+
+export const onForgotPassword = (data) => async (dispatch) => {
+	// reset
+	dispatch(resetStatus());
+	// dispatch loading start
+	dispatch(updateStatus({ status: 'loading' }));
+	// try-catch fetch API
+	try {
+		const response = await axios.put('http://user-dashboard.qburst.build:3002/user/password/forgot', {
+			email: data.email,
+			link: 'http://localhost:3001/user/set-password',
+		});
+		console.log(response);
+		console.log(response.data);
+		if (response.status === 200) {
+			dispatch(updateStatus({ status: 'success' }));
+			// email sent msg
+			dispatch(updateStatus({ status: 'password reset email sent' }));
+		} else {
+			console.log('Something went wrong with the forgot password request.');
 		}
 	} catch (error) {
 		console.log(error);
