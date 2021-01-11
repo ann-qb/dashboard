@@ -49,27 +49,33 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await axios.post('http://localhost:3000/user/check', {
+		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/check', {
 			email: data.userName,
 		});
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
-			if (response.data === 'pending') {
+			const status = response.data.message;
+			if (status === 'pending') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'pending' }));
-			} else if (response.data === 'user exist') {
+			} else if (status === 'user exist') {
 				dispatch(updateVerifiedUser({ verifiedUserStatus: 'active' }));
-			} else if (response.data === 'inactive') {
-				dispatch(updateVerifiedUser({ verifiedUserStatus: 'inactive' }));
 			}
+			// else if (status === 'inactive') {
+			// 	dispatch(updateVerifiedUser({ verifiedUserStatus: 'inactive' }));
+			// }
 		} else {
 			console.log('Something went wrong while checking username!');
 		}
 	} catch (error) {
 		console.log(error);
+		console.log(error.response);
 		if (error?.response?.status === 400) {
 			console.log(error.response.data);
 			dispatch(updateVerifiedUser({ verifiedUserStatus: 'nonexistant' }));
+		} else if (error?.response?.status === 403) {
+			console.log(error.response.data);
+			dispatch(updateVerifiedUser({ verifiedUserStatus: 'inactive' }));
 		}
 	}
 	// dispatch(resetStatus()); // to indicate API call is over
@@ -82,7 +88,7 @@ export const onLogin = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await axios.post('http://localhost:3000/user/login', {
+		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/login', {
 			email: data.userName,
 			password: data.password,
 		});
@@ -110,7 +116,7 @@ export const onLogout = () => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await fetch.post('http://localhost:3000/user/logout');
+		const response = await fetch.post('http://user-dashboard.qburst.build:3002/user/logout');
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
@@ -131,7 +137,7 @@ export const onSetPassword = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await axios.put(`http://localhost:3000/password?${data.query}`, {
+		const response = await axios.put(`http://user-dashboard.qburst.build:3002/password?${data.query}`, {
 			password: data.password,
 		});
 		console.log(response);

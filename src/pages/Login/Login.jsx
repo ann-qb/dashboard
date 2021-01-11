@@ -107,7 +107,7 @@ export default function Login() {
 
 	// Side link buttons
 	const displayNewUserMessage = () => {
-		setMessage('Please check you inbox to find a mail or contact admin');
+		setMessage('Please check your inbox to find a mail with login instructions or contact admin');
 		setShowUsername(false);
 		setShowPassword(false);
 		setDisplayMessage(true);
@@ -119,7 +119,7 @@ export default function Login() {
 	};
 
 	const displayForgotPasswordMessage = () => {
-		setMessage('Please check you inbox to find a mail to reset the password');
+		setMessage('A link to reset the password has been sent to your registered email id');
 		setShowUsername(false);
 		setShowPassword(false);
 		setDisplayMessage(true);
