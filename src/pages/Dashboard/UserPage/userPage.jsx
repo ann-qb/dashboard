@@ -68,11 +68,11 @@ export default function UserPage(props) {
 	}, [status]);
 
 	useEffect(() => {
-		if (addUserPopup && status === 'add user success') {
+		if (!addUserPopup && status === 'add user success') {
 			setAlertType('success');
 			setAlertMessage('User added successfully!');
 			showAlertPopup();
-		} else if (addUserPopup && status === 'add user failed') {
+		} else if (!addUserPopup && status === 'add user failed') {
 			setAlertType('error');
 			setAlertMessage('Could not add user');
 			showAlertPopup();
