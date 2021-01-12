@@ -2,8 +2,8 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import Logo from '../../../assets/Images/logo_icon.png';
-import { onLogout } from './../../../slices/login.slice';
+import Logo from '../../assets/Images/logo_icon.png';
+import { onLogout } from '../../slices/login.slice';
 
 /**---------------- Styles ------------------*/
 const NavBar = styled.div`

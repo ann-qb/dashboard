@@ -1,4 +1,4 @@
-import SideNavigation from './SideNavigation';
+import SideNavigation from '../../components/SideNavigation';
 import Content from './Content';
 import { useHistory } from 'react-router-dom';
 /**---------------- Styles ------------------*/

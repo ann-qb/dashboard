@@ -1,4 +1,4 @@
-import SideNavigation from '../Dashboard/SideNavigation'
+import SideNavigation from '../../components/SideNavigation'
 import Content from './Content'
 
 const style = {
