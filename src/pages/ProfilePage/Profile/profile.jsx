@@ -83,7 +83,7 @@ const DetailsText = styled.p`
 	text-transform: capitalize;
 `;
 const iconStyle = {
-	color:'#000',
+	color: '#000',
 	cursor: 'pointer',
 };
 
@@ -101,6 +101,18 @@ export default function ProfilePage() {
 		} else if (status === 'edit user failed') {
 			setAlertType('error');
 			setAlertMessage('Could not update user profile');
+			setAlertDisplay(true);
+		} else if (status === 'change password success') {
+			setAlertType('success');
+			setAlertMessage('Updated password successfully!');
+			setAlertDisplay(true);
+		} else if (status === 'change password failed') {
+			setAlertType('error');
+			setAlertMessage('Could not update password');
+			setAlertDisplay(true);
+		} else if (status === 'old password was wrong') {
+			setAlertType('error');
+			setAlertMessage('Could not update password. The current password entered was incorrect.');
 			setAlertDisplay(true);
 		}
 	}, [status]);
@@ -123,8 +135,8 @@ export default function ProfilePage() {
 	const editDetailsModal = () => {
 		setEditDetailsIsOpen(true);
 	};
-	console.log('Prp')
-	console.log(useHistory())
+	console.log('Prp');
+	console.log(useHistory());
 	return (
 		<PageContainer>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
@@ -181,4 +193,3 @@ export default function ProfilePage() {
 		</PageContainer>
 	);
 }
-
