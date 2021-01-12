@@ -37,9 +37,14 @@ export default function CreateNewPassword(props) {
 		props.close();
 	};
 
+	const closeModal = ()=>{
+		setOldPassword(null)
+		props.close();
+	}
+
 	if (oldPassword) {
 		return (
-			<Modal style={modalStyle} isOpen={props.open} onRequestClose={props.close}>
+			<Modal style={modalStyle} isOpen={props.open} onRequestClose={closeModal}>
 				<HeadText>New Password</HeadText>
 				<PasswordField onChange={() => null} />
 				<Button className="button-primary" onClick={uploadNewPassword}>
@@ -49,7 +54,7 @@ export default function CreateNewPassword(props) {
 		);
 	} else {
 		return (
-			<Modal style={modalStyle} isOpen={props.open}>
+			<Modal style={modalStyle} isOpen={props.open} onRequestClose={closeModal}>
 				<HeadText>Current Password</HeadText>
 				<PasswordField onChange={() => null} />
 				<Button className="button-primary" onClick={validateOldPassword}>
