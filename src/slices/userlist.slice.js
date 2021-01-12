@@ -159,3 +159,37 @@ export const onDeleteUser = (data) => async (dispatch) => {
 	// reset
 	dispatch(resetStatus());
 };
+
+export const onChangePassword = (data) => async (dispatch) => {
+	// reset
+	dispatch(resetStatus());
+	// loading
+	dispatch(updateStatus({ status: 'loading' }));
+	// try-catch
+	try {
+		const response = await fetch.put('http://user-dashboard.qburst.build:3002/user/password/change', {
+			oldPassword: data.oldPassword,
+			newPassword: data.newPassword,
+		});
+		console.log(response);
+		console.log(response.data);
+		if (response.status === 200) {
+			dispatch(updateStatus({ status: 'change password success' }));
+			dispatch(login({ loggedUser: response.data.data.changePasswordUser, role: response.data.data.role }));
+			// notification display
+		} else {
+			console.log('Something went wrong while changing password.');
+			dispatch(updateStatus({ status: 'change password failed' }));
+		}
+	} catch (error) {
+		console.log(error);
+		console.log(error.response);
+		if (error?.response?.status === 401) {
+			console.log(error.response.data);
+		}
+		dispatch(updateStatus({ status: 'change password failed' }));
+	}
+	// end loading
+	// reset
+	dispatch(resetStatus());
+};
