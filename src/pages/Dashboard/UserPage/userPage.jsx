@@ -46,7 +46,7 @@ const EmptyDivToCompensateProfilePic = styled.div`
 	margin-right: 30px;
 `;
 
-export default function UserPage(props) {
+export default function UserPage() {
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
 	const [alertMessage, setAlertMessage] = useState('');

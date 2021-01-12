@@ -48,7 +48,7 @@ export default function ErrorPage(props) {
 	}
 
 	const redirectToLoginPage = () => {
-		history.push('/login');
+		history.replace('/login');
 	};
 
 	return (

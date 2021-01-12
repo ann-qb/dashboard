@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import {useEffect} from 'react'
-import {useHistory,useLocation} from 'react-router-dom'
+import { useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../../../assets/Images/logo_icon.png';
 import { onLogout } from './../../../slices/login.slice';
@@ -55,26 +55,16 @@ export default function SideNavigation(props) {
 	useEffect(() => {
 		let currentSelectedLink = document.querySelector('.activeNavLink');
 		currentSelectedLink.classList.remove('activeNavLink');
-		try{
+		try {
 			document.querySelector(`#${props.parentPage}`).classList.add('activeNavLink');
+		} catch {
+			console.log('No item exist with that id');
 		}
-		catch{
-			console.log('No item exist with that id')
-		}
-	}, [])
+	}, []);
 
-	// Change Selected link on page change
-	const changeSelection = ()=>{
-		let currentSelectedLink = document.querySelector('.activeNavLink');
-		currentSelectedLink.classList.remove('activeNavLink');
-		console.log(`>> ${currentSelectedLink}`)
-		console.log(`>> ${document.querySelector(`#${props.parentPage}`)}`);
-		//document.querySelector(`#${props.parentPage}`).classList.add('activeNavLink');
-	}
-	
 	const changePageRoute = (e) => {
 		const clickedDiv = e.target.closest('div');
-		if(clickedDiv.id === 'dashboard') history.push('/dashboard')
+		if (clickedDiv.id === 'dashboard') history.push('/dashboard');
 	};
 
 	return (
@@ -101,14 +91,11 @@ export default function SideNavigation(props) {
 					className="navLinks"
 					onClick={(e) => {
 						changePageRoute(e);
-						dispatch(onLogout());
-					}}
-				>
+					}}>
 					<ion-icon style={iconStyle} name="earth-outline"></ion-icon>
 					<p className="navigationText ">Contact Us</p>
 				</NavLinksDiv>
 			</div>
-			
 		</NavBar>
 	);
 }
