@@ -87,7 +87,7 @@ export default function Header() {
 			dispatch(onLogout());
 		}
 		else if(clickedDiv.id === 'profile'){
-			history.push('/dashboard/profile')
+			history.push('/profile')
 		}
 	}
 

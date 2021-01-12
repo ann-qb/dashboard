@@ -50,12 +50,16 @@ const LogoImage = styled.img`
 export default function SideNavigation(props) {
 	const history = useHistory();
 	const dispatch = useDispatch();
-	const changeSelection = (e) => {
-		const clickedDiv = e.target.closest('div');
+
+	// Change Selected link on page change
+	const changeSelection = ()=>{
 		let currentSelectedLink = document.querySelector('.activeNavLink');
 		currentSelectedLink.classList.remove('activeNavLink');
-
-		clickedDiv.classList.add('activeNavLink');
+		document.querySelector(`#${props.parentPage}`).classList.add('activeNavLink');
+	}
+	
+	const changePageRoute = (e) => {
+		const clickedDiv = e.target.closest('div');
 		if(clickedDiv.id === 'dashboard') history.push('/dashboard')
 	};
 
@@ -68,27 +72,29 @@ export default function SideNavigation(props) {
 			<div style={{ marginLeft: '10px' }}>
 				<SubTittles className="navigationText">MENU</SubTittles>
 
-				<NavLinksDiv id="dashboard" className="navLinks activeNavLink" onClick={changeSelection}>
+				<NavLinksDiv id="dashboard" className="navLinks activeNavLink" onClick={changePageRoute}>
 					<ion-icon class="navIcons" style={iconStyle} name="clipboard-outline"></ion-icon>
 					<p className="navigationText">Dashboard</p>
 				</NavLinksDiv>
 
 				<SubTittles className="navigationText">UTILITY</SubTittles>
 
-				<NavLinksDiv className="navLinks" onClick={changeSelection}>
+				<NavLinksDiv className="navLinks" onClick={changePageRoute}>
 					<ion-icon style={iconStyle} name="settings-outline"></ion-icon>
 					<p className="navigationText ">Settings</p>
 				</NavLinksDiv>
 				<NavLinksDiv
 					className="navLinks"
 					onClick={(e) => {
-						changeSelection(e);
+						changePageRoute(e);
 						dispatch(onLogout());
-					}}>
+					}}
+				>
 					<ion-icon style={iconStyle} name="log-out-outline"></ion-icon>
 					<p className="navigationText ">Logout</p>
 				</NavLinksDiv>
 			</div>
+			{changeSelection}
 		</NavBar>
 	);
 }

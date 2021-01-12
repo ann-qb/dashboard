@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import LoginPage from './pages/Login';
 import DashboardPage from './pages/Dashboard';
+import ProfilePage from './pages/ProfilePage'
 import ErrorPage from './pages/ErrorPage';
 import SetPasswordPage from './pages/SetPasswordPage';
 
@@ -25,6 +26,9 @@ function App() {
 					</Route>
 					<PrivateRoute path="/dashboard">
 						<DashboardPage />
+					</PrivateRoute>
+					<PrivateRoute path="/profile">
+						<ProfilePage />
 					</PrivateRoute>
 					<PrivateRoute path="/errorpage">
 						<ErrorPage errorType="100" />
