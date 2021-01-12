@@ -95,9 +95,9 @@ export const onEditUser = (data) => async (dispatch, getState) => {
 	// try-catch // onGetUserList
 	try {
 		const response = await fetch.put(
-			data.id
-				? `http://user-dashboard.qburst.build:3002/user/${data.id}`
-				: 'http://user-dashboard.qburst.build:3002/user',
+			data.editSelf
+				? 'http://user-dashboard.qburst.build:3002/user'
+				: `http://user-dashboard.qburst.build:3002/user/${data.id}`,
 			{
 				...data.userData,
 			}
@@ -105,6 +105,8 @@ export const onEditUser = (data) => async (dispatch, getState) => {
 		console.log(response.data);
 		if (response.status === 200) {
 			dispatch(updateStatus({ status: 'edit user success' }));
+			console.log(data.id);
+			console.log(loggedUser.id);
 			if (data.id === loggedUser.id) {
 				dispatch(login({ loggedUser: { ...loggedUser, ...data.userData }, role }));
 			}
@@ -118,7 +120,7 @@ export const onEditUser = (data) => async (dispatch, getState) => {
 		console.log(error);
 		console.log(error.response);
 		// 404 error - put not post
-		// 400 - pending status, validation isAlpha
+		// 400 - pending status, validation isAlpha, edit other admins
 		if (error?.response?.status === 401) {
 			console.log(error.response.data);
 		}
@@ -154,6 +156,40 @@ export const onDeleteUser = (data) => async (dispatch) => {
 			console.log(error.response.data);
 		}
 		dispatch(updateStatus({ status: 'delete user failed' }));
+	}
+	// end loading
+	// reset
+	dispatch(resetStatus());
+};
+
+export const onChangePassword = (data) => async (dispatch) => {
+	// reset
+	dispatch(resetStatus());
+	// loading
+	dispatch(updateStatus({ status: 'loading' }));
+	// try-catch
+	try {
+		const response = await fetch.put('http://user-dashboard.qburst.build:3002/user/password/change', {
+			oldPassword: data.oldPassword,
+			newPassword: data.newPassword,
+		});
+		console.log(response);
+		console.log(response.data);
+		if (response.status === 200) {
+			dispatch(updateStatus({ status: 'change password success' }));
+			dispatch(login({ loggedUser: response.data.data.changePasswordUser, role: response.data.data.role }));
+			// notification display
+		} else {
+			console.log('Something went wrong while changing password.');
+			dispatch(updateStatus({ status: 'change password failed' }));
+		}
+	} catch (error) {
+		console.log(error);
+		console.log(error.response);
+		if (error?.response?.status === 401) {
+			console.log(error.response.data);
+		}
+		dispatch(updateStatus({ status: 'change password failed' }));
 	}
 	// end loading
 	// reset

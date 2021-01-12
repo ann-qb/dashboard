@@ -16,12 +16,11 @@ const CardContainer = styled.div`
 	padding: 10px 10px;
 	background-color: #fff;
 
-	// -youbkit-touch-callout: none; 
-	// -youbkit-user-select: none;   
-	// -moz-user-select: none;	   
-	// -ms-user-select: none;		
-	// user-select: none;			
-								  
+	// -youbkit-touch-callout: none;
+	// -youbkit-user-select: none;
+	// -moz-user-select: none;
+	// -ms-user-select: none;
+	// user-select: none;
 `;
 
 const UserTabs = styled.div`
@@ -34,7 +33,7 @@ const DetailsTabs = styled.div`
 	display: flex;
 	align-items: center;
 	width: 25%;
-	height:100%;
+	height: 100%;
 `;
 
 const StatusText = styled.p`
@@ -79,15 +78,16 @@ const ProfilePicHolder = styled.span`
 	margin-right: 10px;
 `;
 
-const DetailsText=styled.p`
-	width:100%;
-	margin-right:10px;
-	overflow:scroll;
-`
+const DetailsText = styled.p`
+	width: 100%;
+	margin-right: 10px;
+	overflow: scroll;
+`;
 
 export default function UserCard(props) {
 	const { data } = props;
 	const { status } = useSelector((state) => state.userListSlice);
+	const { loggedUser } = useSelector((state) => state.loginSlice);
 
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
@@ -96,11 +96,11 @@ export default function UserCard(props) {
 	const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
 
 	useEffect(() => {
-		if (editPopupIsOpen && status === 'edit user success') {
+		if (!editPopupIsOpen && status === 'edit user success') {
 			setAlertType('success');
 			setAlertMessage('User details updated successfully!');
 			showAlertPopup();
-		} else if (editPopupIsOpen && status === 'edit user failed') {
+		} else if (!editPopupIsOpen && status === 'edit user failed') {
 			setAlertType('error');
 			setAlertMessage('Could not update user details');
 			showAlertPopup();
@@ -113,7 +113,7 @@ export default function UserCard(props) {
 
 	const showAlertPopup = () => {
 		setAlertDisplay(true);
-		setEditPopupIsOpen(false);
+		//setEditPopupIsOpen(false);
 	};
 
 	// Additional function to be written wherever AlertPopup component is used
@@ -176,11 +176,16 @@ export default function UserCard(props) {
 				</DetailsTabs>
 			</UserTabs>
 
+			{/* {!(data.status === 'pending' || data.Role.name === 'admin' || data.id === loggedUser.id) ? (
+				<ShowIfAuth allowedRoles={['admin']}>
+					<CreateAdminTaskTabs />
+				</ShowIfAuth>
+			) : null} */}
 			<ShowIfAuth allowedRoles={['admin']}>
 				<CreateAdminTaskTabs />
 			</ShowIfAuth>
 
-			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} data={data} title="Edit User"/>
+			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} data={data} title="Edit User" />
 			<DeleteConfirmPopup id={data.id} isOpen={deletePopupIsOpen} onRequestClose={closeDeleteModal} />
 		</CardContainer>
 	);

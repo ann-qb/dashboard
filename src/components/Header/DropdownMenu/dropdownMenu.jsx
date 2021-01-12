@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const DropdownWrapper = styled.div`
 	position: relative;
@@ -56,10 +57,10 @@ export default function Dropdown(props) {
 			</HeaderWrapper>
 			{isOpen && props.role !== 'ADMIN' ? (
 				<DroppedContent>
-					<DroppedButtonWrapper id="profile" onClick={props.action}>
-						<ion-icon style={{ marginRight: '8px' }} name="create-outline"></ion-icon>
-						<p>Profile</p>
-					</DroppedButtonWrapper>
+						<DroppedButtonWrapper id="profile" onClick={props.action}>
+							<ion-icon style={{ marginRight: '8px' }} name="create-outline"></ion-icon>
+							<p>Profile</p>
+						</DroppedButtonWrapper>
 					<DroppedButtonWrapper id="logOut" onClick={props.action}>
 						<ion-icon style={{ marginRight: '8px' }} name="log-out-outline"></ion-icon>
 						<p>Log Out</p>

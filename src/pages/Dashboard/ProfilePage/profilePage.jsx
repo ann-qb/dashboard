@@ -4,6 +4,9 @@ import CreateNewPassword from '../../../components/Popups/CreateNewPassword';
 import EditPopup from '../../../components/Popups/EditPopup';
 import ProfilePic from '../../../assets/Images/profilePic_large.png';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import AlertPopup from '../../../components/Popups/AlertPopups';
+import { useHistory } from 'react-router-dom';
 
 const PageContainer = styled.div`
 	padding: 25px;
@@ -83,11 +86,34 @@ const iconStyle = {
 	cursor: 'pointer',
 };
 
-export default function ProfilePage(props) {
+export default function ProfilePage() {
 	const [createPassIsOpen, setCreatePassIsOpen] = useState(false);
 	const [editDetailsIsOpen, setEditDetailsIsOpen] = useState(false);
 
 	const { loggedUser, role } = useSelector((state) => state.loginSlice);
+	const { status } = useSelector((state) => state.userListSlice);
+	useEffect(() => {
+		if (status === 'edit user success') {
+			setAlertType('success');
+			setAlertMessage('User profile updated successfully!');
+			setAlertDisplay(true);
+		} else if (status === 'edit user failed') {
+			setAlertType('error');
+			setAlertMessage('Could not update user profile');
+			setAlertDisplay(true);
+		}
+	}, [status]);
+
+	const [alertDisplay, setAlertDisplay] = useState(false);
+	const [alertType, setAlertType] = useState('');
+	const [alertMessage, setAlertMessage] = useState('');
+
+	// Additional function to be written wherever AlertPopup component is used
+	if (alertDisplay) {
+		setTimeout(() => {
+			setAlertDisplay(false);
+		}, 5000);
+	}
 
 	const openCreatePasswordModal = () => {
 		setCreatePassIsOpen(true);
@@ -96,9 +122,11 @@ export default function ProfilePage(props) {
 	const editDetailsModal = () => {
 		setEditDetailsIsOpen(true);
 	};
-
+	console.log('Prp')
+	console.log(useHistory())
 	return (
 		<PageContainer>
+			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
 			<p className="pageHeaders blackFont">Profile</p>
 			<ProfileCardWrapper>
 				<ProfileDetailsWrapper className="cards">

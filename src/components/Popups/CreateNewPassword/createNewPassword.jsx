@@ -27,6 +27,7 @@ const Button = styled.button`
 
 export default function CreateNewPassword(props) {
 	const [oldPassword, setOldPassword] = useState('');
+	const [newPassword, setNewPassword] = useState('');
 
 	const validateOldPassword = () => {
 		setOldPassword('OldPass');
@@ -41,7 +42,7 @@ export default function CreateNewPassword(props) {
 		return (
 			<Modal style={modalStyle} isOpen={props.open} onRequestClose={props.close}>
 				<HeadText>New Password</HeadText>
-				<PasswordField onChange={() => null} />
+				<PasswordField id={'oldpswd'} fieldValue={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
 				<Button className="button-primary" onClick={uploadNewPassword}>
 					Save
 				</Button>
@@ -51,7 +52,7 @@ export default function CreateNewPassword(props) {
 		return (
 			<Modal style={modalStyle} isOpen={props.open}>
 				<HeadText>Current Password</HeadText>
-				<PasswordField onChange={() => null} />
+				<PasswordField id={'newpswd'} fieldValue={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
 				<Button className="button-primary" onClick={validateOldPassword}>
 					Next
 				</Button>

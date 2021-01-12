@@ -5,15 +5,15 @@ import styled from 'styled-components';
 import { onAddUser, onEditUser } from '../../../slices/userlist.slice';
 
 /**---------------- Styles ------------------*/
-const Title=styled.p`
-	padding-left:5px;
-	font-size:120%;
-	font-weight:500;
-	color:#000;
-`
+const Title = styled.p`
+	padding-left: 5px;
+	font-size: 120%;
+	font-weight: 500;
+	color: #000;
+`;
 const SeparatorLine = styled.hr`
 	margin: 10px 0;
-	border: 1px solid #dcdde2;;
+	border: 1px solid #dcdde2; ;
 `;
 const SuperFieldWrapper = styled.div`
 	width: 100%;
@@ -69,9 +69,9 @@ export default function EditModal(props) {
 		setUserData({ ...userData, [e.target.name]: e.target.value });
 	};
 
-	let selectDisabled;
-	if (role !== 'admin') selectDisabled = true;
-	else selectDisabled = false;
+	// let selectDisabled;
+	// if (role !== 'admin') selectDisabled = true;
+	// else selectDisabled = false;
 
 	const cancelEdit = () => {
 		setUserData(userObj);
@@ -106,7 +106,7 @@ export default function EditModal(props) {
 			if (props.data) {
 				if (props.editSelf) {
 					const { status, ...rest } = userData;
-					dispatch(onEditUser({ userData: { ...rest } }));
+					dispatch(onEditUser({ userData: { ...rest }, id: props.data.id, editSelf: props.editSelf }));
 				} else {
 					// edit user
 					dispatch(onEditUser({ userData: { ...userData }, id: props.data.id }));
@@ -116,7 +116,6 @@ export default function EditModal(props) {
 				dispatch(onAddUser({ userData: { ...userData } }));
 				setUserData(userObj);
 			}
-			setUserData(userObj);
 		}
 	};
 	const modalStyle = {
@@ -163,7 +162,7 @@ export default function EditModal(props) {
 							id="status_dropdown"
 							value={userData.status}
 							onChange={handleInputChange}
-							disabled={selectDisabled && props.editSelf}>
+							disabled={props.editSelf}>
 							{props.data && props.data.status !== 'pending' ? (
 								<>
 									<option value="active">Active</option>
@@ -184,8 +183,7 @@ export default function EditModal(props) {
 					onClick={() => {
 						cancelEdit();
 						props.onRequestClose();
-					}}
-				>
+					}}>
 					Cancel
 				</button>
 				<button
@@ -195,8 +193,7 @@ export default function EditModal(props) {
 						validateData();
 						props.onRequestClose();
 						//props.onSubmit();
-					}}
-				>
+					}}>
 					Submit
 				</button>
 			</ButtonWrapper>
