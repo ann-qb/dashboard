@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ShowIfAuth from '../../../components/ShowIfAuth';
 import AlertPopup from '../../../components/Popups/AlertPopups';
 import EditPopup from '../../../components/Popups/EditPopup';
+import StatCard from '../../../components/StatCards'
 import { onGetUserList } from '../../../slices/userlist.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { BounceLoader } from 'react-spinners';
@@ -39,12 +40,13 @@ const HeaderTab = styled.div`
 	width: 25%;
 `;
 
-const EmptyDivToCompensateProfilePic = styled.div`
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-	margin-right: 30px;
-`;
+const StatCardWrapper = styled.div`
+	display:flex;
+	justify-content:space-around;
+	width:100%
+	height:fit-content;
+	margin:15px 0 20px 0;
+`
 
 export default function UserPage() {
 	const [alertDisplay, setAlertDisplay] = useState(false);
@@ -152,6 +154,18 @@ export default function UserPage() {
 	return (
 		<PageContainer>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
+			<ShowIfAuth allowedRoles={['admin']}>
+				<>
+					<p className="pageHeaders blackFont">Stats</p>
+					<StatCardWrapper>
+						<StatCard type="users" count={totalUsers} />
+						<StatCard type="active_users" count={activeUsers} />
+						<StatCard type="pending_users" count={pendingUsers} />
+						<StatCard type="inactive_users" count={inactiveUsers} />
+					</StatCardWrapper>
+				</>
+			</ShowIfAuth>
+
 			<p className="pageHeaders blackFont">Users</p>
 			<ShowIfAuth allowedRoles={['admin']}>
 				<AddButton className="button-primary" onClick={openAddUserPopup}>
