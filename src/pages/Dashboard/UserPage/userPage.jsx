@@ -56,6 +56,27 @@ export default function UserPage() {
 	const { userList, status } = useSelector((state) => state.userListSlice);
 	const dispatch = useDispatch();
 
+	const [totalUsers, setTotalUsers] = useState(0);
+	const [activeUsers, setActiveUsers] = useState(0);
+	const [pendingUsers, setPendingUsers] = useState(0);
+	const [inactiveUsers, setInactiveUsers] = useState(0);
+	useEffect(() => {
+		// const totalUsers = userList.length;
+		// const activeUsers = userList.reduce((acc, item) => (item.status === 'active' ? acc + 1 : acc), 0);
+		// const pendingUsers = userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0);
+		// const inactiveUsers = userList.reduce((acc, item) => (item.status === 'inactive' ? acc + 1 : acc), 0);
+
+		setTotalUsers(userList.length);
+		setActiveUsers(userList.reduce((acc, item) => (item.status === 'active' ? acc + 1 : acc), 0));
+		setPendingUsers(userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0));
+		setInactiveUsers(userList.reduce((acc, item) => (item.status === 'inactive' ? acc + 1 : acc), 0));
+	}, [userList]);
+
+	console.log(totalUsers);
+	console.log(activeUsers);
+	console.log(pendingUsers);
+	console.log(inactiveUsers);
+
 	useEffect(() => dispatch(onGetUserList()), []);
 
 	useEffect(() => {

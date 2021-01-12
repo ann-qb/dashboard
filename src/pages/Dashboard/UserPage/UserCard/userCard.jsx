@@ -87,7 +87,7 @@ const DetailsText = styled.p`
 export default function UserCard(props) {
 	const { data } = props;
 	const { status } = useSelector((state) => state.userListSlice);
-	const { loggedUser } = useSelector((state) => state.loginSlice);
+	// const { loggedUser } = useSelector((state) => state.loginSlice);
 
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
