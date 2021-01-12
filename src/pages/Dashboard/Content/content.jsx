@@ -3,7 +3,6 @@ import Header from '../../../components/Header';
 import { Route, BrowserRouter as Router, Switch, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import PrivateRoute from '../../../components/PrivateRoute';
 import UserPage from '../UserPage';
-import ProfilePage from '../ProfilePage';
 
 /**---------------- Styles ------------------*/
 const ContentContainer = styled.div`
@@ -19,10 +18,7 @@ export default function Content() {
 			<Header />
 			<Router>
 				<Switch>
-					<PrivateRoute exact path={`${path}/profile`}>
-						<ProfilePage />
-					</PrivateRoute>
-					<PrivateRoute exact path={`${path}`}>
+					<PrivateRoute exact path="/dashboard">
 						<UserPage />
 					</PrivateRoute>
 				</Switch>
