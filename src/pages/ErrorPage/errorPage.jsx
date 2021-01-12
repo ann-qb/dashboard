@@ -6,6 +6,10 @@ import UnknownImg from '../../assets/Images/unknown_error.png';
 import { Redirect, useHistory } from 'react-router-dom';
 
 const PageWrapper = styled.div`
+	display: flex;
+	flex-direction:column;
+	justify-content: center;
+	align-items: center;
 	height: 90vh;
 	padding: 15px;
 	text-align: center;
@@ -49,7 +53,7 @@ export default function ErrorPage(props) {
 
 	return (
 		<>
-			<Header />
+			<Header page="error"/>
 			<PageWrapper>
 				<ErrorImage src={imageSrc} />
 				<ErrorMessage>{errorMessage}</ErrorMessage>

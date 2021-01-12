@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import styled from 'styled-components';
 
 /** Expected props
@@ -40,6 +40,10 @@ export default function PasswordField(props) {
 	let fieldId;
 	if (props.id) fieldId = props.id;
 	else fieldId = 'passwordInputField';
+
+	useEffect(() => {
+		setFieldContent(null)
+	}, [props.id])
 
 	const changePasswordState = () => {
 		setPasswordShown(passwordShown ? false : true);

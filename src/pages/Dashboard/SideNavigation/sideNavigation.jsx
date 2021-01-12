@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import {useEffect} from 'react'
 import {useHistory,useLocation} from 'react-router-dom'
 import styled from 'styled-components';
 import Logo from '../../../assets/Images/logo_icon.png';
@@ -51,11 +52,24 @@ export default function SideNavigation(props) {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
+	useEffect(() => {
+		let currentSelectedLink = document.querySelector('.activeNavLink');
+		currentSelectedLink.classList.remove('activeNavLink');
+		try{
+			document.querySelector(`#${props.parentPage}`).classList.add('activeNavLink');
+		}
+		catch{
+			console.log('No item exist with that id')
+		}
+	}, [])
+
 	// Change Selected link on page change
 	const changeSelection = ()=>{
 		let currentSelectedLink = document.querySelector('.activeNavLink');
 		currentSelectedLink.classList.remove('activeNavLink');
-		document.querySelector(`#${props.parentPage}`).classList.add('activeNavLink');
+		console.log(`>> ${currentSelectedLink}`)
+		console.log(`>> ${document.querySelector(`#${props.parentPage}`)}`);
+		//document.querySelector(`#${props.parentPage}`).classList.add('activeNavLink');
 	}
 	
 	const changePageRoute = (e) => {
@@ -73,7 +87,7 @@ export default function SideNavigation(props) {
 				<SubTittles className="navigationText">MENU</SubTittles>
 
 				<NavLinksDiv id="dashboard" className="navLinks activeNavLink" onClick={changePageRoute}>
-					<ion-icon class="navIcons" style={iconStyle} name="clipboard-outline"></ion-icon>
+					<ion-icon class="navIcons" style={iconStyle} name="briefcase-outline"></ion-icon>
 					<p className="navigationText">Dashboard</p>
 				</NavLinksDiv>
 
@@ -90,11 +104,11 @@ export default function SideNavigation(props) {
 						dispatch(onLogout());
 					}}
 				>
-					<ion-icon style={iconStyle} name="log-out-outline"></ion-icon>
-					<p className="navigationText ">Logout</p>
+					<ion-icon style={iconStyle} name="earth-outline"></ion-icon>
+					<p className="navigationText ">Contact Us</p>
 				</NavLinksDiv>
 			</div>
-			{changeSelection}
+			
 		</NavBar>
 	);
 }

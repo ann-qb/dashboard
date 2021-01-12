@@ -12,7 +12,7 @@ export default function Dashboard(props) {
 	console.log(useHistory())
 	return (
 		<div style={style}>
-			<SideNavigation />
+			<SideNavigation parentPage="dashboard" />
 			<Content />
 		</div>
 	);

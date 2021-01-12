@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import PasswordField from '../../../pages/Login/PasswordField';
 import Modal from 'react-modal';
 import { useState } from 'react';
+import {useDispatch} from 'react-redux'
+import {onChangePassword} from '../../../slices/userlist.slice'
 
 const modalStyle = {
 	overlay: {},
@@ -26,23 +28,36 @@ const Button = styled.button`
 `;
 
 export default function CreateNewPassword(props) {
+	const dispatch = useDispatch();
+	const [oldPasswordEntered, setOldPasswordEntered] = useState(false)
+	let newPassword
 	const [oldPassword, setOldPassword] = useState('');
-	const [newPassword, setNewPassword] = useState('');
+	// const [newPassword, setNewPassword] = useState('')
 
 	const validateOldPassword = () => {
-		setOldPassword('OldPass');
+		setOldPassword(document.querySelector('#old_pass').value);
+		setOldPasswordEntered(true)
 	};
 
 	const uploadNewPassword = () => {
-		setOldPassword(null);
+		// setOldPassword(e.target.value);
+		newPassword = document.querySelector('#new_pass').value;
+		console.log(newPassword);
+		dispatch(onChangePassword({ oldPassword, newPassword }));
+		setOldPasswordEntered(false);
 		props.close();
 	};
 
-	if (oldPassword) {
+	const closeModal = ()=>{
+		setOldPasswordEntered(false);
+		props.close();
+	}
+
+	if (oldPasswordEntered) {
 		return (
-			<Modal style={modalStyle} isOpen={props.open} onRequestClose={props.close}>
+			<Modal style={modalStyle} isOpen={props.open} onRequestClose={closeModal}>
 				<HeadText>New Password</HeadText>
-				<PasswordField id={'oldpswd'} fieldValue={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+				<PasswordField id="new_pass" onChange={()=>null} />
 				<Button className="button-primary" onClick={uploadNewPassword}>
 					Save
 				</Button>
@@ -50,9 +65,9 @@ export default function CreateNewPassword(props) {
 		);
 	} else {
 		return (
-			<Modal style={modalStyle} isOpen={props.open}>
+			<Modal style={modalStyle} isOpen={props.open} onRequestClose={closeModal}>
 				<HeadText>Current Password</HeadText>
-				<PasswordField id={'newpswd'} fieldValue={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+				<PasswordField id="old_pass" onChange={()=>null} />
 				<Button className="button-primary" onClick={validateOldPassword}>
 					Next
 				</Button>
