@@ -9,7 +9,7 @@ const style = {
 export default function Dashboard(props) {
 	return (
 		<div style={style}>
-			<SideNavigation />
+			<SideNavigation parentPage="dashboard" />
 			<Content />
 		</div>
 	);
