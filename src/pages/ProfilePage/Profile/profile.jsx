@@ -43,7 +43,7 @@ const ProfileDetailsWrapper = styled.div`
 	width: 100%;
 	// width: 32%;
 	// height: 100%;
-	padding: 25px;
+	padding: 25px !important;
 `;
 
 const ProfilePicContainer = styled.div`
@@ -80,6 +80,7 @@ const DetailsText = styled.p`
 	text-transform: capitalize;
 `;
 const iconStyle = {
+	color:'#000',
 	cursor: 'pointer',
 };
 
@@ -104,7 +105,7 @@ export default function ProfilePage(props) {
 				<ProfileDetailsWrapper className="cards">
 					<PictureAreaWrapper>
 						<ProfilePicContainer />
-						<NameText>Ann</NameText>
+						<NameText>{loggedUser.firstname}</NameText>
 						<RoleText>{role}</RoleText>
 					</PictureAreaWrapper>
 
@@ -124,9 +125,9 @@ export default function ProfilePage(props) {
 						Admins won't edit it for themselves
 						Users can't edit it */}
 						<DetailsLabel>
-							<p>Status</p>
+							<p>Mobile</p>
 						</DetailsLabel>
-						<DetailsText>{loggedUser.status}</DetailsText>
+						<DetailsText>9874563201</DetailsText>
 						<button className="button-primary" onClick={openCreatePasswordModal}>
 							Change password
 						</button>
@@ -153,19 +154,3 @@ export default function ProfilePage(props) {
 	);
 }
 
-/**
- * <ProfileActionWrapper className="cards">
-					<p>Change Password</p>
-					<SeparationLine />
-					<PasswordFieldsWrapper>
-						<PasswordFieldContainer style={{ marginRight: '10px' }}>
-							<p style={{ marginBottom: '-15px' }}>Old Password</p>
-							<PasswordField onChange={() => null} id="new_password" />
-						</PasswordFieldContainer>
-						<PasswordFieldContainer style={{ marginLeft: '10px' }}>
-							<p style={{ marginBottom: '-15px' }}>New Password</p>
-							<PasswordField onChange={() => null} id="new_password" />
-						</PasswordFieldContainer>
-					</PasswordFieldsWrapper>
-				</ProfileActionWrapper>
- */
