@@ -10,13 +10,13 @@ const Card = styled.div`
 	left: 50%;
 	justify-content: center;
 	width: 350px;
-	padding: 20px 20px;
+	padding: 20px 20px !important;
 	text-align:center;
 	transform: translate(-50%, -50%);
 `;
 const Button=styled.button`
-	width:100%;
-	margin-top:20px;
+	width:90%;
+	margin-top:25px;
 `
 const MessageText = styled.p`
 	color:#000;
@@ -26,7 +26,7 @@ const MessageText = styled.p`
 const StyledLogo = styled.img`
 	width: 120px;
 	height: auto;
-	margin-bottom:10px;
+	margin-bottom:20px;
 	text-align: center;
 `;
 
