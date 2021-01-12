@@ -53,7 +53,7 @@ export default function ErrorPage(props) {
 
 	return (
 		<>
-			<Header />
+			<Header page="error"/>
 			<PageWrapper>
 				<ErrorImage src={imageSrc} />
 				<ErrorMessage>{errorMessage}</ErrorMessage>

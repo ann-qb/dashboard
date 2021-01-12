@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfilePic from '../../assets/Images/profilePic_small.png';
+import Logo from '../../assets/Images/logo_black.png'
 import { useSelector } from 'react-redux';
 import DropdownMenu from './DropdownMenu'
 import { useDispatch } from 'react-redux';
@@ -23,7 +24,11 @@ const LogoText = styled.p`
 	margin-left: 30px;
 	font-family: 'Poppins', sans-serif;
 `;
-
+const LogoImage = styled.img`
+	height:50px;
+	width:auto;
+	margin-left:10px;
+`
 const ActionDiv = styled.div`
 	display: flex;
 	align-items: center;
@@ -65,12 +70,12 @@ const ProfilePicBox = styled.div`
 	margin-right: 10px;
 `;
 
-export default function Header() {
+export default function Header(props) {
 	const { loggedUser } = useSelector((state) => state.loginSlice);
 
 	const history = useHistory()
 	const dispatch = useDispatch();
-	
+	console.log(props.page)
 	const generateHeaderActions = () => {
 		return (
 			<ActionDiv>
@@ -93,13 +98,16 @@ export default function Header() {
 
 	return (
 		<HeaderBar>
-			<SearchBox>
-				<span style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-					<FontAwesomeIcon style={{ color: '#74788d' }} icon="search" />
-				</span>
+			{props.page === 'error' ? (<LogoImage src={Logo}/>) : (
+				<SearchBox>
+					<span style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+						<FontAwesomeIcon style={{ color: '#74788d' }} icon="search" />
+					</span>
 
-				<SearchInput type="text" placeholder="Search..." />
-			</SearchBox>
+					<SearchInput type="text" placeholder="Search..." />
+				</SearchBox>
+			)}
+			
 			{loggedUser ? generateHeaderActions() : null}
 		</HeaderBar>
 	);
