@@ -66,7 +66,6 @@ const deleteIconStyle = {
 	margin: '5px',
 	color: '#f46a6a',
 	cursor: 'pointer',
-	pointerEvents: 'none',
 };
 
 const ProfilePicHolder = styled.span`
