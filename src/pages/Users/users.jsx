@@ -12,7 +12,7 @@ export default function Users(props) {
 	console.log(useHistory());
 	return (
 		<div style={style}>
-			<SideNavigation parentPage="dashboard" />
+			<SideNavigation parentPage="users" />
 			<Content />
 		</div>
 	);
