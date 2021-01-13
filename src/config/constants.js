@@ -1,1 +1,1 @@
-export const baseURL = '';
+export const baseURL = 'http://user-dashboard.qburst.build:3002';

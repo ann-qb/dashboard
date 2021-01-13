@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import ShowIfAuth from '../../../components/ShowIfAuth';
 import AlertPopup from '../../../components/Popups/AlertPopups';
 import EditPopup from '../../../components/Popups/EditPopup';
-import StatCard from '../../../components/StatCards'
+import StatCard from '../../../components/StatCards';
 import { onGetUserList } from '../../../slices/userlist.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { BounceLoader } from 'react-spinners';
@@ -23,13 +23,13 @@ const StatCardWrapper = styled.div`
 	width:100%
 	height:fit-content;
 	margin:15px 0 20px 0;
-`
+`;
 
 export default function UserPage() {
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
 	const [alertMessage, setAlertMessage] = useState('');
-	
+
 	const [showLoading, setShowLoading] = useState(false);
 
 	const { userList, status } = useSelector((state) => state.userListSlice);
@@ -40,8 +40,10 @@ export default function UserPage() {
 	const [pendingUsers, setPendingUsers] = useState(0);
 	const [inactiveUsers, setInactiveUsers] = useState(0);
 	useEffect(() => {
-		setTotalUsers(userList.length);
-		setActiveUsers(userList.reduce((acc, item) => (item.status === 'active' ? acc + 1 : acc), 0));
+		setTotalUsers(userList.filter((each) => each.Role.name !== 'admin').length);
+		setActiveUsers(
+			userList.reduce((acc, item) => (item.status === 'active' && item.Role.name !== 'admin' ? acc + 1 : acc), 0)
+		);
 		setPendingUsers(userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0));
 		setInactiveUsers(userList.reduce((acc, item) => (item.status === 'inactive' ? acc + 1 : acc), 0));
 	}, [userList]);
@@ -59,7 +61,6 @@ export default function UserPage() {
 			setAlertDisplay(false);
 		}, 5000);
 	}
-
 
 	return (
 		<PageContainer>

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { baseURL } from '../config/constants';
 import fetch from './../utils/axios';
 import { login } from './login.slice';
 
@@ -31,7 +32,7 @@ export const onGetUserList = () => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading user list' }));
 	// try-catch // storeUserList
 	try {
-		const response = await fetch.get('http://user-dashboard.qburst.build:3002/user');
+		const response = await fetch.get(`${baseURL}/user`);
 		console.log(response);
 		console.log(response.data);
 		if (response.status === 200) {
@@ -56,7 +57,7 @@ export const onAddUser = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch // onGetUserList
 	try {
-		const response = await fetch.post('http://user-dashboard.qburst.build:3002/user', {
+		const response = await fetch.post(`${baseURL}/user`, {
 			...data.userData,
 			role: 'user',
 			link: 'http://localhost:3001/user/set-password',
@@ -94,14 +95,9 @@ export const onEditUser = (data) => async (dispatch, getState) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch // onGetUserList
 	try {
-		const response = await fetch.put(
-			data.editSelf
-				? 'http://user-dashboard.qburst.build:3002/user'
-				: `http://user-dashboard.qburst.build:3002/user/${data.id}`,
-			{
-				...data.userData,
-			}
-		);
+		const response = await fetch.put(data.editSelf ? `${baseURL}/user` : `${baseURL}/user/${data.id}`, {
+			...data.userData,
+		});
 		console.log(response.data);
 		if (response.status === 200) {
 			dispatch(updateStatus({ status: 'edit user success' }));
@@ -138,7 +134,7 @@ export const onDeleteUser = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch // onGetUserList
 	try {
-		const response = await fetch.delete(`http://user-dashboard.qburst.build:3002/user/delete/${data.id}`);
+		const response = await fetch.delete(`${baseURL}/user/delete/${data.id}`);
 		console.log(response);
 		console.log(response.data);
 		if (response.status === 200) {
@@ -169,7 +165,7 @@ export const onChangePassword = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch
 	try {
-		const response = await fetch.put('http://user-dashboard.qburst.build:3002/user/password/change', {
+		const response = await fetch.put(`${baseURL}/user/password/change`, {
 			oldPassword: data.oldPassword,
 			newPassword: data.newPassword,
 		});
