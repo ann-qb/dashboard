@@ -48,7 +48,8 @@ export default function ErrorPage(props) {
 	}
 
 	const redirectToLoginPage = () => {
-		history.replace('/login');
+		// history.replace('/login');
+		history.goBack()
 	};
 
 	return (

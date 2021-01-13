@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-d
 import PrivateRoute from './components/PrivateRoute';
 import LoginPage from './pages/Login';
 import DashboardPage from './pages/Dashboard';
+import Users from './pages/Users'
 import ProfilePage from './pages/ProfilePage';
 import ErrorPage from './pages/ErrorPage';
 import SetPasswordPage from './pages/SetPasswordPage';
@@ -26,6 +27,9 @@ function App() {
 					</Route>
 					<PrivateRoute exact path="/dashboard">
 						<DashboardPage />
+					</PrivateRoute>
+					<PrivateRoute exact path="/users">
+						<Users />
 					</PrivateRoute>
 					<PrivateRoute path="/profile">
 						<ProfilePage />

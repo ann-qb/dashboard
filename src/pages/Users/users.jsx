@@ -7,12 +7,12 @@ const style = {
 	width: '100%',
 };
 
-export default function Dashboard(props) {
-	console.log('dp')
-	console.log(useHistory())
+export default function Users(props) {
+	console.log('dp');
+	console.log(useHistory());
 	return (
 		<div style={style}>
-			<SideNavigation parentPage="dashboard" />
+			<SideNavigation parentPage="users" />
 			<Content />
 		</div>
 	);

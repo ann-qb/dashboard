@@ -39,12 +39,6 @@ const HeaderTab = styled.div`
 	width: 25%;
 `;
 
-const EmptyDivToCompensateProfilePic = styled.div`
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-	margin-right: 30px;
-`;
 
 export default function UserPage() {
 	const [alertDisplay, setAlertDisplay] = useState(false);
@@ -56,27 +50,6 @@ export default function UserPage() {
 	const { userList, status } = useSelector((state) => state.userListSlice);
 	// const { loggedUser } = useSelector((state) => state.loginSlice);
 	const dispatch = useDispatch();
-
-	const [totalUsers, setTotalUsers] = useState(0);
-	const [activeUsers, setActiveUsers] = useState(0);
-	const [pendingUsers, setPendingUsers] = useState(0);
-	const [inactiveUsers, setInactiveUsers] = useState(0);
-	useEffect(() => {
-		// const totalUsers = userList.length;
-		// const activeUsers = userList.reduce((acc, item) => (item.status === 'active' ? acc + 1 : acc), 0);
-		// const pendingUsers = userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0);
-		// const inactiveUsers = userList.reduce((acc, item) => (item.status === 'inactive' ? acc + 1 : acc), 0);
-
-		setTotalUsers(userList.length);
-		setActiveUsers(userList.reduce((acc, item) => (item.status === 'active' ? acc + 1 : acc), 0));
-		setPendingUsers(userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0));
-		setInactiveUsers(userList.reduce((acc, item) => (item.status === 'inactive' ? acc + 1 : acc), 0));
-	}, [userList]);
-
-	console.log(totalUsers);
-	console.log(activeUsers);
-	console.log(pendingUsers);
-	console.log(inactiveUsers);
 
 	useEffect(() => dispatch(onGetUserList()), []);
 
@@ -114,7 +87,7 @@ export default function UserPage() {
 	}, [status]);
 
 	const createCards = () => {
-		return <> {!showLoading ? userList.map((each) => <UserCard key={each.id} data={each} />) : null}</>;
+		return <> {!showLoading ? userList.map((each) => <UserCard key={each.id} data={each} />).reverse() : null}</>;
 	};
 
 	// const createCards = () => {
@@ -165,6 +138,7 @@ export default function UserPage() {
 	return (
 		<PageContainer>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
+		
 			<p className="pageHeaders blackFont">Users</p>
 			<ShowIfAuth allowedRoles={['admin']}>
 				<AddButton className="button-primary" onClick={openAddUserPopup}>
