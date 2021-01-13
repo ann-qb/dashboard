@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-
-
 export default function StatCards(props){
   let color,bgColor,text
   if (props.type === 'users') {

@@ -48,6 +48,7 @@ export default function UserPage() {
 	const [showLoading, setShowLoading] = useState(false);
 
 	const { userList, status } = useSelector((state) => state.userListSlice);
+	// const { loggedUser } = useSelector((state) => state.loginSlice);
 	const dispatch = useDispatch();
 
 	useEffect(() => dispatch(onGetUserList()), []);
@@ -85,8 +86,20 @@ export default function UserPage() {
 		}
 	}, [status]);
 
+	// const createCards = () => {
+	// 	return <> {!showLoading ? userList.map((each) => <UserCard key={each.id} data={each} />).reverse() : null}</>;
+	// };
+
 	const createCards = () => {
-		return <> {!showLoading ? userList.map((each) => <UserCard key={each.id} data={each} />).reverse() : null}</>;
+		return (
+			<>
+				{!showLoading
+					? userList
+							.filter((each) => each.Role.name !== 'admin')
+							.map((each) => <UserCard key={each.id} data={each} />)
+					: null}
+			</>
+		);
 	};
 
 	const openAddUserPopup = () => {

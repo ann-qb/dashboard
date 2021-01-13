@@ -152,7 +152,7 @@ export default function EditModal(props) {
 				<SubFieldWrapper>
 					<SingleFieldGroup style={{ marginRight: '10px' }}>
 						<p>Email</p>
-						<Input type="email" name="email" value={userData.email} onChange={handleInputChange} />
+						<Input type="email" name="email" disabled={!props.editSelf} value={userData.email} onChange={handleInputChange} />
 						<p>{emailError}</p>
 					</SingleFieldGroup>
 					<SingleFieldGroup>

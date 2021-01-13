@@ -16,7 +16,6 @@ export default function Content() {
 	return (
 		<ContentContainer>
 			<Header />
-
 			<DashboardPage />
 		</ContentContainer>
 	);
