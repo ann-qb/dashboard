@@ -115,7 +115,7 @@ export default function UserPage() {
 	}, [status]);
 
 	const createCards = () => {
-		return <> {!showLoading ? userList.map((each) => <UserCard key={each.id} data={each} />) : null}</>;
+		return <> {!showLoading ? userList.map((each) => <UserCard key={each.id} data={each} />).reverse() : null}</>;
 	};
 
 	const openAddUserPopup = () => {
