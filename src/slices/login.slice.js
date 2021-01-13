@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { baseURL } from '../config/constants';
+import { baseRedirectURL, baseURL } from '../config/constants';
 import fetch from './../utils/axios';
 
 const initialState = { verifiedUser: null, loggedUser: null, role: null, status: 'idle', errorMessage: '' };
@@ -163,7 +163,7 @@ export const onForgotPassword = (data) => async (dispatch) => {
 	try {
 		const response = await axios.put(`${baseURL}/user/password/forgot`, {
 			email: data.email,
-			link: 'http://localhost:3001/user/set-password',
+			link: `${baseRedirectURL}/user/set-password`,
 		});
 		console.log(response);
 		console.log(response.data);

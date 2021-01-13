@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { baseURL } from '../config/constants';
+import { baseRedirectURL, baseURL } from '../config/constants';
 import fetch from './../utils/axios';
 import { login } from './login.slice';
 
@@ -60,7 +60,7 @@ export const onAddUser = (data) => async (dispatch) => {
 		const response = await fetch.post(`${baseURL}/user`, {
 			...data.userData,
 			role: 'user',
-			link: 'http://localhost:3001/user/set-password',
+			link: `${baseRedirectURL}/user/set-password`,
 		});
 		console.log(response);
 		if (response.status === 201) {
