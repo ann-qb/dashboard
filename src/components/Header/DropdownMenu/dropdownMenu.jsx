@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const DropdownWrapper = styled.div`
 	position: relative;
@@ -48,6 +49,20 @@ export default function Dropdown(props) {
 	const toggleDropdown = () => {
 		isOpen ? setIsOpen(false) : setIsOpen(true);
 	};
+
+	useEffect(() => {
+		const closeDropDown = () => {
+			setIsOpen(false);
+		};
+		if (isOpen) {
+			setTimeout(() => {
+				window.addEventListener('click', closeDropDown);
+			}, 0);
+		}
+		return () => {
+			window.removeEventListener('click', closeDropDown);
+		};
+	}, [isOpen]);
 
 	return (
 		<DropdownWrapper onClick={toggleDropdown}>
