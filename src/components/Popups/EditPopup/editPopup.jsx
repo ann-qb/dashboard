@@ -109,7 +109,8 @@ export default function EditModal(props) {
 					dispatch(onEditUser({ userData: { ...rest }, id: props.data.id, editSelf: props.editSelf }));
 				} else {
 					// edit user
-					dispatch(onEditUser({ userData: { ...userData }, id: props.data.id }));
+					const { email, ...rest } = userData;
+					dispatch(onEditUser({ userData: { ...rest }, id: props.data.id }));
 				}
 			} else {
 				// add user
@@ -152,7 +153,13 @@ export default function EditModal(props) {
 				<SubFieldWrapper>
 					<SingleFieldGroup style={{ marginRight: '10px' }}>
 						<p>Email</p>
-						<Input type="email" name="email" disabled={!props.editSelf} value={userData.email} onChange={handleInputChange} />
+						<Input
+							type="email"
+							name="email"
+							disabled={!props.editSelf}
+							value={userData.email}
+							onChange={handleInputChange}
+						/>
 						<p>{emailError}</p>
 					</SingleFieldGroup>
 					<SingleFieldGroup>
