@@ -86,21 +86,21 @@ export default function UserPage() {
 		}
 	}, [status]);
 
-	const createCards = () => {
-		return <> {!showLoading ? userList.map((each) => <UserCard key={each.id} data={each} />).reverse() : null}</>;
-	};
-
 	// const createCards = () => {
-	// 	return (
-	// 		<>
-	// 			{!showLoading
-	// 				? userList
-	// 						.filter((each) => each.Role.name !== 'admin' && each.id !== loggedUser.id)
-	// 						.map((each) => <UserCard key={each.id} data={each} />)
-	// 				: null}
-	// 		</>
-	// 	);
+	// 	return <> {!showLoading ? userList.map((each) => <UserCard key={each.id} data={each} />).reverse() : null}</>;
 	// };
+
+	const createCards = () => {
+		return (
+			<>
+				{!showLoading
+					? userList
+							.filter((each) => each.Role.name !== 'admin')
+							.map((each) => <UserCard key={each.id} data={each} />)
+					: null}
+			</>
+		);
+	};
 
 	const openAddUserPopup = () => {
 		setAddUserPopup(true);
