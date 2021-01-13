@@ -60,11 +60,12 @@ export default function SideNavigation(props) {
 		} catch {
 			console.log('No item exist with that id');
 		}
-	}, []);
+	}, );
 
 	const changePageRoute = (e) => {
 		const clickedDiv = e.target.closest('div');
 		if (clickedDiv.id === 'dashboard') history.push('/dashboard');
+		else if(clickedDiv.id === 'users') history.push('/users')
 	};
 
 	return (
@@ -81,6 +82,11 @@ export default function SideNavigation(props) {
 					<p className="navigationText">Dashboard</p>
 				</NavLinksDiv>
 
+				<NavLinksDiv id="users" className="navLinks" onClick={changePageRoute}>
+					<ion-icon class="navIcons" style={iconStyle} name="people-outline"></ion-icon>
+					<p className="navigationText">Users</p>
+				</NavLinksDiv>
+
 				<SubTittles className="navigationText">UTILITY</SubTittles>
 
 				<NavLinksDiv className="navLinks" onClick={changePageRoute}>
@@ -91,7 +97,8 @@ export default function SideNavigation(props) {
 					className="navLinks"
 					onClick={(e) => {
 						changePageRoute(e);
-					}}>
+					}}
+				>
 					<ion-icon style={iconStyle} name="earth-outline"></ion-icon>
 					<p className="navigationText ">Contact Us</p>
 				</NavLinksDiv>

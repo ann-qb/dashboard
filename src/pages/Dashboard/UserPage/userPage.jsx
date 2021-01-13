@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import UserCard from './UserCard';
 import { useEffect, useState } from 'react';
 import ShowIfAuth from '../../../components/ShowIfAuth';
 import AlertPopup from '../../../components/Popups/AlertPopups';
@@ -17,28 +16,6 @@ const PageContainer = styled.div`
 	height: 90vh;
 	overflow: scroll;
 `;
-const AddButton = styled.button`
-	margin-top: 15px;
-`;
-
-const UserCardHeadWrapper = styled.div`
-	display: flex;
-	width: 100%;
-	margin: 8px 0;
-	margin-top: 15px;
-	padding: 0 10px;
-	// background-color: #fff;
-`;
-
-const UserCardHeaders = styled.div`
-	display: flex;
-	width: 100%;
-	height: 100%;
-`;
-
-const HeaderTab = styled.div`
-	width: 25%;
-`;
 
 const StatCardWrapper = styled.div`
 	display:flex;
@@ -52,7 +29,7 @@ export default function UserPage() {
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
 	const [alertMessage, setAlertMessage] = useState('');
-	const [addUserPopup, setAddUserPopup] = useState(false);
+	
 	const [showLoading, setShowLoading] = useState(false);
 
 	const { userList, status } = useSelector((state) => state.userListSlice);
@@ -63,11 +40,6 @@ export default function UserPage() {
 	const [pendingUsers, setPendingUsers] = useState(0);
 	const [inactiveUsers, setInactiveUsers] = useState(0);
 	useEffect(() => {
-		// const totalUsers = userList.length;
-		// const activeUsers = userList.reduce((acc, item) => (item.status === 'active' ? acc + 1 : acc), 0);
-		// const pendingUsers = userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0);
-		// const inactiveUsers = userList.reduce((acc, item) => (item.status === 'inactive' ? acc + 1 : acc), 0);
-
 		setTotalUsers(userList.length);
 		setActiveUsers(userList.reduce((acc, item) => (item.status === 'active' ? acc + 1 : acc), 0));
 		setPendingUsers(userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0));
@@ -81,56 +53,6 @@ export default function UserPage() {
 
 	useEffect(() => dispatch(onGetUserList()), []);
 
-	useEffect(() => {
-		if (status === 'loading user list') {
-			setShowLoading(true);
-		} else if (status === 'loading user list over') {
-			setShowLoading(false);
-		}
-		// status === 'loading' ? setShowPopupLoading(true) : setShowPopupLoading(false);
-	}, [status]);
-
-	useEffect(() => {
-		if (!addUserPopup && status === 'add user success') {
-			setAlertType('success');
-			setAlertMessage('User added successfully!');
-			showAlertPopup();
-		} else if (!addUserPopup && status === 'add user failed') {
-			setAlertType('error');
-			setAlertMessage('Could not add user');
-			showAlertPopup();
-		}
-	}, [addUserPopup, status]);
-
-	useEffect(() => {
-		if (status === 'delete user success') {
-			setAlertType('success');
-			setAlertMessage('User deleted successfully!');
-			showAlertPopup();
-		} else if (status === 'delete user failed') {
-			setAlertType('error');
-			setAlertMessage('Could not delete user');
-			showAlertPopup();
-		}
-	}, [status]);
-
-	const createCards = () => {
-		return <> {!showLoading ? userList.map((each) => <UserCard key={each.id} data={each} />) : null}</>;
-	};
-
-	const openAddUserPopup = () => {
-		setAddUserPopup(true);
-	};
-
-	const closeAddUserPopup = () => {
-		setAddUserPopup(false);
-	};
-
-	const showAlertPopup = () => {
-		setAlertDisplay(true);
-		// setAddUserPopup(false);
-	};
-
 	// Additional function to be written wherever AlertPopup component is used
 	if (alertDisplay) {
 		setTimeout(() => {
@@ -138,18 +60,6 @@ export default function UserPage() {
 		}, 5000);
 	}
 
-	// Spinner div style (dynamic display)
-	let display = 'flex';
-	showLoading ? (display = 'flex') : (display = 'none');
-
-	const SpinnerDiv = styled.div`
-		display: ${display};
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 200px;
-		margin: auto 0;
-	`;
 
 	return (
 		<PageContainer>
@@ -165,38 +75,6 @@ export default function UserPage() {
 					</StatCardWrapper>
 				</>
 			</ShowIfAuth>
-
-			<p className="pageHeaders blackFont">Users</p>
-			<ShowIfAuth allowedRoles={['admin']}>
-				<AddButton className="button-primary" onClick={openAddUserPopup}>
-					+ Add Users
-				</AddButton>
-			</ShowIfAuth>
-
-			<UserCardHeadWrapper>
-				<UserCardHeaders>
-					<HeaderTab style={{ width: '30%' }}>
-						<p className="blackFont">User</p>
-					</HeaderTab>
-					<HeaderTab style={{ width: '50%' }}>
-						<p className="blackFont">Email</p>
-					</HeaderTab>
-					<HeaderTab>
-						<p className="blackFont">Status</p>
-					</HeaderTab>
-				</UserCardHeaders>
-
-				<ShowIfAuth allowedRoles={['admin']}>
-					<p className="blackFont">Actions</p>
-				</ShowIfAuth>
-			</UserCardHeadWrapper>
-
-			<SpinnerDiv>
-				<BounceLoader size={100} color={'#5673E8'} loading={showLoading} />
-			</SpinnerDiv>
-			{createCards()}
-
-			<EditPopup isOpen={addUserPopup} onRequestClose={closeAddUserPopup} title="Add User" />
 		</PageContainer>
 	);
 }

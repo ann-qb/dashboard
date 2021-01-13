@@ -40,7 +40,7 @@ const StatusText = styled.p`
 	width: fit-content;
 	height: fit-content;
 	padding: 2px 5px;
-	font-size: 65%;
+	font-size: 80%;
 	border-radius: 5px;
 	border: none;
 	color: ${(props) => props.textColor};

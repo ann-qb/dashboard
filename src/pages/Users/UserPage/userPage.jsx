@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import ShowIfAuth from '../../../components/ShowIfAuth';
 import AlertPopup from '../../../components/Popups/AlertPopups';
 import EditPopup from '../../../components/Popups/EditPopup';
-import StatCard from '../../../components/StatCards';
 import { onGetUserList } from '../../../slices/userlist.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { BounceLoader } from 'react-spinners';
@@ -40,13 +39,6 @@ const HeaderTab = styled.div`
 	width: 25%;
 `;
 
-const StatCardWrapper = styled.div`
-	display:flex;
-	justify-content:space-around;
-	width:100%
-	height:fit-content;
-	margin:15px 0 20px 0;
-`;
 
 export default function UserPage() {
 	const [alertDisplay, setAlertDisplay] = useState(false);
@@ -57,27 +49,6 @@ export default function UserPage() {
 
 	const { userList, status } = useSelector((state) => state.userListSlice);
 	const dispatch = useDispatch();
-
-	const [totalUsers, setTotalUsers] = useState(0);
-	const [activeUsers, setActiveUsers] = useState(0);
-	const [pendingUsers, setPendingUsers] = useState(0);
-	const [inactiveUsers, setInactiveUsers] = useState(0);
-	useEffect(() => {
-		// const totalUsers = userList.length;
-		// const activeUsers = userList.reduce((acc, item) => (item.status === 'active' ? acc + 1 : acc), 0);
-		// const pendingUsers = userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0);
-		// const inactiveUsers = userList.reduce((acc, item) => (item.status === 'inactive' ? acc + 1 : acc), 0);
-
-		setTotalUsers(userList.length);
-		setActiveUsers(userList.reduce((acc, item) => (item.status === 'active' ? acc + 1 : acc), 0));
-		setPendingUsers(userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0));
-		setInactiveUsers(userList.reduce((acc, item) => (item.status === 'inactive' ? acc + 1 : acc), 0));
-	}, [userList]);
-
-	console.log(totalUsers);
-	console.log(activeUsers);
-	console.log(pendingUsers);
-	console.log(inactiveUsers);
 
 	useEffect(() => dispatch(onGetUserList()), []);
 
@@ -154,18 +125,7 @@ export default function UserPage() {
 	return (
 		<PageContainer>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
-			<ShowIfAuth allowedRoles={['admin']}>
-				<>
-					<p className="pageHeaders blackFont">Stats</p>
-					<StatCardWrapper>
-						<StatCard type="users" count={totalUsers} />
-						<StatCard type="active_users" count={activeUsers} />
-						<StatCard type="pending_users" count={pendingUsers} />
-						<StatCard type="inactive_users" count={inactiveUsers} />
-					</StatCardWrapper>
-				</>
-			</ShowIfAuth>
-
+		
 			<p className="pageHeaders blackFont">Users</p>
 			<ShowIfAuth allowedRoles={['admin']}>
 				<AddButton className="button-primary" onClick={openAddUserPopup}>
