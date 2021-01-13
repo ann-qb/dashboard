@@ -9,6 +9,7 @@ import DashboardPage from './pages/Dashboard';
 import Users from './pages/Users'
 import ProfilePage from './pages/ProfilePage';
 import ErrorPage from './pages/ErrorPage';
+import OfflinePage from './pages/OfflinePage'
 import SetPasswordPage from './pages/SetPasswordPage';
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
 				</Router>
 			</Online>
 			<Offline>
-				<p>You are offline</p>
+				<OfflinePage/>
 			</Offline>
 		</div>
 	);
