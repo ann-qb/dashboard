@@ -21,6 +21,7 @@ const Input = styled.input`
 	height: 100%;
 	padding: 8px;
 	margin-right: 15px;
+	border: 0.2px solid #dcdde2;
 `;
 
 export default function Catagories(props){

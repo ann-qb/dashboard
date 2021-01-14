@@ -45,10 +45,11 @@ const Button = styled.button`
   height:100%;
 `
 const Input = styled.input`
-  height:100%;
-  padding:8px;
-  margin-right: 15px;
-`
+	height: 100%;
+	padding: 8px;
+	margin-right: 15px;
+	border: 0.2px solid #dcdde2;
+`;
 const SubCard = styled.div`
 	display: flex;
 	align-items: center;
