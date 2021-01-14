@@ -53,7 +53,8 @@ const SubCard = styled.div`
 	display: flex;
 	align-items: center;
 	width: 100%;
-	padding: 10px 10px;
+  padding: 10px 10px;
+  margin-bottom:2px;
 	background-color: #fff;
 `;
 

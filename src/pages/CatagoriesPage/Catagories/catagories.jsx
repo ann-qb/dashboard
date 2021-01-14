@@ -8,10 +8,29 @@ const PageContainer = styled.div`
 	overflow: scroll;
 `;
 
+const AddCategoryWrapper = styled.div`
+	padding: 10px;
+	padding-left:0;
+	margin-top:15px;
+	margin-bottom:5px;
+`;
+const Button = styled.button`
+	height: 100%;
+`;
+const Input = styled.input`
+	height: 100%;
+	padding: 8px;
+	margin-right: 15px;
+`;
+
 export default function Catagories(props){
   return (
 		<PageContainer>
 			<p className="pageHeaders blackFont">Categories</p>
+			<AddCategoryWrapper>
+				<Input placeholder="Category" />
+				<Button className="button-primary">Add</Button>
+			</AddCategoryWrapper>
 			<CategoryCard />
 			<CategoryCard />
 		</PageContainer>
