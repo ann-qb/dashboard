@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-d
 import { Offline, Online } from 'react-detect-offline';
 import PrivateRoute from './components/PrivateRoute';
 
+
 import LoginPage from './pages/Login';
 import DashboardPage from './pages/Dashboard';
 import Users from './pages/Users';
@@ -14,6 +15,8 @@ import OfflinePage from './pages/OfflinePage';
 import SetPasswordPage from './pages/SetPasswordPage';
 import CategoriesPage from './pages/CategoriesPage';
 import AddProductsPage from './pages/AddProductsPage'
+
+
 
 function App() {
 	return (

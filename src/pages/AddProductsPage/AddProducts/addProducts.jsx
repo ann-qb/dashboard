@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -7,10 +8,13 @@ import Button from '@material-ui/core/Button';
 const useStyle = makeStyles({
 	textField: {
 		width: '100%',
-  },
-  leftButton:{
-    marginRight:'15px'
-  }
+	},
+	leftButton: {
+		marginRight: '15px',
+	},
+	button: {
+		backgroundColor: '#5673E8',
+	},
 });
 
 const PageContainer = styled.div`
@@ -37,10 +41,10 @@ const Form = styled.form`
 	overflow: scroll;
 `;
 const FormHeader = styled.p`
-  margin-bottom:20px;
-  font-size:120%;
-  color:#000;
-`
+	margin-bottom: 20px;
+	font-size: 120%;
+	color: #000;
+`;
 const MainGroup = styled.div`
 	display: flex;
 	// flex-direction: column;
@@ -63,14 +67,14 @@ const PreviewWrapper = styled.div`
 	overflow: scroll;
 `;
 const ButtonGroup = styled.div`
-  display:flex;
-  justify-content:space-between;
-  width:fit-content;
-  margin:10px auto;
-`
+	display: flex;
+	justify-content: space-between;
+	width: fit-content;
+	margin: 20px auto;
+`;
 
 const CATAGORIES = [
-	{ name: 'Cloths', id: 1},
+	{ name: 'Cloths', id: 1 },
 	{ name: 'Food', id: 2 },
 	{ name: 'Medicines', id: 3 },
 	{ name: 'Electronics', id: 4 },
@@ -78,6 +82,16 @@ const CATAGORIES = [
 
 export default function AddProducts(props) {
 	const classes = useStyle();
+  const [category, setCategory] = useState(null);
+  const [subCategory, setSubCategory] = useState(null)
+
+	const saveCategory = (e) => {
+		setCategory(e.target.value);
+  };
+  const saveSubCategory =(e)=>{
+    setSubCategory(e.target.value)
+  }
+
 	return (
 		<PageContainer>
 			<p className="pageHeaders blackFont">Add Products</p>
@@ -116,7 +130,8 @@ export default function AddProducts(props) {
 								label="Category"
 								variant="outlined"
 								select
-								value=""
+								onChange={saveCategory}
+								value={category}
 								color="#5673E8"
 							>
 								{CATAGORIES.map((item) => (
@@ -126,9 +141,22 @@ export default function AddProducts(props) {
 								))}
 							</TextField>
 						</ItemGroup>
-						<ItemGroup>
-							<TextField className={classes.textField} label="Sub Category" variant="outlined" color="#5673E8" />
-						</ItemGroup>
+						{category ? (
+							<ItemGroup>
+								<TextField
+									className={classes.textField}
+									label="Sub Category"
+									variant="outlined"
+									select
+									onChange={saveSubCategory}
+									value={subCategory}
+									color="#5673E8"
+								>
+									<MenuItem value="Value 1">Value 1</MenuItem>
+									<MenuItem value="Value 2">Value 2</MenuItem>
+								</TextField>
+							</ItemGroup>
+						) : null}
 					</MainGroup>
 					<MainGroup>
 						<FullWidthItemGroup>
@@ -144,10 +172,10 @@ export default function AddProducts(props) {
 					</MainGroup>
 
 					<ButtonGroup>
-						<Button className={classes.leftButton} variant="contained" color="#5673E8" disableElevation>
+						<Button className={classes.leftButton} variant="contained" color="primary" disableElevation>
 							Primary
 						</Button>
-						<Button variant="outlined" color="#5673E8">
+						<Button variant="outlined" color="primary">
 							Secondary
 						</Button>
 					</ButtonGroup>
