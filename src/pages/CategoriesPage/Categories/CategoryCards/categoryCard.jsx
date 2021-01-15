@@ -13,6 +13,7 @@ import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import { useDispatch } from 'react-redux';
 import { onAddSubCategory, onDeleteSubCategory, onEditSubCategory } from '../../../../slices/categorylist.slice';
+import SubCategoryCard from './SubCategoryCard/subCategoryCard';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -55,36 +56,8 @@ const AddSubCategoryWrapper = styled.div`
 const Button = styled.button`
 	height: 100%;
 `;
+
 const Input = styled.input`
-	height: 100%;
-	padding: 8px;
-	margin-right: 15px;
-	border: 0.2px solid #dcdde2;
-`;
-const SubCard = styled.div`
-	display: flex;
-	align-items: center;
-	width: 100%;
-	padding: 10px 10px;
-	margin-bottom: 2px;
-	background-color: #fff;
-	position: relative;
-`;
-
-const SubCategoryNameWrapper = styled.div`
-	display: flex;
-	align-items: center;
-	width: 88%;
-	height: 100%;
-	margin-left: 10px;
-`;
-
-const SubCategoryText = styled.p`
-	font-size: 100%;
-`;
-
-const SubCategoryInput = styled.input`
-	${'' /* border: none; */}
 	height: 100%;
 	padding: 8px;
 	margin-right: 15px;
@@ -103,13 +76,15 @@ const DisabledDiv = styled.div`
 `;
 
 export default function CategoryCard(props) {
+	const classes = useStyles();
 	const dispatch = useDispatch();
+
 	const [open, setOpen] = useState(false);
-	const [edit, setEdit] = useState(false);
-	const [disableDiv, setDisableDiv] = useState(false);
+
+	//----------------------Add new subcategory functionality----------------------//
 	const [newSubCategory, setNewSubCategory] = useState('');
 	const [disableAdd, setDisableAdd] = useState(true);
-	const [editedcategory, setEditedcategory] = useState(props.category.name);
+	const [disableInput, setDisableInput] = useState(false);
 
 	useEffect(() => {
 		if (!open) setNewSubCategory('');
@@ -128,8 +103,77 @@ export default function CategoryCard(props) {
 	};
 
 	const addNewSubCategory = () => {
-		dispatch(onAddSubCategory({ subcategory: newSubCategory, parentCategoryId: props.category.id }));
+		// dispatch(onAddSubCategory({ subcategory: newSubCategory, parentCategoryId: props.category.id }));
 		console.log({ subcategory: newSubCategory, parentCategoryId: props.category.id });
+	};
+
+	//----------------Edit/ Delete category functionality--------------------------//
+	const [edit, setEdit] = useState(false);
+	const [editedCategory, setEditedCategory] = useState(props.category.name);
+	const [disableDiv, setDisableDiv] = useState(false);
+
+	const handleEditCategoryInputChange = (e) => {
+		setEditedCategory(e.target.value);
+	};
+
+	const keyPress = (e) => {
+		if (e.key === 'Enter') {
+			console.log('enter pressed');
+			if (editedCategory.trim().length !== 0) {
+				setDisableInput(true);
+				// dispatch(
+				// 	onEditCategory({
+				// 		category: editedCategory,
+				// 		categoryId: props.category.id,
+				// 	})
+				// );
+			}
+			console.log({
+				category: editedCategory,
+				categoryId: props.category.id,
+			});
+			// setEdit(false);
+		}
+	};
+
+	const editCategory = () => {
+		if (editedCategory.trim().length !== 0) {
+			setDisableInput(true);
+			// dispatch(
+			// 	onEditCategory({
+			// 		category: editedCategory,
+			// 		categoryId: props.category.id,
+			// 	})
+			// );
+		}
+		// setEdit(false);
+	};
+
+	const toggleEnableEditCategory = () => {
+		edit ? setEdit(false) : setEdit(true);
+		setEditedCategory(props.category.name);
+	};
+
+	// const resetEditSubcategory = () => {
+	// 	setEditedSubcategory('');
+	// };
+
+	// const cancelEditSubcategory = () => {
+	// 	setEditedSubcategory(props.subcategory.name);
+	// };
+
+	const deleteCategory = () => {
+		// dispatch(
+		// 	onDeleteCategory({
+		// 		category: props.category.name,
+		// 		categoryId: props.category.id,
+		// 	})
+		// );
+		console.log({
+			category: props.category.name,
+			categoryId: props.category.id,
+		});
+		setDisableDiv(true);
 	};
 
 	return (
@@ -140,17 +184,55 @@ export default function CategoryCard(props) {
 					{open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 				</IconButton>
 
-				<CategoryNameWrapper>
-					<CategoryText>{props.category.name}</CategoryText>
-				</CategoryNameWrapper>
+				{edit ? (
+					<CategoryNameWrapper>
+						<Input
+							value={editedCategory}
+							onChange={handleEditCategoryInputChange}
+							onKeyDown={keyPress}
+							disabled={disableInput}
+							autoFocus
+						/>
+						{disableInput ? (
+							<div className={classes.root}>
+								<CircularProgress size={20} />
+							</div>
+						) : null}
+					</CategoryNameWrapper>
+				) : (
+					<CategoryNameWrapper>
+						<CategoryText>{props.category.name}</CategoryText>
+					</CategoryNameWrapper>
+				)}
 
-				<IconButton style={{ marginRight: '15px' }} aria-label="expand row" size="small">
-					<CreateOutlinedIcon />
-				</IconButton>
+				{edit ? (
+					<>
+						<IconButton style={{ marginRight: '15px' }} aria-label="expand row" size="small" onClick={editCategory}>
+							<DoneRoundedIcon />
+						</IconButton>
+						<IconButton
+							style={{ marginRight: '15px' }}
+							aria-label="expand row"
+							size="small"
+							onClick={toggleEnableEditCategory}>
+							<ClearRoundedIcon />
+						</IconButton>
+					</>
+				) : (
+					<>
+						<IconButton
+							style={{ marginRight: '15px' }}
+							aria-label="expand row"
+							size="small"
+							onClick={toggleEnableEditCategory}>
+							<CreateOutlinedIcon />
+						</IconButton>
 
-				<IconButton aria-label="expand row" size="small">
-					<DeleteOutlineOutlinedIcon />
-				</IconButton>
+						<IconButton aria-label="expand row" size="small" onClick={deleteCategory}>
+							<DeleteOutlineOutlinedIcon />
+						</IconButton>
+					</>
+				)}
 			</Card>
 
 			<Collapse style={{ backgroundColor: '#fff' }} in={open} timeout="auto" unmountOnExit>
@@ -167,139 +249,9 @@ export default function CategoryCard(props) {
 					</Button>
 				</AddSubCategoryWrapper>
 				{props.category.subcategories.reverse().map((each) => (
-					<GenerateSubCategory key={each.id + each.name} subcategory={each} />
+					<SubCategoryCard key={each.id + each.name} subcategory={each} />
 				))}
 			</Collapse>
 		</>
 	);
 }
-
-const GenerateSubCategory = (props) => {
-	const classes = useStyles();
-	const dispatch = useDispatch();
-
-	const [edit, setEdit] = useState(false);
-	const [disableInput, setDisableInput] = useState(false);
-	const [disableDiv, setDisableDiv] = useState(false);
-	const [editedSubcategory, setEditedSubcategory] = useState(props.subcategory.name);
-
-	const handleInputChange = (e) => {
-		setEditedSubcategory(e.target.value);
-	};
-
-	const keyPress = (e) => {
-		if (e.key === 'Enter') {
-			console.log('enter pressed');
-			if (editedSubcategory.trim().length !== 0) {
-				setDisableInput(true);
-				dispatch(
-					onEditSubCategory({
-						subcategory: editedSubcategory,
-						subcategoryId: props.subcategory.id,
-						parentCategoryId: props.subcategory.category,
-					})
-				);
-			}
-			// setEdit(false);
-		}
-	};
-
-	const editSubcategory = () => {
-		if (editedSubcategory.trim().length !== 0) {
-			setDisableInput(true);
-			dispatch(
-				onEditSubCategory({
-					subcategory: editedSubcategory,
-					subcategoryId: props.subcategory.id,
-					parentCategoryId: props.subcategory.category,
-				})
-			);
-		}
-		// setEdit(false);
-	};
-	const toggleEnableEditSubcategory = () => {
-		edit ? setEdit(false) : setEdit(true);
-		setEditedSubcategory(props.subcategory.name);
-	};
-
-	const resetEditSubcategory = () => {
-		setEditedSubcategory('');
-	};
-
-	const cancelEditSubcategory = () => {
-		setEditedSubcategory(props.subcategory.name);
-	};
-
-	const deleteSubCategory = () => {
-		dispatch(
-			onDeleteSubCategory({
-				subcategory: props.subcategory.name,
-				subcategoryId: props.subcategory.id,
-				parentCategoryId: props.subcategory.category,
-			})
-		);
-		console.log({
-			subcategory: props.subcategory.name,
-			subcategoryId: props.subcategory.id,
-			parentCategoryId: props.subcategory.category,
-		});
-		setDisableDiv(true);
-	};
-
-	return (
-		<div>
-			<SubCard>
-				<DisabledDiv disable={disableDiv}></DisabledDiv>
-				{edit ? (
-					<SubCategoryNameWrapper>
-						<SubCategoryInput
-							value={editedSubcategory}
-							onChange={handleInputChange}
-							onKeyDown={keyPress}
-							disabled={disableInput}
-							autoFocus
-						/>
-						{disableInput ? (
-							<div className={classes.root}>
-								<CircularProgress size={20} />
-							</div>
-						) : null}
-					</SubCategoryNameWrapper>
-				) : (
-					<SubCategoryNameWrapper>
-						<SubCategoryText>{props.subcategory.name}</SubCategoryText>
-					</SubCategoryNameWrapper>
-				)}
-
-				{edit ? (
-					<>
-						<IconButton style={{ marginRight: '15px' }} aria-label="expand row" size="small" onClick={editSubcategory}>
-							<DoneRoundedIcon />
-						</IconButton>
-						<IconButton
-							style={{ marginRight: '15px' }}
-							aria-label="expand row"
-							size="small"
-							onClick={toggleEnableEditSubcategory}>
-							<ClearRoundedIcon />
-						</IconButton>
-					</>
-				) : (
-					<>
-						<IconButton
-							style={{ marginRight: '15px' }}
-							aria-label="expand row"
-							size="small"
-							onClick={toggleEnableEditSubcategory}>
-							<CreateOutlinedIcon />
-						</IconButton>
-
-						<IconButton aria-label="expand row" size="small" onClick={deleteSubCategory}>
-							<DeleteOutlineOutlinedIcon />
-						</IconButton>
-					</>
-				)}
-			</SubCard>
-		</div>
-	);
-};

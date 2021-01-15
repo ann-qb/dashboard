@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import Header from '../../components/Header'
-import OfflinePic from '../../assets/Images/offline2.jpg'
+import styled from 'styled-components';
+import Header from '../../components/Header';
+import OfflinePic from '../../assets/Images/offline2.jpg';
 
 const PageWrapper = styled.div`
 	display: flex;
@@ -14,12 +14,11 @@ const PageWrapper = styled.div`
 	color: #000;
 `;
 
-
 const ErrorImage = styled.img`
 	height: 300px;
 	width: auto;
-  margin-bottom: 25px;
-  margin-right:20px
+	margin-bottom: 25px;
+	margin-right: 20px;
 `;
 const ErrorMessageMain = styled.p`
 	font-weight: 400;
@@ -30,16 +29,16 @@ const ErrorMessage = styled.p`
 	font-size: 100%;
 `;
 
-export default function OfflinePage(props){
-  return (
+export default function OfflinePage(props) {
+	return (
 		<>
 			<Header page="error" />
 			<PageWrapper>
 				<ErrorImage src={OfflinePic} />
 				<ErrorMessageMain>Oh! Seems like you are offline!</ErrorMessageMain>
 				<ErrorMessage>
-					The internet is not the same without you.
-					<br /> So check your connection and get back to us.
+					The internet is not the same without you :)
+					<br /> So check your connection and get back to us!
 				</ErrorMessage>
 			</PageWrapper>
 		</>

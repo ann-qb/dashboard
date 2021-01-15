@@ -109,7 +109,7 @@ export default function Categories() {
 	};
 
 	const addNewCategory = () => {
-		dispatch(onAddCategory({ category: newCategory }));
+		// dispatch(onAddCategory({ category: newCategory }));
 		console.log({ category: newCategory });
 	};
 
