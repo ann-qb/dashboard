@@ -67,6 +67,7 @@ export default function SideNavigation(props) {
 		if (clickedDiv.id === 'dashboard') history.push('/dashboard');
 		else if (clickedDiv.id === 'users') history.push('/users');
 		else if (clickedDiv.id === 'categories') history.push('/categories');
+		else if (clickedDiv.id === 'add_products') history.push('/addProducts');
 	};
 
 	return (
@@ -91,6 +92,11 @@ export default function SideNavigation(props) {
 				<NavLinksDiv id="categories" className="navLinks" onClick={changePageRoute}>
 					<ion-icon class="navIcons" style={iconStyle} name="people-outline"></ion-icon>
 					<p className="navigationText">Categories</p>
+				</NavLinksDiv>
+
+				<NavLinksDiv id="add_products" className="navLinks" onClick={changePageRoute}>
+					<ion-icon class="navIcons" style={iconStyle} name="people-outline"></ion-icon>
+					<p className="navigationText">Add Products</p>
 				</NavLinksDiv>
 
 				<SubTittles className="navigationText">UTILITY</SubTittles>

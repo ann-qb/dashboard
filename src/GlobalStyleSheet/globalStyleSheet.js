@@ -228,7 +228,7 @@ const GlobalStyle = createGlobalStyle`
   /*------------ dashboard main header ---------------*/
 
   .pageHeaders{
-    font-size:120%;
+    font-size:150%;
     font-weight:500;
     letter-spacing: 1px;
   }
