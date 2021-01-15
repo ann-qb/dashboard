@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import ImageUploader from 'react-images-upload';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -73,6 +74,14 @@ const ButtonGroup = styled.div`
 	margin: 20px auto;
 `;
 
+const ImagePlaceHolder = styled.div`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:30%;
+  
+`
+
 const CATAGORIES = [
 	{ name: 'Cloths', id: 1 },
 	{ name: 'Food', id: 2 },
@@ -82,15 +91,20 @@ const CATAGORIES = [
 
 export default function AddProducts(props) {
 	const classes = useStyle();
-  const [category, setCategory] = useState(null);
-  const [subCategory, setSubCategory] = useState(null)
+	const [category, setCategory] = useState(null);
+	const [subCategory, setSubCategory] = useState(null);
+	const [picture, setPicture] = useState([]);
 
 	const saveCategory = (e) => {
 		setCategory(e.target.value);
-  };
-  const saveSubCategory =(e)=>{
-    setSubCategory(e.target.value)
-  }
+	};
+	const saveSubCategory = (e) => {
+		setSubCategory(e.target.value);
+	};
+
+	const onDrop = (picture) => {
+		setPicture([...picture]);
+	};
 
 	return (
 		<PageContainer>
@@ -100,15 +114,21 @@ export default function AddProducts(props) {
 					<FormHeader>Details</FormHeader>
 					<MainGroup>
 						<ItemGroup>
-							<TextField className={classes.textField} label="Brand Name" variant="outlined" color="#5673E8" />
+							<TextField
+								className={classes.textField}
+								label="Product Name"
+								variant="outlined"
+								color="#5673E8"
+								required
+							/>
 						</ItemGroup>
 						<ItemGroup>
-							<TextField className={classes.textField} label="product Name" variant="outlined" color="#5673E8" />
+							<TextField className={classes.textField} label="Brand" variant="outlined" color="#5673E8" />
 						</ItemGroup>
 					</MainGroup>
 					<MainGroup>
 						<ItemGroup>
-							<TextField className={classes.textField} label="price Name" variant="outlined" color="#5673E8" />
+							<TextField className={classes.textField} label="Price" variant="outlined" color="#5673E8" required />
 						</ItemGroup>
 						<ItemGroup>
 							<TextField className={classes.textField} label="Discount Percentage" variant="outlined" color="#5673E8" />
@@ -117,10 +137,10 @@ export default function AddProducts(props) {
 
 					<MainGroup>
 						<ItemGroup>
-							<TextField className={classes.textField} label="Status" variant="outlined" color="#5673E8" />
+							<TextField className={classes.textField} label="Status" variant="outlined" color="#5673E8" required />
 						</ItemGroup>
 						<ItemGroup>
-							<TextField className={classes.textField} label="Quantity" variant="outlined" color="#5673E8" />
+							<TextField className={classes.textField} label="Quantity" variant="outlined" color="#5673E8" required />
 						</ItemGroup>
 					</MainGroup>
 					<MainGroup>
@@ -133,6 +153,7 @@ export default function AddProducts(props) {
 								onChange={saveCategory}
 								value={category}
 								color="#5673E8"
+								required
 							>
 								{CATAGORIES.map((item) => (
 									<MenuItem key={item.id} value={item.name}>
@@ -151,6 +172,7 @@ export default function AddProducts(props) {
 									onChange={saveSubCategory}
 									value={subCategory}
 									color="#5673E8"
+									required
 								>
 									<MenuItem value="Value 1">Value 1</MenuItem>
 									<MenuItem value="Value 2">Value 2</MenuItem>
@@ -167,22 +189,46 @@ export default function AddProducts(props) {
 								color="#5673E8"
 								multiline
 								rowsMax={4}
+								required
 							/>
 						</FullWidthItemGroup>
 					</MainGroup>
 
 					<ButtonGroup>
-						<Button className={classes.leftButton} variant="contained" color="primary" disableElevation>
-							Primary
+						<Button className={classes.leftButton} variant="outlined" color="primary">
+							cancel
 						</Button>
-						<Button variant="outlined" color="primary">
-							Secondary
+						<Button variant="contained" color="primary" disableElevation>
+							Submit
 						</Button>
 					</ButtonGroup>
 				</Form>
 
 				<PreviewWrapper className="cards">
-					<p>Preview</p>
+					<FormHeader>Upload Image</FormHeader>
+
+					{picture[0] ? (
+						<ImagePlaceHolder>
+							{picture.map((each) => {
+								const tt = URL.createObjectURL(each);
+								return <img src={tt} alt="preview" />;
+							})}
+						</ImagePlaceHolder>
+					) : (
+						<ImagePlaceHolder />
+					)}
+
+					<ImageUploader
+						className="uploadCard"
+						withIcon={true}
+						onChange={onDrop}
+						imgExtension={['.jpg', '.png']}
+						label="Max file size: 5MB, Accepted: jpg, png"
+						maxFileSize={5242880}
+						buttonClassName="imageUploadBtn"
+						singleImage={true}
+						buttonText="Choose Image"
+					/>
 				</PreviewWrapper>
 			</FlexWrapper>
 		</PageContainer>
@@ -194,5 +240,5 @@ export default function AddProducts(props) {
 		width: '100%',
 		'&:hover': { width: '500px' },
 	},
-});
+});<div style={{display:"flex",flexDirection:'column',alignItems:'center',justifyContents:'center'}}>
  */
