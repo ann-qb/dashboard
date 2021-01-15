@@ -163,6 +163,24 @@ const GlobalStyle = createGlobalStyle`
     
   }
 
+  /*-- Image Upload --*/
+  .imageUploadBtn{
+    // padding:5px !important;
+    outline: none !important;
+    cursor:pointer;
+    padding:5px 10px !important;
+    transition: all ease 0.2s !important;
+    font-size:90% !important;
+    background-color:${PRIMARY_PURPLE} !important;
+    color:#fff !important;
+    border: 1px solid ${PRIMARY_PURPLE} !important;
+    border-radius:5px !important;
+  }
+
+  uploadCard{
+    margin:auto 0;
+  }
+
   /*------------ Cards ---------------*/
 
   .cards{
@@ -228,7 +246,7 @@ const GlobalStyle = createGlobalStyle`
   /*------------ dashboard main header ---------------*/
 
   .pageHeaders{
-    font-size:120%;
+    font-size:150%;
     font-weight:500;
     letter-spacing: 1px;
   }

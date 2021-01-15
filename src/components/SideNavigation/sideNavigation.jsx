@@ -4,6 +4,10 @@ import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../../assets/Images/logo_icon.png';
 import { onLogout } from '../../slices/login.slice';
+import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
+import CategoryIcon from '@material-ui/icons/Category';
+import AddIcon from '@material-ui/icons/Add';
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 
 /**---------------- Styles ------------------*/
 const NavBar = styled.div`
@@ -67,6 +71,7 @@ export default function SideNavigation(props) {
 		if (clickedDiv.id === 'dashboard') history.push('/dashboard');
 		else if (clickedDiv.id === 'users') history.push('/users');
 		else if (clickedDiv.id === 'categories') history.push('/categories');
+		else if (clickedDiv.id === 'add_products') history.push('/addProducts');
 	};
 
 	return (
@@ -79,18 +84,23 @@ export default function SideNavigation(props) {
 				<SubTittles className="navigationText">MENU</SubTittles>
 
 				<NavLinksDiv id="dashboard" className="navLinks activeNavLink" onClick={changePageRoute}>
-					<ion-icon class="navIcons" style={iconStyle} name="briefcase-outline"></ion-icon>
+					<DashboardOutlinedIcon style={iconStyle} />
 					<p className="navigationText">Dashboard</p>
 				</NavLinksDiv>
 
 				<NavLinksDiv id="users" className="navLinks" onClick={changePageRoute}>
-					<ion-icon class="navIcons" style={iconStyle} name="people-outline"></ion-icon>
+					<PeopleAltOutlinedIcon style={iconStyle} />
 					<p className="navigationText">Users</p>
 				</NavLinksDiv>
 
 				<NavLinksDiv id="categories" className="navLinks" onClick={changePageRoute}>
-					<ion-icon class="navIcons" style={iconStyle} name="people-outline"></ion-icon>
+					<CategoryIcon style={iconStyle} />
 					<p className="navigationText">Categories</p>
+				</NavLinksDiv>
+
+				<NavLinksDiv id="add_products" className="navLinks" onClick={changePageRoute}>
+					<AddIcon style={iconStyle} />
+					<p className="navigationText">Add Products</p>
 				</NavLinksDiv>
 
 				<SubTittles className="navigationText">UTILITY</SubTittles>
@@ -112,3 +122,4 @@ export default function SideNavigation(props) {
 		</NavBar>
 	);
 }
+//<ion-icon class="navIcons" style={iconStyle} name="people-outline"></ion-icon>
