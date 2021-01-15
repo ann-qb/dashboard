@@ -75,12 +75,11 @@ const ButtonGroup = styled.div`
 `;
 
 const ImagePlaceHolder = styled.div`
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:30%;
-  
-`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 30%;
+`;
 
 const CATAGORIES = [
 	{ name: 'Cloths', id: 1 },
@@ -93,13 +92,18 @@ export default function AddProducts(props) {
 	const classes = useStyle();
 	const [category, setCategory] = useState(null);
 	const [subCategory, setSubCategory] = useState(null);
+	const [status, setStatus] = useState('Active');
 	const [picture, setPicture] = useState([]);
+	const [trialError, setTrialError] = useState(false);
 
 	const saveCategory = (e) => {
 		setCategory(e.target.value);
 	};
 	const saveSubCategory = (e) => {
 		setSubCategory(e.target.value);
+	};
+	const saveStatus = (e) => {
+		setStatus(e.target.value);
 	};
 
 	const onDrop = (picture) => {
@@ -123,7 +127,14 @@ export default function AddProducts(props) {
 							/>
 						</ItemGroup>
 						<ItemGroup>
-							<TextField className={classes.textField} label="Brand" variant="outlined" color="#5673E8" />
+							<TextField
+								error={trialError}
+								helperText={trialError? "Field is empty":""}
+								className={classes.textField}
+								label="Brand"
+								variant="outlined"
+								color="#5673E8"
+							/>
 						</ItemGroup>
 					</MainGroup>
 					<MainGroup>
@@ -131,13 +142,31 @@ export default function AddProducts(props) {
 							<TextField className={classes.textField} label="Price" variant="outlined" color="#5673E8" required />
 						</ItemGroup>
 						<ItemGroup>
-							<TextField className={classes.textField} label="Discount Percentage" variant="outlined" color="#5673E8" />
+							<TextField
+								className={classes.textField}
+								label="Discount Percentage"
+								variant="outlined"
+								defaultValue="Small"
+								color="#5673E8"
+							/>
 						</ItemGroup>
 					</MainGroup>
 
 					<MainGroup>
 						<ItemGroup>
-							<TextField className={classes.textField} label="Status" variant="outlined" color="#5673E8" required />
+							<TextField
+								className={classes.textField}
+								select
+								label="Status"
+								value={status}
+								onChange={saveStatus}
+								variant="outlined"
+								color="#5673E8"
+								required
+							>
+								<MenuItem value="Value 1">Active</MenuItem>
+								<MenuItem value="Value 2">Inactive</MenuItem>
+							</TextField>
 						</ItemGroup>
 						<ItemGroup>
 							<TextField className={classes.textField} label="Quantity" variant="outlined" color="#5673E8" required />
