@@ -8,10 +8,6 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 
-
-
-
-
 const Card = styled.div`
 	display: flex;
 	align-items: center;
@@ -23,8 +19,8 @@ const Card = styled.div`
 `;
 
 const CategoryText = styled.p`
-  font-size:120%;
-`
+	font-size: 120%;
+`;
 
 const CategoryNameWrapper = styled.div`
 	display: flex;
@@ -39,11 +35,11 @@ const SeparationLine = styled.hr`
 `;
 
 const AddSubCategoryWrapper = styled.div`
-  padding:10px;
-`
+	padding: 10px;
+`;
 const Button = styled.button`
-  height:100%;
-`
+	height: 100%;
+`;
 const Input = styled.input`
 	height: 100%;
 	padding: 8px;
@@ -54,8 +50,8 @@ const SubCard = styled.div`
 	display: flex;
 	align-items: center;
 	width: 100%;
-  padding: 10px 10px;
-  margin-bottom:2px;
+	padding: 10px 10px;
+	margin-bottom: 2px;
 	background-color: #fff;
 `;
 
@@ -71,26 +67,17 @@ const SubCategoryText = styled.p`
 `;
 
 export default function CategoryCard(props) {
-  const [open, setOpen] = useState(false);
-  
-  const GenerateSubCategory=(props)=>{
-    return (
-			<SubCard>
-				<SubCategoryNameWrapper>
-					<SubCategoryText>{props.name}</SubCategoryText>
-				</SubCategoryNameWrapper>
-
-				<IconButton style={{ marginRight: '15px' }} aria-label="expand row" size="small">
-					<CreateOutlinedIcon />
-				</IconButton>
-
-				<IconButton aria-label="expand row" size="small">
-					<DeleteOutlineOutlinedIcon />
-				</IconButton>
-			</SubCard>
-		);
-  }
-
+	const [open, setOpen] = useState(false);
+	const [newSubCategory, setNewSubCategory] = useState('');
+	const [disableAdd, setDisableAdd] = useState(true);
+	const handleInputChange = (e) => {
+		setNewSubCategory(e.target.value);
+		newSubCategory.trim().length > 0 ? setDisableAdd(false) : setDisableAdd(true);
+	};
+	const cancelAddNewSubCategory = () => {
+		setNewSubCategory('');
+	};
+	const onAddNewSubCategory = () => {};
 	return (
 		<>
 			<Card>
@@ -99,7 +86,7 @@ export default function CategoryCard(props) {
 				</IconButton>
 
 				<CategoryNameWrapper>
-					<CategoryText>Cloths</CategoryText>
+					<CategoryText>{props.categoryName}</CategoryText>
 				</CategoryNameWrapper>
 
 				<IconButton style={{ marginRight: '15px' }} aria-label="expand row" size="small">
@@ -114,13 +101,39 @@ export default function CategoryCard(props) {
 			<Collapse style={{ backgroundColor: '#fff' }} in={open} timeout="auto" unmountOnExit>
 				<SeparationLine />
 				<AddSubCategoryWrapper>
-					<Input placeholder="Sub Category" />
+					<Input
+						value={newSubCategory}
+						onChange={handleInputChange}
+						onBlur={cancelAddNewSubCategory}
+						placeholder="Sub Category"
+					/>
 					<Button className="button-primary">Add</Button>
 				</AddSubCategoryWrapper>
-				<GenerateSubCategory name="Shirts" />
+				{props.subCategories.map((each) => (
+					<GenerateSubCategory name={each} />
+				))}
+				{/* <GenerateSubCategory name="Shirts" />
 				<GenerateSubCategory name="Pants" />
-				<GenerateSubCategory name="Shoes" />
+				<GenerateSubCategory name="Shoes" /> */}
 			</Collapse>
 		</>
 	);
 }
+
+const GenerateSubCategory = (props) => {
+	return (
+		<SubCard>
+			<SubCategoryNameWrapper>
+				<SubCategoryText>{props.name}</SubCategoryText>
+			</SubCategoryNameWrapper>
+
+			<IconButton style={{ marginRight: '15px' }} aria-label="expand row" size="small">
+				<CreateOutlinedIcon />
+			</IconButton>
+
+			<IconButton aria-label="expand row" size="small">
+				<DeleteOutlineOutlinedIcon />
+			</IconButton>
+		</SubCard>
+	);
+};

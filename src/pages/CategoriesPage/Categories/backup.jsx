@@ -55,14 +55,14 @@ const useRowStyles = makeStyles({
 	},
 });
 
-export default function Catagories(props) {
+export default function Categories(props) {
 	const classes = useRowStyles();
 
 	const createRow = (name, id) => {
 		return {
 			name,
 			id,
-			SubCatagories: [
+			SubCategories: [
 				{ name: 'subCat', id: 'subId' },
 				{ name: 'subCat', id: 'subId' },
 			],
@@ -71,7 +71,7 @@ export default function Catagories(props) {
 
 	const rows = [createRow('Clothes', '1'), createRow('Medicines', '2'), createRow('Food', '3')];
 
-	const SubCatagories = (props) => {
+	const SubCategories = (props) => {
 		const [open, setOpen] = useState(false);
 		return (
 			<>
@@ -109,7 +109,7 @@ export default function Catagories(props) {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{props.row.SubCatagories.map((item) => (
+									{props.row.SubCategories.map((item) => (
 										<TableRow>
 											<TableCell style={{ width: '90%' }}>
 												<TableSubContent>{item.name}</TableSubContent>
@@ -134,13 +134,13 @@ export default function Catagories(props) {
 	};
 	return (
 		<PageContainer>
-			<HeadText className="pageHeaders blackFont">Catagories</HeadText>
+			<HeadText className="pageHeaders blackFont">Categories</HeadText>
 
 			<TableContainer component={Paper}>
 				<Table aria-label="collapsible table">
 					<TableBody>
 						{rows.map((row) => (
-							<SubCatagories key={row.name} row={row} />
+							<SubCategories key={row.name} row={row} />
 						))}
 					</TableBody>
 				</Table>
@@ -154,7 +154,7 @@ export default function Catagories(props) {
 						<TableRow>
 							<TableCell style={{ width: '10%' }} colSpan={1} />
 							<TableCell colSpan={6}>
-								<TableHeadTextMain>Catagories</TableHeadTextMain>
+								<TableHeadTextMain>Categories</TableHeadTextMain>
 							</TableCell>
 
 							<TableCell colSpan={1} align="right">

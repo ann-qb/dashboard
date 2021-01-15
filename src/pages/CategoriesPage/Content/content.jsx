@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Header from '../../../components/Header';
-import Catagories from '../Catagories';
+import Categories from '../Categories';
 
 /**---------------- Styles ------------------*/
 const ContentContainer = styled.div`
@@ -10,7 +10,7 @@ export default function Content() {
 	return (
 		<ContentContainer>
 			<Header />
-			<Catagories/>
+			<Categories/>
 		</ContentContainer>
 	);
 }

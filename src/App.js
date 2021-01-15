@@ -12,49 +12,72 @@ import ProfilePage from './pages/ProfilePage';
 import ErrorPage from './pages/ErrorPage';
 import OfflinePage from './pages/OfflinePage'
 import SetPasswordPage from './pages/SetPasswordPage';
-import CatagoriesPage from './pages/CatagoriesPage'
+import CategoriesPage from './pages/CategoriesPage'
 
 function App() {
-	return (
-		<div>
-			<Online>
-				{console.error('>>>>>>>>>>>>>>> APP LOADED >>>>>>>>>>>>>>>>>>>')}
-				<GlobalStyle />
-				<Router>
-					<Switch>
-						<Route path="/" exact>
-							<LoginPage />
-						</Route>
-						<Route path="/login">
-							<LoginPage />
-						</Route>
-						<Route path="/user/set-password">
-							<SetPasswordPage />
-						</Route>
-						<PrivateRoute exact path="/dashboard">
-							<DashboardPage />
-						</PrivateRoute>
-						<PrivateRoute exact path="/users">
-							<Users />
-						</PrivateRoute>
-						<PrivateRoute path="/profile">
-							<ProfilePage />
-						</PrivateRoute>
-						<PrivateRoute path="/catagories">
-							<CatagoriesPage />
-						</PrivateRoute>
-						<PrivateRoute path="/errorpage">
-							<ErrorPage errorType="404" />
-						</PrivateRoute>
-						<Redirect to="/errorpage" />
-					</Switch>
-				</Router>
-			</Online>
-			<Offline>
-				<OfflinePage />
-			</Offline>
-		</div>
-	);
+    return ( <
+        div >
+        <
+        Online > { console.error('>>>>>>>>>>>>>>> APP LOADED >>>>>>>>>>>>>>>>>>>') } <
+        GlobalStyle / >
+        <
+        Router >
+        <
+        Switch >
+        <
+        Route path = "/"
+        exact >
+        <
+        LoginPage / >
+        <
+        /Route> <
+        Route path = "/login" >
+        <
+        LoginPage / >
+        <
+        /Route> <
+        Route path = "/user/set-password" >
+        <
+        SetPasswordPage / >
+        <
+        /Route> <
+        PrivateRoute exact path = "/dashboard" >
+        <
+        DashboardPage / >
+        <
+        /PrivateRoute> <
+        PrivateRoute exact path = "/users" >
+        <
+        Users / >
+        <
+        /PrivateRoute> <
+        PrivateRoute path = "/profile" >
+        <
+        ProfilePage / >
+        <
+        /PrivateRoute> <
+        PrivateRoute path = "/categories" >
+        <
+        CategoriesPage / >
+        <
+        /PrivateRoute> <
+        PrivateRoute path = "/errorpage" >
+        <
+        ErrorPage errorType = "404" / >
+        <
+        /PrivateRoute> <
+        Redirect to = "/errorpage" / >
+        <
+        /Switch> < /
+        Router > <
+        /Online> <
+        Offline >
+        <
+        OfflinePage / >
+        <
+        /Offline> < /
+        div >
+    );
 }
 
 export default App;
