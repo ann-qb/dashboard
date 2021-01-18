@@ -273,6 +273,11 @@ const GlobalStyle = createGlobalStyle`
     color:${PRIMARY_PURPLE};
   }
 
+  /*------------ Carousal ---------------*/
+  .carousal{
+    height:500px;
+  }
+
 `;
 
 export default GlobalStyle;

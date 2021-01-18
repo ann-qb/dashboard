@@ -14,6 +14,7 @@ import OfflinePage from './pages/OfflinePage';
 import SetPasswordPage from './pages/SetPasswordPage';
 import CategoriesPage from './pages/CategoriesPage';
 import AddProductsPage from './pages/AddProductsPage';
+import StoreHomePage from './pages/StoreHomePage'
 
 function App() {
 	return (
@@ -45,6 +46,9 @@ function App() {
 						</PrivateRoute>
 						<PrivateRoute path="/addProducts">
 							<AddProductsPage />
+						</PrivateRoute>
+						<PrivateRoute path="/store">
+							<StoreHomePage/>
 						</PrivateRoute>
 						<PrivateRoute path="/errorpage">
 							<ErrorPage errorType="404" />

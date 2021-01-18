@@ -72,6 +72,7 @@ export default function SideNavigation(props) {
 		else if (clickedDiv.id === 'users') history.push('/users');
 		else if (clickedDiv.id === 'categories') history.push('/categories');
 		else if (clickedDiv.id === 'add_products') history.push('/addProducts');
+		else if (clickedDiv.id === 'store') history.push('/store');
 	};
 
 	return (
@@ -88,6 +89,11 @@ export default function SideNavigation(props) {
 					<p className="navigationText">Dashboard</p>
 				</NavLinksDiv>
 
+				<NavLinksDiv id="store" className="navLinks" onClick={changePageRoute}>
+					<DashboardOutlinedIcon style={iconStyle} />
+					<p className="navigationText">Store</p>
+				</NavLinksDiv>
+
 				<NavLinksDiv id="users" className="navLinks" onClick={changePageRoute}>
 					<PeopleAltOutlinedIcon style={iconStyle} />
 					<p className="navigationText">Users</p>
@@ -100,7 +106,7 @@ export default function SideNavigation(props) {
 
 				<NavLinksDiv id="add_products" className="navLinks" onClick={changePageRoute}>
 					<AddIcon style={iconStyle} />
-					<p className="navigationText">Add Products</p>
+					<p className="navigationText">Products</p>
 				</NavLinksDiv>
 
 				<SubTittles className="navigationText">UTILITY</SubTittles>
