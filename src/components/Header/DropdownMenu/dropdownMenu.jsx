@@ -2,6 +2,10 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
+import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
+import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
+
 const DropdownWrapper = styled.div`
 	position: relative;
 	display: inline-block;
@@ -29,6 +33,7 @@ const DroppedContent = styled.div`
 	width: 190px;
 	background-color: #fff;
 	box-shadow: 0 2px 4px rgba(15, 34, 58, 0.12);
+	color: #74788d;
 `;
 
 const DroppedButtonWrapper = styled.div`
@@ -63,31 +68,79 @@ export default function Dropdown(props) {
 		};
 	}, [isOpen]);
 
+	const MenuItems = () => {
+		if (props.page === 'store') {
+			if (isOpen && props.role !== 'ADMIN') {
+				return (
+					<DroppedContent>
+						<DroppedButtonWrapper id="profile" onClick={props.action}>
+							<PermIdentityOutlinedIcon style={{ marginRight: '8px' }} />
+							<p>Profile</p>
+						</DroppedButtonWrapper>
+						<DroppedButtonWrapper id="users" onClick={props.action}>
+							<PeopleAltOutlinedIcon style={{ marginRight: '8px' }} />
+							<p>Users</p>
+						</DroppedButtonWrapper>
+						<DroppedButtonWrapper id="logOut" onClick={props.action}>
+							<ExitToAppOutlinedIcon style={{ marginRight: '8px' }} />
+							<p>Log Out</p>
+						</DroppedButtonWrapper>
+					</DroppedContent>
+				);
+			} else if (isOpen) {
+				return (
+					<DroppedContent>
+						<DroppedButtonWrapper id="users" onClick={props.action}>
+							<PeopleAltOutlinedIcon style={{ marginRight: '8px' }} />
+							<p>Users</p>
+						</DroppedButtonWrapper>
+						<DroppedButtonWrapper id="logOut" onClick={props.action}>
+							<ExitToAppOutlinedIcon style={{ marginRight: '8px' }} />
+							<p>Log Out</p>
+						</DroppedButtonWrapper>
+					</DroppedContent>
+				);
+			} else {
+				return null;
+			}
+		} else {
+			if (isOpen && props.role !== 'ADMIN'){
+				return (
+					<DroppedContent>
+						<DroppedButtonWrapper id="profile" onClick={props.action}>
+							<PermIdentityOutlinedIcon style={{ marginRight: '8px' }} />
+							<p>Profile</p>
+						</DroppedButtonWrapper>
+						<DroppedButtonWrapper id="logOut" onClick={props.action}>
+							<ExitToAppOutlinedIcon style={{ marginRight: '8px' }} />
+							<p>Log Out</p>
+						</DroppedButtonWrapper>
+					</DroppedContent>
+				);
+			}
+			else if(isOpen){
+				return (
+					<DroppedContent>
+						<DroppedButtonWrapper id="logOut" onClick={props.action}>
+							<ExitToAppOutlinedIcon style={{ marginRight: '8px' }} />
+							<p>Log Out</p>
+						</DroppedButtonWrapper>
+					</DroppedContent>
+				);
+			}
+			else{
+				return(null)
+			}
+		}
+	};
+
 	return (
 		<DropdownWrapper onClick={toggleDropdown}>
 			<HeaderWrapper>
 				<DropdownHeadText>{props.menuHeader}</DropdownHeadText>
 				{isOpen ? <ion-icon name="chevron-up-outline"></ion-icon> : <ion-icon name="chevron-down-outline"></ion-icon>}
 			</HeaderWrapper>
-			{isOpen && props.role !== 'ADMIN' ? (
-				<DroppedContent>
-					<DroppedButtonWrapper id="profile" onClick={props.action}>
-						<ion-icon style={{ marginRight: '8px' }} name="person-outline"></ion-icon>
-						<p>Profile</p>
-					</DroppedButtonWrapper>
-					<DroppedButtonWrapper id="logOut" onClick={props.action}>
-						<ion-icon style={{ marginRight: '8px' }} name="log-out-outline"></ion-icon>
-						<p>Log Out</p>
-					</DroppedButtonWrapper>
-				</DroppedContent>
-			) : isOpen ? (
-				<DroppedContent>
-					<DroppedButtonWrapper id="logOut" onClick={props.action}>
-						<ion-icon style={{ marginRight: '8px' }} name="log-out-outline"></ion-icon>
-						<p>Log Out</p>
-					</DroppedButtonWrapper>
-				</DroppedContent>
-			) : null}
+			<MenuItems/>
 		</DropdownWrapper>
 	);
 }

@@ -56,7 +56,7 @@ const NewCategoryWrapper = styled.div`
 	width: 100%;
 	height: fit-content;
 	padding: 10px;
-	margin: 10px 0;
+	margin: 20px 0;
 `;
 const SectionHeadWrapper = styled.div`
 	display: flex;
@@ -94,7 +94,7 @@ export default function StoreHomePage(props) {
 		swipeable: true,
 	};
 	return (
-		<>
+		<div>
 			<StoreHeader />
 			<Carousel indicators={false}>
 				<BannerOne />
@@ -150,7 +150,7 @@ export default function StoreHomePage(props) {
 					</MultiCarousel>
 				</NewCategoryWrapper>
 			</ProductsWrapper>
-		</>
+		</div>
 	);
 }
 

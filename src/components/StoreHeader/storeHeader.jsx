@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import Logo from '../../assets/Images/logo_white.png';
 import ProfilePic from '../../assets/Images/profilePic_small.png';
+import DropdownMenu from '../Header/DropdownMenu'
+import SubCategoryDropdown from './SubCategoryDropdown'
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
@@ -74,6 +77,7 @@ const CartWrapper = styled.div`
 	color: #fff;
 `;
 const BottomNavigation = styled.div`
+	position:relative;
 	display: flex;
 	align-items: center;
 	height: 40px;
@@ -82,39 +86,41 @@ const BottomNavigation = styled.div`
 	background-color: #d6dcf9; ;
 `;
 
-const UL = styled.ul`
-	list-styling: none;
-`;
-const LI = styled.li`
-	display: inline-block;
+const CategoryLinkWrapper = styled.div`
+	display:flex;
+	align-items:center;
+	width:fit-content;
+	height:100%;
 	margin-right: 30px;
-	color: #000;
 `;
+
 const CategoryLinks = styled.p`
 	cursor: pointer;
+	color:#000;
 `;
 
+
+
 export default function StoreHeader(props) {
-	const [allAnchorEl, setAllAnchorEl] = useState(null)
-	const [clothsAnchorEl, setClothsAnchorEl] = useState(null)
-	const [medicinesAnchorEl, setMedicinesAnchorEl] = useState(null);
-	const [foodAnchorEl, setFoodAnchorEl] = useState(null);
-	const [electronicsAnchorEl, setElectronicsAnchorEl] = useState(null);
-	
-	const handleClick = (event) => {
-		setAllAnchorEl(null);
-		setClothsAnchorEl(clothsAnchorEl ? null : event.currentTarget);
-		setMedicinesAnchorEl(null)
-		setFoodAnchorEl(null)
-		setElectronicsAnchorEl(null)
+	const history = useHistory()
+	const [subCategoryData, setSubCategoryData] = useState(null)
+	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false)
+
+	const openSubCategoryDropdown = (e)=>{
+		setSubCategoryData(e.target.id)
+		setSubCategoryDropdownOpen(true)
+	}
+	const closeSubCategoryDropdown = () => {
+		setSubCategoryData(null);
+		setSubCategoryDropdownOpen(false);
 	};
 
-	const allOpen = Boolean(allAnchorEl);
-	const clothsOpen = Boolean(clothsAnchorEl);
-	const id = allOpen || clothsOpen ? 'simple-popper' : undefined;
-
-	
-	// const id = clothsOpen ? 'simple-popper' : undefined;
+		const dropdownActions = (e) => {
+			const clickedDiv = e.target.closest('div');
+			if (clickedDiv.id === 'users') {
+				history.push('/users');
+			} 
+		};
 	
 	return (
 		<>
@@ -128,36 +134,35 @@ export default function StoreHeader(props) {
 				</SearchWrapper>
 				<ProfileWrapper>
 					<ProfilePicBox />
-					<p style={{ textTransform: 'capitalize' }}>Thejus</p>
+
+					<DropdownMenu menuHeader="Thejus" role="USER" action={dropdownActions} page="store" />
 				</ProfileWrapper>
 				<CartWrapper>
 					<ShoppingCartOutlinedIcon />
 				</CartWrapper>
 			</TopNavigation>
-			<BottomNavigation>
-				<UL>
-					<LI>
-						<CategoryLinks onClick={handleClick}>All</CategoryLinks>
-						<Popper id={id} open={allOpen} anchorEl={allAnchorEl}>
-							<div>The content of the Popper.</div>
-						</Popper>
-					</LI>
-					<LI>
-						<CategoryLinks onClick={handleClick}>Cloths</CategoryLinks>
-						<Popper id={id} open={clothsOpen} anchorEl={clothsAnchorEl}>
-							<div>The content of the Popper.</div>
-						</Popper>
-					</LI>
-					<LI>
-						<CategoryLinks>Medicines</CategoryLinks>
-					</LI>
-					<LI>
-						<CategoryLinks>Food</CategoryLinks>
-					</LI>
-					<LI>
-						<CategoryLinks>Electronics</CategoryLinks>
-					</LI>
-				</UL>
+			<BottomNavigation onMouseLeave={closeSubCategoryDropdown}>
+				<CategoryLinkWrapper>
+					<CategoryLinks id="all" onMouseEnter={closeSubCategoryDropdown}>
+						All
+					</CategoryLinks>
+				</CategoryLinkWrapper>
+				<CategoryLinkWrapper>
+					<CategoryLinks id="cloths" onMouseEnter={openSubCategoryDropdown}>
+						Cloths
+					</CategoryLinks>
+				</CategoryLinkWrapper>
+				<CategoryLinkWrapper>
+					<CategoryLinks id="food" onMouseEnter={openSubCategoryDropdown}>
+						Food
+					</CategoryLinks>
+				</CategoryLinkWrapper>
+				<CategoryLinkWrapper>
+					<CategoryLinks id="medicines" onMouseEnter={openSubCategoryDropdown}>
+						Medicines
+					</CategoryLinks>
+				</CategoryLinkWrapper>
+				{subCategoryDropdownOpen ? <SubCategoryDropdown categoryData={subCategoryData} /> : null}
 			</BottomNavigation>
 		</>
 	);
