@@ -8,6 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import { useDispatch } from 'react-redux';
+import { onDeleteSubCategory, onEditSubCategory } from '../../../../../slices/categorylist.slice';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -76,13 +77,13 @@ export default function SubCategoryCard(props) {
 			console.log('enter pressed');
 			if (editedSubcategory.trim().length !== 0) {
 				setDisableInput(true);
-				// dispatch(
-				// 	onEditSubCategory({
-				// 		subcategory: editedSubcategory,
-				// 		subcategoryId: props.subcategory.id,
-				// 		parentCategoryId: props.subcategory.category,
-				// 	})
-				// );
+				dispatch(
+					onEditSubCategory({
+						subcategory: editedSubcategory,
+						subcategoryId: props.subcategory.id,
+						parentCategoryId: props.subcategory.category,
+					})
+				);
 			}
 			// setEdit(false);
 		}
@@ -91,13 +92,13 @@ export default function SubCategoryCard(props) {
 	const editSubcategory = () => {
 		if (editedSubcategory.trim().length !== 0) {
 			setDisableInput(true);
-			// dispatch(
-			// 	onEditSubCategory({
-			// 		subcategory: editedSubcategory,
-			// 		subcategoryId: props.subcategory.id,
-			// 		parentCategoryId: props.subcategory.category,
-			// 	})
-			// );
+			dispatch(
+				onEditSubCategory({
+					subcategory: editedSubcategory,
+					subcategoryId: props.subcategory.id,
+					parentCategoryId: props.subcategory.category,
+				})
+			);
 			console.log({
 				subcategory: editedSubcategory,
 				subcategoryId: props.subcategory.id,
@@ -120,13 +121,11 @@ export default function SubCategoryCard(props) {
 	};
 
 	const deleteSubCategory = () => {
-		// dispatch(
-		// 	onDeleteSubCategory({
-		// 		subcategory: props.subcategory.name,
-		// 		subcategoryId: props.subcategory.id,
-		// 		parentCategoryId: props.subcategory.category,
-		// 	})
-		// );
+		dispatch(
+			onDeleteSubCategory({
+				subcategoryId: props.subcategory.id,
+			})
+		);
 		console.log({
 			subcategory: props.subcategory.name,
 			subcategoryId: props.subcategory.id,
