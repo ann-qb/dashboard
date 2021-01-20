@@ -175,10 +175,10 @@ export default function StoreHeader(props) {
 		right: false,
 	});
 	const [productsInCart, setProductsInCart] = useState(null);
-	const [subCategoryData, setSubCategoryData] = useState(null);
+	const [subCategoryData, setSubCategoryData] = useState({category:null,subCategories:null});
 	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false);
 
-	
+
 
 	useEffect(() => {
 		try {
@@ -196,7 +196,8 @@ export default function StoreHeader(props) {
 
 	// For sub category drop-down
 	const openSubCategoryDropdown = (e) => {
-		setSubCategoryData(e.target.innerHTML);
+		const selectedCategory = DATA_CATEGORIES.find(category => category.name === e.target.id)
+		setSubCategoryData({ category: selectedCategory.name, subCategories: selectedCategory.subCategories });
 		setSubCategoryDropdownOpen(true);
 	};
 	const closeSubCategoryDropdown = () => {
@@ -242,26 +243,20 @@ export default function StoreHeader(props) {
 					<CategoryLinks id="all" onMouseEnter={closeSubCategoryDropdown} onClick={toggleDrawer(true)}>
 						All
 					</CategoryLinks>
-					<Drawer anchor='left' open={openAllCategoryDrawer.left} onClose={toggleDrawer(false)}>
+					<Drawer anchor="left" open={openAllCategoryDrawer.left} onClose={toggleDrawer(false)}>
 						<p>Hello world</p>
 					</Drawer>
 				</CategoryLinkWrapper>
-				<CategoryLinkWrapper>
-					<CategoryLinks id="cloths" onMouseEnter={openSubCategoryDropdown}>
-						Cloths
-					</CategoryLinks>
-				</CategoryLinkWrapper>
-				<CategoryLinkWrapper>
-					<CategoryLinks id="food" onMouseEnter={openSubCategoryDropdown}>
-						Food
-					</CategoryLinks>
-				</CategoryLinkWrapper>
-				<CategoryLinkWrapper>
-					<CategoryLinks id="medicines" onMouseEnter={openSubCategoryDropdown}>
-						Medicines
-					</CategoryLinks>
-				</CategoryLinkWrapper>
-				{subCategoryDropdownOpen ? <SubCategoryDropdown categoryData={subCategoryData} /> : null}
+
+				{DATA_CATEGORIES.slice(0, 3).map((category) => (
+					<CategoryLinkWrapper key={category.id}>
+						<CategoryLinks id={category.name} onMouseEnter={openSubCategoryDropdown}>
+							{category.name}
+						</CategoryLinks>
+					</CategoryLinkWrapper>
+				))}
+				
+				{subCategoryDropdownOpen ? <SubCategoryDropdown subCategoryData={subCategoryData} /> : null}
 			</BottomNavigation>
 		</>
 	);

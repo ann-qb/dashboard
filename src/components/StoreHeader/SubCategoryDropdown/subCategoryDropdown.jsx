@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
-const DATA = [
-	{ name: 'Shirts', id: 1 },
-	{ name: 'Pants', id: 2 },
-	{ name: 'Ladies', id: 3 },
-	{ name: 'Kids', id: 4 },
-];
-
 const DropDownWrapper = styled.div`
 	z-index: 999999;
 	position: absolute;
@@ -32,15 +25,15 @@ const SubCategoryLink = styled.p`
 
 export default function SubCategoryDropdown(props) {
   const history = useHistory()
-	const category = props.categoryData;
+	// const category = props.categoryData;
 	const redirectToCategoriesPage = (e) => {
     const subCategory = e.target.innerHTML;
-    history.push(`/store-category?category=${category}&subCategory=${subCategory}`);
+    history.push(`/store-category?category=${props.subCategoryData.category}&subCategory=${subCategory}`);
 	};
 
 	return (
 		<DropDownWrapper className="cards">
-			{DATA.map((data) => (
+			{props.subCategoryData.subCategories.map((data) => (
 				<SubCategoryLink key={data.id} onClick={redirectToCategoriesPage}>
 					{data.name}
 				</SubCategoryLink>
