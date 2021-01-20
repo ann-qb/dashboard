@@ -109,7 +109,7 @@ export default function CategoryCard(props) {
 	};
 
 	const addNewSubCategory = () => {
-		// dispatch(onAddSubCategory({ subcategory: newSubCategory, parentCategoryId: props.category.id }));
+		dispatch(onAddSubCategory({ subcategory: newSubCategory, parentCategory: props.category.name }));
 		console.log({ subcategory: newSubCategory, parentCategoryId: props.category.id });
 	};
 
@@ -253,7 +253,7 @@ export default function CategoryCard(props) {
 						Add
 					</Button>
 				</AddSubCategoryWrapper>
-				{props.category.Subcategories.reverse().map((each) => (
+				{props.category.Subcategories.map((each) => (
 					<SubCategoryCard key={each.id + each.name} subcategory={each} />
 				))}
 			</Collapse>
