@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import styled from 'styled-components';
 import StoreHeader from '../../components/StoreHeader';
 import Placeholder from '../../assets/Images/placeholder.jpg';
@@ -56,6 +57,12 @@ const ButtonBox = styled.div`
 `;
 
 export default function StoreProductPage(props) {
+  const [productToCart, setProductToCart] = useState(null)
+
+  const addToCart = ()=>{
+    const existingNumber = localStorage.getItem('productsInCart');
+    existingNumber ? localStorage.setItem('productsInCart', existingNumber + 1) : localStorage.setItem('productsInCart',1)
+  }
 	return (
 		<div style={{ backgroundColor: '#fff' }}>
 			<StoreHeader />

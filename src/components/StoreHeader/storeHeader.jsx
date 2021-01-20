@@ -3,16 +3,12 @@ import Logo from '../../assets/Images/logo_white.png';
 import ProfilePic from '../../assets/Images/profilePic_small.png';
 import DropdownMenu from '../Header/DropdownMenu'
 import SubCategoryDropdown from './SubCategoryDropdown'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import Popper from '@material-ui/core/Popper';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import { SignalCellularNull } from '@material-ui/icons';
-
+import Badge from '@material-ui/core/Badge';
 
 
 const TopNavigation = styled.div`
@@ -84,7 +80,8 @@ const BottomNavigation = styled.div`
 	height: 40px;
 	width: 100%;
 	padding: 25px;
-	background-color: #d6dcf9; ;
+	background-color: #fff; 
+	border-bottom:1px solid #eee;
 `;
 
 const CategoryLinkWrapper = styled.div`
@@ -97,7 +94,12 @@ const CategoryLinkWrapper = styled.div`
 
 const CategoryLinks = styled.p`
 	cursor: pointer;
-	color:#000;
+	color: #000;
+	transition:all 0.2s ease;
+	&:hover {
+		color: #5673e8;
+		border-bottom: 1px solid #5673e8;
+	}
 `;
 
 
@@ -106,6 +108,16 @@ export default function StoreHeader(props) {
 	const history = useHistory()
 	const [subCategoryData, setSubCategoryData] = useState(null)
 	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false)
+
+	let productsInCart
+	useEffect(() => {
+		try{
+			productsInCart = localStorage.getItem('productsInCart');
+		}
+		catch{
+			productsInCart = null
+		}
+	})
 
 	// Master back button (logo button)
 	const backToHome = ()=>{
@@ -144,7 +156,9 @@ export default function StoreHeader(props) {
 					<DropdownMenu menuHeader="Thejus" role="USER" action={dropdownActions} page="store" />
 				</ProfileWrapper>
 				<CartWrapper>
-					<ShoppingCartOutlinedIcon />
+					<Badge badgeContent={productsInCart} color="primary">
+						<ShoppingCartOutlinedIcon />
+					</Badge>
 				</CartWrapper>
 			</TopNavigation>
 			<BottomNavigation onMouseLeave={closeSubCategoryDropdown}>

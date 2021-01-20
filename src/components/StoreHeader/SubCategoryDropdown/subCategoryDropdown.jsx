@@ -20,9 +20,13 @@ const DropDownWrapper = styled.div`
 	margin: 0 auto;
 `;
 const SubCategoryLink = styled.p`
-	margin-right:20px;
+	margin-right: 20px;
 	color: #000;
 	cursor: pointer;
+	transition: all 0.2s ease;
+	&:hover {
+		color: #5673e8;
+	}
 `;
 
 export default function SubCategoryDropdown(props) {
