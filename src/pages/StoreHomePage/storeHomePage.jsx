@@ -3,9 +3,9 @@ import StoreHeader from '../../components/StoreHeader';
 import ProductCard from '../../components/ProductCard';
 import MultiCarousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import ScrollToTop from '../../components/ScrollToTop'
 // import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import Carousel from 'react-material-ui-carousel';
-import { Paper, Button } from '@material-ui/core';
 import Banner1 from '../../assets/Images/banner1.png';
 import Banner2 from '../../assets/Images/banner2.png';
 import Banner3 from '../../assets/Images/banner3.png';
@@ -60,12 +60,13 @@ export default function StoreHomePage(props) {
 		renderDotsOutside: false,
 		responsive: responsive,
 		showDots: false,
-		slidesToSlide: 1,
+		slidesToSlide: 2,
 		swipeable: true,
 	};
 	return (
 		<div>
 			<StoreHeader />
+			<ScrollToTop/>
 			<Carousel indicators={false}>
 				<BannerImage src={Banner1} />
 				<BannerImage src={Banner2} />

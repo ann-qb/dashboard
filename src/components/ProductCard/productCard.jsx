@@ -1,10 +1,13 @@
 import styled from 'styled-components'
 import Placeholder from '../../assets/Images/placeholder.jpg'
+import { useHistory } from 'react-router-dom';
+
 const ProductCardWrapper = styled.div`
-  height:280px;
-  width:250px;
-  margin:${(props)=>props.margin? props.margin : '0'};
-  text-align:center;
+	height: 280px;
+	width: 250px;
+	margin: ${(props) => (props.margin ? props.margin : '0')};
+	text-align: center;
+	cursor: pointer;
 `;
 const ImageWrapper = styled.div`
   width:100%;
@@ -26,8 +29,13 @@ const ProductBrand = styled.p`
 `
 
 export default function ProductCard(props){
+  const history = useHistory()
+
+  const sendToProductPage = ()=>{
+    history.push('/product')
+  }
   return (
-		<ProductCardWrapper margin={props.margin}>
+		<ProductCardWrapper margin={props.margin} onClick={sendToProductPage}>
 			<ImageWrapper />
 			<ProductName>Tittle</ProductName>
 			<ProductPrice>Price</ProductPrice>

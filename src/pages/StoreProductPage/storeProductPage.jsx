@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react';
 import styled from 'styled-components';
 import StoreHeader from '../../components/StoreHeader';
 import Placeholder from '../../assets/Images/placeholder.jpg';
@@ -47,8 +47,12 @@ const PriceNumber = styled.span`
 	color: #34c38f;
 `;
 const ProductStock = styled.p`
+	width:fit-content;
 	margin-bottom: 20px;
+	padding: 2px 10px;
 	color: #34c38f;
+	border-radius: 2px;
+	background-color: #eee;
 `;
 const ButtonBox = styled.div`
 	display: flex;
@@ -57,14 +61,16 @@ const ButtonBox = styled.div`
 `;
 
 export default function StoreProductPage(props) {
-  const [productToCart, setProductToCart] = useState(null)
+	const [productToCart, setProductToCart] = useState(null);
 
-  const addToCart = ()=>{
-    const existingNumber = localStorage.getItem('productsInCart');
-    existingNumber ? localStorage.setItem('productsInCart', existingNumber + 1) : localStorage.setItem('productsInCart',1)
-  }
+	const addToCart = () => {
+		const existingNumber = localStorage.getItem('productsInCart');
+		existingNumber
+			? localStorage.setItem('productsInCart', existingNumber + 1)
+			: localStorage.setItem('productsInCart', 1);
+	};
 	return (
-		<div style={{ backgroundColor: '#fff' }}>
+		<div style={{ backgroundColor: '#fff', color: '#020001' }}>
 			<StoreHeader />
 			<ProductContentWrapper>
 				<ProductImageWrapper>
@@ -79,7 +85,7 @@ export default function StoreProductPage(props) {
 						vero deserunt commodi, inventore hic.
 					</ProductDescription>
 					<ProductPrice>
-						Offer price:<PriceNumber> ₹ 16666</PriceNumber>
+						Offer price: <PriceNumber>₹ 16666</PriceNumber>
 					</ProductPrice>
 					<ProductStock>In Stock</ProductStock>
 					<ButtonBox>
