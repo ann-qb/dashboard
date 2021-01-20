@@ -5,6 +5,19 @@ import Placeholder from '../../assets/Images/placeholder.jpg';
 import Button from '@material-ui/core/Button';
 import AddShoppingCartOutlinedIcon from '@material-ui/icons/AddShoppingCartOutlined';
 import ShopOutlinedIcon from '@material-ui/icons/ShopOutlined';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+	button: {
+		backgroundColor: '#5673E8',
+		color: '#fff',
+		'&:hover': {
+			transition: '0.2s ease',
+			color: '#000',
+			backgroundColor: '#d6dcf9',
+		},
+	},
+}));
 
 const ProductContentWrapper = styled.div`
 	display: flex;
@@ -61,6 +74,7 @@ const ButtonBox = styled.div`
 `;
 
 export default function StoreProductPage(props) {
+	const classes = useStyles()
 	const [productToCart, setProductToCart] = useState(null);
 
 	const addToCart = () => {
@@ -94,13 +108,13 @@ export default function StoreProductPage(props) {
 						<Button
 							style={{ marginRight: '10px' }}
 							variant="contained"
-							color="primary"
+							className={classes.button}
 							startIcon={<AddShoppingCartOutlinedIcon />}
 							onClick={addToCart}
 						>
 							Add To Cart
 						</Button>
-						<Button variant="contained" color="primary" startIcon={<ShopOutlinedIcon />}>
+						<Button variant="contained" className={classes.button} startIcon={<ShopOutlinedIcon />}>
 							Order Now
 						</Button>
 					</ButtonBox>

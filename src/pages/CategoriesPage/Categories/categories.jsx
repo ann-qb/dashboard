@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { onAddCategory, onGetCategoryList } from '../../../slices/categorylist.slice';
 import { BounceLoader } from 'react-spinners';
 import AlertPopup from '../../../components/Popups/AlertPopups';
+import AddIcon from '@material-ui/icons/Add';
 
 const PageContainer = styled.div`
 	position: relative;
@@ -15,6 +16,8 @@ const PageContainer = styled.div`
 `;
 
 const AddCategoryWrapper = styled.div`
+	display:flex;
+	align-item:center;
 	padding: 10px;
 	padding-left: 0;
 	margin-top: 15px;
@@ -22,6 +25,7 @@ const AddCategoryWrapper = styled.div`
 `;
 const Button = styled.button`
 	height: 100%;
+	padding:0 !important;
 `;
 const Input = styled.input`
 	height: 100%;
@@ -186,7 +190,7 @@ export default function Categories() {
 			<AddCategoryWrapper>
 				<Input placeholder="Category" onChange={handleInputChange} />
 				<Button className="button-primary" disabled={disableAdd} onClick={addNewCategory}>
-					Add
+					<AddIcon/>
 				</Button>
 			</AddCategoryWrapper>
 			{showLoading ? (
