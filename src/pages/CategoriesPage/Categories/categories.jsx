@@ -26,6 +26,7 @@ const AddCategoryWrapper = styled.div`
 const Button = styled.button`
 	height: 100%;
 	padding:0 !important;
+	padding-bottom:-10px;
 `;
 const Input = styled.input`
 	height: 100%;

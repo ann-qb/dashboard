@@ -12,6 +12,9 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import Badge from '@material-ui/core/Badge';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -259,5 +262,32 @@ export default function StoreHeader(props) {
 				{subCategoryDropdownOpen ? <SubCategoryDropdown subCategoryData={subCategoryData} /> : null}
 			</BottomNavigation>
 		</>
+	);
+}
+
+const DrawerDataWrapper = styled.div`
+	width:100%;
+	height:100%;
+	padding:10px;
+`
+const CategoryNameWrapper = styled.div`
+	display:flex;
+	justify-content:space-between;
+`
+
+const DrawerData = (props)=>{
+	return (
+		<DrawerDataWrapper>
+			<CategoryNameWrapper>
+				<p>Category</p>
+				<IconButton aria-label="expand row" size="small">
+					<KeyboardArrowDownIcon />
+				</IconButton>
+			</CategoryNameWrapper>
+			<Collapse in={props.open} timeout="auto" unmountOnExit>
+				<p>Sub</p>
+				<p>Sub</p>
+			</Collapse>
+		</DrawerDataWrapper>
 	);
 }
