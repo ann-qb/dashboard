@@ -11,6 +11,7 @@ import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import Badge from '@material-ui/core/Badge';
 import { makeStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -111,14 +112,73 @@ const CategoryLinks = styled.p`
 	}
 `;
 
+// Mock data for categories and sub-categories
+const DATA_CATEGORIES = [
+	{
+		name: 'Cloths',
+		id: 1,
+		subCategories: [
+			{ name: 'Shirts', id: 1 },
+			{ name: 'Pants', id: 2 },
+			{ name: 'Ladies wear', id: 3 },
+			{ name: 'Kids', id: 4 },
+		],
+	},
+	{
+		name: 'Food',
+		id: 2,
+		subCategories: [
+			{ name: 'Bakery', id: 1 },
+			{ name: 'Fried', id: 2 },
+			{ name: 'Ice creams', id: 3 },
+		],
+	},
+	{
+		name: 'Medicine',
+		id: 3,
+		subCategories: [
+			{ name: 'First Aid', id: 1 },
+			{ name: 'Anti Inflammatory', id: 2 },
+			{ name: 'Neelakoduveli', id: 3 },
+			{ name: 'Himalayan poopoo', id: 4 },
+		],
+	},
+	{
+		name: 'Electronics',
+		id: 4,
+		subCategories: [
+			{ name: 'Watch', id: 1 },
+			{ name: 'Laptops', id: 2 },
+			{ name: 'Mobiles', id: 3 },
+			{ name: 'Iron Box', id: 4 },
+			{ name: 'Toilet paper', id: 5},
+		],
+	},
+	{
+		name: 'Stationary',
+		id: 5,
+		subCategories: [
+			{ name: 'Glitter Paper', id: 1 },
+		],
+	},
+];
+
 export default function StoreHeader(props) {
 	const classes= useStyles()
 	const history = useHistory();
 	const { loggedUser } = useSelector((state) => state.loginSlice);
 	const { role } = useSelector((state) => state.loginSlice);
+	const [openAllCategoryDrawer, setOpenAllCategoryDrawer] = useState({
+		top: false,
+		left: false,
+		bottom: false,
+		right: false,
+	});
 	const [productsInCart, setProductsInCart] = useState(null);
 	const [subCategoryData, setSubCategoryData] = useState(null);
 	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false);
+
+	
 
 	useEffect(() => {
 		try {
@@ -134,6 +194,7 @@ export default function StoreHeader(props) {
 		history.push('/store');
 	};
 
+	// For sub category drop-down
 	const openSubCategoryDropdown = (e) => {
 		setSubCategoryData(e.target.innerHTML);
 		setSubCategoryDropdownOpen(true);
@@ -150,6 +211,11 @@ export default function StoreHeader(props) {
 		}
 	};
 
+	// For All category drawer
+	const toggleDrawer=(open)=>(e)=>{
+		setOpenAllCategoryDrawer({...openAllCategoryDrawer,left:open})
+	}
+
 	return (
 		<>
 			<TopNavigation>
@@ -162,7 +228,7 @@ export default function StoreHeader(props) {
 				</SearchWrapper>
 				<ProfileWrapper>
 					<ProfilePicBox />
-					
+
 					<DropdownMenu menuHeader={loggedUser.firstname} role={role} action={dropdownActions} page="store" />
 				</ProfileWrapper>
 				<CartWrapper onClick={() => alert('Hi')}>
@@ -173,9 +239,12 @@ export default function StoreHeader(props) {
 			</TopNavigation>
 			<BottomNavigation onMouseLeave={closeSubCategoryDropdown}>
 				<CategoryLinkWrapper>
-					<CategoryLinks id="all" onMouseEnter={closeSubCategoryDropdown}>
+					<CategoryLinks id="all" onMouseEnter={closeSubCategoryDropdown} onClick={toggleDrawer(true)}>
 						All
 					</CategoryLinks>
+					<Drawer anchor='left' open={openAllCategoryDrawer.left} onClose={toggleDrawer(false)}>
+						<p>Hello world</p>
+					</Drawer>
 				</CategoryLinkWrapper>
 				<CategoryLinkWrapper>
 					<CategoryLinks id="cloths" onMouseEnter={openSubCategoryDropdown}>
