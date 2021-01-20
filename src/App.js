@@ -16,6 +16,7 @@ import CategoriesPage from './pages/CategoriesPage';
 import AddProductsPage from './pages/AddProductsPage';
 import StoreHomePage from './pages/StoreHomePage'
 import StoreCategoryPage from './pages/StoreCategoriesPage'
+import StoreProductPage from './pages/StoreProductPage'
 
 function App() {
 	return (
@@ -53,6 +54,9 @@ function App() {
 						</PrivateRoute>
 						<PrivateRoute path="/store-category">
 							<StoreCategoryPage />
+						</PrivateRoute>
+						<PrivateRoute path="/product">
+							<StoreProductPage />
 						</PrivateRoute>
 						<PrivateRoute path="/errorpage">
 							<ErrorPage errorType="404" />
