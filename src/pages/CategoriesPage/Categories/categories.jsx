@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { onAddCategory } from '../../../slices/categorylist.slice';
+import { onAddCategory, onGetCategoryList } from '../../../slices/categorylist.slice';
+import { BounceLoader } from 'react-spinners';
+import AlertPopup from '../../../components/Popups/AlertPopups';
 
 const PageContainer = styled.div`
 	position: relative;
@@ -28,74 +30,137 @@ const Input = styled.input`
 	border: 0.2px solid #dcdde2;
 `;
 
-const categoriesArray = [
-	{
-		id: 0,
-		name: 'Electronics',
-		subcategories: [
-			{
-				id: 0,
-				name: 'Mobile Accessories',
-				category: 0,
-			},
-			{
-				id: 1,
-				name: 'Computer Peripherals',
-				category: 0,
-			},
-			{
-				id: 2,
-				name: 'Laptop Accessories',
-				category: 0,
-			},
-			{
-				id: 3,
-				name: 'Tablets',
-				category: 0,
-			},
-		],
-	},
-	{
-		id: 1,
-		name: 'Fashion',
-		subcategories: [
-			{
-				id: 0,
-				name: 'Jeans',
-				category: 1,
-			},
-			{
-				id: 1,
-				name: 'T-shirts',
-				category: 1,
-			},
-			{
-				id: 2,
-				name: 'Dresses',
-				category: 1,
-			},
-			{
-				id: 3,
-				name: 'Caps',
-				category: 1,
-			},
-		],
-	},
-	{
-		id: 2,
-		name: 'Grocery',
-		subcategories: [],
-	},
-	{
-		id: 3,
-		name: 'Mobiles',
-		subcategories: [],
-	},
-];
+const SpinnerDiv = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 200px;
+	margin: auto 0;
+`;
+
+// const categoriesArray = [
+// 	{
+// 		id: 0,
+// 		name: 'Electronics',
+// 		subcategories: [
+// 			{
+// 				id: 0,
+// 				name: 'Mobile Accessories',
+// 				category: 0,
+// 			},
+// 			{
+// 				id: 1,
+// 				name: 'Computer Peripherals',
+// 				category: 0,
+// 			},
+// 			{
+// 				id: 2,
+// 				name: 'Laptop Accessories',
+// 				category: 0,
+// 			},
+// 			{
+// 				id: 3,
+// 				name: 'Tablets',
+// 				category: 0,
+// 			},
+// 		],
+// 	},
+// 	{
+// 		id: 1,
+// 		name: 'Fashion',
+// 		subcategories: [
+// 			{
+// 				id: 0,
+// 				name: 'Jeans',
+// 				category: 1,
+// 			},
+// 			{
+// 				id: 1,
+// 				name: 'T-shirts',
+// 				category: 1,
+// 			},
+// 			{
+// 				id: 2,
+// 				name: 'Dresses',
+// 				category: 1,
+// 			},
+// 			{
+// 				id: 3,
+// 				name: 'Caps',
+// 				category: 1,
+// 			},
+// 		],
+// 	},
+// 	{
+// 		id: 2,
+// 		name: 'Grocery',
+// 		subcategories: [],
+// 	},
+// 	{
+// 		id: 3,
+// 		name: 'Mobiles',
+// 		subcategories: [],
+// 	},
+// ];
 
 export default function Categories() {
-	const { categoryList } = useSelector((state) => state.categoryListSlice);
+	const { categoryList, status } = useSelector((state) => state.categoryListSlice);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(onGetCategoryList());
+	}, []);
+
+	const [alertDisplay, setAlertDisplay] = useState(false);
+	const [alertType, setAlertType] = useState('');
+	const [alertMessage, setAlertMessage] = useState('');
+	const [showLoading, setShowLoading] = useState(false);
+
+	useEffect(() => {
+		if (status === 'loading category list') {
+			setShowLoading(true);
+		} else if (status === 'loading category list over') {
+			setShowLoading(false);
+		}
+		// status === 'loading' ? setShowPopupLoading(true) : setShowPopupLoading(false);
+	}, [status]);
+
+	// useEffect(() => {
+	// 	if (!addUserPopup && status === 'add user success') {
+	// 		setAlertType('success');
+	// 		setAlertMessage('User added successfully!');
+	// 		showAlertPopup();
+	// 	} else if (!addUserPopup && status === 'add user failed') {
+	// 		setAlertType('error');
+	// 		setAlertMessage('Could not add user');
+	// 		showAlertPopup();
+	// 	}
+	// }, [addUserPopup, status]);
+
+	// useEffect(() => {
+	// 	if (status === 'delete user success') {
+	// 		setAlertType('success');
+	// 		setAlertMessage('User deleted successfully!');
+	// 		showAlertPopup();
+	// 	} else if (status === 'delete user failed') {
+	// 		setAlertType('error');
+	// 		setAlertMessage('Could not delete user');
+	// 		showAlertPopup();
+	// 	}
+	// }, [status]);
+
+	const showAlertPopup = () => {
+		setAlertDisplay(true);
+		// setAddUserPopup(false);
+	};
+
+	// Additional function to be written wherever AlertPopup component is used
+	if (alertDisplay) {
+		setTimeout(() => {
+			setAlertDisplay(false);
+		}, 5000);
+	}
 
 	const [disableAdd, setDisableAdd] = useState(true);
 	const [newCategory, setNewCategory] = useState('');
@@ -109,12 +174,14 @@ export default function Categories() {
 	};
 
 	const addNewCategory = () => {
-		// dispatch(onAddCategory({ category: newCategory }));
+		dispatch(onAddCategory({ category: newCategory }));
 		console.log({ category: newCategory });
 	};
 
 	return (
 		<PageContainer>
+			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
+
 			<p className="pageHeaders blackFont">Categories</p>
 			<AddCategoryWrapper>
 				<Input placeholder="Category" onChange={handleInputChange} />
@@ -122,12 +189,17 @@ export default function Categories() {
 					Add
 				</Button>
 			</AddCategoryWrapper>
-			{categoriesArray.reverse().map((each) => (
-				<CategoryCard key={each.id + each.name} category={each} />
-			))}
-			{categoryList.reverse().map((each) => (
-				<CategoryCard key={each.id + each.name} category={each} />
-			))}
+			{showLoading ? (
+				<SpinnerDiv>
+					<BounceLoader size={100} color={'#5673E8'} loading={showLoading} />
+				</SpinnerDiv>
+			) : (
+				categoryList.map((each) => <CategoryCard key={each.id + each.name} category={each} />)
+			)}
 		</PageContainer>
 	);
 }
+
+/* {categoriesArray.reverse().map((each) => (
+				<CategoryCard key={each.id + each.name} category={each} />
+			))} */
