@@ -8,6 +8,7 @@ import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import CategoryIcon from '@material-ui/icons/Category';
 import AddIcon from '@material-ui/icons/Add';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
+import StoreMallDirectoryOutlinedIcon from '@material-ui/icons/StoreMallDirectoryOutlined';
 
 /**---------------- Styles ------------------*/
 const NavBar = styled.div`
@@ -90,7 +91,7 @@ export default function SideNavigation(props) {
 				</NavLinksDiv>
 
 				<NavLinksDiv id="store" className="navLinks" onClick={changePageRoute}>
-					<DashboardOutlinedIcon style={iconStyle} />
+					<StoreMallDirectoryOutlinedIcon style={iconStyle} />
 					<p className="navigationText">Store</p>
 				</NavLinksDiv>
 

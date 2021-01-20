@@ -23,6 +23,7 @@ const HeaderWrapper = styled.div`
 `;
 const DropdownHeadText = styled.p`
 	margin-right: 5px;
+	text-transform: capitalize;
 `;
 
 const DroppedContent = styled.div`
@@ -70,7 +71,7 @@ export default function Dropdown(props) {
 
 	const MenuItems = () => {
 		if (props.page === 'store') {
-			if (isOpen && props.role !== 'ADMIN') {
+			if (isOpen && props.role !== 'admin') {
 				return (
 					<DroppedContent>
 						<DroppedButtonWrapper id="profile" onClick={props.action}>
@@ -104,7 +105,7 @@ export default function Dropdown(props) {
 				return null;
 			}
 		} else {
-			if (isOpen && props.role !== 'ADMIN'){
+			if (isOpen && props.role !== 'admin'){
 				return (
 					<DroppedContent>
 						<DroppedButtonWrapper id="profile" onClick={props.action}>

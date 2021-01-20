@@ -56,7 +56,7 @@ export default function StoreCategoriesPage(props){
 					<SectionHeading>Filters</SectionHeading>
 				</FiltersWrapper>
 				<ProductsWrapper className="cards">
-					<p>
+					<p style={{marginBottom:'15px'}}>
 						<span>{category}</span> / <span>{subCategory}</span>
 					</p>
 					<SectionHeading>{subCategory}</SectionHeading>

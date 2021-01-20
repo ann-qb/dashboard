@@ -18,6 +18,7 @@ const DropDownWrapper = styled.div`
 	height: fit-content;
 	padding: 15px;
 	margin: 0 auto;
+	border-top:1px solid #eee;
 `;
 const SubCategoryLink = styled.p`
 	margin-right: 20px;

@@ -5,6 +5,7 @@ import DropdownMenu from '../Header/DropdownMenu';
 import SubCategoryDropdown from './SubCategoryDropdown';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
@@ -113,6 +114,8 @@ const CategoryLinks = styled.p`
 export default function StoreHeader(props) {
 	const classes= useStyles()
 	const history = useHistory();
+	const { loggedUser } = useSelector((state) => state.loginSlice);
+	const { role } = useSelector((state) => state.loginSlice);
 	const [productsInCart, setProductsInCart] = useState(null);
 	const [subCategoryData, setSubCategoryData] = useState(null);
 	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false);
@@ -159,8 +162,8 @@ export default function StoreHeader(props) {
 				</SearchWrapper>
 				<ProfileWrapper>
 					<ProfilePicBox />
-
-					<DropdownMenu menuHeader="Thejus" role="USER" action={dropdownActions} page="store" />
+					
+					<DropdownMenu menuHeader={loggedUser.firstname} role={role} action={dropdownActions} page="store" />
 				</ProfileWrapper>
 				<CartWrapper onClick={() => alert('Hi')}>
 					<Badge badgeContent={productsInCart} color="primary" className={classes.root}>
