@@ -41,6 +41,7 @@ const SectionHeading = styled.p`
 const SeeMore = styled.p`
 	color: #5673e8;
 	font-size: 90%;
+	cursor:pointer;
 `;
 
 export default function StoreHomePage(props) {
