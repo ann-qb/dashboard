@@ -13,8 +13,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
 	root: {
-		cursor:'pointer'
-	},
+		'& .MuiBadge-colorPrimary': {
+			backgroundColor: '#f46a6a',
+		},
+	}
 }));
 
 const TopNavigation = styled.div`
@@ -160,7 +162,7 @@ export default function StoreHeader(props) {
 
 					<DropdownMenu menuHeader="Thejus" role="USER" action={dropdownActions} page="store" />
 				</ProfileWrapper>
-				<CartWrapper onClick={()=>alert('Hi')}>
+				<CartWrapper onClick={() => alert('Hi')}>
 					<Badge badgeContent={productsInCart} color="primary" className={classes.root}>
 						<ShoppingCartOutlinedIcon />
 					</Badge>
