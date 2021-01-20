@@ -32,6 +32,7 @@ const LogoWrapper = styled.div`
 const LogoImage = styled.img`
 	height: 40px;
 	width: auto;
+	cursor:pointer;
 `;
 const SearchWrapper = styled.div`
 	position: relative;
@@ -106,8 +107,13 @@ export default function StoreHeader(props) {
 	const [subCategoryData, setSubCategoryData] = useState(null)
 	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false)
 
+	// Master back button (logo button)
+	const backToHome = ()=>{
+		history.push('/store')
+	}
+
 	const openSubCategoryDropdown = (e)=>{
-		setSubCategoryData(e.target.id)
+		setSubCategoryData(e.target.innerHTML)
 		setSubCategoryDropdownOpen(true)
 	}
 	const closeSubCategoryDropdown = () => {
@@ -126,7 +132,7 @@ export default function StoreHeader(props) {
 		<>
 			<TopNavigation>
 				<LogoWrapper>
-					<LogoImage src={Logo} />
+					<LogoImage src={Logo} onClick={backToHome} />
 				</LogoWrapper>
 				<SearchWrapper>
 					<SearchInput type="text" />

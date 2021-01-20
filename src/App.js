@@ -15,6 +15,7 @@ import SetPasswordPage from './pages/SetPasswordPage';
 import CategoriesPage from './pages/CategoriesPage';
 import AddProductsPage from './pages/AddProductsPage';
 import StoreHomePage from './pages/StoreHomePage'
+import StoreCategoryPage from './pages/StoreCategoriesPage'
 
 function App() {
 	return (
@@ -48,7 +49,10 @@ function App() {
 							<AddProductsPage />
 						</PrivateRoute>
 						<PrivateRoute path="/store">
-							<StoreHomePage/>
+							<StoreHomePage />
+						</PrivateRoute>
+						<PrivateRoute path="/store-category">
+							<StoreCategoryPage />
 						</PrivateRoute>
 						<PrivateRoute path="/errorpage">
 							<ErrorPage errorType="404" />
