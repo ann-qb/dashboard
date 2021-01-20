@@ -47,7 +47,7 @@ const PriceNumber = styled.span`
 	color: #34c38f;
 `;
 const ProductStock = styled.p`
-	width:fit-content;
+	width: fit-content;
 	margin-bottom: 20px;
 	padding: 2px 10px;
 	color: #34c38f;
@@ -65,13 +65,15 @@ export default function StoreProductPage(props) {
 
 	const addToCart = () => {
 		const existingNumber = localStorage.getItem('productsInCart');
-		existingNumber
-			? localStorage.setItem('productsInCart', existingNumber + 1)
-			: localStorage.setItem('productsInCart', 1);
+		let newNumber;
+		existingNumber ? (newNumber = parseInt(existingNumber) + 1) : (newNumber = 1);
+
+		localStorage.setItem('productsInCart', newNumber);
+		setProductToCart(newNumber);
 	};
 	return (
 		<div style={{ backgroundColor: '#fff', color: '#020001' }}>
-			<StoreHeader />
+			<StoreHeader itemsInCart={productToCart} />
 			<ProductContentWrapper>
 				<ProductImageWrapper>
 					<ProductImage src={Placeholder} alt="Product Image" />
@@ -94,6 +96,7 @@ export default function StoreProductPage(props) {
 							variant="contained"
 							color="primary"
 							startIcon={<AddShoppingCartOutlinedIcon />}
+							onClick={addToCart}
 						>
 							Add To Cart
 						</Button>

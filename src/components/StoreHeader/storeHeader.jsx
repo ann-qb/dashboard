@@ -106,18 +106,19 @@ const CategoryLinks = styled.p`
 
 export default function StoreHeader(props) {
 	const history = useHistory()
+	const [productsInCart, setProductsInCart] = useState(null)
 	const [subCategoryData, setSubCategoryData] = useState(null)
 	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false)
 
-	let productsInCart
 	useEffect(() => {
 		try{
-			productsInCart = localStorage.getItem('productsInCart');
+			setProductsInCart(localStorage.getItem('productsInCart'))
 		}
 		catch{
-			productsInCart = null
+			setProductsInCart(null)
 		}
-	})
+		console.log('...',productsInCart)
+	},[props.itemsInCart])
 
 	// Master back button (logo button)
 	const backToHome = ()=>{
