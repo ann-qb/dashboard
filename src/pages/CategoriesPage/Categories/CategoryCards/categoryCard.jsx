@@ -12,7 +12,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 import { useDispatch } from 'react-redux';
-import { onAddSubCategory, onDeleteSubCategory, onEditSubCategory } from '../../../../slices/categorylist.slice';
+import {
+	onAddSubCategory,
+	onDeleteCategory,
+	onDeleteSubCategory,
+	onEditCategory,
+	onEditSubCategory,
+} from '../../../../slices/categorylist.slice';
 import SubCategoryCard from './SubCategoryCard/subCategoryCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -121,12 +127,12 @@ export default function CategoryCard(props) {
 			console.log('enter pressed');
 			if (editedCategory.trim().length !== 0) {
 				setDisableInput(true);
-				// dispatch(
-				// 	onEditCategory({
-				// 		category: editedCategory,
-				// 		categoryId: props.category.id,
-				// 	})
-				// );
+				dispatch(
+					onEditCategory({
+						category: editedCategory,
+						categoryId: props.category.id,
+					})
+				);
 			}
 			console.log({
 				category: editedCategory,
@@ -139,12 +145,12 @@ export default function CategoryCard(props) {
 	const editCategory = () => {
 		if (editedCategory.trim().length !== 0) {
 			setDisableInput(true);
-			// dispatch(
-			// 	onEditCategory({
-			// 		category: editedCategory,
-			// 		categoryId: props.category.id,
-			// 	})
-			// );
+			dispatch(
+				onEditCategory({
+					category: editedCategory,
+					categoryId: props.category.id,
+				})
+			);
 		}
 		// setEdit(false);
 	};
@@ -163,12 +169,11 @@ export default function CategoryCard(props) {
 	// };
 
 	const deleteCategory = () => {
-		// dispatch(
-		// 	onDeleteCategory({
-		// 		category: props.category.name,
-		// 		categoryId: props.category.id,
-		// 	})
-		// );
+		dispatch(
+			onDeleteCategory({
+				categoryId: props.category.id,
+			})
+		);
 		console.log({
 			category: props.category.name,
 			categoryId: props.category.id,
@@ -248,7 +253,7 @@ export default function CategoryCard(props) {
 						Add
 					</Button>
 				</AddSubCategoryWrapper>
-				{props.category.subcategories.reverse().map((each) => (
+				{props.category.Subcategories.reverse().map((each) => (
 					<SubCategoryCard key={each.id + each.name} subcategory={each} />
 				))}
 			</Collapse>

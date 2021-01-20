@@ -9,7 +9,7 @@ const categoryListSlice = createSlice({
 	initialState,
 	reducers: {
 		storeCategoryList(state, action) {
-			state.categoryList = action.payload.categoryList;
+			state.categoryList = action.payload.categoryList.reverse();
 			state.status = 'success';
 		},
 		resetStatus(state) {
@@ -31,9 +31,8 @@ export const onGetCategoryList = () => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading category list' }));
 	// try-catch // storeCategoryList
 	try {
-		const response = await fetch.get(`${baseURL}/category`);
+		const response = await fetch.get(`${baseURL}/subcategory`);
 		console.log(response);
-		console.log(response.data);
 		if (response.status === 200) {
 			dispatch(storeCategoryList({ categoryList: response.data.data }));
 		} else {
@@ -57,7 +56,7 @@ export const onAddCategory = (data) => async (dispatch) => {
 	// try-catch // onGetCategoryList
 	try {
 		const response = await fetch.post(`${baseURL}/category/create`, {
-			...data.categoryData,
+			name: data.category,
 		});
 		console.log(response);
 		if (response.status === 201) {
@@ -89,8 +88,8 @@ export const onEditCategory = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch // onGetCategoryList
 	try {
-		const response = await fetch.put(`${baseURL}/category/${data.id}`, {
-			...data.categoryData,
+		const response = await fetch.put(`${baseURL}/category/${data.categoryId}`, {
+			name: data.category,
 		});
 		console.log(response.data);
 		if (response.status === 200) {
@@ -122,7 +121,7 @@ export const onDeleteCategory = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch // onGetCategoryList
 	try {
-		const response = await fetch.delete(`${baseURL}/category/${data.id}`);
+		const response = await fetch.delete(`${baseURL}/category/${data.categoryId}`);
 		console.log(response);
 		console.log(response.data);
 		if (response.status === 200) {

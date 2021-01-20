@@ -156,7 +156,7 @@ export default function EditModal(props) {
 						<Input
 							type="email"
 							name="email"
-							disabled={!props.editSelf}
+							disabled={!(props?.data?.email === undefined || props.editSelf)}
 							value={userData.email}
 							onChange={handleInputChange}
 						/>
