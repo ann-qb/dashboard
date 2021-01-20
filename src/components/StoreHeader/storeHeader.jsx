@@ -59,7 +59,7 @@ const ProfileWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	width: 10%;
-	height: fit-content;
+	height: 100%;
 	margin-right: 0;
 	margin-left: auto;
 	color: #fff;
