@@ -23,7 +23,6 @@ const ProductCardWrapper = styled.div`
 	margin: ${(props) => (props.margin ? props.margin : '0')};
 	padding: 5px;
 	// text-align: center;
-	text-overflow: ellipsis;
 	border: 1px solid #eee;
 	border-radius: 5px;
 	cursor: pointer;
@@ -37,44 +36,61 @@ const ProductCardWrapper = styled.div`
 		transition: all 0.2s ease;
 	}
 `;
-
-const ProductName = styled.p`
-	width:100%;
-	max-height:20px;
+const ProductNameWrapper = styled.div`
+	width: 100%;
+	max-height: 20px;
 	margin-top: 10px;
+`;
+const ProductName = styled.p`
+	display: block;
+	margin: 0;
 	font-weight: 500;
-	overflow:hidden;
-	text-overflow:ellipsis;
 	color: #000;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 `;
 const ProductPrice = styled.p`
 	color: #34c38f;
 `;
-const ProductBrand = styled.p`
+const ProductBrandWrapper = styled.div`
+	width: 100%;
+	max-height: 20px;
 	margin-bottom: 10px;
 `;
+const ProductBrand = styled.p`
+	display: block;
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+`;
 const ExploreMore = styled.p`
-	padding:5px 15px;
-	font-size:90%;
-	background-color:#eee;
+	padding: 5px 15px;
+	font-size: 90%;
+	background-color: #eee;
 	color: #5673e8;
 `;
 
 export default function ProductCard(props) {
-
 	const history = useHistory();
 
 	const sendToProductPage = () => {
 		history.push('/product');
 	};
 
-
 	return (
 		<ProductCardWrapper margin={props.margin} onClick={sendToProductPage}>
 			<ImageWrapper />
-			<ProductName>A product name can be something very big like this</ProductName>
+			<ProductNameWrapper>
+				<ProductName>A product name can be something very big like this</ProductName>
+			</ProductNameWrapper>
+
 			<ProductPrice>₹ 16,666</ProductPrice>
-			<ProductBrand>Can be some Cool Brand</ProductBrand>
+
+			<ProductBrandWrapper>
+				<ProductBrand>Can be some Cool Brand</ProductBrand>
+			</ProductBrandWrapper>
 			<HiddenIcons>
 				<ExploreMore>Explore More...</ExploreMore>
 			</HiddenIcons>
