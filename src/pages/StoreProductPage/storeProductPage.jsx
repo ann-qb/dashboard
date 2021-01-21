@@ -5,6 +5,7 @@ import Placeholder from '../../assets/Images/placeholder.jpg';
 import Button from '@material-ui/core/Button';
 import AddShoppingCartOutlinedIcon from '@material-ui/icons/AddShoppingCartOutlined';
 import ShopOutlinedIcon from '@material-ui/icons/ShopOutlined';
+import StoreFooter from '../../components/StoreFooter';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
@@ -120,6 +121,7 @@ export default function StoreProductPage(props) {
 					</ButtonBox>
 				</ProductDetailsWrapper>
 			</ProductContentWrapper>
+			<StoreFooter/>
 		</div>
 	);
 }

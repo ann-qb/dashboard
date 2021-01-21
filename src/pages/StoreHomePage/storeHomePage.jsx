@@ -4,6 +4,7 @@ import ProductCard from '../../components/ProductCard';
 import MultiCarousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import ScrollToTop from '../../components/ScrollToTop'
+import StoreFooter from '../../components/StoreFooter'
 // import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import Carousel from 'react-material-ui-carousel';
 import Banner1 from '../../assets/Images/banner1.png';
@@ -122,6 +123,7 @@ export default function StoreHomePage(props) {
 					</MultiCarousel>
 				</NewCategoryWrapper>
 			</ProductsWrapper>
+			<StoreFooter/>
 		</div>
 	);
 }
