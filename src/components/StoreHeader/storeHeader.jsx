@@ -202,7 +202,7 @@ function DrawerData(props) {
 	return (
 		<DrawerDataWrapper>
 			<CategoryNameWrapper>
-				<p style={{ fontWeight: '500', fontSize: '110%' }}>{props.data.name}</p>
+				<p style={{ fontSize: '110%' }}>{props.data.name}</p>
 				<IconButton aria-label="expand row" size="small" onClick={openSubCategoryCollapsible}>
 					{drawerSubCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 				</IconButton>
@@ -236,7 +236,7 @@ export default function StoreHeader(props) {
 	});
 	const [productsInCart, setProductsInCart] = useState(0);
 	const [subCategoryData, setSubCategoryData] = useState({ category: '', subCategories: [] });
-	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false);
+	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState({open:false,id:null});
 
 	useEffect(() => {
 		try {
@@ -256,11 +256,19 @@ export default function StoreHeader(props) {
 	const openSubCategoryDropdown = (e) => {
 		const selectedCategory = categoryList.find((category) => category.name === e.target.id);
 		setSubCategoryData({ category: selectedCategory.name, subCategories: selectedCategory.Subcategories });
-		setSubCategoryDropdownOpen(true);
+		setSubCategoryDropdownOpen({open:true,id:e.target.id});
+		// console.log(document.querySelector(`#${e.target.id}`));
+		// document.querySelector(`#${e.target.id}`).style.color="blue";
 	};
 	const closeSubCategoryDropdown = () => {
+		// try{
+		// 	document.querySelector(`#${subCategoryDropdownOpen.id}`).style.color = '#000';
+		// }
+		// catch{
+		// 	console.log("No such element exists, yet")
+		// }
 		setSubCategoryData({ category: '', subCategories: [] });
-		setSubCategoryDropdownOpen(false);
+		setSubCategoryDropdownOpen({ open: false, id: null})
 	};
 
 	const dropdownActions = (e) => {
@@ -302,9 +310,8 @@ export default function StoreHeader(props) {
 						All
 					</CategoryLinks>
 					<Drawer anchor="left" open={openAllCategoryDrawer.left} onClose={toggleDrawer(false)}>
-						{/* {DATA_CATEGORIES.map((category) => (
-							<DrawerData key={category.id} data={category} />
-						))} */}
+						<p style={{ fontWeight: '500', fontSize: '120%', padding: '15px' }}>All Categories</p>
+						<hr style={{ border: '1px solid #eee' }} />
 						{categoryList.map((each) => (
 							<DrawerData key={each.id + each.name} data={each} />
 						))}
@@ -315,13 +322,13 @@ export default function StoreHeader(props) {
 					<CategoryLinkWrapper key={category.id}>
 						<CategoryLinks
 							id={category.name}
-							onMouseEnter={(e) => (category.Subcategories.length === 0 ? null : openSubCategoryDropdown(e))}>
+							onMouseEnter={(e) => (category.Subcategories.length === 0 ? null : openSubCategoryDropdown(e))}
+						>
 							{category.name}
 						</CategoryLinks>
+						{subCategoryDropdownOpen.open && (subCategoryDropdownOpen.id === category.name) ? <SubCategoryDropdown subCategoryData={subCategoryData} /> : null}
 					</CategoryLinkWrapper>
 				))}
-
-				{subCategoryDropdownOpen ? <SubCategoryDropdown subCategoryData={subCategoryData} /> : null}
 			</BottomNavigation>
 		</>
 	);
