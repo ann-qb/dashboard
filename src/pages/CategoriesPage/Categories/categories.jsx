@@ -14,6 +14,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import Grow from '@material-ui/core/Grow';
 
+import AddIcon from '@material-ui/icons/Add';
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
@@ -81,6 +83,8 @@ const AddCategoryWrapper = styled.div`
 `;
 const Button = styled.button`
 	height: 100%;
+	padding:0 !important;
+	padding-bottom:-10px;
 `;
 const Input = styled.input`
 	height: 100%;
@@ -256,6 +260,10 @@ export default function Categories() {
 						)}
 					</>
 				)}
+				{/* <Input placeholder="Category" onChange={handleInputChange} />
+				<Button className="button-primary" disabled={disableAdd} onClick={addNewCategory}>
+					<AddIcon/>
+				</Button> */}
 			</AddCategoryWrapper>
 			{showLoading ? (
 				<SpinnerDiv>

@@ -3,51 +3,22 @@ import StoreHeader from '../../components/StoreHeader';
 import ProductCard from '../../components/ProductCard';
 import MultiCarousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import ScrollToTop from '../../components/ScrollToTop'
+import StoreFooter from '../../components/StoreFooter'
 // import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import Carousel from 'react-material-ui-carousel';
-import { Paper, Button } from '@material-ui/core';
-import Banner1 from '../../assets/Images/banner1.jpg';
-import Banner2 from '../../assets/Images/banner2.jpg';
-import Banner3 from '../../assets/Images/banner3.jpg';
+import Banner1 from '../../assets/Images/banner1.png';
+import Banner2 from '../../assets/Images/banner2.png';
+import Banner3 from '../../assets/Images/banner3.png';
 
 const CarouselWrapper = {
 	backgroundColor: '#ff0000',
 };
 
-const BannerOne = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	height: 400px;
-	width: 100%;
-	background-image: url(${Banner1});
-	background-position: center;
-	background-size: cover;
-`;
-const BannerTwo = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	height: 400px;
-	width: 100%;
-	background-image: url(${Banner2});
-	background-position: center;
-	background-size: cover;
-`;
-const BannerThree = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	height: 400px;
-	width: 100%;
-	background-image: url(${Banner3});
-	background-position: center;
-	background-size: cover;
-`;
-
+const BannerImage = styled.img`
+	width:100%;
+	height:auto;
+`
 const ProductsWrapper = styled.div`
 	width: 100%;
 	padding: 0 25px;
@@ -71,6 +42,7 @@ const SectionHeading = styled.p`
 const SeeMore = styled.p`
 	color: #5673e8;
 	font-size: 90%;
+	cursor:pointer;
 `;
 
 export default function StoreHomePage(props) {
@@ -90,16 +62,17 @@ export default function StoreHomePage(props) {
 		renderDotsOutside: false,
 		responsive: responsive,
 		showDots: false,
-		slidesToSlide: 1,
+		slidesToSlide: 2,
 		swipeable: true,
 	};
 	return (
 		<div>
 			<StoreHeader />
+			<ScrollToTop/>
 			<Carousel indicators={false}>
-				<BannerOne />
-				<BannerTwo />
-				<BannerThree />
+				<BannerImage src={Banner1} />
+				<BannerImage src={Banner2} />
+				<BannerImage src={Banner3} />
 			</Carousel>
 			<ProductsWrapper>
 				<NewCategoryWrapper className="cards">
@@ -150,6 +123,7 @@ export default function StoreHomePage(props) {
 					</MultiCarousel>
 				</NewCategoryWrapper>
 			</ProductsWrapper>
+			<StoreFooter/>
 		</div>
 	);
 }

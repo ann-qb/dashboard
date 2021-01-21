@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import StoreHeader from '../../components/StoreHeader'
 import ProductCards from '../../components/ProductCard'
+import StoreFooter from '../../components/StoreFooter';
 import { useLocation, useHistory } from 'react-router-dom';
 
 const ContentWrapper = styled.div`
@@ -56,7 +57,7 @@ export default function StoreCategoriesPage(props){
 					<SectionHeading>Filters</SectionHeading>
 				</FiltersWrapper>
 				<ProductsWrapper className="cards">
-					<p>
+					<p style={{marginBottom:'15px'}}>
 						<span>{category}</span> / <span>{subCategory}</span>
 					</p>
 					<SectionHeading>{subCategory}</SectionHeading>
@@ -70,6 +71,7 @@ export default function StoreCategoriesPage(props){
 					</ProductCardWrapper>
 				</ProductsWrapper>
 			</ContentWrapper>
+			<StoreFooter/>
 		</>
 	);
 }
