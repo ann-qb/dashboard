@@ -110,11 +110,10 @@ const CategoryLinkWrapper = styled.div`
 
 const CategoryLinks = styled.p`
 	cursor: pointer;
-	color: #000;
+	// color: #000;
 	transition: all 0.2s ease;
 	&:hover {
 		color: #5673e8;
-		border-bottom: 1px solid #5673e8;
 	}
 `;
 
@@ -236,7 +235,7 @@ export default function StoreHeader(props) {
 	});
 	const [productsInCart, setProductsInCart] = useState(0);
 	const [subCategoryData, setSubCategoryData] = useState({ category: '', subCategories: [] });
-	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState({open:false,id:null});
+	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState({ open: false, id: null });
 
 	useEffect(() => {
 		try {
@@ -256,7 +255,7 @@ export default function StoreHeader(props) {
 	const openSubCategoryDropdown = (e) => {
 		const selectedCategory = categoryList.find((category) => category.name === e.target.id);
 		setSubCategoryData({ category: selectedCategory.name, subCategories: selectedCategory.Subcategories });
-		setSubCategoryDropdownOpen({open:true,id:e.target.id});
+		setSubCategoryDropdownOpen({ open: true, id: e.target.id });
 		// console.log(document.querySelector(`#${e.target.id}`));
 		// document.querySelector(`#${e.target.id}`).style.color="blue";
 	};
@@ -268,7 +267,7 @@ export default function StoreHeader(props) {
 		// 	console.log("No such element exists, yet")
 		// }
 		setSubCategoryData({ category: '', subCategories: [] });
-		setSubCategoryDropdownOpen({ open: false, id: null})
+		setSubCategoryDropdownOpen({ open: false, id: null });
 	};
 
 	const dropdownActions = (e) => {
@@ -318,17 +317,24 @@ export default function StoreHeader(props) {
 					</Drawer>
 				</CategoryLinkWrapper>
 
-				{categoryList.map((category) => (
-					<CategoryLinkWrapper key={category.id}>
-						<CategoryLinks
-							id={category.name}
-							onMouseEnter={(e) => (category.Subcategories.length === 0 ? null : openSubCategoryDropdown(e))}
-						>
-							{category.name}
-						</CategoryLinks>
-						{subCategoryDropdownOpen.open && (subCategoryDropdownOpen.id === category.name) ? <SubCategoryDropdown subCategoryData={subCategoryData} /> : null}
-					</CategoryLinkWrapper>
-				))}
+				{categoryList.map((category) => {
+					let colorOfLink 
+					subCategoryDropdownOpen.open && subCategoryDropdownOpen.id === category.name ? colorOfLink='#5673E8':colorOfLink='#000'
+					return (
+						<CategoryLinkWrapper key={category.id}>
+							<CategoryLinks
+								style={{color:colorOfLink}}
+								id={category.name}
+								onMouseEnter={(e) => (category.Subcategories.length === 0 ? null : openSubCategoryDropdown(e))}
+							>
+								{category.name}
+							</CategoryLinks>
+							{subCategoryDropdownOpen.open && subCategoryDropdownOpen.id === category.name ? (
+								<SubCategoryDropdown subCategoryData={subCategoryData} />
+							) : null}
+						</CategoryLinkWrapper>
+					);
+				})}
 			</BottomNavigation>
 		</>
 	);
