@@ -19,6 +19,7 @@
     "react": "^17.0.1",
     "react-detect-offline": "^2.4.1",
     "react-dom": "^17.0.1",
+    "react-image-magnify": "^2.7.4",
     "react-images-upload": "^1.2.8",
     "react-material-ui-carousel": "^2.1.2",
     "react-modal": "^3.12.1",
