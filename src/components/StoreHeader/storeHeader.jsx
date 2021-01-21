@@ -5,7 +5,7 @@ import DropdownMenu from '../Header/DropdownMenu';
 import SubCategoryDropdown from './SubCategoryDropdown';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
@@ -16,6 +16,8 @@ import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+
+import { onGetCategoryList } from './../../slices/categorylist.slice';
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -185,7 +187,7 @@ const SubCategoryLink = styled.p`
 `;
 
 function DrawerData(props) {
-	const history = useHistory()
+	const history = useHistory();
 	const [drawerSubCategoryOpen, setDrawerSubCategoryOpen] = useState(false);
 
 	const openSubCategoryCollapsible = () => {
@@ -200,14 +202,14 @@ function DrawerData(props) {
 	return (
 		<DrawerDataWrapper>
 			<CategoryNameWrapper>
-				<p style={{fontWeight:'500',fontSize:'110%'}}>{props.data.name}</p>
+				<p style={{ fontWeight: '500', fontSize: '110%' }}>{props.data.name}</p>
 				<IconButton aria-label="expand row" size="small" onClick={openSubCategoryCollapsible}>
 					{drawerSubCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 				</IconButton>
 			</CategoryNameWrapper>
 			<Collapse in={drawerSubCategoryOpen} timeout="auto" unmountOnExit>
-				{props.data.subCategories.map((subCategory) => (
-					<SubCategoryLink onClick={redirectToCategoriesPage}>{subCategory.name}</SubCategoryLink>
+				{props.data.Subcategories.map((each) => (
+					<SubCategoryLink onClick={redirectToCategoriesPage}>{each.name}</SubCategoryLink>
 				))}
 			</Collapse>
 		</DrawerDataWrapper>
@@ -217,7 +219,14 @@ function DrawerData(props) {
 export default function StoreHeader(props) {
 	const classes = useStyles();
 	const history = useHistory();
+	const dispatch = useDispatch();
 	const { loggedUser } = useSelector((state) => state.loginSlice);
+	const { categoryList } = useSelector((state) => state.categoryListSlice);
+	useEffect(() => {
+		if (categoryList.length === 0) {
+			dispatch(onGetCategoryList());
+		}
+	}, []);
 	const { role } = useSelector((state) => state.loginSlice);
 	const [openAllCategoryDrawer, setOpenAllCategoryDrawer] = useState({
 		top: false,
@@ -225,8 +234,8 @@ export default function StoreHeader(props) {
 		bottom: false,
 		right: false,
 	});
-	const [productsInCart, setProductsInCart] = useState(null);
-	const [subCategoryData, setSubCategoryData] = useState({ category: null, subCategories: null });
+	const [productsInCart, setProductsInCart] = useState(0);
+	const [subCategoryData, setSubCategoryData] = useState({ category: '', subCategories: [] });
 	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false);
 
 	useEffect(() => {
@@ -245,12 +254,12 @@ export default function StoreHeader(props) {
 
 	// For sub category drop-down
 	const openSubCategoryDropdown = (e) => {
-		const selectedCategory = DATA_CATEGORIES.find((category) => category.name === e.target.id);
-		setSubCategoryData({ category: selectedCategory.name, subCategories: selectedCategory.subCategories });
+		const selectedCategory = categoryList.find((category) => category.name === e.target.id);
+		setSubCategoryData({ category: selectedCategory.name, subCategories: selectedCategory.Subcategories });
 		setSubCategoryDropdownOpen(true);
 	};
 	const closeSubCategoryDropdown = () => {
-		setSubCategoryData(null);
+		setSubCategoryData({ category: '', subCategories: [] });
 		setSubCategoryDropdownOpen(false);
 	};
 
@@ -293,15 +302,20 @@ export default function StoreHeader(props) {
 						All
 					</CategoryLinks>
 					<Drawer anchor="left" open={openAllCategoryDrawer.left} onClose={toggleDrawer(false)}>
-						{DATA_CATEGORIES.map((category) => (
+						{/* {DATA_CATEGORIES.map((category) => (
 							<DrawerData key={category.id} data={category} />
+						))} */}
+						{categoryList.map((each) => (
+							<DrawerData key={each.id + each.name} data={each} />
 						))}
 					</Drawer>
 				</CategoryLinkWrapper>
 
-				{DATA_CATEGORIES.slice(0, 3).map((category) => (
+				{categoryList.map((category) => (
 					<CategoryLinkWrapper key={category.id}>
-						<CategoryLinks id={category.name} onMouseEnter={openSubCategoryDropdown}>
+						<CategoryLinks
+							id={category.name}
+							onMouseEnter={(e) => (category.Subcategories.length === 0 ? null : openSubCategoryDropdown(e))}>
 							{category.name}
 						</CategoryLinks>
 					</CategoryLinkWrapper>
