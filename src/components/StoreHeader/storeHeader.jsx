@@ -15,13 +15,14 @@ import Drawer from '@material-ui/core/Drawer';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 const useStyles = makeStyles(() => ({
 	root: {
 		'& .MuiBadge-colorPrimary': {
 			backgroundColor: '#f46a6a',
 		},
-	}
+	},
 }));
 
 const TopNavigation = styled.div`
@@ -84,7 +85,7 @@ const CartWrapper = styled.div`
 	padding: 5px;
 	margin-right: 0;
 	color: #fff;
-	cursor:pointer !important;
+	cursor: pointer !important;
 `;
 const BottomNavigation = styled.div`
 	position: relative;
@@ -154,20 +155,67 @@ const DATA_CATEGORIES = [
 			{ name: 'Laptops', id: 2 },
 			{ name: 'Mobiles', id: 3 },
 			{ name: 'Iron Box', id: 4 },
-			{ name: 'Toilet paper', id: 5},
+			{ name: 'Toilet paper', id: 5 },
 		],
 	},
 	{
 		name: 'Stationary',
 		id: 5,
-		subCategories: [
-			{ name: 'Glitter Paper', id: 1 },
-		],
+		subCategories: [{ name: 'Glitter Paper', id: 1 }],
 	},
 ];
 
+const DrawerDataWrapper = styled.div`
+	width: 300px;
+	// height: 100%;
+	padding: 10px 20px;
+`;
+const CategoryNameWrapper = styled.div`
+	display: flex;
+	justify-content: space-between;
+`;
+
+const SubCategoryLink = styled.p`
+	margin-left: 10px;
+	padding: 5px 0;
+	cursor: pointer;
+	&:hover {
+		color: #5673e8;
+	}
+`;
+
+function DrawerData(props) {
+	const history = useHistory()
+	const [drawerSubCategoryOpen, setDrawerSubCategoryOpen] = useState(false);
+
+	const openSubCategoryCollapsible = () => {
+		setDrawerSubCategoryOpen(!drawerSubCategoryOpen);
+	};
+
+	const redirectToCategoriesPage = (e) => {
+		const subCategory = e.target.innerHTML;
+		history.push(`/store-category?category=${props.data.name}&subCategory=${subCategory}`);
+	};
+
+	return (
+		<DrawerDataWrapper>
+			<CategoryNameWrapper>
+				<p style={{fontWeight:'500',fontSize:'110%'}}>{props.data.name}</p>
+				<IconButton aria-label="expand row" size="small" onClick={openSubCategoryCollapsible}>
+					{drawerSubCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+				</IconButton>
+			</CategoryNameWrapper>
+			<Collapse in={drawerSubCategoryOpen} timeout="auto" unmountOnExit>
+				{props.data.subCategories.map((subCategory) => (
+					<SubCategoryLink onClick={redirectToCategoriesPage}>{subCategory.name}</SubCategoryLink>
+				))}
+			</Collapse>
+		</DrawerDataWrapper>
+	);
+}
+
 export default function StoreHeader(props) {
-	const classes= useStyles()
+	const classes = useStyles();
 	const history = useHistory();
 	const { loggedUser } = useSelector((state) => state.loginSlice);
 	const { role } = useSelector((state) => state.loginSlice);
@@ -178,10 +226,8 @@ export default function StoreHeader(props) {
 		right: false,
 	});
 	const [productsInCart, setProductsInCart] = useState(null);
-	const [subCategoryData, setSubCategoryData] = useState({category:null,subCategories:null});
+	const [subCategoryData, setSubCategoryData] = useState({ category: null, subCategories: null });
 	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState(false);
-
-
 
 	useEffect(() => {
 		try {
@@ -199,7 +245,7 @@ export default function StoreHeader(props) {
 
 	// For sub category drop-down
 	const openSubCategoryDropdown = (e) => {
-		const selectedCategory = DATA_CATEGORIES.find(category => category.name === e.target.id)
+		const selectedCategory = DATA_CATEGORIES.find((category) => category.name === e.target.id);
 		setSubCategoryData({ category: selectedCategory.name, subCategories: selectedCategory.subCategories });
 		setSubCategoryDropdownOpen(true);
 	};
@@ -216,9 +262,9 @@ export default function StoreHeader(props) {
 	};
 
 	// For All category drawer
-	const toggleDrawer=(open)=>(e)=>{
-		setOpenAllCategoryDrawer({...openAllCategoryDrawer,left:open})
-	}
+	const toggleDrawer = (open) => (e) => {
+		setOpenAllCategoryDrawer({ ...openAllCategoryDrawer, left: open });
+	};
 
 	return (
 		<>
@@ -247,7 +293,9 @@ export default function StoreHeader(props) {
 						All
 					</CategoryLinks>
 					<Drawer anchor="left" open={openAllCategoryDrawer.left} onClose={toggleDrawer(false)}>
-						<p>Hello world</p>
+						{DATA_CATEGORIES.map((category) => (
+							<DrawerData key={category.id} data={category} />
+						))}
 					</Drawer>
 				</CategoryLinkWrapper>
 
@@ -258,36 +306,9 @@ export default function StoreHeader(props) {
 						</CategoryLinks>
 					</CategoryLinkWrapper>
 				))}
-				
+
 				{subCategoryDropdownOpen ? <SubCategoryDropdown subCategoryData={subCategoryData} /> : null}
 			</BottomNavigation>
 		</>
-	);
-}
-
-const DrawerDataWrapper = styled.div`
-	width:100%;
-	height:100%;
-	padding:10px;
-`
-const CategoryNameWrapper = styled.div`
-	display:flex;
-	justify-content:space-between;
-`
-
-const DrawerData = (props)=>{
-	return (
-		<DrawerDataWrapper>
-			<CategoryNameWrapper>
-				<p>Category</p>
-				<IconButton aria-label="expand row" size="small">
-					<KeyboardArrowDownIcon />
-				</IconButton>
-			</CategoryNameWrapper>
-			<Collapse in={props.open} timeout="auto" unmountOnExit>
-				<p>Sub</p>
-				<p>Sub</p>
-			</Collapse>
-		</DrawerDataWrapper>
 	);
 }
