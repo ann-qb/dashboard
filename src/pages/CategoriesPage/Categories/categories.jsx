@@ -6,6 +6,63 @@ import { useEffect } from 'react';
 import { onAddCategory, onGetCategoryList } from '../../../slices/categorylist.slice';
 import { BounceLoader } from 'react-spinners';
 import AlertPopup from '../../../components/Popups/AlertPopups';
+import AddRoundedIcon from '@material-ui/icons/AddRounded';
+import IconButton from '@material-ui/core/IconButton';
+import AddBoxRoundedIcon from '@material-ui/icons/AddBoxRounded';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Grow from '@material-ui/core/Grow';
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+		display: 'flex',
+		'& > * + *': {
+			marginLeft: theme.spacing(2),
+		},
+	},
+}));
+
+// const useStyles = makeStyles(() => ({
+// 	root: {
+// 		height: 'inherit',
+// 	},
+// 	container: {
+// 		display: 'inline',
+// 	},
+// 	rootButton: {
+// 		background: 'transparent',
+// 		'&$disabled': {
+// 			background: 'white',
+// 			boxShadow: 'none',
+// 		},
+// 	},
+// 	disabledButton: {
+// 		background: 'white',
+// 		boxShadow: 'none',
+// 	},
+// }));
+
+const useIconButtonStyles = makeStyles({
+	root: {
+		background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+		borderRadius: 3,
+		border: 0,
+		color: 'white',
+		height: 48,
+		padding: '0 30px',
+		boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+		// $disabled is a reference to the local disabled
+		// rule within the same style sheet.
+		// By using &, we increase the specificity.
+		'&$disabled': {
+			background: 'rgba(0, 0, 0, 0.12)',
+			color: 'white',
+			boxShadow: 'none',
+		},
+	},
+	disabled: {},
+});
 
 const PageContainer = styled.div`
 	position: relative;
@@ -15,6 +72,8 @@ const PageContainer = styled.div`
 `;
 
 const AddCategoryWrapper = styled.div`
+	display: flex;
+	align-items: center;
 	padding: 10px;
 	padding-left: 0;
 	margin-top: 15px;
@@ -105,12 +164,19 @@ const SpinnerDiv = styled.div`
 // ];
 
 export default function Categories() {
+	const classes = useStyles();
+
 	const { categoryList, status } = useSelector((state) => state.categoryListSlice);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(onGetCategoryList());
-	}, []);
+		if (categoryList === [] && status === 'loading category list') {
+			setShowLoading(true);
+		} else if (status === 'loading category list over') {
+			setShowLoading(false);
+		}
+	}, [categoryList, status]);
 
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
@@ -118,41 +184,14 @@ export default function Categories() {
 	const [showLoading, setShowLoading] = useState(false);
 
 	useEffect(() => {
-		if (status === 'loading category list') {
-			setShowLoading(true);
-		} else if (status === 'loading category list over') {
-			setShowLoading(false);
+		if (status === 'loading category list over') {
+			setNewCategory('');
+			setDisableInput(false);
 		}
-		// status === 'loading' ? setShowPopupLoading(true) : setShowPopupLoading(false);
 	}, [status]);
-
-	// useEffect(() => {
-	// 	if (!addUserPopup && status === 'add user success') {
-	// 		setAlertType('success');
-	// 		setAlertMessage('User added successfully!');
-	// 		showAlertPopup();
-	// 	} else if (!addUserPopup && status === 'add user failed') {
-	// 		setAlertType('error');
-	// 		setAlertMessage('Could not add user');
-	// 		showAlertPopup();
-	// 	}
-	// }, [addUserPopup, status]);
-
-	// useEffect(() => {
-	// 	if (status === 'delete user success') {
-	// 		setAlertType('success');
-	// 		setAlertMessage('User deleted successfully!');
-	// 		showAlertPopup();
-	// 	} else if (status === 'delete user failed') {
-	// 		setAlertType('error');
-	// 		setAlertMessage('Could not delete user');
-	// 		showAlertPopup();
-	// 	}
-	// }, [status]);
 
 	const showAlertPopup = () => {
 		setAlertDisplay(true);
-		// setAddUserPopup(false);
 	};
 
 	// Additional function to be written wherever AlertPopup component is used
@@ -162,6 +201,7 @@ export default function Categories() {
 		}, 5000);
 	}
 
+	const [disableInput, setDisableInput] = useState(false);
 	const [disableAdd, setDisableAdd] = useState(true);
 	const [newCategory, setNewCategory] = useState('');
 
@@ -174,6 +214,7 @@ export default function Categories() {
 	};
 
 	const addNewCategory = () => {
+		setDisableInput(true);
 		dispatch(onAddCategory({ category: newCategory }));
 		console.log({ category: newCategory });
 	};
@@ -184,10 +225,37 @@ export default function Categories() {
 
 			<p className="pageHeaders blackFont">Categories</p>
 			<AddCategoryWrapper>
-				<Input placeholder="Category" onChange={handleInputChange} />
-				<Button className="button-primary" disabled={disableAdd} onClick={addNewCategory}>
-					Add
-				</Button>
+				<Input placeholder="Add Category" onChange={handleInputChange} value={newCategory} disabled={disableInput} />
+				{disableInput ? (
+					<div className={classes.root}>
+						<CircularProgress size={20} />
+					</div>
+				) : (
+					<>
+						{disableAdd ? (
+							<Grow in={disableAdd} {...(disableAdd ? { timeout: 1000 } : {})}>
+								<IconButton
+									aria-label="expand row"
+									size="small"
+									// style={{ background: 'transparent' }}
+									// disabled={disableAdd}
+									// classes={{
+									// 	root: classes.rootButton, // class name, e.g. `root-x`
+									// 	disabled: classes.disabledButton, // class name, e.g. `disabled-x`
+									// }}
+								>
+									<AddBoxRoundedIcon color="disabled" fontSize="large" />
+								</IconButton>
+							</Grow>
+						) : (
+							<Grow in={!disableAdd} disabled={disableAdd} {...(disableAdd ? { timeout: 1000 } : {})}>
+								<IconButton aria-label="expand row" size="small" disabled={disableAdd} onClick={addNewCategory}>
+									<AddBoxRoundedIcon fontSize="large" />
+								</IconButton>
+							</Grow>
+						)}
+					</>
+				)}
 			</AddCategoryWrapper>
 			{showLoading ? (
 				<SpinnerDiv>
@@ -199,7 +267,3 @@ export default function Categories() {
 		</PageContainer>
 	);
 }
-
-/* {categoriesArray.reverse().map((each) => (
-				<CategoryCard key={each.id + each.name} category={each} />
-			))} */

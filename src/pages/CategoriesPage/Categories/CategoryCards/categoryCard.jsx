@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	onAddSubCategory,
 	onDeleteCategory,
@@ -58,6 +58,8 @@ const SeparationLine = styled.hr`
 
 const AddSubCategoryWrapper = styled.div`
 	padding: 10px;
+	display: flex;
+	align-items: center;
 `;
 const Button = styled.button`
 	height: 100%;
@@ -84,13 +86,14 @@ const DisabledDiv = styled.div`
 export default function CategoryCard(props) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const { status } = useSelector((state) => state.categoryListSlice);
 
 	const [open, setOpen] = useState(false);
 
 	//----------------------Add new subcategory functionality----------------------//
 	const [newSubCategory, setNewSubCategory] = useState('');
 	const [disableAdd, setDisableAdd] = useState(true);
-	const [disableInput, setDisableInput] = useState(false);
+	const [disableAddNewSubCategory, setDisableAddNewSubCategory] = useState(false);
 
 	useEffect(() => {
 		if (!open) setNewSubCategory('');
@@ -99,6 +102,15 @@ export default function CategoryCard(props) {
 	useEffect(() => {
 		newSubCategory.trim().length !== 0 ? setDisableAdd(false) : setDisableAdd(true);
 	}, [newSubCategory]);
+
+	useEffect(() => {
+		if (status === 'add subcategory loading') {
+			setDisableAddNewSubCategory(true);
+		} else if (status === 'add subcategory success' || status === 'add subcategory failed') {
+			setNewSubCategory('');
+			setDisableAddNewSubCategory(false);
+		}
+	}, [status]);
 
 	const handleInputChange = (e) => {
 		setNewSubCategory(e.target.value);
@@ -110,12 +122,12 @@ export default function CategoryCard(props) {
 
 	const addNewSubCategory = () => {
 		dispatch(onAddSubCategory({ subcategory: newSubCategory, parentCategory: props.category.name }));
-		console.log({ subcategory: newSubCategory, parentCategoryId: props.category.id });
 	};
 
 	//----------------Edit/ Delete category functionality--------------------------//
 	const [edit, setEdit] = useState(false);
 	const [editedCategory, setEditedCategory] = useState(props.category.name);
+	const [disableInput, setDisableInput] = useState(false);
 	const [disableDiv, setDisableDiv] = useState(false);
 
 	const handleEditCategoryInputChange = (e) => {
@@ -247,11 +259,18 @@ export default function CategoryCard(props) {
 						value={newSubCategory}
 						onChange={handleInputChange}
 						// onBlur={cancelAddNewSubCategory}
+						disabled={disableAddNewSubCategory}
 						placeholder="Sub Category"
 					/>
-					<Button disabled={disableAdd} className="button-primary" onClick={addNewSubCategory}>
-						Add
-					</Button>
+					{disableAddNewSubCategory ? (
+						<div className={classes.root}>
+							<CircularProgress size={20} />
+						</div>
+					) : (
+						<Button disabled={disableAdd} className="button-primary" onClick={addNewSubCategory}>
+							Add
+						</Button>
+					)}
 				</AddSubCategoryWrapper>
 				{props.category.Subcategories.map((each) => (
 					<SubCategoryCard key={each.id + each.name} subcategory={each} />

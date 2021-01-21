@@ -151,7 +151,7 @@ export const onAddSubCategory = (data) => async (dispatch) => {
 	// reset
 	dispatch(resetStatus());
 	// loading
-	dispatch(updateStatus({ status: 'loading' }));
+	dispatch(updateStatus({ status: 'add subcategory loading' }));
 	// try-catch // onGetCategoryList
 	try {
 		const response = await fetch.post(`${baseURL}/subCategory/create`, {
@@ -185,7 +185,7 @@ export const onEditSubCategory = (data) => async (dispatch) => {
 	// reset
 	dispatch(resetStatus());
 	// loading
-	dispatch(updateStatus({ status: 'loading' }));
+	dispatch(updateStatus({ status: 'edit subcategory loading' }));
 	// try-catch // onGetCategoryList
 	try {
 		const response = await fetch.put(`${baseURL}/subCategory/${data.subcategoryId}`, {

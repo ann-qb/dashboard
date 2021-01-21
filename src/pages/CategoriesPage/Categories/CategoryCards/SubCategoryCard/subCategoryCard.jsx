@@ -7,8 +7,9 @@ import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { onDeleteSubCategory, onEditSubCategory } from '../../../../../slices/categorylist.slice';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -62,11 +63,20 @@ const DisabledDiv = styled.div`
 export default function SubCategoryCard(props) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const { status } = useSelector((state) => state.categoryListSlice);
 
 	const [edit, setEdit] = useState(false);
 	const [disableInput, setDisableInput] = useState(false);
 	const [disableDiv, setDisableDiv] = useState(false);
 	const [editedSubcategory, setEditedSubcategory] = useState(props.subcategory.name);
+
+	useEffect(() => {
+		if (status === 'edit subcategory loading') {
+		} else if (status === 'loading category list success') {
+			setEdit(false);
+			setDisableInput(false);
+		}
+	}, [status]);
 
 	const handleInputChange = (e) => {
 		setEditedSubcategory(e.target.value);
@@ -161,16 +171,24 @@ export default function SubCategoryCard(props) {
 
 				{edit ? (
 					<>
-						<IconButton style={{ marginRight: '15px' }} aria-label="expand row" size="small" onClick={editSubcategory}>
-							<DoneRoundedIcon />
-						</IconButton>
-						<IconButton
-							style={{ marginRight: '15px' }}
-							aria-label="expand row"
-							size="small"
-							onClick={toggleEnableEditSubcategory}>
-							<ClearRoundedIcon />
-						</IconButton>
+						{disableInput ? null : (
+							<>
+								<IconButton
+									style={{ marginRight: '15px' }}
+									aria-label="expand row"
+									size="small"
+									onClick={editSubcategory}>
+									<DoneRoundedIcon />
+								</IconButton>
+								<IconButton
+									style={{ marginRight: '15px' }}
+									aria-label="expand row"
+									size="small"
+									onClick={toggleEnableEditSubcategory}>
+									<ClearRoundedIcon />
+								</IconButton>
+							</>
+						)}
 					</>
 				) : (
 					<>
