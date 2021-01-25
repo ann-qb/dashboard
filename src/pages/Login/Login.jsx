@@ -42,7 +42,7 @@ export default function Login() {
 		if (status === 'idle' && loggedUser !== null) {
 			dispatch(resetStatus());
 			dispatch(updateErrorMessage({ errorMessage: '' }));
-			history.replace('/store');
+			history.replace(location?.state?.from || '/store');
 		}
 	}, [status, loggedUser]);
 

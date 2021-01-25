@@ -6,6 +6,7 @@ import SubCategoryDropdown from './SubCategoryDropdown';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { onLogout } from '../../slices/login.slice'
 
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
@@ -274,6 +275,9 @@ export default function StoreHeader(props) {
 		const clickedDiv = e.target.closest('div');
 		if (clickedDiv.id === 'users') {
 			history.push('/users');
+		}
+		else if (clickedDiv.id === 'logOut') {
+			dispatch(onLogout());
 		}
 	};
 
