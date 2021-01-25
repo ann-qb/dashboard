@@ -83,8 +83,8 @@ const AddCategoryWrapper = styled.div`
 `;
 const Button = styled.button`
 	height: 100%;
-	padding:0 !important;
-	padding-bottom:-10px;
+	padding: 0 !important;
+	padding-bottom: -10px;
 `;
 const Input = styled.input`
 	height: 100%;
@@ -167,8 +167,10 @@ const SpinnerDiv = styled.div`
 // 	},
 // ];
 
-export default function Categories() {
+export default function Categories(props) {
 	const classes = useStyles();
+	// States for search and filter
+	console.log(props.searchValue);
 
 	const { categoryList, status } = useSelector((state) => state.categoryListSlice);
 	const dispatch = useDispatch();
@@ -269,6 +271,10 @@ export default function Categories() {
 				<SpinnerDiv>
 					<BounceLoader size={100} color={'#5673E8'} loading={showLoading} />
 				</SpinnerDiv>
+			) : props.searchValue ? (
+				categoryList
+					.filter((category) => category.name.toLowercase().includes(props.searchValue.toLowercase()))
+					.map((each) => <CategoryCard key={each.id + each.name} category={each} />)
 			) : (
 				categoryList.map((each) => <CategoryCard key={each.id + each.name} category={each} />)
 			)}

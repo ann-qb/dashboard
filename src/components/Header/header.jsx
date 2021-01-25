@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfilePic from '../../assets/Images/profilePic_small.png';
-import Logo from '../../assets/Images/logo_black.png'
+import Logo from '../../assets/Images/logo_black.png';
 import { useSelector } from 'react-redux';
-import DropdownMenu from './DropdownMenu'
+import DropdownMenu from './DropdownMenu';
 import { useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
-import {onLogout} from '../../slices/login.slice'
-
+import { onLogout } from '../../slices/login.slice';
 
 /**---------------- Styles ------------------*/
 const HeaderBar = styled.div`
@@ -25,10 +24,10 @@ const LogoText = styled.p`
 	font-family: 'Poppins', sans-serif;
 `;
 const LogoImage = styled.img`
-	height:50px;
-	width:auto;
-	margin-left:10px;
-`
+	height: 50px;
+	width: auto;
+	margin-left: 10px;
+`;
 const ActionDiv = styled.div`
 	display: flex;
 	align-items: center;
@@ -73,41 +72,46 @@ const ProfilePicBox = styled.div`
 export default function Header(props) {
 	const { loggedUser } = useSelector((state) => state.loginSlice);
 
-	const history = useHistory()
+	const history = useHistory();
 	const dispatch = useDispatch();
-	console.log(props.page)
+	console.log(props.page);
 	const generateHeaderActions = () => {
 		return (
 			<ActionDiv>
 				<ProfilePicBox />
 				<p style={{ textTransform: 'capitalize' }}>{loggedUser.firstname + ' ' + loggedUser.lastname}</p>
-				<DropdownMenu menuHeader={loggedUser.firstName} role='USER' action={dropdownActions}/>
+				<DropdownMenu menuHeader={loggedUser.firstName} role="USER" action={dropdownActions} />
 			</ActionDiv>
 		);
 	};
 
-	const dropdownActions = (e)=>{
-		const clickedDiv = e.target.closest('div')
-		if(clickedDiv.id === 'logOut'){
+	const dropdownActions = (e) => {
+		const clickedDiv = e.target.closest('div');
+		if (clickedDiv.id === 'logOut') {
 			dispatch(onLogout());
+		} else if (clickedDiv.id === 'profile') {
+			history.push('/profile');
 		}
-		else if(clickedDiv.id === 'profile'){
-			history.push('/profile')
-		}
-	}
+	};
 
 	return (
 		<HeaderBar>
-			{props.page === 'error' ? (<LogoImage src={Logo}/>) : (
+			{props.page === 'error' ? (
+				<LogoImage src={Logo} />
+			) : (
 				<SearchBox>
 					<span style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
 						<FontAwesomeIcon style={{ color: '#74788d' }} icon="search" />
 					</span>
 
-					<SearchInput type="text" placeholder="Search..." />
+					{props.value && props.onChange ? (
+						<SearchInput type="text" value={props.value} onChange={props.onChange} placeholder="Search..." />
+					) : (
+						<SearchInput type="text" placeholder="Search..." />
+					)}
 				</SearchBox>
 			)}
-			
+
 			{loggedUser ? generateHeaderActions() : null}
 		</HeaderBar>
 	);
