@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import DeleteConfirmPopup from '../../../../components/Popups/DeleteConfirmPopup';
 import { makeStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
@@ -31,12 +32,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Card = styled.div`
+	position: relative;
 	display: flex;
 	align-items: center;
 	width: 100%;
 
 	margin-top: 10px;
-	padding: 10px 10px;
+	// padding: 10px 10px;
+	padding: ${(props) => (props.removeLeftPadding ? '10px 0' : '10px 10px')};
 	background-color: #fff;
 `;
 
@@ -74,24 +77,27 @@ const Input = styled.input`
 
 const DisabledDiv = styled.div`
 	position: absolute;
+	display: flex;
+	align-items: center;
 	height: 100%;
 	width: 100%;
+	padding: 10px 10px;
 	z-index: 1;
 	background-color: #ddd;
-	opacity: 0.3;
+	opacity: 1;
 	display: ${(props) => (props.disable ? 'block' : 'none')};
 	cursor: default;
 `;
 const SubCategoryCount = styled.p`
-	height:fit-content;
-	width:fit-content;
-	margin-left:15px;
-	padding:0 8px;
-	font-size:90%;
-	background-color:#5673E8;
-	color:#fff;
-	border-radius:5px;
-`
+	height: fit-content;
+	width: fit-content;
+	margin-left: 15px;
+	padding: 0 8px;
+	font-size: 90%;
+	background-color: #5673e8;
+	color: #fff;
+	border-radius: 5px;
+`;
 
 export default function CategoryCard(props) {
 	const classes = useStyles();
@@ -99,6 +105,7 @@ export default function CategoryCard(props) {
 	const { status } = useSelector((state) => state.categoryListSlice);
 
 	const [open, setOpen] = useState(false);
+	const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
 
 	//----------------------Add new subcategory functionality----------------------//
 	const [newSubCategory, setNewSubCategory] = useState('');
@@ -190,7 +197,12 @@ export default function CategoryCard(props) {
 	// 	setEditedSubcategory(props.subcategory.name);
 	// };
 
+	const openDeleteConfirmationModal =()=>{
+		setDeletePopupIsOpen(true);
+	}
+
 	const deleteCategory = () => {
+		setDeletePopupIsOpen(false);
 		dispatch(
 			onDeleteCategory({
 				categoryId: props.category.id,
@@ -203,10 +215,16 @@ export default function CategoryCard(props) {
 		setDisableDiv(true);
 	};
 
+	const closeDeleteModal = () => {
+		setDeletePopupIsOpen(false);
+	};
+
 	return (
 		<>
-			<Card>
-				<DisabledDiv disable={disableDiv}></DisabledDiv>
+			<Card removeLeftPadding={disableDiv}>
+				<DisabledDiv disable={disableDiv}>
+					<p>Hold on.... Just a second.</p>
+				</DisabledDiv>
 				<IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
 					{open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 				</IconButton>
@@ -258,7 +276,7 @@ export default function CategoryCard(props) {
 							<CreateOutlinedIcon />
 						</IconButton>
 
-						<IconButton aria-label="expand row" size="small" onClick={deleteCategory}>
+						<IconButton aria-label="expand row" size="small" onClick={openDeleteConfirmationModal}>
 							<DeleteOutlineOutlinedIcon />
 						</IconButton>
 					</>
@@ -289,6 +307,12 @@ export default function CategoryCard(props) {
 					<SubCategoryCard key={each.id + each.name} subcategory={each} />
 				))}
 			</Collapse>
+			<DeleteConfirmPopup
+				id={props.category.id}
+				isOpen={deletePopupIsOpen}
+				onDelete={deleteCategory}
+				onRequestClose={closeDeleteModal}
+			/>
 		</>
 	);
 }

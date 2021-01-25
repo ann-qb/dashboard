@@ -49,12 +49,24 @@ export default function DeleteModal(props) {
 				<P>Delete User?</P>
 			</TextWrapper>
 			<ButtonWrapper>
-				<button
-					style={{ marginRight: '10px' }}
-					className="button-danger"
-					onClick={() => (dispatch(onDeleteUser({ id: props.id })))}>
-					Delete
-				</button>
+				{props.onDelete ? (
+					<button
+						style={{ marginRight: '10px' }}
+						className="button-danger"
+						onClick={props.onDelete}
+					>
+						Delete
+					</button>
+				) : (
+					<button
+						style={{ marginRight: '10px' }}
+						className="button-danger"
+						onClick={() => dispatch(onDeleteUser({ id: props.id }))}
+					>
+						Delete
+					</button>
+				)}
+
 				<button style={{ marginLeft: '10px' }} className="button-danger-secondary" onClick={props.onRequestClose}>
 					Cancel
 				</button>
