@@ -46,7 +46,7 @@ export default function DeleteModal(props) {
 		<Modal style={modalStyle} isOpen={props.isOpen} onRequestClose={props.onRequestClose}>
 			<TextWrapper>
 				<ion-icon style={iconStyle} name="alert-circle-outline"></ion-icon>
-				<P>Delete User?</P>
+				<P>Are you sure?</P>
 			</TextWrapper>
 			<ButtonWrapper>
 				{props.onDelete ? (

@@ -77,7 +77,6 @@ const Input = styled.input`
 
 const DisabledDiv = styled.div`
 	position: absolute;
-	display: flex;
 	align-items: center;
 	height: 100%;
 	width: 100%;
@@ -85,7 +84,7 @@ const DisabledDiv = styled.div`
 	z-index: 1;
 	background-color: #ddd;
 	opacity: 1;
-	display: ${(props) => (props.disable ? 'block' : 'none')};
+	display: ${(props) => (props.disable ? 'flex' : 'none')};
 	cursor: default;
 `;
 const SubCategoryCount = styled.p`
@@ -223,7 +222,8 @@ export default function CategoryCard(props) {
 		<>
 			<Card removeLeftPadding={disableDiv}>
 				<DisabledDiv disable={disableDiv}>
-					<p>Hold on.... Just a second.</p>
+					<CircularProgress size={20} />
+					<p style={{ marginLeft: '30px' }}>Hold on.... </p>
 				</DisabledDiv>
 				<IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
 					{open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
