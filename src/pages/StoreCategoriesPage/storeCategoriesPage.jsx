@@ -3,6 +3,7 @@ import StoreHeader from '../../components/StoreHeader'
 import ProductCards from '../../components/ProductCard'
 import StoreFooter from '../../components/StoreFooter';
 import { useLocation, useHistory } from 'react-router-dom';
+import Pagination from '@material-ui/lab/Pagination';
 
 const ContentWrapper = styled.div`
   display:flex;
@@ -11,9 +12,7 @@ const ContentWrapper = styled.div`
   width:fit-content;
   padding:15px 0;
   margin:0 auto;
- 
 `
-
 const FiltersWrapper = styled.div`
   width:270px;
   height:100%;
@@ -57,7 +56,7 @@ export default function StoreCategoriesPage(props){
 					<SectionHeading>Filters</SectionHeading>
 				</FiltersWrapper>
 				<ProductsWrapper className="cards">
-					<p style={{marginBottom:'15px'}}>
+					<p style={{ marginBottom: '15px' }}>
 						<span>{category}</span> / <span>{subCategory}</span>
 					</p>
 					<SectionHeading>{subCategory}</SectionHeading>
@@ -69,9 +68,10 @@ export default function StoreCategoriesPage(props){
 						<ProductCards margin="5px 5px" />
 						<ProductCards margin="5px 5px" />
 					</ProductCardWrapper>
+					<Pagination count={10} shape="rounded" />
 				</ProductsWrapper>
 			</ContentWrapper>
-			<StoreFooter/>
+			<StoreFooter />
 		</>
 	);
 }

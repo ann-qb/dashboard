@@ -34,6 +34,9 @@ function App() {
 						<Route path="/user/set-password">
 							<SetPasswordPage />
 						</Route>
+						<PrivateRoute path="/store">
+							<StoreHomePage />
+						</PrivateRoute>
 						<PrivateRoute exact path="/dashboard">
 							<DashboardPage />
 						</PrivateRoute>
@@ -49,9 +52,7 @@ function App() {
 						<PrivateRoute path="/addProducts">
 							<AddProductsPage />
 						</PrivateRoute>
-						<PrivateRoute path="/store">
-							<StoreHomePage />
-						</PrivateRoute>
+
 						<PrivateRoute path="/store-category">
 							<StoreCategoryPage />
 						</PrivateRoute>

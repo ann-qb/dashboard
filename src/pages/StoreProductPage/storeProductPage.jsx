@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import ReactImageMagnify from 'react-image-magnify';
 import StoreHeader from '../../components/StoreHeader';
 import Placeholder from '../../assets/Images/placeholder.jpg';
 import Button from '@material-ui/core/Button';
@@ -75,7 +76,7 @@ const ButtonBox = styled.div`
 `;
 
 export default function StoreProductPage(props) {
-	const classes = useStyles()
+	const classes = useStyles();
 	const [productToCart, setProductToCart] = useState(null);
 
 	const addToCart = () => {
@@ -112,16 +113,18 @@ export default function StoreProductPage(props) {
 							className={classes.button}
 							startIcon={<AddShoppingCartOutlinedIcon />}
 							onClick={addToCart}
+							disableElevation
 						>
 							Add To Cart
 						</Button>
-						<Button variant="contained" className={classes.button} startIcon={<ShopOutlinedIcon />}>
+						<Button variant="contained" className={classes.button} startIcon={<ShopOutlinedIcon />} disableElevation>
 							Order Now
 						</Button>
 					</ButtonBox>
 				</ProductDetailsWrapper>
 			</ProductContentWrapper>
-			<StoreFooter/>
+			<StoreFooter />
 		</div>
 	);
 }
+//	<ProductImage src={Placeholder} alt="Product Image" />

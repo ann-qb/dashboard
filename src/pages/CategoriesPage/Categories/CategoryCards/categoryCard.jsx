@@ -82,6 +82,16 @@ const DisabledDiv = styled.div`
 	display: ${(props) => (props.disable ? 'block' : 'none')};
 	cursor: default;
 `;
+const SubCategoryCount = styled.p`
+	height:fit-content;
+	width:fit-content;
+	margin-left:15px;
+	padding:0 8px;
+	font-size:90%;
+	background-color:#5673E8;
+	color:#fff;
+	border-radius:5px;
+`
 
 export default function CategoryCard(props) {
 	const classes = useStyles();
@@ -219,6 +229,7 @@ export default function CategoryCard(props) {
 				) : (
 					<CategoryNameWrapper>
 						<CategoryText>{props.category.name}</CategoryText>
+						{open ? null : <SubCategoryCount>{props.category.Subcategories.length}</SubCategoryCount>}
 					</CategoryNameWrapper>
 				)}
 
@@ -231,7 +242,8 @@ export default function CategoryCard(props) {
 							style={{ marginRight: '15px' }}
 							aria-label="expand row"
 							size="small"
-							onClick={toggleEnableEditCategory}>
+							onClick={toggleEnableEditCategory}
+						>
 							<ClearRoundedIcon />
 						</IconButton>
 					</>
@@ -241,7 +253,8 @@ export default function CategoryCard(props) {
 							style={{ marginRight: '15px' }}
 							aria-label="expand row"
 							size="small"
-							onClick={toggleEnableEditCategory}>
+							onClick={toggleEnableEditCategory}
+						>
 							<CreateOutlinedIcon />
 						</IconButton>
 
