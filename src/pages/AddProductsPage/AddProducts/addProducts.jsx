@@ -5,8 +5,9 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { onAddProduct } from '../../../slices/productlist.slice';
 
 const useStyle = makeStyles({
 	textField: {
@@ -83,20 +84,14 @@ const ImagePlaceHolder = styled.div`
 	min-height: 30%;
 `;
 
-const CATAGORIES = [
-	{ name: 'Cloths', id: 1 },
-	{ name: 'Food', id: 2 },
-	{ name: 'Medicines', id: 3 },
-	{ name: 'Electronics', id: 4 },
-];
-
 export default function AddProducts(props) {
 	const { categoryList } = useSelector((state) => state.categoryListSlice);
 	const classes = useStyle();
+	const dispatch = useDispatch();
 
 	const [productName, setProductName] = useState('');
 	const [price, setPrice] = useState('');
-	const [status, setStatus] = useState('Active');
+	const [status, setStatus] = useState('active');
 	const [quantity, setQuantity] = useState('');
 	const [category, setCategory] = useState('');
 	const [currentCategory, setCurrentCategory] = useState({});
@@ -116,7 +111,7 @@ export default function AddProducts(props) {
 				: setCurrentCategoryHasSubcategory(true);
 	}, [currentCategory]);
 
-	const [trialError, setTrialError] = useState(true);
+	// const [trialError, setTrialError] = useState(true);
 	const [productNameError, setProductNameError] = useState(false);
 	const [priceError, setPriceError] = useState(false);
 	const [categoryError, setCategoryError] = useState(false);
@@ -175,29 +170,32 @@ export default function AddProducts(props) {
 			setPictureError(true);
 			valid = false;
 		}
+
 		if (valid) {
-			// dispatch
 			setProductNameError(false);
 			setPriceError(false);
 			setCategoryError(false);
 			setSubcategoryError(false);
 			setDescriptionError(false);
 			setPictureError(false);
+
 			const formData = new FormData();
 			formData.append('name', productName);
 			formData.append('price', price);
 			formData.append('status', status);
+			formData.append('quantity', quantity);
 			formData.append('category', category);
 			if (currentCategoryHasSubcategory) {
 				formData.append('subcategory', subCategory);
 			}
 			formData.append('description', description);
-			formData.append('avatar', picture);
+			formData.append('avatar', picture[0]);
 
 			for (const v of formData.entries()) {
 				console.log(v);
 			}
-			console.log('All valid');
+
+			dispatch(onAddProduct(formData));
 		}
 	};
 
@@ -274,8 +272,8 @@ export default function AddProducts(props) {
 								variant="outlined"
 								color="#5673E8"
 								required>
-								<MenuItem value="Active">Active</MenuItem>
-								<MenuItem value="Inactive">Inactive</MenuItem>
+								<MenuItem value="active">Active</MenuItem>
+								<MenuItem value="inactive">Inactive</MenuItem>
 							</TextField>
 						</ItemGroup>
 						<ItemGroup>
@@ -376,6 +374,7 @@ export default function AddProducts(props) {
 					) : (
 						<ImagePlaceHolder />
 					)}
+
 					<ImageUploader
 						className="uploadCard"
 						withIcon={true}
@@ -387,6 +386,7 @@ export default function AddProducts(props) {
 						singleImage={true}
 						buttonText="Choose Image"
 					/>
+
 					{pictureError ? <p>Please upload a product image</p> : null}
 				</PreviewWrapper>
 			</FlexWrapper>
