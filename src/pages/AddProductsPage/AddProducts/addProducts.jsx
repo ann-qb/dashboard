@@ -5,6 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const useStyle = makeStyles({
 	textField: {
@@ -89,30 +91,119 @@ const CATAGORIES = [
 ];
 
 export default function AddProducts(props) {
+	const { categoryList } = useSelector((state) => state.categoryListSlice);
 	const classes = useStyle();
-	const [category, setCategory] = useState(null);
-	const [subCategory, setSubCategory] = useState(null);
-	const [status, setStatus] = useState('Active');
-	const [picture, setPicture] = useState([]);
-	const [trialError, setTrialError] = useState(false);
 
-	const saveCategory = (e) => {
-		setCategory(e.target.value);
+	const [productName, setProductName] = useState('');
+	const [price, setPrice] = useState('');
+	const [status, setStatus] = useState('Active');
+	const [quantity, setQuantity] = useState('');
+	const [category, setCategory] = useState('');
+	const [currentCategory, setCurrentCategory] = useState({});
+	const [currentCategoryHasSubcategory, setCurrentCategoryHasSubcategory] = useState(false);
+	const [subCategory, setSubCategory] = useState('');
+	const [description, setDescription] = useState('');
+	const [picture, setPicture] = useState([]);
+
+	useEffect(() => {
+		setCurrentCategory(categoryList.find((each) => each.name === category));
+	}, [categoryList, category]);
+
+	useEffect(() => {
+		if (currentCategory !== {})
+			currentCategory?.Subcategories?.length === 0
+				? setCurrentCategoryHasSubcategory(false)
+				: setCurrentCategoryHasSubcategory(true);
+	}, [currentCategory]);
+
+	const [trialError, setTrialError] = useState(true);
+	const [productNameError, setProductNameError] = useState(false);
+	const [priceError, setPriceError] = useState(false);
+	const [categoryError, setCategoryError] = useState(false);
+	const [subcategoryError, setSubcategoryError] = useState(false);
+	const [descriptionError, setDescriptionError] = useState(false);
+	const [pictureError, setPictureError] = useState(false);
+
+	const handleProductNameChange = (e) => {
+		setProductName(e.target.value);
 	};
-	const saveSubCategory = (e) => {
-		setSubCategory(e.target.value);
+	const handlePriceChange = (e) => {
+		setPrice(e.target.value);
 	};
-	const saveStatus = (e) => {
+	const handleStatusChange = (e) => {
 		setStatus(e.target.value);
 	};
-
+	const handleQuantityChange = (e) => {
+		setQuantity(e.target.value);
+	};
+	const handleCategoryChange = (e) => {
+		setCategory(e.target.value);
+	};
+	const handleSubCategoryChange = (e) => {
+		setSubCategory(e.target.value);
+	};
+	const handleDescriptionChange = (e) => {
+		setDescription(e.target.value);
+	};
 	const onDrop = (picture) => {
 		setPicture([...picture]);
 	};
 
+	const addProductValidate = () => {
+		let valid = true;
+		if (productName === '') {
+			setProductNameError(true);
+			valid = false;
+		}
+		if (price === '') {
+			setPriceError(true);
+			valid = false;
+		}
+		if (category === '') {
+			setCategoryError(true);
+			valid = false;
+		}
+		if (currentCategoryHasSubcategory && subCategory === '') {
+			setSubcategoryError(true);
+			valid = false;
+		}
+		if (description === '') {
+			setDescriptionError(true);
+			valid = false;
+		}
+		if (picture.length === 0) {
+			setPictureError(true);
+			valid = false;
+		}
+		if (valid) {
+			// dispatch
+			setProductNameError(false);
+			setPriceError(false);
+			setCategoryError(false);
+			setSubcategoryError(false);
+			setDescriptionError(false);
+			setPictureError(false);
+			const formData = new FormData();
+			formData.append('name', productName);
+			formData.append('price', price);
+			formData.append('status', status);
+			formData.append('category', category);
+			if (currentCategoryHasSubcategory) {
+				formData.append('subcategory', subCategory);
+			}
+			formData.append('description', description);
+			formData.append('avatar', picture);
+
+			for (const v of formData.entries()) {
+				console.log(v);
+			}
+			console.log('All valid');
+		}
+	};
+
 	return (
 		<PageContainer>
-			<p className="pageHeaders blackFont">Add Products</p>
+			<p className="pageHeaders blackFont">Add Product</p>
 			<FlexWrapper>
 				<Form className="cards">
 					<FormHeader>Details</FormHeader>
@@ -124,9 +215,13 @@ export default function AddProducts(props) {
 								variant="outlined"
 								color="#5673E8"
 								required
+								value={productName}
+								onChange={handleProductNameChange}
+								error={productNameError}
+								helperText={productNameError ? 'This is a required field' : ''}
 							/>
 						</ItemGroup>
-						<ItemGroup>
+						{/* <ItemGroup>
 							<TextField
 								error={trialError}
 								helperText={trialError? "Field is empty":""}
@@ -134,10 +229,26 @@ export default function AddProducts(props) {
 								label="Brand"
 								variant="outlined"
 								color="#5673E8"
+								disabled
+							/>
+						</ItemGroup> */}
+						<ItemGroup>
+							<TextField
+								className={classes.textField}
+								label="Price"
+								variant="outlined"
+								color="#5673E8"
+								required
+								value={price}
+								onChange={handlePriceChange}
+								type="number"
+								InputProps={{ inputProps: { min: 0 } }}
+								error={priceError}
+								helperText={priceError ? 'This is a required field' : ''}
 							/>
 						</ItemGroup>
 					</MainGroup>
-					<MainGroup>
+					{/* <MainGroup>
 						<ItemGroup>
 							<TextField className={classes.textField} label="Price" variant="outlined" color="#5673E8" required />
 						</ItemGroup>
@@ -150,7 +261,7 @@ export default function AddProducts(props) {
 								color="#5673E8"
 							/>
 						</ItemGroup>
-					</MainGroup>
+					</MainGroup> */}
 
 					<MainGroup>
 						<ItemGroup>
@@ -159,17 +270,25 @@ export default function AddProducts(props) {
 								select
 								label="Status"
 								value={status}
-								onChange={saveStatus}
+								onChange={handleStatusChange}
 								variant="outlined"
 								color="#5673E8"
-								required
-							>
-								<MenuItem value="Value 1">Active</MenuItem>
-								<MenuItem value="Value 2">Inactive</MenuItem>
+								required>
+								<MenuItem value="Active">Active</MenuItem>
+								<MenuItem value="Inactive">Inactive</MenuItem>
 							</TextField>
 						</ItemGroup>
 						<ItemGroup>
-							<TextField className={classes.textField} label="Quantity" variant="outlined" color="#5673E8" required />
+							<TextField
+								className={classes.textField}
+								label="Quantity"
+								variant="outlined"
+								color="#5673E8"
+								type="number"
+								InputProps={{ inputProps: { min: 0 } }}
+								value={quantity}
+								onChange={handleQuantityChange}
+							/>
 						</ItemGroup>
 					</MainGroup>
 					<MainGroup>
@@ -179,32 +298,39 @@ export default function AddProducts(props) {
 								label="Category"
 								variant="outlined"
 								select
-								onChange={saveCategory}
+								onChange={handleCategoryChange}
 								value={category}
 								color="#5673E8"
 								required
-							>
-								{CATAGORIES.map((item) => (
+								error={categoryError}
+								helperText={categoryError ? 'This is a required field' : ''}>
+								{categoryList.map((item) => (
 									<MenuItem key={item.id} value={item.name}>
 										{item.name}
 									</MenuItem>
 								))}
 							</TextField>
 						</ItemGroup>
-						{category ? (
+						{currentCategoryHasSubcategory ? (
 							<ItemGroup>
 								<TextField
 									className={classes.textField}
 									label="Sub Category"
 									variant="outlined"
 									select
-									onChange={saveSubCategory}
+									onChange={handleSubCategoryChange}
 									value={subCategory}
 									color="#5673E8"
 									required
-								>
-									<MenuItem value="Value 1">Value 1</MenuItem>
-									<MenuItem value="Value 2">Value 2</MenuItem>
+									error={subcategoryError}
+									helperText={subcategoryError ? 'This is a required field' : ''}>
+									{currentCategory?.Subcategories.map((item) => (
+										<MenuItem key={item.id} value={item.name}>
+											{item.name}
+										</MenuItem>
+									))}
+									{/* <MenuItem value="Value 1">Value 1</MenuItem>
+									<MenuItem value="Value 2">Value 2</MenuItem> */}
 								</TextField>
 							</ItemGroup>
 						) : null}
@@ -219,15 +345,19 @@ export default function AddProducts(props) {
 								multiline
 								rowsMax={4}
 								required
+								value={description}
+								onChange={handleDescriptionChange}
+								error={descriptionError}
+								helperText={descriptionError ? 'This is a required field' : ''}
 							/>
 						</FullWidthItemGroup>
 					</MainGroup>
 
 					<ButtonGroup>
 						<Button className={classes.leftButton} variant="outlined" color="primary">
-							cancel
+							Cancel
 						</Button>
-						<Button variant="contained" color="primary" disableElevation>
+						<Button variant="contained" color="primary" disableElevation onClick={addProductValidate}>
 							Submit
 						</Button>
 					</ButtonGroup>
@@ -246,7 +376,6 @@ export default function AddProducts(props) {
 					) : (
 						<ImagePlaceHolder />
 					)}
-
 					<ImageUploader
 						className="uploadCard"
 						withIcon={true}
@@ -258,6 +387,7 @@ export default function AddProducts(props) {
 						singleImage={true}
 						buttonText="Choose Image"
 					/>
+					{pictureError ? <p>Please upload a product image</p> : null}
 				</PreviewWrapper>
 			</FlexWrapper>
 		</PageContainer>
