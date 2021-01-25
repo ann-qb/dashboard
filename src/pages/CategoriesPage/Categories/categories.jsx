@@ -176,13 +176,15 @@ export default function Categories(props) {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(onGetCategoryList());
-		if (categoryList === [] && status === 'loading category list') {
+		if (categoryList.length === 0) {
+			dispatch(onGetCategoryList());
+		}
+		if (categoryList.length === 0 && status === 'loading category list') {
 			setShowLoading(true);
 		} else if (status === 'loading category list over') {
 			setShowLoading(false);
 		}
-	}, [categoryList, status]);
+	}, []);
 
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
