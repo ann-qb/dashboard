@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
+import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
@@ -78,9 +79,9 @@ export default function Dropdown(props) {
 							<PermIdentityOutlinedIcon style={{ marginRight: '8px' }} />
 							<p>Profile</p>
 						</DroppedButtonWrapper>
-						<DroppedButtonWrapper id="dashboard" onClick={props.action}>
-							<DashboardOutlinedIcon style={{ marginRight: '8px' }} />
-							<p>Dashboard</p>
+						<DroppedButtonWrapper id="users" onClick={props.action}>
+							<PeopleAltOutlinedIcon style={{ marginRight: '8px' }} />
+							<p>Users</p>
 						</DroppedButtonWrapper>
 						<DroppedButtonWrapper id="logOut" onClick={props.action}>
 							<ExitToAppOutlinedIcon style={{ marginRight: '8px' }} />

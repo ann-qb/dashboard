@@ -275,7 +275,9 @@ export default function StoreHeader(props) {
 		if (clickedDiv.id === 'dashboard') {
 			history.push('/dashboard');
 		}
-		else if (clickedDiv.id === 'logOut') {
+		else if (clickedDiv.id === 'users') {
+			history.push('/users');
+		} else if (clickedDiv.id === 'logOut') {
 			dispatch(onLogout());
 		}
 	};
