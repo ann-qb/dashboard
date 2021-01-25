@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../../assets/Images/logo_icon.png';
+import ShowIfAuth from '../../components/ShowIfAuth';
 import { onLogout } from '../../slices/login.slice';
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import CategoryIcon from '@material-ui/icons/Category';
@@ -80,7 +81,7 @@ export default function SideNavigation(props) {
 		} catch {
 			console.log('No item exist with that id');
 		}
-	}, );
+	});
 
 	const changePageRoute = (e) => {
 		const clickedDiv = e.target.closest('div');
@@ -100,10 +101,12 @@ export default function SideNavigation(props) {
 			<div style={{ marginLeft: '10px' }}>
 				<SubTittles className="navigationText">MENU</SubTittles>
 
-				<NavLinksDiv id="dashboard" className="navLinks activeNavLink" onClick={changePageRoute}>
-					<DashboardOutlinedIcon className={classes.icons} />
-					<p className="navigationText">Dashboard</p>
-				</NavLinksDiv>
+				<ShowIfAuth allowedRoles={['admin']}>
+					<NavLinksDiv id="dashboard" className="navLinks activeNavLink" onClick={changePageRoute}>
+						<DashboardOutlinedIcon className={classes.icons} />
+						<p className="navigationText">Dashboard</p>
+					</NavLinksDiv>
+				</ShowIfAuth>
 
 				<NavLinksDiv id="store" className="navLinks" onClick={changePageRoute}>
 					<StoreMallDirectoryOutlinedIcon className={classes.icons} />
@@ -115,15 +118,17 @@ export default function SideNavigation(props) {
 					<p className="navigationText">Users</p>
 				</NavLinksDiv>
 
-				<NavLinksDiv id="categories" className="navLinks" onClick={changePageRoute}>
-					<CategoryIcon className={classes.icons} />
-					<p className="navigationText">Categories</p>
-				</NavLinksDiv>
+				<ShowIfAuth allowedRoles={['admin']}>
+					<NavLinksDiv id="categories" className="navLinks" onClick={changePageRoute}>
+						<CategoryIcon className={classes.icons} />
+						<p className="navigationText">Categories</p>
+					</NavLinksDiv>
 
-				<NavLinksDiv id="add_products" className="navLinks" onClick={changePageRoute}>
-					<LocalMallOutlinedIcon className={classes.icons} />
-					<p className="navigationText">Products</p>
-				</NavLinksDiv>
+					<NavLinksDiv id="add_products" className="navLinks" onClick={changePageRoute}>
+						<LocalMallOutlinedIcon className={classes.icons} />
+						<p className="navigationText">Products</p>
+					</NavLinksDiv>
+				</ShowIfAuth>
 
 				<SubTittles className="navigationText">UTILITY</SubTittles>
 

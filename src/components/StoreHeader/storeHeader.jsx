@@ -6,6 +6,7 @@ import SubCategoryDropdown from './SubCategoryDropdown';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { onLogout } from '../../slices/login.slice'
 
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
@@ -243,7 +244,6 @@ export default function StoreHeader(props) {
 		} catch {
 			setProductsInCart(null);
 		}
-		console.log('...', productsInCart);
 	}, [props.itemsInCart]);
 
 	// Master back button (logo button)
@@ -272,8 +272,13 @@ export default function StoreHeader(props) {
 
 	const dropdownActions = (e) => {
 		const clickedDiv = e.target.closest('div');
-		if (clickedDiv.id === 'users') {
+		if (clickedDiv.id === 'dashboard') {
+			history.push('/dashboard');
+		}
+		else if (clickedDiv.id === 'users') {
 			history.push('/users');
+		} else if (clickedDiv.id === 'logOut') {
+			dispatch(onLogout());
 		}
 	};
 

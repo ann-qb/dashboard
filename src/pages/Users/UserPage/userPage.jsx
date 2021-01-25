@@ -143,7 +143,7 @@ export default function UserPage(props) {
 	return (
 		<PageContainer>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
-		
+
 			<p className="pageHeaders blackFont">Users</p>
 			<ShowIfAuth allowedRoles={['admin']}>
 				<AddButton className="button-primary" onClick={openAddUserPopup}>

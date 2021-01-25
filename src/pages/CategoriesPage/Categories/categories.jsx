@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
 			marginLeft: theme.spacing(2),
 		},
 	},
+	addIcon: {
+		color: '#5673E8',
+	},
 }));
 
 // const useStyles = makeStyles(() => ({
@@ -257,7 +260,7 @@ export default function Categories(props) {
 						) : (
 							<Grow in={!disableAdd} disabled={disableAdd} {...(disableAdd ? { timeout: 1000 } : {})}>
 								<IconButton aria-label="expand row" size="small" disabled={disableAdd} onClick={addNewCategory}>
-									<AddBoxRoundedIcon fontSize="large" />
+									<AddBoxRoundedIcon className={classes.addIcon} fontSize="large" />
 								</IconButton>
 							</Grow>
 						)}

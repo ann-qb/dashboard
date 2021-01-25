@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
+import AddBoxRoundedIcon from '@material-ui/icons/AddBoxRounded';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	onAddSubCategory,
@@ -66,6 +67,7 @@ const AddSubCategoryWrapper = styled.div`
 `;
 const Button = styled.button`
 	height: 100%;
+	padding:0 10px !important;
 `;
 
 const Input = styled.input`
@@ -291,7 +293,7 @@ export default function CategoryCard(props) {
 						onChange={handleInputChange}
 						// onBlur={cancelAddNewSubCategory}
 						disabled={disableAddNewSubCategory}
-						placeholder="Sub Category"
+						placeholder="Add Sub Category"
 					/>
 					{disableAddNewSubCategory ? (
 						<div className={classes.root}>
@@ -299,7 +301,7 @@ export default function CategoryCard(props) {
 						</div>
 					) : (
 						<Button disabled={disableAdd} className="button-primary" onClick={addNewSubCategory}>
-							Add
+							<p style={{fontSize:'150%',fontWeight:'500'}}>+</p>
 						</Button>
 					)}
 				</AddSubCategoryWrapper>
