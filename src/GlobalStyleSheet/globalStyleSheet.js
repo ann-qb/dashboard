@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import LoginBackdrop from '../assets/Images/backdrop.png'
+import LoginBackdrop from '../assets/Images/backdrop.png';
 
 /**------ Colors ------*/
 const PRIMARY_PURPLE = '#5673E8',
@@ -209,6 +209,7 @@ const GlobalStyle = createGlobalStyle`
   .navigationText{
     font-family: 'IBM Plex Sans', sans-serif;
     color:#9398a4;
+    margin-left:20px;
   }
   
   .navLinks{
@@ -221,7 +222,8 @@ const GlobalStyle = createGlobalStyle`
   .navLinks:hover{
     background-color:#f3f8fb;
   }
-  .navLinks:hover .navigationText
+  .navLinks:hover .navigationText,
+  .navLinks:hover .MuiSvgIcon-root
   {
     color:${PRIMARY_PURPLE};
   }

@@ -46,15 +46,27 @@ export default function DeleteModal(props) {
 		<Modal style={modalStyle} isOpen={props.isOpen} onRequestClose={props.onRequestClose}>
 			<TextWrapper>
 				<ion-icon style={iconStyle} name="alert-circle-outline"></ion-icon>
-				<P>Delete User?</P>
+				<P>Are you sure?</P>
 			</TextWrapper>
 			<ButtonWrapper>
-				<button
-					style={{ marginRight: '10px' }}
-					className="button-danger"
-					onClick={() => (dispatch(onDeleteUser({ id: props.id })))}>
-					Delete
-				</button>
+				{props.onDelete ? (
+					<button
+						style={{ marginRight: '10px' }}
+						className="button-danger"
+						onClick={props.onDelete}
+					>
+						Delete
+					</button>
+				) : (
+					<button
+						style={{ marginRight: '10px' }}
+						className="button-danger"
+						onClick={() => dispatch(onDeleteUser({ id: props.id }))}
+					>
+						Delete
+					</button>
+				)}
+
 				<button style={{ marginLeft: '10px' }} className="button-danger-secondary" onClick={props.onRequestClose}>
 					Cancel
 				</button>

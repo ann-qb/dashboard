@@ -6,11 +6,25 @@ import Logo from '../../assets/Images/logo_icon.png';
 import { onLogout } from '../../slices/login.slice';
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import CategoryIcon from '@material-ui/icons/Category';
-import AddIcon from '@material-ui/icons/Add';
+import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import StoreMallDirectoryOutlinedIcon from '@material-ui/icons/StoreMallDirectoryOutlined';
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import PhoneInTalkOutlinedIcon from '@material-ui/icons/PhoneInTalkOutlined';
+import { makeStyles } from '@material-ui/core/styles';
 
 /**---------------- Styles ------------------*/
+const useStyles = makeStyles(() => ({
+	icons: {
+		fontSize: '115%',
+		marginRight: '10px',
+		color: '#9398a4',
+		'&:hover': {
+			color: '#5673E8',
+		},
+	},
+}));
+
 const NavBar = styled.div`
 	top: 0;
 	left: 0;
@@ -54,6 +68,7 @@ const LogoImage = styled.img`
 `;
 
 export default function SideNavigation(props) {
+	const classes = useStyles();
 	const history = useHistory();
 	const dispatch = useDispatch();
 
@@ -86,34 +101,34 @@ export default function SideNavigation(props) {
 				<SubTittles className="navigationText">MENU</SubTittles>
 
 				<NavLinksDiv id="dashboard" className="navLinks activeNavLink" onClick={changePageRoute}>
-					<DashboardOutlinedIcon style={iconStyle} />
+					<DashboardOutlinedIcon className={classes.icons} />
 					<p className="navigationText">Dashboard</p>
 				</NavLinksDiv>
 
 				<NavLinksDiv id="store" className="navLinks" onClick={changePageRoute}>
-					<StoreMallDirectoryOutlinedIcon style={iconStyle} />
+					<StoreMallDirectoryOutlinedIcon className={classes.icons} />
 					<p className="navigationText">Store</p>
 				</NavLinksDiv>
 
 				<NavLinksDiv id="users" className="navLinks" onClick={changePageRoute}>
-					<PeopleAltOutlinedIcon style={iconStyle} />
+					<PeopleAltOutlinedIcon className={classes.icons} />
 					<p className="navigationText">Users</p>
 				</NavLinksDiv>
 
 				<NavLinksDiv id="categories" className="navLinks" onClick={changePageRoute}>
-					<CategoryIcon style={iconStyle} />
+					<CategoryIcon className={classes.icons} />
 					<p className="navigationText">Categories</p>
 				</NavLinksDiv>
 
 				<NavLinksDiv id="add_products" className="navLinks" onClick={changePageRoute}>
-					<AddIcon style={iconStyle} />
+					<LocalMallOutlinedIcon className={classes.icons} />
 					<p className="navigationText">Products</p>
 				</NavLinksDiv>
 
 				<SubTittles className="navigationText">UTILITY</SubTittles>
 
 				<NavLinksDiv className="navLinks" onClick={changePageRoute}>
-					<ion-icon style={iconStyle} name="settings-outline"></ion-icon>
+					<SettingsOutlinedIcon className={classes.icons} />
 					<p className="navigationText ">Settings</p>
 				</NavLinksDiv>
 				<NavLinksDiv
@@ -122,7 +137,7 @@ export default function SideNavigation(props) {
 						changePageRoute(e);
 					}}
 				>
-					<ion-icon style={iconStyle} name="earth-outline"></ion-icon>
+					<PhoneInTalkOutlinedIcon className={classes.icons} />
 					<p className="navigationText ">Contact Us</p>
 				</NavLinksDiv>
 			</div>

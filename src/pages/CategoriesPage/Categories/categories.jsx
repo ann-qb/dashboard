@@ -167,8 +167,9 @@ const SpinnerDiv = styled.div`
 // 	},
 // ];
 
-export default function Categories() {
+export default function Categories(props) {
 	const classes = useStyles();
+	// States for search and filter
 
 	const { categoryList, status } = useSelector((state) => state.categoryListSlice);
 	const dispatch = useDispatch();
@@ -271,6 +272,10 @@ export default function Categories() {
 				<SpinnerDiv>
 					<BounceLoader size={100} color={'#5673E8'} loading={showLoading} />
 				</SpinnerDiv>
+			) : props.searchValue ? (
+				categoryList
+					.filter((category) => category.name.toLowerCase().includes(props.searchValue.toLowerCase()))
+					.map((each) => <CategoryCard key={each.id + each.name} category={each} />)
 			) : (
 				categoryList.map((each) => <CategoryCard key={each.id + each.name} category={each} />)
 			)}

@@ -40,7 +40,7 @@ const HeaderTab = styled.div`
 `;
 
 
-export default function UserPage() {
+export default function UserPage(props) {
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
 	const [alertMessage, setAlertMessage] = useState('');
@@ -95,7 +95,12 @@ export default function UserPage() {
 			<>
 				{!showLoading
 					? userList
-							.filter((each) => each.Role.name !== 'admin')
+							.filter(
+								(each) =>
+									each.Role.name !== 'admin' &&
+									(each.firstname.toLowerCase().includes(props.searchValue.toLowerCase()) ||
+										each.lastname.toLowerCase().includes(props.searchValue.toLowerCase()))
+							)
 							.map((each) => <UserCard key={each.id} data={each} />)
 					: null}
 			</>

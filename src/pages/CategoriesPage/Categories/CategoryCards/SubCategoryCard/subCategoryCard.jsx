@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import DeleteConfirmPopup from '../../../../../components/Popups/DeleteConfirmPopup'
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
@@ -21,10 +22,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SubCard = styled.div`
+	position: relative;
 	display: flex;
 	align-items: center;
 	width: 100%;
-	padding: 10px 10px;
+	padding: ${(props) => (props.disablePadding ? '10px 0' : '10px 10px')};
 	margin-bottom: 2px;
 	background-color: #fff;
 `;
@@ -50,13 +52,14 @@ const SubCategoryInput = styled.input`
 `;
 
 const DisabledDiv = styled.div`
-	${'' /* position: absolute; */}
+	position: absolute;
+	align-items: center;
 	height: 100%;
 	width: 100%;
 	z-index: 1;
 	background-color: #ddd;
-	opacity: 0.3;
-	display: ${(props) => (props.disable ? 'block' : 'none')};
+	padding: 10px 10px;
+	display: ${(props) => (props.disable ? 'flex' : 'none')};
 	cursor: default;
 `;
 
@@ -69,6 +72,7 @@ export default function SubCategoryCard(props) {
 	const [disableInput, setDisableInput] = useState(false);
 	const [disableDiv, setDisableDiv] = useState(false);
 	const [editedSubcategory, setEditedSubcategory] = useState(props.subcategory.name);
+	const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
 
 	useEffect(() => {
 		if (status === 'edit subcategory loading') {
@@ -131,6 +135,7 @@ export default function SubCategoryCard(props) {
 	};
 
 	const deleteSubCategory = () => {
+		setDeletePopupIsOpen(false);
 		dispatch(
 			onDeleteSubCategory({
 				subcategoryId: props.subcategory.id,
@@ -144,10 +149,21 @@ export default function SubCategoryCard(props) {
 		setDisableDiv(true);
 	};
 
+	const openDeleteConfirmationModal = () => {
+		setDeletePopupIsOpen(true);
+	};
+
+	const closeDeleteModal = () => {
+		setDeletePopupIsOpen(false);
+	};
+
 	return (
 		<div>
-			<SubCard>
-				<DisabledDiv disable={disableDiv}></DisabledDiv>
+			<SubCard disablePadding={disableDiv}>
+				<DisabledDiv disable={disableDiv}>
+					<CircularProgress size={20} />
+					<p style={{ marginLeft: '30px' }}>Hold on.... </p>
+				</DisabledDiv>
 				{edit ? (
 					<SubCategoryNameWrapper>
 						<SubCategoryInput
@@ -177,14 +193,16 @@ export default function SubCategoryCard(props) {
 									style={{ marginRight: '15px' }}
 									aria-label="expand row"
 									size="small"
-									onClick={editSubcategory}>
+									onClick={editSubcategory}
+								>
 									<DoneRoundedIcon />
 								</IconButton>
 								<IconButton
 									style={{ marginRight: '15px' }}
 									aria-label="expand row"
 									size="small"
-									onClick={toggleEnableEditSubcategory}>
+									onClick={toggleEnableEditSubcategory}
+								>
 									<ClearRoundedIcon />
 								</IconButton>
 							</>
@@ -196,16 +214,23 @@ export default function SubCategoryCard(props) {
 							style={{ marginRight: '15px' }}
 							aria-label="expand row"
 							size="small"
-							onClick={toggleEnableEditSubcategory}>
+							onClick={toggleEnableEditSubcategory}
+						>
 							<CreateOutlinedIcon />
 						</IconButton>
 
-						<IconButton aria-label="expand row" size="small" onClick={deleteSubCategory}>
+						<IconButton aria-label="expand row" size="small" onClick={openDeleteConfirmationModal}>
 							<DeleteOutlineOutlinedIcon />
 						</IconButton>
 					</>
 				)}
 			</SubCard>
+			<DeleteConfirmPopup
+				id={props.subcategory.id}
+				isOpen={deletePopupIsOpen}
+				onDelete={deleteSubCategory}
+				onRequestClose={closeDeleteModal}
+			/>
 		</div>
 	);
 }
