@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/dashboard/static/css/main.2e7919c8.chunk.css",
+    "main.js": "/dashboard/static/js/main.80fe2916.chunk.js",
+    "main.js.map": "/dashboard/static/js/main.80fe2916.chunk.js.map",
+    "runtime-main.js": "/dashboard/static/js/runtime-main.a635eca5.js",
+    "runtime-main.js.map": "/dashboard/static/js/runtime-main.a635eca5.js.map",
+    "static/css/2.f64b6e61.chunk.css": "/dashboard/static/css/2.f64b6e61.chunk.css",
+    "static/js/2.8b4cea68.chunk.js": "/dashboard/static/js/2.8b4cea68.chunk.js",
+    "static/js/2.8b4cea68.chunk.js.map": "/dashboard/static/js/2.8b4cea68.chunk.js.map",
+    "static/js/3.38975b5f.chunk.js": "/dashboard/static/js/3.38975b5f.chunk.js",
+    "static/js/3.38975b5f.chunk.js.map": "/dashboard/static/js/3.38975b5f.chunk.js.map",
+    "index.html": "/dashboard/index.html",
+    "static/css/2.f64b6e61.chunk.css.map": "/dashboard/static/css/2.f64b6e61.chunk.css.map",
+    "static/css/main.2e7919c8.chunk.css.map": "/dashboard/static/css/main.2e7919c8.chunk.css.map",
+    "static/js/2.8b4cea68.chunk.js.LICENSE.txt": "/dashboard/static/js/2.8b4cea68.chunk.js.LICENSE.txt",
+    "static/media/404.f9067e05.png": "/dashboard/static/media/404.f9067e05.png",
+    "static/media/UploadIcon.svg": "/dashboard/static/media/UploadIcon.469126df.svg",
+    "static/media/backdrop.856023d3.png": "/dashboard/static/media/backdrop.856023d3.png",
+    "static/media/banner1.e87a1bbc.png": "/dashboard/static/media/banner1.e87a1bbc.png",
+    "static/media/banner2.b1399f16.png": "/dashboard/static/media/banner2.b1399f16.png",
+    "static/media/banner3.d8b61506.png": "/dashboard/static/media/banner3.d8b61506.png",
+    "static/media/logo_black.a724b61d.png": "/dashboard/static/media/logo_black.a724b61d.png",
+    "static/media/logo_white.25613a73.png": "/dashboard/static/media/logo_white.25613a73.png",
+    "static/media/offline2.89a0a1db.jpg": "/dashboard/static/media/offline2.89a0a1db.jpg",
+    "static/media/profilePic_large.954fda23.png": "/dashboard/static/media/profilePic_large.954fda23.png",
+    "static/media/profilePic_small.d2baeaa3.png": "/dashboard/static/media/profilePic_small.d2baeaa3.png",
+    "static/media/styles.css": "/dashboard/static/media/revicons.e8746a62.woff",
+    "static/media/server_down.6b76524c.png": "/dashboard/static/media/server_down.6b76524c.png",
+    "static/media/unknown_error.13cc2e4b.png": "/dashboard/static/media/unknown_error.13cc2e4b.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a635eca5.js",
+    "static/css/2.f64b6e61.chunk.css",
+    "static/js/2.8b4cea68.chunk.js",
+    "static/css/main.2e7919c8.chunk.css",
+    "static/js/main.80fe2916.chunk.js"
+  ]
+}
