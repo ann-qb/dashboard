@@ -83,8 +83,8 @@ const AddCategoryWrapper = styled.div`
 `;
 const Button = styled.button`
 	height: 100%;
-	padding:0 !important;
-	padding-bottom:-10px;
+	padding: 0 !important;
+	padding-bottom: -10px;
 `;
 const Input = styled.input`
 	height: 100%;
@@ -174,13 +174,15 @@ export default function Categories() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(onGetCategoryList());
-		if (categoryList === [] && status === 'loading category list') {
+		if (categoryList.length === 0) {
+			dispatch(onGetCategoryList());
+		}
+		if (categoryList.length === 0 && status === 'loading category list') {
 			setShowLoading(true);
 		} else if (status === 'loading category list over') {
 			setShowLoading(false);
 		}
-	}, [categoryList, status]);
+	}, []);
 
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
