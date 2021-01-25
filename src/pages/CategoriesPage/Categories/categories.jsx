@@ -170,7 +170,6 @@ const SpinnerDiv = styled.div`
 export default function Categories(props) {
 	const classes = useStyles();
 	// States for search and filter
-	console.log(props.searchValue);
 
 	const { categoryList, status } = useSelector((state) => state.categoryListSlice);
 	const dispatch = useDispatch();
@@ -275,7 +274,7 @@ export default function Categories(props) {
 				</SpinnerDiv>
 			) : props.searchValue ? (
 				categoryList
-					.filter((category) => category.name.toLowercase().includes(props.searchValue.toLowercase()))
+					.filter((category) => category.name.toLowerCase().includes(props.searchValue.toLowerCase()))
 					.map((each) => <CategoryCard key={each.id + each.name} category={each} />)
 			) : (
 				categoryList.map((each) => <CategoryCard key={each.id + each.name} category={each} />)

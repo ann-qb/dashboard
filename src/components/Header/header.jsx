@@ -94,6 +94,7 @@ export default function Header(props) {
 		}
 	};
 
+
 	return (
 		<HeaderBar>
 			{props.page === 'error' ? (
@@ -104,7 +105,7 @@ export default function Header(props) {
 						<FontAwesomeIcon style={{ color: '#74788d' }} icon="search" />
 					</span>
 
-					{props.value && props.onChange ? (
+					{props.onChange ? (
 						<SearchInput type="text" value={props.value} onChange={props.onChange} placeholder="Search..." />
 					) : (
 						<SearchInput type="text" placeholder="Search..." />
