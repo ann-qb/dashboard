@@ -49,8 +49,8 @@ export default function StoreCategoriesPage(props) {
 
 	// Query data
 	const category = query.get('category');
-	const subCategory = query.get('subCategory');
-	console.log(category, subCategory);
+	let subCategory = query.get('subCategory');
+	if (category === subCategory) subCategory = null;
 	const dispatch = useDispatch();
 	const { productListing } = useSelector((state) => state.storeProductListingSlice);
 	useEffect(() => {

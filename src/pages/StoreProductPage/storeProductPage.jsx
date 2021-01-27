@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import ReactImageMagnify from 'react-image-magnify';
 import StoreHeader from '../../components/StoreHeader';
@@ -26,14 +27,17 @@ const useStyles = makeStyles(() => ({
 const ProductContentWrapper = styled.div`
 	display: flex;
 	justify-content: space-between;
-	width: 100%;
-	height: fit-content;
+	width: 1340px;
+	min-height: 80vh;
+	max-height: fit-content;
 	padding: 15px;
+	margin: 0 auto;
 `;
 const ProductImageWrapper = styled.div`
 	display: flex;
 	align-item: center;
 	width: 49%;
+	height: fit-content;
 `;
 const ProductImage = styled.img`
 	width: 100%;
@@ -79,6 +83,7 @@ const ButtonBox = styled.div`
 
 export default function StoreProductPage(props) {
 	const classes = useStyles();
+	const { loggedUser } = useSelector((state) => state.loginSlice);
 	const [productToCart, setProductToCart] = useState(null);
 	const { id } = useParams();
 	console.log(id);
@@ -103,11 +108,12 @@ export default function StoreProductPage(props) {
 	}, []);
 
 	const addToCart = () => {
-		const existingNumber = localStorage.getItem('productsInCart');
+		const existingNumber = JSON.parse(localStorage.getItem('productsInCart'))?.numberOfProducts;
+		console.log(localStorage.getItem('productsInCart'));
 		let newNumber;
 		existingNumber ? (newNumber = parseInt(existingNumber) + 1) : (newNumber = 1);
 
-		localStorage.setItem('productsInCart', newNumber);
+		localStorage.setItem('productsInCart', JSON.stringify({ user: loggedUser.email, numberOfProducts: newNumber }));
 		setProductToCart(newNumber);
 	};
 

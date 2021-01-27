@@ -34,15 +34,14 @@ export default function ProductsList(props){
 				+ Add Products
 			</AddButton>
 			<CardsWrapper>
-				<ProductCard margin="10px 10px" editable />
-				<ProductCard margin="10px 10px" editable />
-				<ProductCard margin="10px 10px" editable />
-				<ProductCard margin="10px 10px" editable />
-				<ProductCard margin="10px 10px" editable />
-				<ProductCard margin="10px 10px" editable />
-				<ProductCard margin="10px 10px" editable />
-				<ProductCard margin="10px 10px" editable />
-				<ProductCard margin="10px 10px" editable />
+				<ProductCard margin="10px 20px 10px 0" editable />
+				<ProductCard margin="10px 20px 10px 0" editable />
+				<ProductCard margin="10px 20px 10px 0" editable />
+				<ProductCard margin="10px 20px 10px 0" editable />
+				<ProductCard margin="10px 20px 10px 0" editable />
+				<ProductCard margin="10px 20px 10px 0" editable />
+				<ProductCard margin="10px 20px 10px 0" editable />
+				<ProductCard margin="10px 20px 10px 0" editable />
 			</CardsWrapper>
 		</PageContainer>
 	);

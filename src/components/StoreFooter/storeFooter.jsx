@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FooterWrapper = styled.div`
+	bottom:0;
 	display: flex;
 	// justify-content: space-around;
 	align-items: center;
