@@ -14,9 +14,10 @@ import OfflinePage from './pages/OfflinePage';
 import SetPasswordPage from './pages/SetPasswordPage';
 import CategoriesPage from './pages/CategoriesPage';
 import AddProductsPage from './pages/AddProductsPage';
-import StoreHomePage from './pages/StoreHomePage'
-import StoreCategoryPage from './pages/StoreCategoriesPage'
-import StoreProductPage from './pages/StoreProductPage'
+import ProductListingPage from './pages/ProductListingPage';
+import StoreHomePage from './pages/StoreHomePage';
+import StoreCategoryPage from './pages/StoreCategoriesPage';
+import StoreProductPage from './pages/StoreProductPage';
 
 function App() {
 	return (
@@ -51,6 +52,9 @@ function App() {
 						</PrivateRoute>
 						<PrivateRoute path="/addProducts">
 							<AddProductsPage />
+						</PrivateRoute>
+						<PrivateRoute path="/productListing">
+							<ProductListingPage />
 						</PrivateRoute>
 
 						<PrivateRoute path="/store-category">
