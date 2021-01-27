@@ -25,14 +25,17 @@ const useStyles = makeStyles(() => ({
 const ProductContentWrapper = styled.div`
 	display: flex;
 	justify-content: space-between;
-	width: 100%;
-	height: fit-content;
+	width: 1340px;
+	min-height:80vh;
+	max-height: fit-content;
 	padding: 15px;
+	margin:0 auto;
 `;
 const ProductImageWrapper = styled.div`
 	display: flex;
 	align-item: center;
 	width: 49%;
+	height:fit-content;
 `;
 const ProductImage = styled.img`
 	width: 100%;
