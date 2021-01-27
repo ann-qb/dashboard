@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import AlertPopup from '../../../components/Popups/AlertPopups'
 import { useState } from 'react';
 import ImageUploader from 'react-images-upload';
 import TextField from '@material-ui/core/TextField';
@@ -89,7 +90,11 @@ export default function AddProducts(props) {
 	const { categoryList } = useSelector((state) => state.categoryListSlice);
 	const classes = useStyle();
 	const dispatch = useDispatch();
-	const history = useHistory()
+	const history = useHistory();
+
+	const [alertDisplay, setAlertDisplay] = useState(false);
+	const [alertType, setAlertType] = useState('');
+	const [alertMessage, setAlertMessage] = useState('');
 
 	const [productName, setProductName] = useState('');
 	const [price, setPrice] = useState('');
@@ -101,6 +106,19 @@ export default function AddProducts(props) {
 	const [subCategory, setSubCategory] = useState('');
 	const [description, setDescription] = useState('');
 	const [picture, setPicture] = useState([]);
+
+	// Additional function to be written wherever AlertPopup component is used
+	if (alertDisplay) {
+		setTimeout(() => {
+			setAlertDisplay(false);
+		}, 5000);
+	}
+
+	const showAlertPopup = (type,message)=>{
+		setAlertType(type)
+		setAlertMessage(message)
+		setAlertDisplay(true);
+	}
 
 	useEffect(() => {
 		setCurrentCategory(categoryList.find((each) => each.name === category));
@@ -198,15 +216,18 @@ export default function AddProducts(props) {
 			}
 
 			dispatch(onAddProduct(formData));
+			showAlertPopup('success','Product added successfully')
 		}
 	};
 
-	const returnToProductListingPage =()=>{
+	const returnToProductListingPage = () => {
 		history.push('/productListing');
-	}
+	};
 
 	return (
 		<PageContainer>
+			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
+
 			<p className="pageHeaders blackFont">Add Product</p>
 			<FlexWrapper>
 				<Form className="cards">
@@ -277,7 +298,8 @@ export default function AddProducts(props) {
 								onChange={handleStatusChange}
 								variant="outlined"
 								color="#5673E8"
-								required>
+								required
+							>
 								<MenuItem value="active">Active</MenuItem>
 								<MenuItem value="inactive">Inactive</MenuItem>
 							</TextField>
@@ -307,7 +329,8 @@ export default function AddProducts(props) {
 								color="#5673E8"
 								required
 								error={categoryError}
-								helperText={categoryError ? 'This is a required field' : ''}>
+								helperText={categoryError ? 'This is a required field' : ''}
+							>
 								{categoryList.map((item) => (
 									<MenuItem key={item.id} value={item.name}>
 										{item.name}
@@ -327,7 +350,8 @@ export default function AddProducts(props) {
 									color="#5673E8"
 									required
 									error={subcategoryError}
-									helperText={subcategoryError ? 'This is a required field' : ''}>
+									helperText={subcategoryError ? 'This is a required field' : ''}
+								>
 									{currentCategory?.Subcategories.map((item) => (
 										<MenuItem key={item.id} value={item.name}>
 											{item.name}
@@ -358,7 +382,12 @@ export default function AddProducts(props) {
 					</MainGroup>
 
 					<ButtonGroup>
-						<Button className={classes.leftButton} variant="outlined" color="primary" onClick={returnToProductListingPage}>
+						<Button
+							className={classes.leftButton}
+							variant="outlined"
+							color="primary"
+							onClick={returnToProductListingPage}
+						>
 							Back to listing
 						</Button>
 						<Button variant="contained" color="primary" disableElevation onClick={addProductValidate}>
