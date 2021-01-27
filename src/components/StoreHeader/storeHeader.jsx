@@ -240,7 +240,14 @@ export default function StoreHeader(props) {
 
 	useEffect(() => {
 		try {
-			setProductsInCart(localStorage.getItem('productsInCart'));
+			const productsInCart = JSON.parse(localStorage.getItem('productsInCart'));
+			console.log(productsInCart)
+			if(loggedUser.email === productsInCart.user){
+				setProductsInCart(productsInCart.numberOfProducts);
+			}else{
+				setProductsInCart(null);
+			}
+			
 		} catch {
 			setProductsInCart(null);
 		}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import ReactImageMagnify from 'react-image-magnify';
 import StoreHeader from '../../components/StoreHeader';
@@ -77,14 +78,16 @@ const ButtonBox = styled.div`
 
 export default function StoreProductPage(props) {
 	const classes = useStyles();
+	const { loggedUser } = useSelector((state) => state.loginSlice);
 	const [productToCart, setProductToCart] = useState(null);
 
 	const addToCart = () => {
-		const existingNumber = localStorage.getItem('productsInCart');
+		const existingNumber = JSON.parse(localStorage.getItem('productsInCart'))?.numberOfProducts;
+		console.log(localStorage.getItem('productsInCart'));
 		let newNumber;
 		existingNumber ? (newNumber = parseInt(existingNumber) + 1) : (newNumber = 1);
 
-		localStorage.setItem('productsInCart', newNumber);
+		localStorage.setItem('productsInCart', JSON.stringify({ user: loggedUser.email, numberOfProducts: newNumber }));
 		setProductToCart(newNumber);
 	};
 	return (
