@@ -3,6 +3,7 @@ import userListSlice from './../slices/userlist.slice';
 import categoryListSlice from './../slices/categorylist.slice';
 import productListSlice from './../slices/productlist.slice';
 import homePageDataSlice from './../slices/storehomepage.slice';
+import storeProductListingSlice from './../slices/storeproductlisting.slice';
 import { combineReducers } from '@reduxjs/toolkit';
 
 export default combineReducers({
@@ -11,4 +12,5 @@ export default combineReducers({
     categoryListSlice,
     productListSlice,
     homePageDataSlice,
+    storeProductListingSlice,
 });

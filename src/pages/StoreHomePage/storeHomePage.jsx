@@ -88,7 +88,7 @@ export default function StoreHomePage(props) {
 			</Carousel>
 			<ProductsWrapper>
 				{homePageData.map((each) => (
-					<NewCategoryWrapper className="cards">
+					<NewCategoryWrapper className="cards" key={each.id+each.name}>
 						<SectionHeadWrapper>
 							<SectionHeading>{each.name}</SectionHeading>
 							<SeeMore>See more</SeeMore>

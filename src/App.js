@@ -60,7 +60,7 @@ function App() {
 						<PrivateRoute path="/store-category">
 							<StoreCategoryPage />
 						</PrivateRoute>
-						<PrivateRoute path="/product">
+						<PrivateRoute path="/product/:id">
 							<StoreProductPage />
 						</PrivateRoute>
 						<PrivateRoute path="/errorpage">

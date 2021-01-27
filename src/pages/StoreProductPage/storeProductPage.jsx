@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ReactImageMagnify from 'react-image-magnify';
 import StoreHeader from '../../components/StoreHeader';
@@ -8,6 +8,8 @@ import AddShoppingCartOutlinedIcon from '@material-ui/icons/AddShoppingCartOutli
 import ShopOutlinedIcon from '@material-ui/icons/ShopOutlined';
 import StoreFooter from '../../components/StoreFooter';
 import { makeStyles } from '@material-ui/core/styles';
+import { useParams } from 'react-router-dom';
+import { baseURL } from '../../config/constants';
 
 const useStyles = makeStyles(() => ({
 	button: {
@@ -41,7 +43,7 @@ const ProductDetailsWrapper = styled.div`
 	width: 50%;
 	padding: 10px;
 `;
-const ProductTittle = styled.p`
+const ProductTitle = styled.p`
 	margin-bottom: 10px;
 	font-size: 150%;
 	color: #000;
@@ -78,6 +80,27 @@ const ButtonBox = styled.div`
 export default function StoreProductPage(props) {
 	const classes = useStyles();
 	const [productToCart, setProductToCart] = useState(null);
+	const { id } = useParams();
+	console.log(id);
+	const [productDetails, setProductDetails] = useState('');
+
+	useEffect(() => {
+		const fetchProductDetails = async () => {
+			try {
+				const response = await fetch.get(`${baseURL}/product/${id}`);
+				console.log(response);
+				if (response.status === 200) {
+					setProductDetails(response.data.data);
+				} else {
+					console.log('Failed to fetch product details');
+				}
+			} catch (error) {
+				console.log(error);
+				console.log(error.response);
+			}
+		};
+		fetchProductDetails();
+	}, []);
 
 	const addToCart = () => {
 		const existingNumber = localStorage.getItem('productsInCart');
@@ -87,6 +110,7 @@ export default function StoreProductPage(props) {
 		localStorage.setItem('productsInCart', newNumber);
 		setProductToCart(newNumber);
 	};
+
 	return (
 		<div style={{ backgroundColor: '#fff', color: '#020001' }}>
 			<StoreHeader itemsInCart={productToCart} />
@@ -95,15 +119,14 @@ export default function StoreProductPage(props) {
 					<ProductImage src={Placeholder} alt="Product Image" />
 				</ProductImageWrapper>
 				<ProductDetailsWrapper>
-					<ProductTittle>Product tittle</ProductTittle>
+					<ProductTitle>{productDetails?.name || 'Product title'}</ProductTitle>
 					<ProductBrand>Product Brand</ProductBrand>
 					<ProductDescription>
-						Product Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quibusdam pariatur optio
-						molestias vitae beatae facilis reprehenderit illo quo. Laboriosam error dolorum delectus porro veritatis
-						vero deserunt commodi, inventore hic.
+						{productDetails?.description ||
+							'Product Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quibusdam pariatur optio molestias vitae beatae facilis reprehenderit illo quo. Laboriosam error dolorum delectus porro veritatis vero deserunt commodi, inventore hic.'}
 					</ProductDescription>
 					<ProductPrice>
-						Offer price: <PriceNumber>₹ 16666</PriceNumber>
+						Offer price: <PriceNumber>₹ {productDetails?.price || '16666'}</PriceNumber>
 					</ProductPrice>
 					<ProductStock>In Stock</ProductStock>
 					<ButtonBox>
@@ -113,8 +136,7 @@ export default function StoreProductPage(props) {
 							className={classes.button}
 							startIcon={<AddShoppingCartOutlinedIcon />}
 							onClick={addToCart}
-							disableElevation
-						>
+							disableElevation>
 							Add To Cart
 						</Button>
 						<Button variant="contained" className={classes.button} startIcon={<ShopOutlinedIcon />} disableElevation>

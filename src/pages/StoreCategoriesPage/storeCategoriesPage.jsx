@@ -4,6 +4,9 @@ import ProductCards from '../../components/ProductCard';
 import StoreFooter from '../../components/StoreFooter';
 import { useLocation, useHistory } from 'react-router-dom';
 import Pagination from '@material-ui/lab/Pagination';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { onGetStoreProductListing } from '../../slices/storeproductlisting.slice';
 
 const ContentWrapper = styled.div`
 	display: flex;
@@ -48,6 +51,16 @@ export default function StoreCategoriesPage(props) {
 	const category = query.get('category');
 	const subCategory = query.get('subCategory');
 	console.log(category, subCategory);
+	const dispatch = useDispatch();
+	const { productListing } = useSelector((state) => state.storeProductListingSlice);
+	useEffect(() => {
+		if (subCategory === null) {
+			dispatch(onGetStoreProductListing({ category }));
+		} else {
+			dispatch(onGetStoreProductListing({ subCategory }));
+		}
+	}, [category, subCategory]);
+
 	return (
 		<>
 			<StoreHeader />
@@ -57,10 +70,22 @@ export default function StoreCategoriesPage(props) {
 				</FiltersWrapper>
 				<ProductsWrapper className="cards">
 					<p style={{ marginBottom: '15px' }}>
-						<span>{category}</span> / <span>{subCategory}</span>
+						{category ? (
+							<>
+								<span>{category}</span>{' '}
+								{subCategory ? (
+									<>
+										/ <span>{subCategory}</span>
+									</>
+								) : null}
+							</>
+						) : null}
 					</p>
 					<SectionHeading>{subCategory}</SectionHeading>
 					<ProductCardWrapper>
+						{productListing.map((each) => (
+							<ProductCards key={each.id + each.name} data={each} margin="5px 5px" />
+						))}
 						<ProductCards margin="5px 5px" />
 						<ProductCards margin="5px 5px" />
 						<ProductCards margin="5px 5px" />

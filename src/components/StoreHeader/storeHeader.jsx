@@ -6,7 +6,7 @@ import SubCategoryDropdown from './SubCategoryDropdown';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { onLogout } from '../../slices/login.slice'
+import { onLogout } from '../../slices/login.slice';
 
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
@@ -203,15 +203,19 @@ function DrawerData(props) {
 		<DrawerDataWrapper>
 			<CategoryNameWrapper>
 				<p style={{ fontSize: '110%' }}>{props.data.name}</p>
-				<IconButton aria-label="expand row" size="small" onClick={openSubCategoryCollapsible}>
-					{drawerSubCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-				</IconButton>
+				{props.data.Subcategories.length === 0 ? null : (
+					<IconButton aria-label="expand row" size="small" onClick={openSubCategoryCollapsible}>
+						{drawerSubCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+					</IconButton>
+				)}
 			</CategoryNameWrapper>
-			<Collapse in={drawerSubCategoryOpen} timeout="auto" unmountOnExit>
-				{props.data.Subcategories.map((each) => (
-					<SubCategoryLink onClick={redirectToCategoriesPage}>{each.name}</SubCategoryLink>
-				))}
-			</Collapse>
+			{props.data.Subcategories.length === 0 ? null : (
+				<Collapse in={drawerSubCategoryOpen} timeout="auto" unmountOnExit>
+					{props.data.Subcategories.map((each) => (
+						<SubCategoryLink onClick={redirectToCategoriesPage}>{each.name}</SubCategoryLink>
+					))}
+				</Collapse>
+			)}
 		</DrawerDataWrapper>
 	);
 }
@@ -280,12 +284,16 @@ export default function StoreHeader(props) {
 			dispatch(onLogout());
 		} else if (clickedDiv.id === 'profile') {
 			history.push('/profile');
-		} 
+		}
 	};
 
 	// For All category drawer
 	const toggleDrawer = (open) => (e) => {
 		setOpenAllCategoryDrawer({ ...openAllCategoryDrawer, left: open });
+	};
+
+	const redirectToCategoriesPage = (e) => {
+		history.push(`/store-category?category=${e.target.id}`);
 	};
 
 	return (
@@ -309,6 +317,7 @@ export default function StoreHeader(props) {
 					</Badge>
 				</CartWrapper>
 			</TopNavigation>
+
 			<BottomNavigation onMouseLeave={closeSubCategoryDropdown}>
 				<CategoryLinkWrapper>
 					<CategoryLinks id="all" onMouseEnter={closeSubCategoryDropdown} onClick={toggleDrawer(true)}>
@@ -324,15 +333,18 @@ export default function StoreHeader(props) {
 				</CategoryLinkWrapper>
 
 				{categoryList.map((category) => {
-					let colorOfLink 
-					subCategoryDropdownOpen.open && subCategoryDropdownOpen.id === category.name ? colorOfLink='#5673E8':colorOfLink='#000'
+					let colorOfLink;
+					(subCategoryDropdownOpen.open && subCategoryDropdownOpen.id === category.name) ||
+					category.Subcategories.length === 0
+						? (colorOfLink = '#5673E8')
+						: (colorOfLink = '#000');
 					return (
 						<CategoryLinkWrapper key={category.id}>
 							<CategoryLinks
-								style={{color:colorOfLink}}
+								style={{ color: colorOfLink }}
 								id={category.name}
 								onMouseEnter={(e) => (category.Subcategories.length === 0 ? null : openSubCategoryDropdown(e))}
-							>
+								onClick={(e) => (category.Subcategories.length === 0 ? redirectToCategoriesPage(e) : null)}>
 								{category.name}
 							</CategoryLinks>
 							{subCategoryDropdownOpen.open && subCategoryDropdownOpen.id === category.name ? (
