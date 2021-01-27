@@ -3,22 +3,25 @@ import StoreHeader from '../../components/StoreHeader';
 import ProductCard from '../../components/ProductCard';
 import MultiCarousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import ScrollToTop from '../../components/ScrollToTop'
-import StoreFooter from '../../components/StoreFooter'
+import ScrollToTop from '../../components/ScrollToTop';
+import StoreFooter from '../../components/StoreFooter';
 // import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import Carousel from 'react-material-ui-carousel';
 import Banner1 from '../../assets/Images/banner1.png';
 import Banner2 from '../../assets/Images/banner2.png';
 import Banner3 from '../../assets/Images/banner3.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { onGetHomePageData } from '../../slices/storehomepage.slice';
+import { useEffect } from 'react';
 
 const CarouselWrapper = {
 	backgroundColor: '#ff0000',
 };
 
 const BannerImage = styled.img`
-	width:100%;
-	height:auto;
-`
+	width: 100%;
+	height: auto;
+`;
 const ProductsWrapper = styled.div`
 	width: 100%;
 	padding: 0 25px;
@@ -42,7 +45,7 @@ const SectionHeading = styled.p`
 const SeeMore = styled.p`
 	color: #5673e8;
 	font-size: 90%;
-	cursor:pointer;
+	cursor: pointer;
 `;
 
 export default function StoreHomePage(props) {
@@ -65,65 +68,40 @@ export default function StoreHomePage(props) {
 		slidesToSlide: 2,
 		swipeable: true,
 	};
+
+	const { homePageData } = useSelector((state) => state.homePageDataSlice);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		if (homePageData.length === 0) {
+			dispatch(onGetHomePageData());
+		}
+	}, []);
+
 	return (
 		<div>
 			<StoreHeader />
-			<ScrollToTop/>
+			<ScrollToTop />
 			<Carousel indicators={false}>
 				<BannerImage src={Banner1} />
 				<BannerImage src={Banner2} />
 				<BannerImage src={Banner3} />
 			</Carousel>
 			<ProductsWrapper>
-				<NewCategoryWrapper className="cards">
-					<SectionHeadWrapper>
-						<SectionHeading>New Products</SectionHeading>
-						<SeeMore>See more</SeeMore>
-					</SectionHeadWrapper>
-					<MultiCarousel {...MultiCarouselProps}>
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-					</MultiCarousel>
-				</NewCategoryWrapper>
-
-				<NewCategoryWrapper className="cards">
-					<SectionHeadWrapper>
-						<SectionHeading>Cloths</SectionHeading>
-						<SeeMore>See more</SeeMore>
-					</SectionHeadWrapper>
-					<MultiCarousel {...MultiCarouselProps}>
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-					</MultiCarousel>
-				</NewCategoryWrapper>
-
-				<NewCategoryWrapper className="cards">
-					<SectionHeadWrapper>
-						<SectionHeading>Electronics</SectionHeading>
-						<SeeMore>See more</SeeMore>
-					</SectionHeadWrapper>
-					<MultiCarousel {...MultiCarouselProps}>
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-					</MultiCarousel>
-				</NewCategoryWrapper>
+				{homePageData.map((each) => (
+					<NewCategoryWrapper className="cards">
+						<SectionHeadWrapper>
+							<SectionHeading>{each.name}</SectionHeading>
+							<SeeMore>See more</SeeMore>
+						</SectionHeadWrapper>
+						<MultiCarousel {...MultiCarouselProps}>
+							{each.Products.map((item) => (
+								<ProductCard key={item.id + item.name} data={item} />
+							))}
+						</MultiCarousel>
+					</NewCategoryWrapper>
+				))}
 			</ProductsWrapper>
-			<StoreFooter/>
+			<StoreFooter />
 		</div>
 	);
 }

@@ -1,41 +1,41 @@
-import styled from 'styled-components'
-import StoreHeader from '../../components/StoreHeader'
-import ProductCards from '../../components/ProductCard'
+import styled from 'styled-components';
+import StoreHeader from '../../components/StoreHeader';
+import ProductCards from '../../components/ProductCard';
 import StoreFooter from '../../components/StoreFooter';
 import { useLocation, useHistory } from 'react-router-dom';
 import Pagination from '@material-ui/lab/Pagination';
 
 const ContentWrapper = styled.div`
-  display:flex;
-  justify-content:space-between;
-  height:fit-content;
-  width:fit-content;
-  padding:15px 0;
-  margin:0 auto;
-`
+	display: flex;
+	justify-content: space-between;
+	height: fit-content;
+	width: fit-content;
+	padding: 15px 0;
+	margin: 0 auto;
+`;
 const FiltersWrapper = styled.div`
-  width:270px;
-  height:100%;
-  margin:0 5px;
-`
+	width: 270px;
+	height: 100%;
+	margin: 0 5px;
+`;
 const ProductsWrapper = styled.div`
 	width: 1060px;
 	height: 100%;
 	margin: 0 5px;
 `;
 
-const SectionHeading=styled.p`
-  font-size:130%;
-  color:#000;
-`
+const SectionHeading = styled.p`
+	font-size: 130%;
+	color: #000;
+`;
 const ProductCardWrapper = styled.div`
-  display:flex;
-  flex-wrap:wrap;
-  width:100%;
-  padding:10px 0;
-`
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	padding: 10px 0;
+`;
 
-export default function StoreCategoriesPage(props){
+export default function StoreCategoriesPage(props) {
 	const history = useHistory();
 	const location = useLocation();
 
@@ -47,7 +47,7 @@ export default function StoreCategoriesPage(props){
 	// Query data
 	const category = query.get('category');
 	const subCategory = query.get('subCategory');
-
+	console.log(category, subCategory);
 	return (
 		<>
 			<StoreHeader />

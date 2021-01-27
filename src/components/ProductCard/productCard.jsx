@@ -3,11 +3,13 @@ import Placeholder from '../../assets/Images/placeholder.jpg';
 import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import { useEffect } from 'react';
+import { baseImageURL } from '../../config/constants';
 
 const ImageWrapper = styled.div`
 	width: 100%;
 	height: 70%;
-	background-image: url(${Placeholder});
+	background-image: ${(props) => `url(${props.imageSrc})`};
 	background-position: center;
 	background-size: cover;
 	border-radius: 5px;
@@ -79,14 +81,17 @@ export default function ProductCard(props) {
 		history.push('/product');
 	};
 
+	const imageURL = `${baseImageURL}/${props?.data?.image}`;
+	// if (props.data) console.log(imageURL);
 	return (
 		<ProductCardWrapper margin={props.margin} onClick={sendToProductPage}>
-			<ImageWrapper />
+			{/* {props?.data?.image !== undefined ? <ImageWrapper imageSrc={imageURL} /> : <ImageWrapper />} */}
+			<ImageWrapper imageSrc={imageURL} />
 			<ProductNameWrapper>
-				<ProductName>A product name can be something very big like this</ProductName>
+				<ProductName>{props?.data?.name || 'A product name can be something very big like this'}</ProductName>
 			</ProductNameWrapper>
 
-			<ProductPrice>₹ 16,666</ProductPrice>
+			<ProductPrice>{'₹ ' + (props?.data?.price || '16,666')}</ProductPrice>
 
 			<ProductBrandWrapper>
 				<ProductBrand>Can be some Cool Brand</ProductBrand>
