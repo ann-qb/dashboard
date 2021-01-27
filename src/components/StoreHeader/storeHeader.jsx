@@ -177,6 +177,14 @@ const CategoryNameWrapper = styled.div`
 	justify-content: space-between;
 `;
 
+const CategoryLink = styled.p`
+	font-size: 110%;
+	cursor: pointer;
+	&:hover {
+		color: #5673e8;
+	}
+`;
+
 const SubCategoryLink = styled.p`
 	margin-left: 10px;
 	padding: 5px 0;
@@ -201,17 +209,27 @@ function DrawerData(props) {
 
 	return (
 		<DrawerDataWrapper>
-			<CategoryNameWrapper>
-				<p style={{ fontSize: '110%' }}>{props.data.name}</p>
-				<IconButton aria-label="expand row" size="small" onClick={openSubCategoryCollapsible}>
-					{drawerSubCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-				</IconButton>
-			</CategoryNameWrapper>
-			<Collapse in={drawerSubCategoryOpen} timeout="auto" unmountOnExit>
-				{props.data.Subcategories.map((each) => (
-					<SubCategoryLink onClick={redirectToCategoriesPage}>{each.name}</SubCategoryLink>
-				))}
-			</Collapse>
+			{props.data.Subcategories.length === 0 ? (
+				<CategoryNameWrapper>
+					<CategoryLink onClick={redirectToCategoriesPage}>
+						{props.data.name}
+					</CategoryLink>
+				</CategoryNameWrapper>
+			) : (
+				<>
+					<CategoryNameWrapper>
+						<p style={{ fontSize: '110%' }}>{props.data.name}</p>
+						<IconButton aria-label="expand row" size="small" onClick={openSubCategoryCollapsible}>
+							{drawerSubCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+						</IconButton>
+					</CategoryNameWrapper>
+					<Collapse in={drawerSubCategoryOpen} timeout="auto" unmountOnExit>
+						{props.data.Subcategories.map((each) => (
+							<SubCategoryLink onClick={redirectToCategoriesPage}>{each.name}</SubCategoryLink>
+						))}
+					</Collapse>
+				</>
+			)}
 		</DrawerDataWrapper>
 	);
 }
@@ -330,24 +348,28 @@ export default function StoreHeader(props) {
 					</Drawer>
 				</CategoryLinkWrapper>
 
-				{categoryList.map((category) => {
-					let colorOfLink 
-					subCategoryDropdownOpen.open && subCategoryDropdownOpen.id === category.name ? colorOfLink='#5673E8':colorOfLink='#000'
-					return (
-						<CategoryLinkWrapper key={category.id}>
-							<CategoryLinks
-								style={{color:colorOfLink}}
-								id={category.name}
-								onMouseEnter={(e) => (category.Subcategories.length === 0 ? null : openSubCategoryDropdown(e))}
-							>
-								{category.name}
-							</CategoryLinks>
-							{subCategoryDropdownOpen.open && subCategoryDropdownOpen.id === category.name ? (
-								<SubCategoryDropdown subCategoryData={subCategoryData} />
-							) : null}
-						</CategoryLinkWrapper>
-					);
-				})}
+				{categoryList
+					.filter((category) => category.Subcategories.length !== 0)
+					.map((category) => {
+						let colorOfLink;
+						subCategoryDropdownOpen.open && subCategoryDropdownOpen.id === category.name
+							? (colorOfLink = '#5673E8')
+							: (colorOfLink = '#000');
+						return (
+							<CategoryLinkWrapper key={category.id}>
+								<CategoryLinks
+									style={{ color: colorOfLink }}
+									id={category.name}
+									onMouseEnter={(e) => (category.Subcategories.length === 0 ? null : openSubCategoryDropdown(e))}
+								>
+									{category.name}
+								</CategoryLinks>
+								{subCategoryDropdownOpen.open && subCategoryDropdownOpen.id === category.name ? (
+									<SubCategoryDropdown subCategoryData={subCategoryData} />
+								) : null}
+							</CategoryLinkWrapper>
+						);
+					})}
 			</BottomNavigation>
 		</>
 	);

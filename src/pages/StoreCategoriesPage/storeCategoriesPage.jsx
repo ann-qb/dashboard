@@ -46,8 +46,8 @@ export default function StoreCategoriesPage(props) {
 
 	// Query data
 	const category = query.get('category');
-	const subCategory = query.get('subCategory');
-	console.log(category, subCategory);
+	let subCategory = query.get('subCategory');
+	if (category === subCategory) subCategory = null;
 	return (
 		<>
 			<StoreHeader />
@@ -56,10 +56,17 @@ export default function StoreCategoriesPage(props) {
 					<SectionHeading>Filters</SectionHeading>
 				</FiltersWrapper>
 				<ProductsWrapper className="cards">
-					<p style={{ marginBottom: '15px' }}>
-						<span>{category}</span> / <span>{subCategory}</span>
-					</p>
-					<SectionHeading>{subCategory}</SectionHeading>
+					{subCategory ? (
+						<>
+							<p style={{ marginBottom: '15px' }}>
+								<span>{category}</span> / <span>{subCategory}</span>
+							</p>
+							<SectionHeading>{subCategory}</SectionHeading>
+						</>
+					) : (
+						<SectionHeading>{category}</SectionHeading>
+					)}
+
 					<ProductCardWrapper>
 						<ProductCards margin="5px 5px" />
 						<ProductCards margin="5px 5px" />
