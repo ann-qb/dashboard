@@ -1,17 +1,19 @@
 import styled from 'styled-components';
-import {useState} from 'react'
+import { useState } from 'react';
 import Placeholder from '../../assets/Images/placeholder.jpg';
 import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteConfirmPopup from '../../components/Popups/DeleteConfirmPopup';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import { useEffect } from 'react';
+import { baseImageURL } from '../../config/constants';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 
 const ImageWrapper = styled.div`
 	width: 100%;
 	height: 70%;
-	background-image: url(${Placeholder});
+	background-image: ${(props) => `url(${props.imageSrc})`};
 	background-position: center;
 	background-size: cover;
 	border-radius: 5px;
@@ -34,7 +36,7 @@ const ProductCardWrapper = styled.div`
 	// text-align: center;
 	border: 1px solid #eee;
 	border-radius: 5px;
-	
+
 	background-color: #fff;
 	overflow: hidden;
 
@@ -47,7 +49,6 @@ const ProductCardWrapper = styled.div`
 		transition: all 0.2s ease;
 	}
 `;
-
 
 const ProductNameWrapper = styled.div`
 	width: 100%;
@@ -81,10 +82,10 @@ const ProductBrand = styled.p`
 const ExploreMore = styled.p`
 	padding: 5px 15px;
 	font-size: 90%;
-	margin-top:10px;
+	margin-top: 10px;
 	background-color: #eee;
 	color: #5673e8;
-	cursor:pointer;
+	cursor: pointer;
 `;
 
 export default function ProductCard(props) {
@@ -92,36 +93,38 @@ export default function ProductCard(props) {
 	const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
 
 	const sendToProductPage = (e) => {
-		console.log(e.target.id)
+		console.log(e.target.id);
 		history.push('/product');
 	};
-
-	const sendToEditProductsPage =()=>{
+	const sendToEditProductsPage = () => {
 		history.push('/addProducts');
-	}
+	};
 
-	const askForDeleteConfirmation=()=>{
+	const askForDeleteConfirmation = () => {
 		setDeletePopupIsOpen(true);
-	}
+	};
 
 	const closeDeleteModal = () => {
 		setDeletePopupIsOpen(false);
 	};
 
-	const onDeleteConfirmation=()=>{
+	const onDeleteConfirmation = () => {
 		setDeletePopupIsOpen(false);
-		alert('Deleted')
-	}
+		alert('Deleted');
+	};
+	const imageURL = `${baseImageURL}/${props?.data?.image}`;
+	// if (props.data) console.log(imageURL);
 
 	return (
 		<ProductCardWrapper margin={props.margin}>
 			<Clickable onClick={sendToProductPage}>
-				<ImageWrapper />
+				{/* {props?.data?.image !== undefined ? <ImageWrapper imageSrc={imageURL} /> : <ImageWrapper />} */}
+				<ImageWrapper imageSrc={imageURL} />
 				<ProductNameWrapper>
-					<ProductName>A product name can be something very big like this</ProductName>
+					<ProductName>{props?.data?.name || 'A product name can be something very big like this'}</ProductName>
 				</ProductNameWrapper>
 
-				<ProductPrice>₹ 16,666</ProductPrice>
+				<ProductPrice>{'₹ ' + (props?.data?.price || '16,666')}</ProductPrice>
 
 				<ProductBrandWrapper>
 					<ProductBrand>Can be some Cool Brand</ProductBrand>
