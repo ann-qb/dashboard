@@ -403,7 +403,7 @@ export default function AddProducts(props) {
 						<ImagePlaceHolder>
 							{picture.map((each) => {
 								const tt = URL.createObjectURL(each);
-								return <img src={tt} alt="preview" />;
+								return <img style={{width:'90%',height:'auto'}} src={tt} alt="preview" />;
 							})}
 						</ImagePlaceHolder>
 					) : (
