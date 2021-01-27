@@ -20,8 +20,9 @@ const BannerImage = styled.img`
 	height:auto;
 `
 const ProductsWrapper = styled.div`
-	width: 100%;
+	width: 1340px;
 	padding: 0 25px;
+	margin:0 auto;
 `;
 const NewCategoryWrapper = styled.div`
 	width: 100%;
