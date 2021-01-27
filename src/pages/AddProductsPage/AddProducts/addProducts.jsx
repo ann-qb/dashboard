@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { onAddProduct } from '../../../slices/productlist.slice';
 
@@ -88,6 +89,7 @@ export default function AddProducts(props) {
 	const { categoryList } = useSelector((state) => state.categoryListSlice);
 	const classes = useStyle();
 	const dispatch = useDispatch();
+	const history = useHistory()
 
 	const [productName, setProductName] = useState('');
 	const [price, setPrice] = useState('');
@@ -198,6 +200,10 @@ export default function AddProducts(props) {
 			dispatch(onAddProduct(formData));
 		}
 	};
+
+	const returnToProductListingPage =()=>{
+		history.push('/productListing');
+	}
 
 	return (
 		<PageContainer>
@@ -352,11 +358,11 @@ export default function AddProducts(props) {
 					</MainGroup>
 
 					<ButtonGroup>
-						<Button className={classes.leftButton} variant="outlined" color="primary">
-							Cancel
+						<Button className={classes.leftButton} variant="outlined" color="primary" onClick={returnToProductListingPage}>
+							Back to listing
 						</Button>
 						<Button variant="contained" color="primary" disableElevation onClick={addProductValidate}>
-							Submit
+							Submit product
 						</Button>
 					</ButtonGroup>
 				</Form>

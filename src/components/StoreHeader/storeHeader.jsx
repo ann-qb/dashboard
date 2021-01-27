@@ -274,12 +274,13 @@ export default function StoreHeader(props) {
 		const clickedDiv = e.target.closest('div');
 		if (clickedDiv.id === 'dashboard') {
 			history.push('/dashboard');
-		}
-		else if (clickedDiv.id === 'users') {
+		} else if (clickedDiv.id === 'users') {
 			history.push('/users');
 		} else if (clickedDiv.id === 'logOut') {
 			dispatch(onLogout());
-		}
+		} else if (clickedDiv.id === 'profile') {
+			history.push('/profile');
+		} 
 	};
 
 	// For All category drawer

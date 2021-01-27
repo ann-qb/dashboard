@@ -1,8 +1,12 @@
 import styled from 'styled-components';
+import {useState} from 'react'
 import Placeholder from '../../assets/Images/placeholder.jpg';
 import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
+import DeleteConfirmPopup from '../../components/Popups/DeleteConfirmPopup';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 
 const ImageWrapper = styled.div`
 	width: 100%;
@@ -17,6 +21,11 @@ const HiddenIcons = styled.div`
 	align-item: center;
 	width: 100%;
 `;
+const Clickable = styled.div`
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+`;
 const ProductCardWrapper = styled.div`
 	height: 290px;
 	width: 250px;
@@ -25,10 +34,12 @@ const ProductCardWrapper = styled.div`
 	// text-align: center;
 	border: 1px solid #eee;
 	border-radius: 5px;
-	cursor: pointer;
+	
+	background-color: #fff;
+	overflow: hidden;
 
-	&:hover ${ImageWrapper} {
-		height: 60%;
+	&:hover ${Clickable} {
+		height: 85%;
 		transition: all 0.2s ease;
 	}
 	&:hover ${HiddenIcons} {
@@ -36,6 +47,8 @@ const ProductCardWrapper = styled.div`
 		transition: all 0.2s ease;
 	}
 `;
+
+
 const ProductNameWrapper = styled.div`
 	width: 100%;
 	max-height: 20px;
@@ -68,32 +81,72 @@ const ProductBrand = styled.p`
 const ExploreMore = styled.p`
 	padding: 5px 15px;
 	font-size: 90%;
+	margin-top:10px;
 	background-color: #eee;
 	color: #5673e8;
+	cursor:pointer;
 `;
 
 export default function ProductCard(props) {
 	const history = useHistory();
+	const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
 
-	const sendToProductPage = () => {
+	const sendToProductPage = (e) => {
+		console.log(e.target.id)
 		history.push('/product');
 	};
 
+	const sendToEditProductsPage =()=>{
+		history.push('/addProducts');
+	}
+
+	const askForDeleteConfirmation=()=>{
+		setDeletePopupIsOpen(true);
+	}
+
+	const closeDeleteModal = () => {
+		setDeletePopupIsOpen(false);
+	};
+
+	const onDeleteConfirmation=()=>{
+		setDeletePopupIsOpen(false);
+		alert('Deleted')
+	}
+
 	return (
-		<ProductCardWrapper margin={props.margin} onClick={sendToProductPage}>
-			<ImageWrapper />
-			<ProductNameWrapper>
-				<ProductName>A product name can be something very big like this</ProductName>
-			</ProductNameWrapper>
+		<ProductCardWrapper margin={props.margin}>
+			<Clickable onClick={sendToProductPage}>
+				<ImageWrapper />
+				<ProductNameWrapper>
+					<ProductName>A product name can be something very big like this</ProductName>
+				</ProductNameWrapper>
 
-			<ProductPrice>₹ 16,666</ProductPrice>
+				<ProductPrice>₹ 16,666</ProductPrice>
 
-			<ProductBrandWrapper>
-				<ProductBrand>Can be some Cool Brand</ProductBrand>
-			</ProductBrandWrapper>
+				<ProductBrandWrapper>
+					<ProductBrand>Can be some Cool Brand</ProductBrand>
+				</ProductBrandWrapper>
+			</Clickable>
 			<HiddenIcons>
-				<ExploreMore>Explore More...</ExploreMore>
+				{props.editable ? (
+					<>
+						<IconButton onClick={sendToEditProductsPage} id="edit_product">
+							<CreateOutlinedIcon fontSize="small" />
+						</IconButton>
+						<IconButton onClick={askForDeleteConfirmation}>
+							<DeleteOutlineOutlinedIcon fontSize="small" />
+						</IconButton>
+					</>
+				) : (
+					<ExploreMore onClick={sendToProductPage}>Explore More...</ExploreMore>
+				)}
 			</HiddenIcons>
+
+			<DeleteConfirmPopup
+				isOpen={deletePopupIsOpen}
+				onRequestClose={closeDeleteModal}
+				onDelete={onDeleteConfirmation}
+			/>
 		</ProductCardWrapper>
 	);
 }

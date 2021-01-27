@@ -97,7 +97,7 @@ export default function UserPage(props) {
 					? userList
 							.filter(
 								(each) =>
-									each.Role.name !== 'admin' &&
+									(!each.Role || each.Role.name !== 'admin') &&
 									(each.firstname.toLowerCase().includes(props.searchValue.toLowerCase()) ||
 										each.lastname.toLowerCase().includes(props.searchValue.toLowerCase()))
 							)

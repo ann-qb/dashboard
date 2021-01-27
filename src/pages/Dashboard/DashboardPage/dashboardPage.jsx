@@ -40,9 +40,12 @@ export default function UserPage() {
 	const [pendingUsers, setPendingUsers] = useState(0);
 	const [inactiveUsers, setInactiveUsers] = useState(0);
 	useEffect(() => {
-		setTotalUsers(userList.filter((each) => each.Role.name !== 'admin').length);
+		setTotalUsers(userList.filter((each) => (each.Role.name !== 'admin' || !each.Role)).length);
 		setActiveUsers(
-			userList.reduce((acc, item) => (item.status === 'active' && item.Role.name !== 'admin' ? acc + 1 : acc), 0)
+			userList.reduce(
+				(acc, item) => (item.status === 'active' && (item.Role.name !== 'admin' || !item.Role) ? acc + 1 : acc),
+				0
+			)
 		);
 		setPendingUsers(userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0));
 		setInactiveUsers(userList.reduce((acc, item) => (item.status === 'inactive' ? acc + 1 : acc), 0));

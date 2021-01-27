@@ -88,7 +88,7 @@ export default function SideNavigation(props) {
 		if (clickedDiv.id === 'dashboard') history.push('/dashboard');
 		else if (clickedDiv.id === 'users') history.push('/users');
 		else if (clickedDiv.id === 'categories') history.push('/categories');
-		else if (clickedDiv.id === 'add_products') history.push('/addProducts');
+		else if (clickedDiv.id === 'add_products') history.push('/productListing');
 		else if (clickedDiv.id === 'store') history.push('/store');
 	};
 
@@ -101,17 +101,17 @@ export default function SideNavigation(props) {
 			<div style={{ marginLeft: '10px' }}>
 				<SubTittles className="navigationText">MENU</SubTittles>
 
+				<NavLinksDiv id="store" className="navLinks activeNavLink" onClick={changePageRoute}>
+					<StoreMallDirectoryOutlinedIcon className={classes.icons} />
+					<p className="navigationText">Store</p>
+				</NavLinksDiv>
+
 				<ShowIfAuth allowedRoles={['admin']}>
-					<NavLinksDiv id="dashboard" className="navLinks activeNavLink" onClick={changePageRoute}>
+					<NavLinksDiv id="dashboard" className="navLinks" onClick={changePageRoute}>
 						<DashboardOutlinedIcon className={classes.icons} />
 						<p className="navigationText">Dashboard</p>
 					</NavLinksDiv>
 				</ShowIfAuth>
-
-				<NavLinksDiv id="store" className="navLinks" onClick={changePageRoute}>
-					<StoreMallDirectoryOutlinedIcon className={classes.icons} />
-					<p className="navigationText">Store</p>
-				</NavLinksDiv>
 
 				<NavLinksDiv id="users" className="navLinks" onClick={changePageRoute}>
 					<PeopleAltOutlinedIcon className={classes.icons} />
