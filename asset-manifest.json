@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/dashboard/static/css/main.2e7919c8.chunk.css",
-    "main.js": "/dashboard/static/js/main.80fe2916.chunk.js",
-    "main.js.map": "/dashboard/static/js/main.80fe2916.chunk.js.map",
-    "runtime-main.js": "/dashboard/static/js/runtime-main.a635eca5.js",
-    "runtime-main.js.map": "/dashboard/static/js/runtime-main.a635eca5.js.map",
+    "main.js": "/dashboard/static/js/main.8af68d33.chunk.js",
+    "main.js.map": "/dashboard/static/js/main.8af68d33.chunk.js.map",
+    "runtime-main.js": "/dashboard/static/js/runtime-main.71573d52.js",
+    "runtime-main.js.map": "/dashboard/static/js/runtime-main.71573d52.js.map",
     "static/css/2.f64b6e61.chunk.css": "/dashboard/static/css/2.f64b6e61.chunk.css",
-    "static/js/2.8b4cea68.chunk.js": "/dashboard/static/js/2.8b4cea68.chunk.js",
-    "static/js/2.8b4cea68.chunk.js.map": "/dashboard/static/js/2.8b4cea68.chunk.js.map",
-    "static/js/3.38975b5f.chunk.js": "/dashboard/static/js/3.38975b5f.chunk.js",
-    "static/js/3.38975b5f.chunk.js.map": "/dashboard/static/js/3.38975b5f.chunk.js.map",
+    "static/js/2.70272b1a.chunk.js": "/dashboard/static/js/2.70272b1a.chunk.js",
+    "static/js/2.70272b1a.chunk.js.map": "/dashboard/static/js/2.70272b1a.chunk.js.map",
+    "static/js/3.5912bb2d.chunk.js": "/dashboard/static/js/3.5912bb2d.chunk.js",
+    "static/js/3.5912bb2d.chunk.js.map": "/dashboard/static/js/3.5912bb2d.chunk.js.map",
     "index.html": "/dashboard/index.html",
     "static/css/2.f64b6e61.chunk.css.map": "/dashboard/static/css/2.f64b6e61.chunk.css.map",
     "static/css/main.2e7919c8.chunk.css.map": "/dashboard/static/css/main.2e7919c8.chunk.css.map",
-    "static/js/2.8b4cea68.chunk.js.LICENSE.txt": "/dashboard/static/js/2.8b4cea68.chunk.js.LICENSE.txt",
+    "static/js/2.70272b1a.chunk.js.LICENSE.txt": "/dashboard/static/js/2.70272b1a.chunk.js.LICENSE.txt",
     "static/media/404.f9067e05.png": "/dashboard/static/media/404.f9067e05.png",
     "static/media/UploadIcon.svg": "/dashboard/static/media/UploadIcon.469126df.svg",
     "static/media/backdrop.856023d3.png": "/dashboard/static/media/backdrop.856023d3.png",
@@ -30,10 +30,10 @@
     "static/media/unknown_error.13cc2e4b.png": "/dashboard/static/media/unknown_error.13cc2e4b.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.a635eca5.js",
+    "static/js/runtime-main.71573d52.js",
     "static/css/2.f64b6e61.chunk.css",
-    "static/js/2.8b4cea68.chunk.js",
+    "static/js/2.70272b1a.chunk.js",
     "static/css/main.2e7919c8.chunk.css",
-    "static/js/main.80fe2916.chunk.js"
+    "static/js/main.8af68d33.chunk.js"
   ]
 }
