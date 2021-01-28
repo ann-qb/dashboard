@@ -50,11 +50,7 @@ export default function DeleteModal(props) {
 			</TextWrapper>
 			<ButtonWrapper>
 				{props.onDelete ? (
-					<button
-						style={{ marginRight: '10px' }}
-						className="button-danger"
-						onClick={props.onDelete}
-					>
+					<button style={{ marginRight: '10px' }} className="button-danger" onClick={props.onDelete}>
 						Delete
 					</button>
 				) : (

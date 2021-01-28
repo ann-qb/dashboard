@@ -135,13 +135,6 @@ export default function Login() {
 		// displayForgotPasswordMessage();
 	};
 
-	// const displayForgotPasswordMessage = () => {
-	// 	setMessage('A link to reset the password has been sent to your registered email id');
-	// 	setShowUsername(false);
-	// 	setShowPassword(false);
-	// 	setDisplayMessage(true);
-	// };
-
 	const takeBackToLoginFromDisplayMessage = () => {
 		setMessage('');
 		setUserName('');

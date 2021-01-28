@@ -39,7 +39,6 @@ const HeaderTab = styled.div`
 	width: 25%;
 `;
 
-
 export default function UserPage(props) {
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
@@ -48,7 +47,6 @@ export default function UserPage(props) {
 	const [showLoading, setShowLoading] = useState(false);
 
 	const { userList, status } = useSelector((state) => state.userListSlice);
-	// const { loggedUser } = useSelector((state) => state.loginSlice);
 	const dispatch = useDispatch();
 
 	useEffect(() => dispatch(onGetUserList()), []);
@@ -59,7 +57,6 @@ export default function UserPage(props) {
 		} else if (status === 'loading user list over') {
 			setShowLoading(false);
 		}
-		// status === 'loading' ? setShowPopupLoading(true) : setShowPopupLoading(false);
 	}, [status]);
 
 	useEffect(() => {
@@ -85,10 +82,6 @@ export default function UserPage(props) {
 			showAlertPopup();
 		}
 	}, [status]);
-
-	// const createCards = () => {
-	// 	return <> {!showLoading ? userList.map((each) => <UserCard key={each.id} data={each} />).reverse() : null}</>;
-	// };
 
 	const createCards = () => {
 		return (
@@ -117,7 +110,6 @@ export default function UserPage(props) {
 
 	const showAlertPopup = () => {
 		setAlertDisplay(true);
-		// setAddUserPopup(false);
 	};
 
 	// Additional function to be written wherever AlertPopup component is used
@@ -185,8 +177,3 @@ const StyledBarLoader = css`
 	margin: 0 auto;
 	width: 100%;
 `;
-/**
-position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%); */

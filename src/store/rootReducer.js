@@ -7,10 +7,10 @@ import storeProductListingSlice from './../slices/storeproductlisting.slice';
 import { combineReducers } from '@reduxjs/toolkit';
 
 export default combineReducers({
-    loginSlice,
-    userListSlice,
-    categoryListSlice,
-    productListSlice,
-    homePageDataSlice,
-    storeProductListingSlice,
+	loginSlice,
+	userListSlice,
+	categoryListSlice,
+	productListSlice,
+	homePageDataSlice,
+	storeProductListingSlice,
 });

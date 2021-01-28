@@ -5,7 +5,6 @@ import MultiCarousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import ScrollToTop from '../../components/ScrollToTop';
 import StoreFooter from '../../components/StoreFooter';
-// import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 import Carousel from 'react-material-ui-carousel';
 import Banner1 from '../../assets/Images/banner1.png';
 import Banner2 from '../../assets/Images/banner2.png';
@@ -14,10 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { onGetHomePageData } from '../../slices/storehomepage.slice';
 import { useEffect } from 'react';
 
-const CarouselWrapper = {
-	backgroundColor: '#ff0000',
-};
-
 const BannerImage = styled.img`
 	width: 100%;
 	height: auto;
@@ -25,7 +20,7 @@ const BannerImage = styled.img`
 const ProductsWrapper = styled.div`
 	width: 1340px;
 	padding: 0 25px;
-	margin:0 auto;
+	margin: 0 auto;
 `;
 const NewCategoryWrapper = styled.div`
 	width: 100%;
@@ -89,7 +84,7 @@ export default function StoreHomePage(props) {
 			</Carousel>
 			<ProductsWrapper>
 				{homePageData.map((each) => (
-					<NewCategoryWrapper className="cards" key={each.id+each.name}>
+					<NewCategoryWrapper className="cards" key={each.id + each.name}>
 						<SectionHeadWrapper>
 							<SectionHeading>{each.name}</SectionHeading>
 							<SeeMore>See more</SeeMore>

@@ -160,10 +160,6 @@ export default function ProfilePage() {
 							<p>Email</p>
 						</DetailsLabel>
 						<DetailsText style={{ textTransform: 'none' }}>{loggedUser.email}</DetailsText>
-
-						{/* Kinda redundant - pending and inactive users can't see it
-						Admins won't edit it for themselves
-						Users can't edit it */}
 						<DetailsLabel>
 							<p>Mobile</p>
 						</DetailsLabel>

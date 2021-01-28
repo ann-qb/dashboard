@@ -1,6 +1,6 @@
-import Header from '../../../components/Header'
-import Profile from '../Profile'
-import styled from 'styled-components'
+import Header from '../../../components/Header';
+import Profile from '../Profile';
+import styled from 'styled-components';
 
 const ContentContainer = styled.div`
 	width: 100%;
@@ -8,8 +8,8 @@ const ContentContainer = styled.div`
 export default function Content() {
 	return (
 		<ContentContainer>
-			<Header />		
-			<Profile/>
+			<Header />
+			<Profile />
 		</ContentContainer>
 	);
 }

@@ -3,8 +3,7 @@ export const onRequest = (config) => {
 	if (token) {
 		config.headers['Authorization'] = 'Bearer ' + token;
 	}
-    // config.headers['Content-Type'] = 'application/json';
-    console.log(config);
+	console.log(config);
 	return config;
 };
 

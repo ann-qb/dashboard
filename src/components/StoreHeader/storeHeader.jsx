@@ -118,55 +118,6 @@ const CategoryLinks = styled.p`
 	}
 `;
 
-// Mock data for categories and sub-categories
-const DATA_CATEGORIES = [
-	{
-		name: 'Cloths',
-		id: 1,
-		subCategories: [
-			{ name: 'Shirts', id: 1 },
-			{ name: 'Pants', id: 2 },
-			{ name: 'Ladies wear', id: 3 },
-			{ name: 'Kids', id: 4 },
-		],
-	},
-	{
-		name: 'Food',
-		id: 2,
-		subCategories: [
-			{ name: 'Bakery', id: 1 },
-			{ name: 'Fried', id: 2 },
-			{ name: 'Ice creams', id: 3 },
-		],
-	},
-	{
-		name: 'Medicine',
-		id: 3,
-		subCategories: [
-			{ name: 'First Aid', id: 1 },
-			{ name: 'Anti Inflammatory', id: 2 },
-			{ name: 'Neelakoduveli', id: 3 },
-			{ name: 'Himalayan poopoo', id: 4 },
-		],
-	},
-	{
-		name: 'Electronics',
-		id: 4,
-		subCategories: [
-			{ name: 'Watch', id: 1 },
-			{ name: 'Laptops', id: 2 },
-			{ name: 'Mobiles', id: 3 },
-			{ name: 'Iron Box', id: 4 },
-			{ name: 'Toilet paper', id: 5 },
-		],
-	},
-	{
-		name: 'Stationary',
-		id: 5,
-		subCategories: [{ name: 'Glitter Paper', id: 1 }],
-	},
-];
-
 const DrawerDataWrapper = styled.div`
 	width: 300px;
 	// height: 100%;
@@ -211,9 +162,7 @@ function DrawerData(props) {
 		<DrawerDataWrapper>
 			{props.data.Subcategories.length === 0 ? (
 				<CategoryNameWrapper>
-					<CategoryLink onClick={redirectToCategoriesPage}>
-						{props.data.name}
-					</CategoryLink>
+					<CategoryLink onClick={redirectToCategoriesPage}>{props.data.name}</CategoryLink>
 				</CategoryNameWrapper>
 			) : (
 				<>
@@ -259,13 +208,12 @@ export default function StoreHeader(props) {
 	useEffect(() => {
 		try {
 			const productsInCart = JSON.parse(localStorage.getItem('productsInCart'));
-			console.log(productsInCart)
-			if(loggedUser.email === productsInCart.user){
+			console.log(productsInCart);
+			if (loggedUser.email === productsInCart.user) {
 				setProductsInCart(productsInCart.numberOfProducts);
-			}else{
+			} else {
 				setProductsInCart(null);
 			}
-			
 		} catch {
 			setProductsInCart(null);
 		}
@@ -281,16 +229,8 @@ export default function StoreHeader(props) {
 		const selectedCategory = categoryList.find((category) => category.name === e.target.id);
 		setSubCategoryData({ category: selectedCategory.name, subCategories: selectedCategory.Subcategories });
 		setSubCategoryDropdownOpen({ open: true, id: e.target.id });
-		// console.log(document.querySelector(`#${e.target.id}`));
-		// document.querySelector(`#${e.target.id}`).style.color="blue";
 	};
 	const closeSubCategoryDropdown = () => {
-		// try{
-		// 	document.querySelector(`#${subCategoryDropdownOpen.id}`).style.color = '#000';
-		// }
-		// catch{
-		// 	console.log("No such element exists, yet")
-		// }
 		setSubCategoryData({ category: '', subCategories: [] });
 		setSubCategoryDropdownOpen({ open: false, id: null });
 	};

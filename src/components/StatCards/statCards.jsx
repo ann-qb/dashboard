@@ -1,27 +1,27 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-export default function StatCards(props){
-  let color,bgColor,text
-  if (props.type === 'users') {
+export default function StatCards(props) {
+	let color, bgColor, text;
+	if (props.type === 'users') {
 		color = '#5673E8';
-    bgColor = '#d6dcf9';
-    text="Users"
+		bgColor = '#d6dcf9';
+		text = 'Users';
 	} else if (props.type === 'active_users') {
 		color = '#34c38f';
-    bgColor = '#ccf0e8';
-    text = 'Active';
+		bgColor = '#ccf0e8';
+		text = 'Active';
 	} else if (props.type === 'pending_users') {
 		color = '#74788d';
-    bgColor = '#dcdde2';
-    text = 'Pending';
+		bgColor = '#dcdde2';
+		text = 'Pending';
 	} else if (props.type === 'inactive_users') {
 		color = '#f46a6a';
-    bgColor = '#fcdada';
-    text = 'Inactive';
-  }
+		bgColor = '#fcdada';
+		text = 'Inactive';
+	}
 
-  // Styles are dynamic, hence written inside function
-  const StatCard = styled.div`
+	// Styles are dynamic, hence written inside function
+	const StatCard = styled.div`
 		display: flex;
 		align-items: center;
 		width: 24%;
@@ -53,8 +53,8 @@ export default function StatCards(props){
 		font-weight: 500;
 		color: #000;
 	`;
-  
-  return (
+
+	return (
 		<StatCard className="cards">
 			<IconWrapper>
 				<ion-icon style={IconStyle} name="people-outline"></ion-icon>

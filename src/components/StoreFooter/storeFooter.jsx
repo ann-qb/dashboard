@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import Logo from '../../assets/Images/logo_white.png'
+import styled from 'styled-components';
+import Logo from '../../assets/Images/logo_white.png';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -19,35 +19,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FooterWrapper = styled.div`
-	bottom:0;
+	bottom: 0;
 	display: flex;
 	// justify-content: space-around;
 	align-items: center;
 	width: 100%;
 	min-height: 200px;
 	padding: 35px;
-  background-color: #24232a;
+	background-color: #24232a;
 `;
 const CopyrightWrapper = styled.div`
-  width:33%;
-  height:fit-content;
-`
-const CopyrightYear =styled.span`
-  font-weight:500;
-`
+	width: 33%;
+	height: fit-content;
+`;
+const CopyrightYear = styled.span`
+	font-weight: 500;
+`;
 const LogoWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-  justify-content: center;
-  align-items:center;
-  width: 33%;
-  
+	justify-content: center;
+	align-items: center;
+	width: 33%;
 `;
 const LogoImage = styled.img`
-  height:auto;
-  width:30%;
-  margin-bottom:20px;
-`
+	height: auto;
+	width: 30%;
+	margin-bottom: 20px;
+`;
 const IconWrapper = styled.div`
 	display: flex;
 	justify-content: flex-end;
@@ -55,12 +54,12 @@ const IconWrapper = styled.div`
 	width: 33%;
 `;
 const FooterText = styled.p`
-  color:#fcfcfc;
-`
+	color: #fcfcfc;
+`;
 
-export default function StoreFooter(props){
-  const classes = useStyles();
-  return (
+export default function StoreFooter(props) {
+	const classes = useStyles();
+	return (
 		<FooterWrapper>
 			<CopyrightWrapper>
 				<FooterText>

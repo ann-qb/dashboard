@@ -106,7 +106,7 @@ export default function Dropdown(props) {
 				return null;
 			}
 		} else {
-			if (isOpen && props.role !== 'admin'){
+			if (isOpen && props.role !== 'admin') {
 				return (
 					<DroppedContent>
 						<DroppedButtonWrapper id="profile" onClick={props.action}>
@@ -119,8 +119,7 @@ export default function Dropdown(props) {
 						</DroppedButtonWrapper>
 					</DroppedContent>
 				);
-			}
-			else if(isOpen){
+			} else if (isOpen) {
 				return (
 					<DroppedContent>
 						<DroppedButtonWrapper id="logOut" onClick={props.action}>
@@ -129,9 +128,8 @@ export default function Dropdown(props) {
 						</DroppedButtonWrapper>
 					</DroppedContent>
 				);
-			}
-			else{
-				return(null)
+			} else {
+				return null;
 			}
 		}
 	};
@@ -142,7 +140,7 @@ export default function Dropdown(props) {
 				<DropdownHeadText>{props.menuHeader}</DropdownHeadText>
 				{isOpen ? <ion-icon name="chevron-up-outline"></ion-icon> : <ion-icon name="chevron-down-outline"></ion-icon>}
 			</HeaderWrapper>
-			<MenuItems/>
+			<MenuItems />
 		</DropdownWrapper>
 	);
 }

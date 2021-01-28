@@ -10,7 +10,7 @@ const ContentContainer = styled.div`
 `;
 export default function Content() {
 	const [searchValue, setSearchValue] = useState('');
-	
+
 	const handleSearchChange = (e) => {
 		setSearchValue(e.target.value);
 	};

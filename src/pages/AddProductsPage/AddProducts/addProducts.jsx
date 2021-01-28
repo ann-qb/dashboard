@@ -143,7 +143,6 @@ export default function AddProducts(props) {
 		}
 	}, [currentCategory]);
 
-	// const [trialError, setTrialError] = useState(true);
 	const [productNameError, setProductNameError] = useState(false);
 	const [priceError, setPriceError] = useState(false);
 	const [categoryError, setCategoryError] = useState(false);
@@ -292,17 +291,7 @@ export default function AddProducts(props) {
 								helperText={productNameError ? 'This is a required field' : ''}
 							/>
 						</ItemGroup>
-						{/* <ItemGroup>
-							<TextField
-								error={trialError}
-								helperText={trialError? "Field is empty":""}
-								className={classes.textField}
-								label="Brand"
-								variant="outlined"
-								color="#5673E8"
-								disabled
-							/>
-						</ItemGroup> */}
+
 						<ItemGroup>
 							<TextField
 								className={classes.textField}
@@ -319,20 +308,6 @@ export default function AddProducts(props) {
 							/>
 						</ItemGroup>
 					</MainGroup>
-					{/* <MainGroup>
-						<ItemGroup>
-							<TextField className={classes.textField} label="Price" variant="outlined" color="#5673E8" required />
-						</ItemGroup>
-						<ItemGroup>
-							<TextField
-								className={classes.textField}
-								label="Discount Percentage"
-								variant="outlined"
-								defaultValue="Small"
-								color="#5673E8"
-							/>
-						</ItemGroup>
-					</MainGroup> */}
 
 					<MainGroup>
 						<ItemGroup>
@@ -400,8 +375,6 @@ export default function AddProducts(props) {
 											{item.name}
 										</MenuItem>
 									))}
-									{/* <MenuItem value="Value 1">Value 1</MenuItem>
-									<MenuItem value="Value 2">Value 2</MenuItem> */}
 								</TextField>
 							</ItemGroup>
 						) : null}
@@ -478,11 +451,3 @@ export default function AddProducts(props) {
 		</PageContainer>
 	);
 }
-/**
- * const useStyle = makeStyles({
-	textField: {
-		width: '100%',
-		'&:hover': { width: '500px' },
-	},
-});<div style={{display:"flex",flexDirection:'column',alignItems:'center',justifyContents:'center'}}>
- */

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import DeleteConfirmPopup from '../../../../../components/Popups/DeleteConfirmPopup'
+import DeleteConfirmPopup from '../../../../../components/Popups/DeleteConfirmPopup';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
@@ -44,7 +44,6 @@ const SubCategoryText = styled.p`
 `;
 
 const SubCategoryInput = styled.input`
-	${'' /* border: none; */}
 	height: 100%;
 	padding: 8px;
 	margin-right: 15px;
@@ -99,7 +98,6 @@ export default function SubCategoryCard(props) {
 					})
 				);
 			}
-			// setEdit(false);
 		}
 	};
 
@@ -119,7 +117,6 @@ export default function SubCategoryCard(props) {
 				parentCategoryId: props.subcategory.category,
 			});
 		}
-		// setEdit(false);
 	};
 	const toggleEnableEditSubcategory = () => {
 		edit ? setEdit(false) : setEdit(true);

@@ -94,7 +94,6 @@ export default function Header(props) {
 		}
 	};
 
-
 	return (
 		<HeaderBar>
 			{props.page === 'error' ? (
@@ -117,6 +116,3 @@ export default function Header(props) {
 		</HeaderBar>
 	);
 }
-
-// <p>{props.userData.firstName}</p>
-// <ion-icon style={iconStyle} name="chevron-down-outline"></ion-icon>

@@ -67,7 +67,7 @@ const AddSubCategoryWrapper = styled.div`
 `;
 const Button = styled.button`
 	height: 100%;
-	padding:0 10px !important;
+	padding: 0 10px !important;
 `;
 
 const Input = styled.input`
@@ -168,7 +168,6 @@ export default function CategoryCard(props) {
 				category: editedCategory,
 				categoryId: props.category.id,
 			});
-			// setEdit(false);
 		}
 	};
 
@@ -182,7 +181,6 @@ export default function CategoryCard(props) {
 				})
 			);
 		}
-		// setEdit(false);
 	};
 
 	const toggleEnableEditCategory = () => {
@@ -190,17 +188,9 @@ export default function CategoryCard(props) {
 		setEditedCategory(props.category.name);
 	};
 
-	// const resetEditSubcategory = () => {
-	// 	setEditedSubcategory('');
-	// };
-
-	// const cancelEditSubcategory = () => {
-	// 	setEditedSubcategory(props.subcategory.name);
-	// };
-
-	const openDeleteConfirmationModal =()=>{
+	const openDeleteConfirmationModal = () => {
 		setDeletePopupIsOpen(true);
-	}
+	};
 
 	const deleteCategory = () => {
 		setDeletePopupIsOpen(false);
@@ -291,7 +281,6 @@ export default function CategoryCard(props) {
 					<Input
 						value={newSubCategory}
 						onChange={handleInputChange}
-						// onBlur={cancelAddNewSubCategory}
 						disabled={disableAddNewSubCategory}
 						placeholder="Add Sub Category"
 					/>
@@ -301,7 +290,7 @@ export default function CategoryCard(props) {
 						</div>
 					) : (
 						<Button disabled={disableAdd} className="button-primary" onClick={addNewSubCategory}>
-							<p style={{fontSize:'150%',fontWeight:'500'}}>+</p>
+							<p style={{ fontSize: '150%', fontWeight: '500' }}>+</p>
 						</Button>
 					)}
 				</AddSubCategoryWrapper>
