@@ -86,12 +86,7 @@ export default function StoreCategoriesPage(props) {
 						{productListing.map((each) => (
 							<ProductCards key={each.id + each.name} data={each} margin="5px 5px" />
 						))}
-						<ProductCards margin="5px 5px" />
-						<ProductCards margin="5px 5px" />
-						<ProductCards margin="5px 5px" />
-						<ProductCards margin="5px 5px" />
-						<ProductCards margin="5px 5px" />
-						<ProductCards margin="5px 5px" />
+						
 					</ProductCardWrapper>
 					<Pagination count={10} shape="rounded" />
 				</ProductsWrapper>
