@@ -93,7 +93,7 @@ export default function StoreProductPage(props) {
 	useEffect(() => {
 		const fetchProductDetails = async () => {
 			try {
-				const response = await fetch.get(`${baseURL}/product/${id}`);
+				const response = await fetch.get(`${baseURL}/product?id=${id}`);
 				console.log(response);
 				if (response.status === 200) {
 					setProductDetails(response.data.data);
