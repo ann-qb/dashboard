@@ -89,7 +89,7 @@ export const onEditProduct = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch // onGetProductList
 	try {
-		const response = await fetch.patch(`${baseURL}/product/${data.productId}`, data, {
+		const response = await fetch.patch(`${baseURL}/product/${data.productId}`, data.formData, {
 			headers: { 'Content-Type': 'multipart/form-data' },
 		});
 		console.log(response.data);

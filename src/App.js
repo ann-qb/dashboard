@@ -53,6 +53,9 @@ function App() {
 						<PrivateRoute path="/addProducts">
 							<AddProductsPage />
 						</PrivateRoute>
+						<PrivateRoute path="/editProducts">
+							<AddProductsPage />
+						</PrivateRoute>
 						<PrivateRoute path="/productListing">
 							<ProductListingPage />
 						</PrivateRoute>

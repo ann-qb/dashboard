@@ -9,6 +9,8 @@ import { useEffect } from 'react';
 import { baseImageURL } from '../../config/constants';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import { onDeleteProduct } from '../../slices/productlist.slice';
+import { useDispatch } from 'react-redux';
 
 const ImageWrapper = styled.div`
 	width: 100%;
@@ -91,13 +93,14 @@ const ExploreMore = styled.p`
 export default function ProductCard(props) {
 	const history = useHistory();
 	const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
+	const dispatch = useDispatch();
 
 	const sendToProductPage = (e) => {
 		console.log(e.target.id);
 		history.push(`/product/${props.data.id}`);
 	};
 	const sendToEditProductsPage = () => {
-		history.push('/addProducts');
+		history.push(`/editProducts?id=${props?.data?.id}`);
 	};
 
 	const askForDeleteConfirmation = () => {
@@ -109,6 +112,7 @@ export default function ProductCard(props) {
 	};
 
 	const onDeleteConfirmation = () => {
+		dispatch(onDeleteProduct({ productId: props?.data?.id }));
 		setDeletePopupIsOpen(false);
 		alert('Deleted');
 	};
@@ -118,7 +122,7 @@ export default function ProductCard(props) {
 	return (
 		<ProductCardWrapper margin={props.margin}>
 			<Clickable onClick={sendToProductPage}>
-				{/* {props?.data?.image !== undefined ? <ImageWrapper imageSrc={imageURL} /> : <ImageWrapper />} */}
+				
 				<ImageWrapper imageSrc={imageURL} />
 				<ProductNameWrapper>
 					<ProductName>{props?.data?.name || 'A product name can be something very big like this'}</ProductName>
@@ -133,8 +137,8 @@ export default function ProductCard(props) {
 			<HiddenIcons>
 				{props.editable ? (
 					<>
-						<IconButton onClick={sendToEditProductsPage} id="edit_product">
-							<CreateOutlinedIcon fontSize="small" />
+						<IconButton onClick={sendToEditProductsPage} >
+							<CreateOutlinedIcon fontSize="small" productId={props?.data?.id} />
 						</IconButton>
 						<IconButton onClick={askForDeleteConfirmation}>
 							<DeleteOutlineOutlinedIcon fontSize="small" />

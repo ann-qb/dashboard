@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import AlertPopup from '../../../components/Popups/AlertPopups'
+import AlertPopup from '../../../components/Popups/AlertPopups';
 import { useState } from 'react';
 import ImageUploader from 'react-images-upload';
 import TextField from '@material-ui/core/TextField';
@@ -7,9 +7,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { onAddProduct } from '../../../slices/productlist.slice';
+import { onAddProduct, onEditProduct } from '../../../slices/productlist.slice';
+import { baseImageURL } from '../../../config/constants';
+import { onGetCategoryList } from '../../../slices/categorylist.slice';
 
 const useStyle = makeStyles({
 	textField: {
@@ -101,7 +103,7 @@ export default function AddProducts(props) {
 	const [status, setStatus] = useState('active');
 	const [quantity, setQuantity] = useState('');
 	const [category, setCategory] = useState('');
-	const [currentCategory, setCurrentCategory] = useState({});
+	const [currentCategory, setCurrentCategory] = useState('');
 	const [currentCategoryHasSubcategory, setCurrentCategoryHasSubcategory] = useState(false);
 	const [subCategory, setSubCategory] = useState('');
 	const [description, setDescription] = useState('');
@@ -114,21 +116,31 @@ export default function AddProducts(props) {
 		}, 5000);
 	}
 
-	const showAlertPopup = (type,message)=>{
-		setAlertType(type)
-		setAlertMessage(message)
+	const showAlertPopup = (type, message) => {
+		setAlertType(type);
+		setAlertMessage(message);
 		setAlertDisplay(true);
-	}
+	};
 
 	useEffect(() => {
-		setCurrentCategory(categoryList.find((each) => each.name === category));
+		if (categoryList.length === 0) {
+			dispatch(onGetCategoryList());
+		}
+	}, []);
+
+	useEffect(() => {
+		const currentCategory = categoryList.find((each) => each.name === category);
+		if (currentCategory) {
+			setCurrentCategory(currentCategory);
+		}
 	}, [categoryList, category]);
 
 	useEffect(() => {
-		if (currentCategory !== {})
+		if (currentCategory !== '') {
 			currentCategory?.Subcategories?.length === 0
 				? setCurrentCategoryHasSubcategory(false)
 				: setCurrentCategoryHasSubcategory(true);
+		}
 	}, [currentCategory]);
 
 	// const [trialError, setTrialError] = useState(true);
@@ -186,7 +198,7 @@ export default function AddProducts(props) {
 			setDescriptionError(true);
 			valid = false;
 		}
-		if (picture.length === 0) {
+		if (picture.length === 0 && productToBeEditedImageURL === '') {
 			setPictureError(true);
 			valid = false;
 		}
@@ -209,20 +221,54 @@ export default function AddProducts(props) {
 				formData.append('subcategory', subCategory);
 			}
 			formData.append('description', description);
-			formData.append('avatar', picture[0]);
+			if (picture[0]) {
+				formData.append('avatar', picture[0]);
+			}
 
 			for (const v of formData.entries()) {
 				console.log(v);
 			}
-
-			dispatch(onAddProduct(formData));
-			showAlertPopup('success','Product added successfully')
+			if (productId) {
+				dispatch(onEditProduct({ productId, formData }));
+			} else {
+				dispatch(onAddProduct(formData));
+			}
+			showAlertPopup('success', 'Product added successfully');
 		}
 	};
 
+	const { productList } = useSelector((state) => state.productListSlice);
 	const returnToProductListingPage = () => {
 		history.push('/productListing');
 	};
+	const location = useLocation();
+	const useQuery = () => {
+		return new URLSearchParams(location.search);
+	};
+	const query = useQuery();
+	const productId = parseInt(query.get('id'));
+	const [productToBeEditedImageURL, setProductToBeEditedImageURL] = useState('');
+	useEffect(() => {
+		if (productId !== null) {
+			const productToBeEdited = productList.find((each) => each.id === productId);
+			console.log(productToBeEdited);
+			if (productToBeEdited) {
+				const category = categoryList.find((each) => each.id === productToBeEdited.category_id);
+				const subcategory = category.Subcategories.find((each) => each.id === productToBeEdited.subcategory_id);
+				const imageLocation = productToBeEdited.image;
+				setProductToBeEditedImageURL(`${baseImageURL}/${imageLocation}`);
+				setProductName(productToBeEdited.name);
+				setPrice(productToBeEdited.price);
+				setStatus(productToBeEdited.status);
+				setQuantity(productToBeEdited.quantity);
+				setCategory(category.name);
+				if (subcategory?.name) {
+					setSubCategory(subcategory.name);
+				}
+				setDescription(productToBeEdited.description);
+			}
+		}
+	}, [productId]);
 
 	return (
 		<PageContainer>
@@ -298,8 +344,7 @@ export default function AddProducts(props) {
 								onChange={handleStatusChange}
 								variant="outlined"
 								color="#5673E8"
-								required
-							>
+								required>
 								<MenuItem value="active">Active</MenuItem>
 								<MenuItem value="inactive">Inactive</MenuItem>
 							</TextField>
@@ -329,8 +374,7 @@ export default function AddProducts(props) {
 								color="#5673E8"
 								required
 								error={categoryError}
-								helperText={categoryError ? 'This is a required field' : ''}
-							>
+								helperText={categoryError ? 'This is a required field' : ''}>
 								{categoryList.map((item) => (
 									<MenuItem key={item.id} value={item.name}>
 										{item.name}
@@ -350,8 +394,7 @@ export default function AddProducts(props) {
 									color="#5673E8"
 									required
 									error={subcategoryError}
-									helperText={subcategoryError ? 'This is a required field' : ''}
-								>
+									helperText={subcategoryError ? 'This is a required field' : ''}>
 									{currentCategory?.Subcategories.map((item) => (
 										<MenuItem key={item.id} value={item.name}>
 											{item.name}
@@ -386,8 +429,7 @@ export default function AddProducts(props) {
 							className={classes.leftButton}
 							variant="outlined"
 							color="primary"
-							onClick={returnToProductListingPage}
-						>
+							onClick={returnToProductListingPage}>
 							Back to listing
 						</Button>
 						<Button variant="contained" color="primary" disableElevation onClick={addProductValidate}>
@@ -403,11 +445,19 @@ export default function AddProducts(props) {
 						<ImagePlaceHolder>
 							{picture.map((each) => {
 								const tt = URL.createObjectURL(each);
-								return <img style={{width:'90%',height:'auto'}} src={tt} alt="preview" />;
+								return <img style={{ width: '90%', height: 'auto' }} src={tt} alt="preview" />;
 							})}
 						</ImagePlaceHolder>
 					) : (
-						<ImagePlaceHolder />
+						<>
+							{productId ? (
+								<ImagePlaceHolder>
+									<img style={{ width: '90%', height: 'auto' }} src={productToBeEditedImageURL} alt="preview" />
+								</ImagePlaceHolder>
+							) : (
+								<ImagePlaceHolder />
+							)}
+						</>
 					)}
 
 					<ImageUploader
