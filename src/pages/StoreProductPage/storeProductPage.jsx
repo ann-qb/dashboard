@@ -10,7 +10,8 @@ import ShopOutlinedIcon from '@material-ui/icons/ShopOutlined';
 import StoreFooter from '../../components/StoreFooter';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from 'react-router-dom';
-import { baseURL } from '../../config/constants';
+import { baseImageURL, baseURL } from '../../config/constants';
+import fetch from './../../utils/axios';
 
 const useStyles = makeStyles(() => ({
 	button: {
@@ -117,22 +118,20 @@ export default function StoreProductPage(props) {
 		setProductToCart(newNumber);
 	};
 
+	const imageURL = `${baseImageURL}/${productDetails?.image}`;
 	return (
 		<div style={{ backgroundColor: '#fff', color: '#020001' }}>
 			<StoreHeader itemsInCart={productToCart} />
 			<ProductContentWrapper>
 				<ProductImageWrapper>
-					<ProductImage src={Placeholder} alt="Product Image" />
+					{productDetails?.image ? <ProductImage src={imageURL} alt="Product Image" /> : null}
 				</ProductImageWrapper>
 				<ProductDetailsWrapper>
-					<ProductTitle>{productDetails?.name || 'Product title'}</ProductTitle>
+					<ProductTitle>{productDetails?.name}</ProductTitle>
 					<ProductBrand>Product Brand</ProductBrand>
-					<ProductDescription>
-						{productDetails?.description ||
-							'Product Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus quibusdam pariatur optio molestias vitae beatae facilis reprehenderit illo quo. Laboriosam error dolorum delectus porro veritatis vero deserunt commodi, inventore hic.'}
-					</ProductDescription>
+					<ProductDescription>{productDetails?.description}</ProductDescription>
 					<ProductPrice>
-						Offer price: <PriceNumber>₹ {productDetails?.price || '16666'}</PriceNumber>
+						Offer price: <PriceNumber>₹ {productDetails?.price}</PriceNumber>
 					</ProductPrice>
 					<ProductStock>In Stock</ProductStock>
 					<ButtonBox>
