@@ -6,12 +6,12 @@ const DropDownWrapper = styled.div`
 	position: absolute;
 	top: 100%;
 	display: flex;
-	
+
 	width: fit-content;
 	height: fit-content;
 	padding: 15px;
 	margin: 0 auto;
-	border-top:1px solid #eee;
+	border-top: 1px solid #eee;
 `;
 const SubCategoryLink = styled.p`
 	margin-right: 20px;
@@ -24,11 +24,10 @@ const SubCategoryLink = styled.p`
 `;
 
 export default function SubCategoryDropdown(props) {
-  const history = useHistory()
-	// const category = props.categoryData;
+	const history = useHistory();
 	const redirectToCategoriesPage = (e) => {
-    const subCategory = e.target.innerHTML;
-    history.push(`/store-category?category=${props.subCategoryData.category}&subCategory=${subCategory}`);
+		const subCategory = e.target.innerHTML;
+		history.push(`/store-category?category=${props.subCategoryData.category}&subCategory=${subCategory}`);
 	};
 
 	return (

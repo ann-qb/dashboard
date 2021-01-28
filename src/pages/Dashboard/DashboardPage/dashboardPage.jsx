@@ -2,11 +2,9 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import ShowIfAuth from '../../../components/ShowIfAuth';
 import AlertPopup from '../../../components/Popups/AlertPopups';
-import EditPopup from '../../../components/Popups/EditPopup';
 import StatCard from '../../../components/StatCards';
 import { onGetUserList } from '../../../slices/userlist.slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { BounceLoader } from 'react-spinners';
 import { css } from '@emotion/react';
 
 /**---------------- Styles ------------------*/
@@ -40,7 +38,7 @@ export default function UserPage() {
 	const [pendingUsers, setPendingUsers] = useState(0);
 	const [inactiveUsers, setInactiveUsers] = useState(0);
 	useEffect(() => {
-		setTotalUsers(userList.filter((each) => (each.Role.name !== 'admin' || !each.Role)).length);
+		setTotalUsers(userList.filter((each) => each.Role.name !== 'admin' || !each.Role).length);
 		setActiveUsers(
 			userList.reduce(
 				(acc, item) => (item.status === 'active' && (item.Role.name !== 'admin' || !item.Role) ? acc + 1 : acc),
@@ -89,8 +87,3 @@ const StyledBarLoader = css`
 	margin: 0 auto;
 	width: 100%;
 `;
-/**
-position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%); */

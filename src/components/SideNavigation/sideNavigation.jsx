@@ -149,4 +149,3 @@ export default function SideNavigation(props) {
 		</NavBar>
 	);
 }
-//<ion-icon class="navIcons" style={iconStyle} name="people-outline"></ion-icon>

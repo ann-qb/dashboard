@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import ProductCard from '../../../components/ProductCard'
+import ProductCard from '../../../components/ProductCard';
 
 const PageContainer = styled.div`
 	position: relative;
@@ -13,21 +13,20 @@ const AddButton = styled.button`
 `;
 
 const CardsWrapper = styled.div`
-  display:flex;
-  flex-wrap:wrap;
-  width:100%;
-  height:fit-content;
-  margin-top:20px;
-  
-`
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	height: fit-content;
+	margin-top: 20px;
+`;
 
-export default function ProductsList(props){
-  const history = useHistory()
+export default function ProductsList(props) {
+	const history = useHistory();
 
-  const redirectToAddProductPage = ()=>{
-    history.push('/addProducts');
-  }
-  return (
+	const redirectToAddProductPage = () => {
+		history.push('/addProducts');
+	};
+	return (
 		<PageContainer>
 			<p className="pageHeaders blackFont">Product List</p>
 			<AddButton className="button-primary" onClick={redirectToAddProductPage}>

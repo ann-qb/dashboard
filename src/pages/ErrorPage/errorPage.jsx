@@ -7,7 +7,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 
 const PageWrapper = styled.div`
 	display: flex;
-	flex-direction:column;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	height: 90vh;
@@ -48,13 +48,12 @@ export default function ErrorPage(props) {
 	}
 
 	const redirectToLoginPage = () => {
-		// history.replace('/login');
-		history.goBack()
+		history.goBack();
 	};
 
 	return (
 		<>
-			<Header page="error"/>
+			<Header page="error" />
 			<PageWrapper>
 				<ErrorImage src={imageSrc} />
 				<ErrorMessage>{errorMessage}</ErrorMessage>

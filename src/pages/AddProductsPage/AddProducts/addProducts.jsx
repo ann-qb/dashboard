@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import AlertPopup from '../../../components/Popups/AlertPopups'
+import AlertPopup from '../../../components/Popups/AlertPopups';
 import { useState } from 'react';
 import ImageUploader from 'react-images-upload';
 import TextField from '@material-ui/core/TextField';
@@ -114,11 +114,11 @@ export default function AddProducts(props) {
 		}, 5000);
 	}
 
-	const showAlertPopup = (type,message)=>{
-		setAlertType(type)
-		setAlertMessage(message)
+	const showAlertPopup = (type, message) => {
+		setAlertType(type);
+		setAlertMessage(message);
 		setAlertDisplay(true);
-	}
+	};
 
 	useEffect(() => {
 		setCurrentCategory(categoryList.find((each) => each.name === category));
@@ -131,7 +131,6 @@ export default function AddProducts(props) {
 				: setCurrentCategoryHasSubcategory(true);
 	}, [currentCategory]);
 
-	// const [trialError, setTrialError] = useState(true);
 	const [productNameError, setProductNameError] = useState(false);
 	const [priceError, setPriceError] = useState(false);
 	const [categoryError, setCategoryError] = useState(false);
@@ -216,7 +215,7 @@ export default function AddProducts(props) {
 			}
 
 			dispatch(onAddProduct(formData));
-			showAlertPopup('success','Product added successfully')
+			showAlertPopup('success', 'Product added successfully');
 		}
 	};
 
@@ -246,17 +245,7 @@ export default function AddProducts(props) {
 								helperText={productNameError ? 'This is a required field' : ''}
 							/>
 						</ItemGroup>
-						{/* <ItemGroup>
-							<TextField
-								error={trialError}
-								helperText={trialError? "Field is empty":""}
-								className={classes.textField}
-								label="Brand"
-								variant="outlined"
-								color="#5673E8"
-								disabled
-							/>
-						</ItemGroup> */}
+
 						<ItemGroup>
 							<TextField
 								className={classes.textField}
@@ -273,20 +262,6 @@ export default function AddProducts(props) {
 							/>
 						</ItemGroup>
 					</MainGroup>
-					{/* <MainGroup>
-						<ItemGroup>
-							<TextField className={classes.textField} label="Price" variant="outlined" color="#5673E8" required />
-						</ItemGroup>
-						<ItemGroup>
-							<TextField
-								className={classes.textField}
-								label="Discount Percentage"
-								variant="outlined"
-								defaultValue="Small"
-								color="#5673E8"
-							/>
-						</ItemGroup>
-					</MainGroup> */}
 
 					<MainGroup>
 						<ItemGroup>
@@ -357,8 +332,6 @@ export default function AddProducts(props) {
 											{item.name}
 										</MenuItem>
 									))}
-									{/* <MenuItem value="Value 1">Value 1</MenuItem>
-									<MenuItem value="Value 2">Value 2</MenuItem> */}
 								</TextField>
 							</ItemGroup>
 						) : null}
@@ -403,7 +376,7 @@ export default function AddProducts(props) {
 						<ImagePlaceHolder>
 							{picture.map((each) => {
 								const tt = URL.createObjectURL(each);
-								return <img style={{width:'90%',height:'auto'}} src={tt} alt="preview" />;
+								return <img style={{ width: '90%', height: 'auto' }} src={tt} alt="preview" />;
 							})}
 						</ImagePlaceHolder>
 					) : (
@@ -428,11 +401,3 @@ export default function AddProducts(props) {
 		</PageContainer>
 	);
 }
-/**
- * const useStyle = makeStyles({
-	textField: {
-		width: '100%',
-		'&:hover': { width: '500px' },
-	},
-});<div style={{display:"flex",flexDirection:'column',alignItems:'center',justifyContents:'center'}}>
- */

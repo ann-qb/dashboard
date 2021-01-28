@@ -8,8 +8,8 @@ const style = {
 };
 
 export default function Dashboard(props) {
-	console.log('dp')
-	console.log(useHistory())
+	console.log('dp');
+	console.log(useHistory());
 	return (
 		<div style={style}>
 			<SideNavigation parentPage="dashboard" />

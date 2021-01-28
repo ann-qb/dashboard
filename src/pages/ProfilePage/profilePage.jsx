@@ -1,5 +1,5 @@
-import SideNavigation from '../../components/SideNavigation'
-import Content from './Content'
+import SideNavigation from '../../components/SideNavigation';
+import Content from './Content';
 
 const style = {
 	display: 'flex',
@@ -9,7 +9,7 @@ const style = {
 export default function Dashboard(props) {
 	return (
 		<div style={style}>
-			<SideNavigation parentPage='profilePage'/>
+			<SideNavigation parentPage="profilePage" />
 			<Content />
 		</div>
 	);

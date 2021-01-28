@@ -6,15 +6,12 @@ import { useEffect } from 'react';
 import { onAddCategory, onGetCategoryList } from '../../../slices/categorylist.slice';
 import { BounceLoader } from 'react-spinners';
 import AlertPopup from '../../../components/Popups/AlertPopups';
-import AddRoundedIcon from '@material-ui/icons/AddRounded';
 import IconButton from '@material-ui/core/IconButton';
 import AddBoxRoundedIcon from '@material-ui/icons/AddBoxRounded';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grow from '@material-ui/core/Grow';
-
-import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -28,26 +25,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-// const useStyles = makeStyles(() => ({
-// 	root: {
-// 		height: 'inherit',
-// 	},
-// 	container: {
-// 		display: 'inline',
-// 	},
-// 	rootButton: {
-// 		background: 'transparent',
-// 		'&$disabled': {
-// 			background: 'white',
-// 			boxShadow: 'none',
-// 		},
-// 	},
-// 	disabledButton: {
-// 		background: 'white',
-// 		boxShadow: 'none',
-// 	},
-// }));
-
 const useIconButtonStyles = makeStyles({
 	root: {
 		background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -57,9 +34,6 @@ const useIconButtonStyles = makeStyles({
 		height: 48,
 		padding: '0 30px',
 		boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-		// $disabled is a reference to the local disabled
-		// rule within the same style sheet.
-		// By using &, we increase the specificity.
 		'&$disabled': {
 			background: 'rgba(0, 0, 0, 0.12)',
 			color: 'white',
@@ -84,11 +58,7 @@ const AddCategoryWrapper = styled.div`
 	margin-top: 15px;
 	margin-bottom: 5px;
 `;
-const Button = styled.button`
-	height: 100%;
-	padding: 0 !important;
-	padding-bottom: -10px;
-`;
+
 const Input = styled.input`
 	height: 100%;
 	padding: 8px;
@@ -104,71 +74,6 @@ const SpinnerDiv = styled.div`
 	height: 200px;
 	margin: auto 0;
 `;
-
-// const categoriesArray = [
-// 	{
-// 		id: 0,
-// 		name: 'Electronics',
-// 		subcategories: [
-// 			{
-// 				id: 0,
-// 				name: 'Mobile Accessories',
-// 				category: 0,
-// 			},
-// 			{
-// 				id: 1,
-// 				name: 'Computer Peripherals',
-// 				category: 0,
-// 			},
-// 			{
-// 				id: 2,
-// 				name: 'Laptop Accessories',
-// 				category: 0,
-// 			},
-// 			{
-// 				id: 3,
-// 				name: 'Tablets',
-// 				category: 0,
-// 			},
-// 		],
-// 	},
-// 	{
-// 		id: 1,
-// 		name: 'Fashion',
-// 		subcategories: [
-// 			{
-// 				id: 0,
-// 				name: 'Jeans',
-// 				category: 1,
-// 			},
-// 			{
-// 				id: 1,
-// 				name: 'T-shirts',
-// 				category: 1,
-// 			},
-// 			{
-// 				id: 2,
-// 				name: 'Dresses',
-// 				category: 1,
-// 			},
-// 			{
-// 				id: 3,
-// 				name: 'Caps',
-// 				category: 1,
-// 			},
-// 		],
-// 	},
-// 	{
-// 		id: 2,
-// 		name: 'Grocery',
-// 		subcategories: [],
-// 	},
-// 	{
-// 		id: 3,
-// 		name: 'Mobiles',
-// 		subcategories: [],
-// 	},
-// ];
 
 export default function Categories(props) {
 	const classes = useStyles();
@@ -244,16 +149,7 @@ export default function Categories(props) {
 					<>
 						{disableAdd ? (
 							<Grow in={disableAdd} {...(disableAdd ? { timeout: 1000 } : {})}>
-								<IconButton
-									aria-label="expand row"
-									size="small"
-									// style={{ background: 'transparent' }}
-									// disabled={disableAdd}
-									// classes={{
-									// 	root: classes.rootButton, // class name, e.g. `root-x`
-									// 	disabled: classes.disabledButton, // class name, e.g. `disabled-x`
-									// }}
-								>
+								<IconButton aria-label="expand row" size="small">
 									<AddBoxRoundedIcon color="disabled" fontSize="large" />
 								</IconButton>
 							</Grow>
@@ -266,10 +162,6 @@ export default function Categories(props) {
 						)}
 					</>
 				)}
-				{/* <Input placeholder="Category" onChange={handleInputChange} />
-				<Button className="button-primary" disabled={disableAdd} onClick={addNewCategory}>
-					<AddIcon/>
-				</Button> */}
 			</AddCategoryWrapper>
 			{showLoading ? (
 				<SpinnerDiv>

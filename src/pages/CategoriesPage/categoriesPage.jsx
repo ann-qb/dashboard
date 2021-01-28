@@ -15,4 +15,3 @@ export default function Dashboard(props) {
 		</div>
 	);
 }
-//<SideNavigation parentPage="categories" /> <Content />

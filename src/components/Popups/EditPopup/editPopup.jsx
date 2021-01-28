@@ -69,10 +69,6 @@ export default function EditModal(props) {
 		setUserData({ ...userData, [e.target.name]: e.target.value });
 	};
 
-	// let selectDisabled;
-	// if (role !== 'admin') selectDisabled = true;
-	// else selectDisabled = false;
-
 	const cancelEdit = () => {
 		setUserData(userObj);
 		setFirstnameError('');
@@ -169,7 +165,8 @@ export default function EditModal(props) {
 							id="status_dropdown"
 							value={userData.status}
 							onChange={handleInputChange}
-							disabled={props.editSelf}>
+							disabled={props.editSelf}
+						>
 							{props.data && props.data.status !== 'pending' ? (
 								<>
 									<option value="active">Active</option>
@@ -190,7 +187,8 @@ export default function EditModal(props) {
 					onClick={() => {
 						cancelEdit();
 						props.onRequestClose();
-					}}>
+					}}
+				>
 					Cancel
 				</button>
 				<button
@@ -199,8 +197,8 @@ export default function EditModal(props) {
 					onClick={() => {
 						validateData();
 						props.onRequestClose();
-						//props.onSubmit();
-					}}>
+					}}
+				>
 					Submit
 				</button>
 			</ButtonWrapper>

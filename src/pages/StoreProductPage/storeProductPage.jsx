@@ -141,7 +141,8 @@ export default function StoreProductPage(props) {
 							className={classes.button}
 							startIcon={<AddShoppingCartOutlinedIcon />}
 							onClick={addToCart}
-							disableElevation>
+							disableElevation
+						>
 							Add To Cart
 						</Button>
 						<Button variant="contained" className={classes.button} startIcon={<ShopOutlinedIcon />} disableElevation>
@@ -154,4 +155,3 @@ export default function StoreProductPage(props) {
 		</div>
 	);
 }
-//	<ProductImage src={Placeholder} alt="Product Image" />

@@ -113,12 +113,10 @@ export default function ProductCard(props) {
 		alert('Deleted');
 	};
 	const imageURL = `${baseImageURL}/${props?.data?.image}`;
-	// if (props.data) console.log(imageURL);
 
 	return (
 		<ProductCardWrapper margin={props.margin}>
 			<Clickable onClick={sendToProductPage}>
-				{/* {props?.data?.image !== undefined ? <ImageWrapper imageSrc={imageURL} /> : <ImageWrapper />} */}
 				<ImageWrapper imageSrc={imageURL} />
 				<ProductNameWrapper>
 					<ProductName>{props?.data?.name || 'A product name can be something very big like this'}</ProductName>

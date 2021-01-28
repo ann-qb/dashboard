@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 /** Expected props
@@ -20,7 +20,7 @@ export default function PasswordField(props) {
 		width: ${props.width};
 		height: ${props.height};
 		margin: ${props.margin};
-		margin-top:20px;
+		margin-top: 20px;
 	`;
 
 	const eyeIconStyle = {
@@ -42,8 +42,8 @@ export default function PasswordField(props) {
 	else fieldId = 'passwordInputField';
 
 	useEffect(() => {
-		setFieldContent(null)
-	}, [props.id])
+		setFieldContent(null);
+	}, [props.id]);
 
 	const changePasswordState = () => {
 		setPasswordShown(passwordShown ? false : true);
@@ -74,7 +74,6 @@ export default function PasswordField(props) {
 	} else {
 		var errorField = null;
 	}
-
 
 	return (
 		<InputDiv>
