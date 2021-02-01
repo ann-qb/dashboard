@@ -4,17 +4,18 @@ import ProductCards from '../../components/ProductCard';
 import StoreFooter from '../../components/StoreFooter';
 import { useLocation, useHistory } from 'react-router-dom';
 import Pagination from '@material-ui/lab/Pagination';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { onGetStoreProductListing } from '../../slices/storeproductlisting.slice';
-import ShowIfAuth from '../../components/ShowIfAuth'
+import { onGetStoreProductListing, onSearchStore } from '../../slices/storeproductlisting.slice';
+import ShowIfAuth from '../../components/ShowIfAuth';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import { BounceLoader } from 'react-spinners';
 
 const useStyles = makeStyles(() => ({
 	button: {
 		backgroundColor: '#5673E8',
-		marginTop:'20px',
+		marginTop: '20px',
 		color: '#fff',
 		'&:hover': {
 			transition: '0.2s ease',
@@ -64,6 +65,15 @@ const NoProductMessageWrapper = styled.div`
 	margin: 20px 0;
 `;
 
+const SpinnerDiv = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 200px;
+	margin: auto 0;
+`;
+
 export default function StoreCategoriesPage(props) {
 	const history = useHistory();
 	const location = useLocation();
@@ -75,22 +85,45 @@ export default function StoreCategoriesPage(props) {
 	let query = useQuery();
 
 	// Query data
+	const searchTerm = query.get('search');
 	const category = query.get('category');
 	let subCategory = query.get('subCategory');
 	if (category === subCategory) subCategory = null;
 	const dispatch = useDispatch();
-	const { productListing } = useSelector((state) => state.storeProductListingSlice);
+	const { productListing, totalPages, status } = useSelector((state) => state.storeProductListingSlice);
+	const [showLoading, setShowLoading] = useState(false);
 	useEffect(() => {
-		if (subCategory === null) {
-			dispatch(onGetStoreProductListing({ category }));
-		} else {
-			dispatch(onGetStoreProductListing({ subCategory }));
+		if (status === 'loading product list') {
+			setShowLoading(true);
+		} else if (status === 'loading product list over') {
+			setShowLoading(false);
 		}
-	}, [category, subCategory]);
+	}, [status]);
 
-	const redirectToAddProductsPage = ()=>{
-		history.push('/addProducts')
-	}
+	const [currentPage, setCurrentPage] = useState(1);
+	const [pageCount, setPageCount] = useState(1);
+	useEffect(() => {
+		if (searchTerm !== null) {
+			dispatch(onSearchStore({ searchTerm, currentPage }));
+		} else if (subCategory === null) {
+			dispatch(onGetStoreProductListing({ category, currentPage }));
+		} else {
+			dispatch(onGetStoreProductListing({ subCategory, currentPage }));
+		}
+	}, [category, subCategory, currentPage, searchTerm]);
+
+	const redirectToAddProductsPage = () => {
+		history.push('/addProducts');
+	};
+
+	const handlePageChange = (e, value) => {
+		setCurrentPage(value);
+	};
+
+	useEffect(() => {
+		setPageCount(totalPages);
+	}, [totalPages]);
+
 	return (
 		<>
 			<StoreHeader />
@@ -112,27 +145,32 @@ export default function StoreCategoriesPage(props) {
 						) : null}
 					</p>
 					<SectionHeading>{subCategory}</SectionHeading>
-					<ProductCardWrapper>
-						{productListing.length === 0 ? (
-							<NoProductMessageWrapper>
-								<p>Sorry, No Products Available</p>
-								<ShowIfAuth allowedRoles={['admin']}>
-									<Button
-										variant="contained"
-										className={classes.button}
-										disableElevation
-										onClick={redirectToAddProductsPage}
-									>
-										Add Products
-									</Button>
-								</ShowIfAuth>
-							</NoProductMessageWrapper>
-						) : null}
-						{productListing.map((each) => (
-							<ProductCards key={each.id + each.name} data={each} margin="5px 5px" />
-						))}
-					</ProductCardWrapper>
-					<Pagination count={10} shape="rounded" />
+					{showLoading ? (
+						<SpinnerDiv>
+							<BounceLoader size={100} color={'#5673E8'} />
+						</SpinnerDiv>
+					) : (
+						<ProductCardWrapper>
+							{productListing.length === 0 ? (
+								<NoProductMessageWrapper>
+									<p>Sorry, No Products Available</p>
+									<ShowIfAuth allowedRoles={['admin']}>
+										<Button
+											variant="contained"
+											className={classes.button}
+											disableElevation
+											onClick={redirectToAddProductsPage}>
+											Add Products
+										</Button>
+									</ShowIfAuth>
+								</NoProductMessageWrapper>
+							) : null}
+							{productListing.map((each) => (
+								<ProductCards key={each.id + each.name} data={each} margin="5px 5px" />
+							))}
+						</ProductCardWrapper>
+					)}
+					{pageCount === 1 ? null : <Pagination count={pageCount} shape="rounded" onChange={handlePageChange} />}
 				</ProductsWrapper>
 			</ContentWrapper>
 			<StoreFooter />

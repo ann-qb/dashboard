@@ -4,7 +4,7 @@ import ProfilePic from '../../assets/Images/profilePic_small.png';
 import DropdownMenu from '../Header/DropdownMenu';
 import SubCategoryDropdown from './SubCategoryDropdown';
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { onLogout } from '../../slices/login.slice';
 
@@ -189,11 +189,19 @@ export default function StoreHeader(props) {
 	const dispatch = useDispatch();
 	const { loggedUser } = useSelector((state) => state.loginSlice);
 	const { categoryList } = useSelector((state) => state.categoryListSlice);
+	const location = useLocation();
 	useEffect(() => {
 		if (categoryList.length === 0) {
 			dispatch(onGetCategoryList());
 		}
 	}, []);
+	const useQuery = () => {
+		return new URLSearchParams(location.search);
+	};
+	let query = useQuery();
+
+	// Query data
+	const search = query.get('search');
 	const { role } = useSelector((state) => state.loginSlice);
 	const [openAllCategoryDrawer, setOpenAllCategoryDrawer] = useState({
 		top: false,
@@ -204,6 +212,7 @@ export default function StoreHeader(props) {
 	const [productsInCart, setProductsInCart] = useState(0);
 	const [subCategoryData, setSubCategoryData] = useState({ category: '', subCategories: [] });
 	const [subCategoryDropdownOpen, setSubCategoryDropdownOpen] = useState({ open: false, id: null });
+	const [searchTerm, setSearchTerm] = useState(search !== null ? search : '');
 
 	useEffect(() => {
 		try {
@@ -257,6 +266,19 @@ export default function StoreHeader(props) {
 		history.push(`/store-category?category=${e.target.id}`);
 	};
 
+	const handleSearchTermChange = (e) => {
+		setSearchTerm(e.target.value);
+	};
+
+	const keyPress = (e) => {
+		if (e.key === 'Enter') {
+			console.log('enter pressed');
+			if (searchTerm.trim().length !== 0) {
+				history.push(`/store-category?search=${searchTerm.trim()}`);
+			}
+		}
+	};
+
 	return (
 		<>
 			<TopNavigation>
@@ -264,7 +286,7 @@ export default function StoreHeader(props) {
 					<LogoImage src={Logo} onClick={backToHome} />
 				</LogoWrapper>
 				<SearchWrapper>
-					<SearchInput type="text" />
+					<SearchInput type="text" value={searchTerm} onChange={handleSearchTermChange} onKeyDown={keyPress} />
 					<SearchOutlinedIcon style={searchIcon} />
 				</SearchWrapper>
 				<ProfileWrapper>
@@ -305,8 +327,7 @@ export default function StoreHeader(props) {
 								<CategoryLinks
 									style={{ color: colorOfLink }}
 									id={category.name}
-									onMouseEnter={(e) => (category.Subcategories.length === 0 ? null : openSubCategoryDropdown(e))}
-								>
+									onMouseEnter={(e) => (category.Subcategories.length === 0 ? null : openSubCategoryDropdown(e))}>
 									{category.name}
 								</CategoryLinks>
 								{subCategoryDropdownOpen.open && subCategoryDropdownOpen.id === category.name ? (

@@ -2,14 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 import { baseURL } from '../config/constants';
 import fetch from '../utils/axios';
 
-const initialState = { productListing: [], status: 'idle' };
+const initialState = { productListing: [], status: 'idle', currentPage: 1, totalPages: 1, productCount: 0 };
 
 const storeProductListingSlice = createSlice({
 	name: 'storeProductListing',
 	initialState,
 	reducers: {
 		storeProductListing(state, action) {
-			state.productListing = action.payload.productListing;
+			state.productListing = action.payload.rows;
+			state.currentPage = action.payload.currentPage;
+			state.totalPages = action.payload.totalPages;
+			state.productCount = action.payload.count;
 			state.status = 'success';
 		},
 		updateProductListing(state, action) {
@@ -37,11 +40,11 @@ export const onGetStoreProductListing = (data) => async (dispatch) => {
 	try {
 		const response =
 			data.subCategory === undefined
-				? await fetch.get(`${baseURL}/product?category=${data.category}&range=16`)
-				: await fetch.get(`${baseURL}/product?subcategory=${data.subCategory}&range=16`);
+				? await fetch.get(`${baseURL}/product?category=${data.category}&page=${data.currentPage}&range=8`)
+				: await fetch.get(`${baseURL}/product?subcategory=${data.subCategory}&page=${data.currentPage}&range=8`);
 		console.log(response);
 		if (response.status === 200) {
-			dispatch(storeProductListing({ productListing: response.data.data }));
+			dispatch(storeProductListing({ ...response.data.data }));
 		} else {
 			console.log('Failed to fetch product listing');
 		}
@@ -51,6 +54,30 @@ export const onGetStoreProductListing = (data) => async (dispatch) => {
 	}
 	// end loading
 	dispatch(updateStatus({ status: 'loading product listing over' }));
+	// reset
+	dispatch(resetStatus());
+};
+
+export const onSearchStore = (data) => async (dispatch) => {
+	// reset
+	dispatch(resetStatus());
+	// loading
+	dispatch(updateStatus({ status: 'searching store' }));
+	// try-catch // storeProductListing
+	try {
+		const response = await fetch.get(`${baseURL}/product?search=${data.searchTerm}&page=${data.currentPage}&range=8`);
+		console.log(response);
+		if (response.status === 200) {
+			dispatch(storeProductListing({ ...response.data.data }));
+		} else {
+			console.log('Failed to fetch search results');
+		}
+	} catch (error) {
+		console.log(error);
+		console.log(error.response);
+	}
+	// end loading
+	dispatch(updateStatus({ status: 'searching store over' }));
 	// reset
 	dispatch(resetStatus());
 };
