@@ -91,11 +91,12 @@ export default function StoreCategoriesPage(props) {
 	if (category === subCategory) subCategory = null;
 	const dispatch = useDispatch();
 	const { productListing, totalPages, status } = useSelector((state) => state.storeProductListingSlice);
-	const [showLoading, setShowLoading] = useState(false);
+	const [showLoading, setShowLoading] = useState(true);
 	useEffect(() => {
-		if (status === 'loading product list') {
+		console.log(status);
+		if (status === 'loading product listing' || status === 'searching store') {
 			setShowLoading(true);
-		} else if (status === 'loading product list over') {
+		} else if (status === 'loading product listing over' || status === 'searching store over') {
 			setShowLoading(false);
 		}
 	}, [status]);

@@ -202,6 +202,12 @@ export default function StoreHeader(props) {
 
 	// Query data
 	const search = query.get('search');
+	console.log(search);
+	useEffect(() => {
+		if (search === null) {
+			setSearchTerm('');
+		}
+	}, [search]);
 	const { role } = useSelector((state) => state.loginSlice);
 	const [openAllCategoryDrawer, setOpenAllCategoryDrawer] = useState({
 		top: false,
