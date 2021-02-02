@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { baseURL } from '../config/constants';
 import fetch from '../utils/axios';
 
+// Number of products to be displayed per page
+const limit = 4;
 const initialState = { productListing: [], status: 'idle', currentPage: 1, totalPages: 1, productCount: 0 };
 
 const storeProductListingSlice = createSlice({
@@ -17,9 +19,8 @@ const storeProductListingSlice = createSlice({
         },
         updateProductListing(state, action) {
             state.currentPage = action.payload.currentPage;
-            const range = 4;
             let j = 0;
-            for (let i = (state.currentPage - 1) * range; i < range * state.currentPage; i++) {
+            for (let i = (state.currentPage - 1) * limit; i < limit * state.currentPage; i++) {
                 console.log(i, ', ', j);
                 if (action.payload.rows[j]) {
                     state.productListing[i] = action.payload.rows[j++];
@@ -54,8 +55,8 @@ export const onGetStoreProductListing = (data) => async(dispatch) => {
     try {
         const response =
             data.subCategory === undefined ?
-            await fetch.get(`${baseURL}/product?category=${data.category}&page=${data.currentPage}&range=4`) :
-            await fetch.get(`${baseURL}/product?subcategory=${data.subCategory}&page=${data.currentPage}&range=4`);
+            await fetch.get(`${baseURL}/product?category=${data.category}&page=${data.currentPage}&range=${limit}`) :
+            await fetch.get(`${baseURL}/product?subcategory=${data.subCategory}&page=${data.currentPage}&range=${limit}`);
         console.log(response);
         if (response.status === 200) {
             data.update ?
@@ -81,7 +82,9 @@ export const onSearchStore = (data) => async(dispatch) => {
     dispatch(updateStatus({ status: 'searching store' }));
     // try-catch // storeProductListing
     try {
-        const response = await fetch.get(`${baseURL}/product?search=${data.searchTerm}&page=${data.currentPage}&range=4`);
+        const response = await fetch.get(
+            `${baseURL}/product?search=${data.searchTerm}&page=${data.currentPage}&range=${limit}`
+        );
         console.log(response);
         if (response.status === 200) {
             data.update ?
