@@ -39,21 +39,27 @@ export const onGetProductList = () => async (dispatch) => {
 		} else {
 			console.log('Failed to fetch product list');
 		}
+
+		// end loading
+		dispatch(updateStatus({ status: 'loading product list over' }));
+		// reset
+		dispatch(resetStatus());
 	} catch (error) {
 		console.log(error);
 		console.log(error.response);
+		// end loading
+		dispatch(updateStatus({ status: 'loading product list failed' }));
+		// reset
+		dispatch(resetStatus());
 	}
-	// end loading
-	dispatch(updateStatus({ status: 'loading product list over' }));
-	// reset
-	dispatch(resetStatus());
+
 };
 
 export const onAddProduct = (data) => async (dispatch) => {
 	// reset
 	dispatch(resetStatus());
 	// loading
-	dispatch(updateStatus({ status: 'loading' }));
+	dispatch(updateStatus({ status: 'adding product...' }));
 	// try-catch // onGetProductList
 	try {
 		const response = await fetch.post(`${baseURL}/product/create`, data, {
@@ -61,12 +67,12 @@ export const onAddProduct = (data) => async (dispatch) => {
 		});
 		console.log(response);
 		if (response.status === 201) {
-			dispatch(updateStatus({ status: 'add product success' }));
+			dispatch(updateStatus({ status: 'Product added successfully' }));
 			dispatch(onGetProductList());
 			// notification display
 		} else {
 			console.log('Something went wrong while adding new product.');
-			dispatch(updateStatus({ status: 'add product failed' }));
+			dispatch(updateStatus({ status: "Sorry, couldn't add product" }));
 		}
 	} catch (error) {
 		console.log(error);
@@ -75,7 +81,7 @@ export const onAddProduct = (data) => async (dispatch) => {
 		if (error?.response?.status === 401) {
 			console.log(error.response.data);
 		}
-		dispatch(updateStatus({ status: 'add product failed' }));
+		dispatch(updateStatus({ status: "Sorry, couldn't add product" }));
 	}
 	// end loading
 	// reset
@@ -86,7 +92,7 @@ export const onEditProduct = (data) => async (dispatch) => {
 	// reset
 	dispatch(resetStatus());
 	// loading
-	dispatch(updateStatus({ status: 'loading' }));
+	dispatch(updateStatus({ status: 'Editing product...' }));
 	// try-catch // onGetProductList
 	try {
 		const response = await fetch.patch(`${baseURL}/product/${data.productId}`, data.formData, {
@@ -94,12 +100,12 @@ export const onEditProduct = (data) => async (dispatch) => {
 		});
 		console.log(response.data);
 		if (response.status === 200) {
-			dispatch(updateStatus({ status: 'edit product success' }));
+			dispatch(updateStatus({ status: 'Product edited successfully' }));
 			dispatch(onGetProductList());
 			// notification display
 		} else {
 			console.log('Something went wrong while editing product details.');
-			dispatch(updateStatus({ status: 'edit product failed' }));
+			dispatch(updateStatus({ status: "Sorry, couldn't edit product" }));
 		}
 	} catch (error) {
 		console.log(error);
@@ -107,7 +113,7 @@ export const onEditProduct = (data) => async (dispatch) => {
 		if (error?.response?.status === 401) {
 			console.log(error.response.data);
 		}
-		dispatch(updateStatus({ status: 'edit product failed' }));
+		dispatch(updateStatus({ status: "Sorry, couldn't edit product" }));
 	}
 	// end loading
 	// reset

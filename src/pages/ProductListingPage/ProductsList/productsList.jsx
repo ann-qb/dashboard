@@ -3,7 +3,8 @@ import { useHistory } from 'react-router-dom';
 import ProductCard from '../../../components/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { onGetProductList } from '../../../slices/productlist.slice';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
+import ErrorImg from '../../../assets/Images/sadError.png'
 
 const PageContainer = styled.div`
 	position: relative;
@@ -19,19 +20,52 @@ const CardsWrapper = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	width: 100%;
-	height: fit-content;
+	// height: fit-content;
+	height: 80vh;
 	margin-top: 20px;
+	background-color: #ff0000;
 `;
+const FailureWrapper = styled.div`
+	display: flex;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	width: 100%;
+	height: fit-content;
+	padding:10px;
+	margin-top: 20px;
+	background-color:#fff;
+`;
+const FailureImage = styled.img`
+	width:50%;
+	height:auto;
+`
+const FailureText = styled.p`
+	font-size:120%;
+	margin-top:20px;
+`
 
 export default function ProductsList(props) {
 	const history = useHistory();
-	const { productList } = useSelector((state) => state.productListSlice);
+	const { productList,status } = useSelector((state) => state.productListSlice);
+	const [loadingListFailed, setLoadingListFailed] = useState(false)
 	const dispatch = useDispatch();
 	useEffect(() => {
 		if (productList.length === 0) {
 			dispatch(onGetProductList());
 		}
 	}, []);
+
+	useEffect(() => {
+		console.log(status)
+		if(status === 'loading product list failed'){
+			setLoadingListFailed(true)
+		}
+		// else{
+		// 	setLoadingListFailed(false)
+		// }
+	}, [status]);
+
 	const redirectToAddProductPage = () => {
 		history.push('/addProducts');
 	};
@@ -41,11 +75,19 @@ export default function ProductsList(props) {
 			<AddButton className="button-primary" onClick={redirectToAddProductPage}>
 				+ Add Products
 			</AddButton>
-			<CardsWrapper>
-				{productList.map((each) => (
-					<ProductCard margin="10px 20px 10px 0" editable key={each.id + each.name} data={each} />
-				))}
-			</CardsWrapper>
+			{loadingListFailed ? (
+				<FailureWrapper>
+					<FailureImage src={ErrorImg} alt="Error Image" />
+					<FailureText>Sorry, failed to load resources</FailureText>
+				</FailureWrapper>
+			) : (
+				<CardsWrapper>
+					{productList.map((each) => (
+						<ProductCard margin="10px 20px 10px 0" editable key={each.id + each.name} data={each} />
+					))}
+				</CardsWrapper>
+			)}
+
 		</PageContainer>
 	);
 }

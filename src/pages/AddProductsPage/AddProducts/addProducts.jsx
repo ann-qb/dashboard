@@ -90,6 +90,7 @@ const ImagePlaceHolder = styled.div`
 
 export default function AddProducts(props) {
 	const { categoryList } = useSelector((state) => state.categoryListSlice);
+	const {status:loadingStatus}  = useSelector((state) => state.storeProductListingSlice);
 	const classes = useStyle();
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -142,6 +143,14 @@ export default function AddProducts(props) {
 				: setCurrentCategoryHasSubcategory(true);
 		}
 	}, [currentCategory]);
+
+	useEffect(() => {
+		if (loadingStatus === 'Product added successfully' || loadingStatus === 'Product edited successfully') {
+			showAlertPopup('success', loadingStatus);
+		} else {
+			showAlertPopup('error', loadingStatus);
+		}
+	}, [loadingStatus]);
 
 	const [productNameError, setProductNameError] = useState(false);
 	const [priceError, setPriceError] = useState(false);
@@ -232,7 +241,6 @@ export default function AddProducts(props) {
 			} else {
 				dispatch(onAddProduct(formData));
 			}
-			showAlertPopup('success', 'Product added successfully');
 		}
 	};
 
