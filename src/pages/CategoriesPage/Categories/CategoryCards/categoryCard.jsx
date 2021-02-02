@@ -204,6 +204,7 @@ export default function CategoryCard(props) {
 			categoryId: props.category.id,
 		});
 		setDisableDiv(true);
+		setOpen(false);
 	};
 
 	const closeDeleteModal = () => {

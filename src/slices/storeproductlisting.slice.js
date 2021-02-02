@@ -4,7 +4,15 @@ import fetch from '../utils/axios';
 
 // Number of products to be displayed per page
 const limit = 4;
-const initialState = { productListing: [], status: 'idle', currentPage: 1, totalPages: 1, productCount: 0 };
+const initialState = {
+    productListing: [],
+    status: 'idle',
+    currentPage: 1,
+    totalPages: 1,
+    productCount: 0,
+    sortProperty: 'nil',
+    sortOrder: 'nil',
+};
 
 const storeProductListingSlice = createSlice({
     name: 'storeProductListing',
@@ -27,6 +35,10 @@ const storeProductListingSlice = createSlice({
             }
             state.status = 'success';
         },
+        sortProductListing(state, action) {
+            state.sortProperty = action.payload.sortProperty;
+            state.sortOrder = action.payload.sortOrder;
+        },
         resetStatus(state) {
             state.status = 'idle';
         },
@@ -39,6 +51,7 @@ const storeProductListingSlice = createSlice({
 export const {
     storeProductListing,
     updateProductListing,
+    sortProductListing,
     resetStatus,
     updateStatus,
 } = storeProductListingSlice.actions;
@@ -51,10 +64,19 @@ export const onGetStoreProductListing = (data) => async(dispatch) => {
     dispatch(updateStatus({ status: 'loading product listing' }));
     // try-catch // storeProductListing
     try {
-        const response =
-            data.subCategory === undefined ?
-            await fetch.get(`${baseURL}/product?category=${data.category}&page=${data.currentPage}&range=${limit}`) :
-            await fetch.get(`${baseURL}/product?subcategory=${data.subCategory}&page=${data.currentPage}&range=${limit}`);
+        let url = '';
+        if (data.sortProperty === 'nil' && data.sortOrder === 'nil') {
+            url =
+                data.subCategory === undefined ?
+                `${baseURL}/product?category=${data.category}&page=${data.currentPage}&range=${limit}` :
+                `${baseURL}/product?subcategory=${data.subCategory}&page=${data.currentPage}&range=${limit}`;
+        } else {
+            url =
+                data.subCategory === undefined ?
+                `${baseURL}/product?category=${data.category}&property=${data.sortProperty}&sort=${data.sortOrder}&page=${data.currentPage}&range=${limit}` :
+                `${baseURL}/product?subcategory=${data.subCategory}&property=${data.sortProperty}&sort=${data.sortOrder}&page=${data.currentPage}&range=${limit}`;
+        }
+        const response = await fetch.get(url);
         console.log(response);
         if (response.status === 200) {
             data.update ?
@@ -80,9 +102,13 @@ export const onSearchStore = (data) => async(dispatch) => {
     dispatch(updateStatus({ status: 'searching store' }));
     // try-catch // storeProductListing
     try {
-        const response = await fetch.get(
-            `${baseURL}/product?search=${data.searchTerm}&page=${data.currentPage}&range=${limit}`
-        );
+        let url = '';
+        if (data.sortProperty === 'nil' && data.sortOrder === 'nil') {
+            url = `${baseURL}/product?search=${data.searchTerm}&page=${data.currentPage}&range=${limit}`;
+        } else {
+            url = `${baseURL}/product?search=${data.searchTerm}&property=${data.sortProperty}&sort=${data.sortOrder}&page=${data.currentPage}&range=${limit}`;
+        }
+        const response = await fetch.get(url);
         console.log(response);
         if (response.status === 200) {
             data.update ?

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import StoreHeader from '../../components/StoreHeader';
 import ProductCards from '../../components/ProductCard';
 import StoreFooter from '../../components/StoreFooter';
-import Filters from './Filters'
+import Filters from './Filters';
 import { useLocation, useHistory } from 'react-router-dom';
 import Pagination from '@material-ui/lab/Pagination';
 import { useEffect, useState } from 'react';
@@ -91,7 +91,9 @@ export default function StoreCategoriesPage(props) {
 	let subCategory = query.get('subCategory');
 	if (category === subCategory) subCategory = null;
 	const dispatch = useDispatch();
-	const { productListing, totalPages, status } = useSelector((state) => state.storeProductListingSlice);
+	const { productListing, totalPages, status, sortProperty, sortOrder } = useSelector(
+		(state) => state.storeProductListingSlice
+	);
 	const [showLoading, setShowLoading] = useState(true);
 	useEffect(() => {
 		console.log(status);
@@ -107,26 +109,25 @@ export default function StoreCategoriesPage(props) {
 	useEffect(() => {
 		setCurrentPage(1);
 		if (searchTerm !== null) {
-			dispatch(onSearchStore({ searchTerm, currentPage: 1 }));
+			dispatch(onSearchStore({ searchTerm, currentPage: 1, sortProperty, sortOrder }));
 		} else if (subCategory === null) {
-			dispatch(onGetStoreProductListing({ category, currentPage: 1 }));
+			dispatch(onGetStoreProductListing({ category, currentPage: 1, sortProperty, sortOrder }));
 		} else {
-			dispatch(onGetStoreProductListing({ subCategory, currentPage: 1 }));
+			dispatch(onGetStoreProductListing({ subCategory, currentPage: 1, sortProperty, sortOrder }));
 		}
-	}, [category, subCategory, searchTerm]);
+	}, [category, subCategory, searchTerm, sortProperty, sortOrder]);
 
 	useEffect(() => {
-		console.log(productListing.slice((currentPage - 1) * range, range * currentPage)[0]);
 		if (
 			productListing.slice((currentPage - 1) * range, range * currentPage)[0] === null ||
 			productListing.slice((currentPage - 1) * range, range * currentPage)[0] === undefined
 		) {
 			if (searchTerm !== null) {
-				dispatch(onSearchStore({ searchTerm, currentPage, update: true }));
+				dispatch(onSearchStore({ searchTerm, currentPage, update: true, sortProperty, sortOrder }));
 			} else if (subCategory === null) {
-				dispatch(onGetStoreProductListing({ category, currentPage, update: true }));
+				dispatch(onGetStoreProductListing({ category, currentPage, update: true, sortProperty, sortOrder }));
 			} else {
-				dispatch(onGetStoreProductListing({ subCategory, currentPage, update: true }));
+				dispatch(onGetStoreProductListing({ subCategory, currentPage, update: true, sortProperty, sortOrder }));
 			}
 		}
 	}, [currentPage]);
@@ -177,8 +178,7 @@ export default function StoreCategoriesPage(props) {
 											variant="contained"
 											className={classes.button}
 											disableElevation
-											onClick={redirectToAddProductsPage}
-										>
+											onClick={redirectToAddProductsPage}>
 											Add Products
 										</Button>
 									</ShowIfAuth>
