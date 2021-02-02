@@ -104,14 +104,31 @@ export default function StoreCategoriesPage(props) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageCount, setPageCount] = useState(1);
 	useEffect(() => {
+		setCurrentPage(1);
 		if (searchTerm !== null) {
-			dispatch(onSearchStore({ searchTerm, currentPage }));
+			dispatch(onSearchStore({ searchTerm, currentPage: 1 }));
 		} else if (subCategory === null) {
-			dispatch(onGetStoreProductListing({ category, currentPage }));
+			dispatch(onGetStoreProductListing({ category, currentPage: 1 }));
 		} else {
-			dispatch(onGetStoreProductListing({ subCategory, currentPage }));
+			dispatch(onGetStoreProductListing({ subCategory, currentPage: 1 }));
 		}
-	}, [category, subCategory, currentPage, searchTerm]);
+	}, [category, subCategory, searchTerm]);
+
+	useEffect(() => {
+		console.log(productListing.slice((currentPage - 1) * range, range * currentPage)[0]);
+		if (
+			productListing.slice((currentPage - 1) * range, range * currentPage)[0] === null ||
+			productListing.slice((currentPage - 1) * range, range * currentPage)[0] === undefined
+		) {
+			if (searchTerm !== null) {
+				dispatch(onSearchStore({ searchTerm, currentPage, update: true }));
+			} else if (subCategory === null) {
+				dispatch(onGetStoreProductListing({ category, currentPage, update: true }));
+			} else {
+				dispatch(onGetStoreProductListing({ subCategory, currentPage, update: true }));
+			}
+		}
+	}, [currentPage]);
 
 	const redirectToAddProductsPage = () => {
 		history.push('/addProducts');
@@ -124,7 +141,8 @@ export default function StoreCategoriesPage(props) {
 	useEffect(() => {
 		setPageCount(totalPages);
 	}, [totalPages]);
-
+	const range = 4;
+	// const productListForCurrentPage = productListing.slice((currentPage - 1) * range, range * currentPage)[0];
 	return (
 		<>
 			<StoreHeader />
@@ -166,12 +184,14 @@ export default function StoreCategoriesPage(props) {
 									</ShowIfAuth>
 								</NoProductMessageWrapper>
 							) : null}
-							{productListing.map((each) => (
+							{productListing.slice((currentPage - 1) * range, range * currentPage).map((each) => (
 								<ProductCards key={each.id + each.name} data={each} margin="5px 5px" />
 							))}
 						</ProductCardWrapper>
 					)}
-					{pageCount === 1 ? null : <Pagination count={pageCount} shape="rounded" onChange={handlePageChange} />}
+					{pageCount === 1 ? null : (
+						<Pagination page={currentPage} count={pageCount} shape="rounded" onChange={handlePageChange} />
+					)}
 				</ProductsWrapper>
 			</ContentWrapper>
 			<StoreFooter />
