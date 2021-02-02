@@ -260,7 +260,7 @@ const GlobalStyle = createGlobalStyle`
   /*------------ Popup Alert ---------------*/
   .alertWrapper{
     position:absolute;
-    top:20px;
+    top:60px;
     right:20px;
     align-items:center;
     height:80px;

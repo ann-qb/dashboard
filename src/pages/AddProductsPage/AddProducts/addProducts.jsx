@@ -149,7 +149,7 @@ export default function AddProducts(props) {
 			showAlertPopup('success', 'Product added successfully');
 		}else if (loadingStatus === 'edit product success') {
 			showAlertPopup('success', 'Product edited successfully');
-		} else {
+		} else if (loadingStatus === 'add product failed' || loadingStatus === 'edit product failed') {
 			showAlertPopup('error', 'Sorry, Something went wrong.');
 		}
 	}, [loadingStatus]);
@@ -280,184 +280,189 @@ export default function AddProducts(props) {
 	}, [productId]);
 
 	return (
-		<PageContainer>
+		<>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
-
-			<p className="pageHeaders blackFont">Add Product</p>
-			<FlexWrapper>
-				<Form className="cards">
-					<FormHeader>Details</FormHeader>
-					<MainGroup>
-						<ItemGroup>
-							<TextField
-								className={classes.textField}
-								label="Product Name"
-								variant="outlined"
-								color="#5673E8"
-								required
-								value={productName}
-								onChange={handleProductNameChange}
-								error={productNameError}
-								helperText={productNameError ? 'This is a required field' : ''}
-							/>
-						</ItemGroup>
-
-						<ItemGroup>
-							<TextField
-								className={classes.textField}
-								label="Price"
-								variant="outlined"
-								color="#5673E8"
-								required
-								value={price}
-								onChange={handlePriceChange}
-								type="number"
-								InputProps={{ inputProps: { min: 0 } }}
-								error={priceError}
-								helperText={priceError ? 'This is a required field' : ''}
-							/>
-						</ItemGroup>
-					</MainGroup>
-
-					<MainGroup>
-						<ItemGroup>
-							<TextField
-								className={classes.textField}
-								select
-								label="Status"
-								value={status}
-								onChange={handleStatusChange}
-								variant="outlined"
-								color="#5673E8"
-								required>
-								<MenuItem value="active">Active</MenuItem>
-								<MenuItem value="inactive">Inactive</MenuItem>
-							</TextField>
-						</ItemGroup>
-						<ItemGroup>
-							<TextField
-								className={classes.textField}
-								label="Quantity"
-								variant="outlined"
-								color="#5673E8"
-								type="number"
-								InputProps={{ inputProps: { min: 0 } }}
-								value={quantity}
-								onChange={handleQuantityChange}
-							/>
-						</ItemGroup>
-					</MainGroup>
-					<MainGroup>
-						<ItemGroup>
-							<TextField
-								className={classes.textField}
-								label="Category"
-								variant="outlined"
-								select
-								onChange={handleCategoryChange}
-								value={category}
-								color="#5673E8"
-								required
-								error={categoryError}
-								helperText={categoryError ? 'This is a required field' : ''}>
-								{categoryList.map((item) => (
-									<MenuItem key={item.id} value={item.name}>
-										{item.name}
-									</MenuItem>
-								))}
-							</TextField>
-						</ItemGroup>
-						{currentCategoryHasSubcategory ? (
+			<PageContainer>
+				<p className="pageHeaders blackFont">Add Product</p>
+				<FlexWrapper>
+					<Form className="cards">
+						<FormHeader>Details</FormHeader>
+						<MainGroup>
 							<ItemGroup>
 								<TextField
 									className={classes.textField}
-									label="Sub Category"
+									label="Product Name"
 									variant="outlined"
-									select
-									onChange={handleSubCategoryChange}
-									value={subCategory}
 									color="#5673E8"
 									required
-									error={subcategoryError}
-									helperText={subcategoryError ? 'This is a required field' : ''}>
-									{currentCategory?.Subcategories.map((item) => (
+									value={productName}
+									onChange={handleProductNameChange}
+									error={productNameError}
+									helperText={productNameError ? 'This is a required field' : ''}
+								/>
+							</ItemGroup>
+
+							<ItemGroup>
+								<TextField
+									className={classes.textField}
+									label="Price"
+									variant="outlined"
+									color="#5673E8"
+									required
+									value={price}
+									onChange={handlePriceChange}
+									type="number"
+									InputProps={{ inputProps: { min: 0 } }}
+									error={priceError}
+									helperText={priceError ? 'This is a required field' : ''}
+								/>
+							</ItemGroup>
+						</MainGroup>
+
+						<MainGroup>
+							<ItemGroup>
+								<TextField
+									className={classes.textField}
+									select
+									label="Status"
+									value={status}
+									onChange={handleStatusChange}
+									variant="outlined"
+									color="#5673E8"
+									required
+								>
+									<MenuItem value="active">Active</MenuItem>
+									<MenuItem value="inactive">Inactive</MenuItem>
+								</TextField>
+							</ItemGroup>
+							<ItemGroup>
+								<TextField
+									className={classes.textField}
+									label="Quantity"
+									variant="outlined"
+									color="#5673E8"
+									type="number"
+									InputProps={{ inputProps: { min: 0 } }}
+									value={quantity}
+									onChange={handleQuantityChange}
+								/>
+							</ItemGroup>
+						</MainGroup>
+						<MainGroup>
+							<ItemGroup>
+								<TextField
+									className={classes.textField}
+									label="Category"
+									variant="outlined"
+									select
+									onChange={handleCategoryChange}
+									value={category}
+									color="#5673E8"
+									required
+									error={categoryError}
+									helperText={categoryError ? 'This is a required field' : ''}
+								>
+									{categoryList.map((item) => (
 										<MenuItem key={item.id} value={item.name}>
 											{item.name}
 										</MenuItem>
 									))}
 								</TextField>
 							</ItemGroup>
-						) : null}
-					</MainGroup>
-					<MainGroup>
-						<FullWidthItemGroup>
-							<TextField
-								className={classes.textField}
-								label="Description"
+							{currentCategoryHasSubcategory ? (
+								<ItemGroup>
+									<TextField
+										className={classes.textField}
+										label="Sub Category"
+										variant="outlined"
+										select
+										onChange={handleSubCategoryChange}
+										value={subCategory}
+										color="#5673E8"
+										required
+										error={subcategoryError}
+										helperText={subcategoryError ? 'This is a required field' : ''}
+									>
+										{currentCategory?.Subcategories.map((item) => (
+											<MenuItem key={item.id} value={item.name}>
+												{item.name}
+											</MenuItem>
+										))}
+									</TextField>
+								</ItemGroup>
+							) : null}
+						</MainGroup>
+						<MainGroup>
+							<FullWidthItemGroup>
+								<TextField
+									className={classes.textField}
+									label="Description"
+									variant="outlined"
+									color="#5673E8"
+									multiline
+									rowsMax={4}
+									required
+									value={description}
+									onChange={handleDescriptionChange}
+									error={descriptionError}
+									helperText={descriptionError ? 'This is a required field' : ''}
+								/>
+							</FullWidthItemGroup>
+						</MainGroup>
+
+						<ButtonGroup>
+							<Button
+								className={classes.leftButton}
 								variant="outlined"
-								color="#5673E8"
-								multiline
-								rowsMax={4}
-								required
-								value={description}
-								onChange={handleDescriptionChange}
-								error={descriptionError}
-								helperText={descriptionError ? 'This is a required field' : ''}
-							/>
-						</FullWidthItemGroup>
-					</MainGroup>
+								color="primary"
+								onClick={returnToProductListingPage}
+							>
+								Back to listing
+							</Button>
+							<Button variant="contained" color="primary" disableElevation onClick={addProductValidate}>
+								Submit product
+							</Button>
+						</ButtonGroup>
+					</Form>
 
-					<ButtonGroup>
-						<Button
-							className={classes.leftButton}
-							variant="outlined"
-							color="primary"
-							onClick={returnToProductListingPage}>
-							Back to listing
-						</Button>
-						<Button variant="contained" color="primary" disableElevation onClick={addProductValidate}>
-							Submit product
-						</Button>
-					</ButtonGroup>
-				</Form>
+					<PreviewWrapper className="cards">
+						<FormHeader>Upload Image</FormHeader>
 
-				<PreviewWrapper className="cards">
-					<FormHeader>Upload Image</FormHeader>
+						{picture[0] ? (
+							<ImagePlaceHolder>
+								{picture.map((each) => {
+									const tt = URL.createObjectURL(each);
+									return <img style={{ width: '90%', height: 'auto' }} src={tt} alt="preview" />;
+								})}
+							</ImagePlaceHolder>
+						) : (
+							<>
+								{productId ? (
+									<ImagePlaceHolder>
+										<img style={{ width: '90%', height: 'auto' }} src={productToBeEditedImageURL} alt="preview" />
+									</ImagePlaceHolder>
+								) : (
+									<ImagePlaceHolder />
+								)}
+							</>
+						)}
 
-					{picture[0] ? (
-						<ImagePlaceHolder>
-							{picture.map((each) => {
-								const tt = URL.createObjectURL(each);
-								return <img style={{ width: '90%', height: 'auto' }} src={tt} alt="preview" />;
-							})}
-						</ImagePlaceHolder>
-					) : (
-						<>
-							{productId ? (
-								<ImagePlaceHolder>
-									<img style={{ width: '90%', height: 'auto' }} src={productToBeEditedImageURL} alt="preview" />
-								</ImagePlaceHolder>
-							) : (
-								<ImagePlaceHolder />
-							)}
-						</>
-					)}
+						<ImageUploader
+							className="uploadCard"
+							withIcon={true}
+							onChange={onDrop}
+							imgExtension={['.jpg', '.png']}
+							label="Max file size: 5MB, Accepted: jpg, png"
+							maxFileSize={5242880}
+							buttonClassName="imageUploadBtn"
+							singleImage={true}
+							buttonText="Choose Image"
+						/>
 
-					<ImageUploader
-						className="uploadCard"
-						withIcon={true}
-						onChange={onDrop}
-						imgExtension={['.jpg', '.png']}
-						label="Max file size: 5MB, Accepted: jpg, png"
-						maxFileSize={5242880}
-						buttonClassName="imageUploadBtn"
-						singleImage={true}
-						buttonText="Choose Image"
-					/>
-
-					{pictureError ? <p>Please upload a product image</p> : null}
-				</PreviewWrapper>
-			</FlexWrapper>
-		</PageContainer>
+						{pictureError ? <p>Please upload a product image</p> : null}
+					</PreviewWrapper>
+				</FlexWrapper>
+			</PageContainer>
+		</>
 	);
 }
