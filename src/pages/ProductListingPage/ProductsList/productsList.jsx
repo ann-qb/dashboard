@@ -107,38 +107,40 @@ export default function ProductsList(props) {
 	}, [totalPages]);
 
 	return (
-		<PageContainer>
-			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
-			
-			<p className="pageHeaders blackFont">Product List</p>
-			<AddButton className="button-primary" onClick={redirectToAddProductPage}>
-				+ Add Products
-			</AddButton>
+		<>
+			<AlertPopup alertType={'success'} message={'alertMessage'} display={true} />
+			<PageContainer>
+				<p className="pageHeaders blackFont">Product List</p>
+				<AddButton className="button-primary" onClick={redirectToAddProductPage}>
+					+ Add Products
+				</AddButton>
 
-			{loadingListFailed ? (
-				<FailureWrapper>
-					<FailureImage src={ErrorImg} alt="Error Image" />
-					<FailureText>Sorry, failed to load products.</FailureText>
-				</FailureWrapper>
-			) : (
-				<>
-					{productList.length === 0 ? (
-						<FailureWrapper>
-							<FailureImage src={ErrorImg} alt="Error Image" />
-							<FailureText>Sorry, there are no products to show.</FailureText>
-						</FailureWrapper>
-					) : (
-						<>
-							<CardsWrapper>
-								{productList.map((each) => (
-									<ProductCard margin="10px 20px 10px 0" editable key={each.id + each.name} data={each} />
-								))}
-							</CardsWrapper>
-							{pageCount === 1 ? null : <Pagination count={pageCount} shape="rounded" onChange={handlePageChange} />}
-						</>
-					)}
-				</>
-			)}
-		</PageContainer>
+				{loadingListFailed ? (
+					<FailureWrapper>
+						<FailureImage src={ErrorImg} alt="Error Image" />
+						<FailureText>Sorry, failed to load products.</FailureText>
+					</FailureWrapper>
+				) : (
+					<>
+						{productList.length === 0 ? (
+							<FailureWrapper>
+								<FailureImage src={ErrorImg} alt="Error Image" />
+								<FailureText>Sorry, there are no products to show.</FailureText>
+							</FailureWrapper>
+						) : (
+							<>
+								<CardsWrapper>
+									{productList.map((each) => (
+										<ProductCard margin="10px 20px 10px 0" editable key={each.id + each.name} data={each} />
+									))}
+								</CardsWrapper>
+								{pageCount === 1 ? null : <Pagination count={pageCount} shape="rounded" onChange={handlePageChange} />}
+							</>
+						)}
+					</>
+				)}
+			</PageContainer>
+		</>
 	);
 }
+//<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />

@@ -57,6 +57,7 @@ export default function AlertPopup(props) {
 		display: ${display};
 		background-color: ${backgroundColor};
 		border: 1px solid ${borderColor};
+		z-index:9999999999;
 	`;
 
 	const AlertTextBox = styled.div`
