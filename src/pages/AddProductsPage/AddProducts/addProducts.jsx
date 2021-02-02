@@ -253,7 +253,7 @@ export default function AddProducts(props) {
 			console.log(productToBeEdited);
 			if (productToBeEdited) {
 				const category = categoryList.find((each) => each.id === productToBeEdited.category_id);
-				const subcategory = category.Subcategories.find((each) => each.id === productToBeEdited.subcategory_id);
+				const subcategory = category?.Subcategories.find((each) => each.id === productToBeEdited.subcategory_id);
 				const imageLocation = productToBeEdited.image;
 				setProductToBeEditedImageURL(`${baseImageURL}/${imageLocation}`);
 				setProductName(productToBeEdited.name);

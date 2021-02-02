@@ -2,15 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import { baseURL } from '../config/constants';
 import fetch from '../utils/axios';
 
-const initialState = { productList: [], status: 'idle' };
+const initialState = { productList: [], status: 'idle', totalPages: 1 };
 
 const productListSlice = createSlice({
 	name: 'productList',
 	initialState,
 	reducers: {
 		storeProductList(state, action) {
-			const productListArray = action.payload.productList.reverse();
-			state.productList = productListArray;
+			state.productList = action.payload.rows;
+			state.totalPages = action.payload.totalPages;
 			state.status = 'success';
 		},
 		resetStatus(state) {
@@ -25,17 +25,17 @@ const productListSlice = createSlice({
 export const { storeProductList, resetStatus, updateStatus } = productListSlice.actions;
 export default productListSlice.reducer;
 
-export const onGetProductList = () => async (dispatch) => {
+export const onGetProductList = (data) => async (dispatch) => {
 	// reset
 	dispatch(resetStatus());
 	// loading
 	dispatch(updateStatus({ status: 'loading product list' }));
 	// try-catch // storeProductList
 	try {
-		const response = await fetch.get(`${baseURL}/product`);
+		const response = await fetch.get(`${baseURL}/product?page=${data.currentPage}&range=16`);
 		console.log(response);
 		if (response.status === 200) {
-			dispatch(storeProductList({ productList: response.data.data }));
+			dispatch(storeProductList({ ...response.data.data }));
 		} else {
 			console.log('Failed to fetch product list');
 		}
@@ -62,7 +62,7 @@ export const onAddProduct = (data) => async (dispatch) => {
 		console.log(response);
 		if (response.status === 201) {
 			dispatch(updateStatus({ status: 'add product success' }));
-			dispatch(onGetProductList());
+			dispatch(onGetProductList({ currentPage: 1 }));
 			// notification display
 		} else {
 			console.log('Something went wrong while adding new product.');
@@ -95,7 +95,7 @@ export const onEditProduct = (data) => async (dispatch) => {
 		console.log(response.data);
 		if (response.status === 200) {
 			dispatch(updateStatus({ status: 'edit product success' }));
-			dispatch(onGetProductList());
+			dispatch(onGetProductList({ currentPage: 1 }));
 			// notification display
 		} else {
 			console.log('Something went wrong while editing product details.');
@@ -126,7 +126,7 @@ export const onDeleteProduct = (data) => async (dispatch) => {
 		console.log(response.data);
 		if (response.status === 200) {
 			dispatch(updateStatus({ status: 'delete product success' }));
-			dispatch(onGetProductList());
+			dispatch(onGetProductList({ currentPage: 1 }));
 			// notification display
 		} else {
 			console.log('Something went wrong while deleting product.');
