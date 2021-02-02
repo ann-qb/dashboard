@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import StoreHeader from '../../components/StoreHeader';
 import ProductCards from '../../components/ProductCard';
 import StoreFooter from '../../components/StoreFooter';
+import Filters from './Filters'
 import { useLocation, useHistory } from 'react-router-dom';
 import Pagination from '@material-ui/lab/Pagination';
 import { useEffect, useState } from 'react';
@@ -147,9 +148,7 @@ export default function StoreCategoriesPage(props) {
 		<>
 			<StoreHeader />
 			<ContentWrapper>
-				<FiltersWrapper className="cards">
-					<SectionHeading>Filters</SectionHeading>
-				</FiltersWrapper>
+				<Filters currentPage={currentPage} />
 				<ProductsWrapper className="cards">
 					<p style={{ marginBottom: '15px' }}>
 						{category ? (
@@ -178,7 +177,8 @@ export default function StoreCategoriesPage(props) {
 											variant="contained"
 											className={classes.button}
 											disableElevation
-											onClick={redirectToAddProductsPage}>
+											onClick={redirectToAddProductsPage}
+										>
 											Add Products
 										</Button>
 									</ShowIfAuth>
