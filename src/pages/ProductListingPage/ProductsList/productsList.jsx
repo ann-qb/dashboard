@@ -108,7 +108,7 @@ export default function ProductsList(props) {
 
 	return (
 		<>
-			<AlertPopup alertType={'success'} message={'alertMessage'} display={true} />
+			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
 			<PageContainer>
 				<p className="pageHeaders blackFont">Product List</p>
 				<AddButton className="button-primary" onClick={redirectToAddProductPage}>
@@ -143,4 +143,3 @@ export default function ProductsList(props) {
 		</>
 	);
 }
-//<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
