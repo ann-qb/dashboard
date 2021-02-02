@@ -13,9 +13,9 @@ const SectionHeading = styled.p`
 	color: #000;
 `;
 const SeparationLine = styled.hr`
-  margin-top:10px;
-  border:1px solid #eee;
-`
+	margin-top: 10px;
+	border: 1px solid #eee;
+`;
 const FilterBox = styled.div`
 	width: 100%;
 	height: fit-content;
@@ -39,9 +39,9 @@ const PriceFieldContainer = styled.div`
 `;
 
 const PriceFieldWrapper = styled.div`
-  width:40%;
-  height:100%;
-`
+	width: 40%;
+	height: 100%;
+`;
 
 export default function Filter(props) {
 	const [checked, setChecked] = useState(false);
@@ -49,14 +49,14 @@ export default function Filter(props) {
 	const [filterHighToLow, setFilterHighToLow] = useState(false);
 
 	const handleLowToHigh = (event) => {
-    setFilterHighToLow(false);
+		setFilterHighToLow(false);
 		setFilterLowToHigh(event.target.checked);
 	};
 	const handleHighToLow = (event) => {
-    setFilterLowToHigh(false);
+		setFilterLowToHigh(false);
 		setFilterHighToLow(event.target.checked);
-  };
-  
+	};
+
 	return (
 		<FiltersWrapper className="cards">
 			<SectionHeading>Filters</SectionHeading>
@@ -87,11 +87,11 @@ export default function Filter(props) {
 				<SubHeaders>Price Range</SubHeaders>
 				<PriceFieldContainer>
 					<PriceFieldWrapper>
-						<TextField id="standard-basic" label="Min price" />
+						<TextField id="standard-basic" label="Min price" size="small" />
 					</PriceFieldWrapper>
 					<p style={{ margin: '15px 10px 0 10px' }}>to</p>
 					<PriceFieldWrapper>
-						<TextField id="standard-basic" label="Max price" />
+						<TextField id="standard-basic" label="Max price" size="small" />
 					</PriceFieldWrapper>
 				</PriceFieldContainer>
 			</FilterBox>
