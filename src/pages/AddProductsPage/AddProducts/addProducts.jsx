@@ -90,7 +90,7 @@ const ImagePlaceHolder = styled.div`
 
 export default function AddProducts(props) {
 	const { categoryList } = useSelector((state) => state.categoryListSlice);
-	const {status:loadingStatus}  = useSelector((state) => state.storeProductListingSlice);
+	const {status:loadingStatus}  = useSelector((state) => state.productListSlice);
 	const classes = useStyle();
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -145,10 +145,12 @@ export default function AddProducts(props) {
 	}, [currentCategory]);
 
 	useEffect(() => {
-		if (loadingStatus === 'Product added successfully' || loadingStatus === 'Product edited successfully') {
-			showAlertPopup('success', loadingStatus);
+		if (loadingStatus === 'add product success') {
+			showAlertPopup('success', 'Product added successfully');
+		}else if (loadingStatus === 'edit product success') {
+			showAlertPopup('success', 'Product edited successfully');
 		} else {
-			showAlertPopup('error', loadingStatus);
+			showAlertPopup('error', 'Sorry, Something went wrong.');
 		}
 	}, [loadingStatus]);
 

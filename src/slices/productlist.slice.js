@@ -71,7 +71,7 @@ export const onAddProduct = (data) => async (dispatch) => {
 			// notification display
 		} else {
 			console.log('Something went wrong while adding new product.');
-			dispatch(updateStatus({ status: "Sorry, couldn't add product" }));
+			dispatch(updateStatus({ status: 'add product failed' }));
 		}
 	} catch (error) {
 		console.log(error);
@@ -80,7 +80,7 @@ export const onAddProduct = (data) => async (dispatch) => {
 		if (error?.response?.status === 401) {
 			console.log(error.response.data);
 		}
-		dispatch(updateStatus({ status: "Sorry, couldn't add product" }));
+		dispatch(updateStatus({ status: 'add product failed' }));
 	}
 	// end loading
 	// reset
@@ -104,7 +104,7 @@ export const onEditProduct = (data) => async (dispatch) => {
 			// notification display
 		} else {
 			console.log('Something went wrong while editing product details.');
-			dispatch(updateStatus({ status: "Sorry, couldn't edit product" }));
+			dispatch(updateStatus({ status: 'edit product failed' }));
 		}
 	} catch (error) {
 		console.log(error);
@@ -112,7 +112,7 @@ export const onEditProduct = (data) => async (dispatch) => {
 		if (error?.response?.status === 401) {
 			console.log(error.response.data);
 		}
-		dispatch(updateStatus({ status: "Sorry, couldn't edit product" }));
+		dispatch(updateStatus({ status: 'edit product failed' }));
 	}
 	// end loading
 	// reset

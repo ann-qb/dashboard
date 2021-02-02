@@ -114,7 +114,6 @@ export default function ProductCard(props) {
 	const onDeleteConfirmation = () => {
 		dispatch(onDeleteProduct({ productId: props?.data?.id }));
 		setDeletePopupIsOpen(false);
-		alert('Deleted');
 	};
 	const imageURL = `${baseImageURL}/${props?.data?.image}`;
 

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import ProductCard from '../../../components/ProductCard';
+import AlertPopup from '../../../components/Popups/AlertPopups';
 import { useDispatch, useSelector } from 'react-redux';
 import { onGetProductList } from '../../../slices/productlist.slice';
 import { useEffect, useState } from 'react';
@@ -49,6 +50,24 @@ export default function ProductsList(props) {
 	const { productList, totalPages, status } = useSelector((state) => state.productListSlice);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageCount, setPageCount] = useState(1);
+
+	const [alertDisplay, setAlertDisplay] = useState(false);
+	const [alertType, setAlertType] = useState('');
+	const [alertMessage, setAlertMessage] = useState('');
+
+	// Additional function to be written wherever AlertPopup component is used
+	if (alertDisplay) {
+		setTimeout(() => {
+			setAlertDisplay(false);
+		}, 5000);
+	}
+
+	const showAlertPopup = (type, message) => {
+		setAlertType(type);
+		setAlertMessage(message);
+		setAlertDisplay(true);
+	};
+
 	const dispatch = useDispatch();
 	useEffect(() => {
 		// if (productList.length === 0) {
@@ -63,9 +82,12 @@ export default function ProductsList(props) {
 		if (status === 'loading product list failed') {
 			setLoadingListFailed(true);
 		}
-		// else{
-		// 	setLoadingListFailed(false)
-		// }
+		if(status === 'delete product success'){
+			showAlertPopup('success','Product Deleted')
+		}
+		else if(status === 'delete product failed'){
+			showAlertPopup('error', 'Cannot delete product');
+		}
 	}, [status]);
 
 	const redirectToAddProductPage = () => {
@@ -86,6 +108,8 @@ export default function ProductsList(props) {
 
 	return (
 		<PageContainer>
+			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
+			
 			<p className="pageHeaders blackFont">Product List</p>
 			<AddButton className="button-primary" onClick={redirectToAddProductPage}>
 				+ Add Products
