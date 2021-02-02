@@ -21,12 +21,10 @@ const storeProductListingSlice = createSlice({
             state.currentPage = action.payload.currentPage;
             let j = 0;
             for (let i = (state.currentPage - 1) * limit; i < limit * state.currentPage; i++) {
-                console.log(i, ', ', j);
                 if (action.payload.rows[j]) {
                     state.productListing[i] = action.payload.rows[j++];
                 }
             }
-            // state.productListing.append(action.payload.productListing);
             state.status = 'success';
         },
         resetStatus(state) {

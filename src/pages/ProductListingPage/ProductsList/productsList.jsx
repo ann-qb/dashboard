@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import ProductCard from '../../../components/ProductCard';
 import AlertPopup from '../../../components/Popups/AlertPopups';
 import { useDispatch, useSelector } from 'react-redux';
-import { onGetProductList } from '../../../slices/productlist.slice';
+import { onGetProductList, onSearchAllProductsList } from '../../../slices/productlist.slice';
 import { useEffect, useState } from 'react';
 import Pagination from '@material-ui/lab/Pagination';
 import ErrorImg from '../../../assets/Images/sadError.png';
@@ -73,7 +73,28 @@ export default function ProductsList(props) {
 		// if (productList.length === 0) {
 		// 	dispatch(onGetProductList({ currentPage }));
 		// }
-		dispatch(onGetProductList({ currentPage }));
+		dispatch(onGetProductList({ currentPage: 1 }));
+	}, []);
+	useEffect(() => {
+		setCurrentPage(1);
+		if (props.searchTerm === '') {
+			console.log(props.searchTerm)
+			dispatch(onGetProductList({ currentPage: 1 }));
+		} else {
+			dispatch(onSearchAllProductsList({ searchTerm: props.searchTerm, currentPage: 1 }));
+		}
+	}, [props.searchTerm]);
+	useEffect(() => {
+		if (
+			productList.slice((currentPage - 1) * range, range * currentPage)[0] === null ||
+			productList.slice((currentPage - 1) * range, range * currentPage)[0] === undefined
+		) {
+			if (props.searchTerm === '') {
+				dispatch(onGetProductList({ currentPage, update: true }));
+			} else {
+				dispatch(onSearchAllProductsList({ searchTerm: props.searchTerm, currentPage, update: true }));
+			}
+		}
 	}, [currentPage]);
 	const [loadingListFailed, setLoadingListFailed] = useState(false);
 
@@ -82,10 +103,9 @@ export default function ProductsList(props) {
 		if (status === 'loading product list failed') {
 			setLoadingListFailed(true);
 		}
-		if(status === 'delete product success'){
-			showAlertPopup('success','Product Deleted')
-		}
-		else if(status === 'delete product failed'){
+		if (status === 'delete product success') {
+			showAlertPopup('success', 'Product Deleted');
+		} else if (status === 'delete product failed') {
 			showAlertPopup('error', 'Cannot delete product');
 		}
 	}, [status]);
@@ -105,11 +125,11 @@ export default function ProductsList(props) {
 	useEffect(() => {
 		setPageCount(totalPages);
 	}, [totalPages]);
-
+	const range = 16;
 	return (
 		<PageContainer>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
-			
+
 			<p className="pageHeaders blackFont">Product List</p>
 			<AddButton className="button-primary" onClick={redirectToAddProductPage}>
 				+ Add Products
@@ -130,11 +150,13 @@ export default function ProductsList(props) {
 					) : (
 						<>
 							<CardsWrapper>
-								{productList.map((each) => (
+								{productList.slice((currentPage - 1) * range, range * currentPage).map((each) => (
 									<ProductCard margin="10px 20px 10px 0" editable key={each.id + each.name} data={each} />
 								))}
 							</CardsWrapper>
-							{pageCount === 1 ? null : <Pagination count={pageCount} shape="rounded" onChange={handlePageChange} />}
+							{pageCount === 1 ? null : (
+								<Pagination page={currentPage} count={pageCount} shape="rounded" onChange={handlePageChange} />
+							)}
 						</>
 					)}
 				</>

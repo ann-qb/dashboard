@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { baseURL } from '../config/constants';
 import fetch from '../utils/axios';
 
-const initialState = { productList: [], status: 'idle', totalPages: 1 };
+// Number of products to be displayed per page
+const limit = 16;
+const initialState = { productList: [], status: 'idle', totalPages: 1, currentPage: 1 };
 
 const productListSlice = createSlice({
 	name: 'productList',
@@ -11,6 +13,17 @@ const productListSlice = createSlice({
 		storeProductList(state, action) {
 			state.productList = action.payload.rows;
 			state.totalPages = action.payload.totalPages;
+			state.currentPage = action.payload.currentPage;
+			state.status = 'success';
+		},
+		updateProductList(state, action) {
+			state.currentPage = action.payload.currentPage;
+			let j = 0;
+			for (let i = (state.currentPage - 1) * limit; i < limit * state.currentPage; i++) {
+				if (action.payload.rows[j]) {
+					state.productList[i] = action.payload.rows[j++];
+				}
+			}
 			state.status = 'success';
 		},
 		resetStatus(state) {
@@ -22,7 +35,7 @@ const productListSlice = createSlice({
 	},
 });
 
-export const { storeProductList, resetStatus, updateStatus } = productListSlice.actions;
+export const { storeProductList, updateProductList, resetStatus, updateStatus } = productListSlice.actions;
 export default productListSlice.reducer;
 
 export const onGetProductList = (data) => async (dispatch) => {
@@ -35,23 +48,49 @@ export const onGetProductList = (data) => async (dispatch) => {
 		const response = await fetch.get(`${baseURL}/product?page=${data.currentPage}&range=16`);
 		console.log(response);
 		if (response.status === 200) {
-			dispatch(storeProductList({ ...response.data.data }));
+			data.update
+				? dispatch(updateProductList({ ...response.data.data }))
+				: dispatch(storeProductList({ ...response.data.data }));
 		} else {
 			console.log('Failed to fetch product list');
 		}
-
-		// end loading
-		dispatch(updateStatus({ status: 'loading product list over' }));
-		// reset
-		dispatch(resetStatus());
 	} catch (error) {
 		console.log(error);
 		console.log(error.response);
-		// end loading
 		dispatch(updateStatus({ status: 'loading product list failed' }));
-		// reset
-		dispatch(resetStatus());
 	}
+	// end loading
+	dispatch(updateStatus({ status: 'loading product list over' }));
+	// reset
+	dispatch(resetStatus());
+};
+
+export const onSearchAllProductsList = (data) => async (dispatch) => {
+	// reset
+	dispatch(resetStatus());
+	// loading
+	dispatch(updateStatus({ status: 'searching all store products' }));
+	// try-catch // storeProductListing
+	try {
+		const response = await fetch.get(
+			`${baseURL}/product?search=${data.searchTerm}&page=${data.currentPage}&range=${limit}`
+		);
+		console.log(response);
+		if (response.status === 200) {
+			data.update
+				? dispatch(updateProductList({ ...response.data.data }))
+				: dispatch(storeProductList({ ...response.data.data }));
+		} else {
+			console.log('Failed to fetch search results');
+		}
+	} catch (error) {
+		console.log(error);
+		console.log(error.response);
+	}
+	// end loading
+	dispatch(updateStatus({ status: 'searching all store products over' }));
+	// reset
+	dispatch(resetStatus());
 };
 
 export const onAddProduct = (data) => async (dispatch) => {
@@ -71,7 +110,6 @@ export const onAddProduct = (data) => async (dispatch) => {
 			// notification display
 		} else {
 			console.log('Something went wrong while adding new product.');
-			dispatch(updateStatus({ status: 'add product failed' }));
 		}
 	} catch (error) {
 		console.log(error);
@@ -104,7 +142,6 @@ export const onEditProduct = (data) => async (dispatch) => {
 			// notification display
 		} else {
 			console.log('Something went wrong while editing product details.');
-			dispatch(updateStatus({ status: 'edit product failed' }));
 		}
 	} catch (error) {
 		console.log(error);
@@ -135,7 +172,6 @@ export const onDeleteProduct = (data) => async (dispatch) => {
 			// notification display
 		} else {
 			console.log('Something went wrong while deleting product.');
-			dispatch(updateStatus({ status: 'delete product failed' }));
 		}
 	} catch (error) {
 		console.log(error);

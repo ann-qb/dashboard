@@ -74,7 +74,6 @@ export default function Header(props) {
 
 	const history = useHistory();
 	const dispatch = useDispatch();
-	console.log(props.page);
 	const generateHeaderActions = () => {
 		return (
 			<ActionDiv>
@@ -105,7 +104,19 @@ export default function Header(props) {
 					</span>
 
 					{props.onChange ? (
-						<SearchInput type="text" value={props.value} onChange={props.onChange} placeholder="Search..." />
+						<>
+							{props.onKeyDown ? (
+								<SearchInput
+									type="text"
+									value={props.value}
+									onChange={props.onChange}
+									onKeyDown={props.onKeyDown}
+									placeholder="Search..."
+								/>
+							) : (
+								<SearchInput type="text" value={props.value} onChange={props.onChange} placeholder="Search..." />
+							)}
+						</>
 					) : (
 						<SearchInput type="text" placeholder="Search..." />
 					)}
