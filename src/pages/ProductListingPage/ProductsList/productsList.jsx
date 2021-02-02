@@ -21,10 +21,8 @@ const CardsWrapper = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	width: 100%;
-	// height: fit-content;
-	height: 80vh;
+	height: fit-content;
 	margin-top: 20px;
-	background-color: #ff0000;
 `;
 const FailureWrapper = styled.div`
 	display: flex;
@@ -96,16 +94,25 @@ export default function ProductsList(props) {
 			{loadingListFailed ? (
 				<FailureWrapper>
 					<FailureImage src={ErrorImg} alt="Error Image" />
-					<FailureText>Sorry, failed to load resources</FailureText>
+					<FailureText>Sorry, failed to load products.</FailureText>
 				</FailureWrapper>
 			) : (
 				<>
-					<CardsWrapper>
-						{productList.map((each) => (
-							<ProductCard margin="10px 20px 10px 0" editable key={each.id + each.name} data={each} />
-						))}
-					</CardsWrapper>
-					{pageCount === 1 ? null : <Pagination count={pageCount} shape="rounded" onChange={handlePageChange} />}
+					{productList.length === 0 ? (
+						<FailureWrapper>
+							<FailureImage src={ErrorImg} alt="Error Image" />
+							<FailureText>Sorry, there are no products to show.</FailureText>
+						</FailureWrapper>
+					) : (
+						<>
+							<CardsWrapper>
+								{productList.map((each) => (
+									<ProductCard margin="10px 20px 10px 0" editable key={each.id + each.name} data={each} />
+								))}
+							</CardsWrapper>
+							{pageCount === 1 ? null : <Pagination count={pageCount} shape="rounded" onChange={handlePageChange} />}
+						</>
+					)}
 				</>
 			)}
 		</PageContainer>
