@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import ProductCard from '../../../components/ProductCard';
 import AlertPopup from '../../../components/Popups/AlertPopups';
+import ProductCardPreLoader from '../../../components/ProductCardPreLoader';
 import { useDispatch, useSelector } from 'react-redux';
 import { onGetProductList, onSearchAllProductsList } from '../../../slices/productlist.slice';
 import { useEffect, useState } from 'react';
@@ -55,6 +56,8 @@ export default function ProductsList(props) {
 	const [alertType, setAlertType] = useState('');
 	const [alertMessage, setAlertMessage] = useState('');
 
+	const [showLoading, setShowLoading] = useState(false);
+
 	// Additional function to be written wherever AlertPopup component is used
 	if (alertDisplay) {
 		setTimeout(() => {
@@ -75,6 +78,7 @@ export default function ProductsList(props) {
 		// }
 		dispatch(onGetProductList({ currentPage: 1 }));
 	}, []);
+
 	useEffect(() => {
 		setCurrentPage(1);
 		if (props.searchTerm === '') {
@@ -84,6 +88,7 @@ export default function ProductsList(props) {
 			dispatch(onSearchAllProductsList({ searchTerm: props.searchTerm, currentPage: 1 }));
 		}
 	}, [props.searchTerm]);
+
 	useEffect(() => {
 		if (
 			productList.slice((currentPage - 1) * range, range * currentPage)[0] === null ||
@@ -100,6 +105,11 @@ export default function ProductsList(props) {
 
 	useEffect(() => {
 		console.log(status);
+		if (status === 'loading product list') {
+			setShowLoading(true);
+		} else {
+			setShowLoading(false);
+		}
 		if (status === 'loading product list failed') {
 			setLoadingListFailed(true);
 		}
@@ -112,7 +122,7 @@ export default function ProductsList(props) {
 
 	useEffect(() => {
 		const pageContainer = document.querySelector('#scrollToTop');
-		console.log('>>>>>>>>>>> page Change')
+		console.log('>>>>>>>>>>> page Change');
 		pageContainer['scrollTo']({ top: 0, behavior: 'smooth' });
 	}, [currentPage]);
 
@@ -141,7 +151,11 @@ export default function ProductsList(props) {
 					+ Add Products
 				</AddButton>
 
-				{loadingListFailed ? (
+				{showLoading ? (
+					<CardsWrapper>
+						<ProductCardPreLoader cardCount="12" margin="10px 20px 10px 0" />
+					</CardsWrapper>
+				) : loadingListFailed ? (
 					<FailureWrapper>
 						<FailureImage src={ErrorImg} alt="Error Image" />
 						<FailureText>Sorry, failed to load products.</FailureText>
