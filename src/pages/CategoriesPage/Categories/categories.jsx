@@ -103,10 +103,37 @@ export default function Categories(props) {
 			setNewCategory('');
 			setDisableInput(false);
 		}
+		if (status === 'add category success') {
+			showAlertPopup('success', 'Category added successfully');
+		} else if (status === 'add category failed') {
+			showAlertPopup('error', 'Something went wrong while adding new category');
+		} else if (status === 'edit category success') {
+			showAlertPopup('success', 'Category edited successfully');
+		} else if (status === 'edit category failed') {
+			showAlertPopup('error', 'Something went wrong while editing the category');
+		} else if (status === 'add subcategory success') {
+			showAlertPopup('success', 'Sub category added successfully');
+		} else if (status === 'add subcategory failed') {
+			showAlertPopup('error', 'Something went wrong while adding new sub category');
+		} else if (status === 'edit subcategory success') {
+			showAlertPopup('success', 'Sub category edited successfully');
+		} else if (status === 'edit subcategory failed') {
+			showAlertPopup('error', 'Something went wrong while editing the sub category');
+		} else if (status === 'delete category failed') {
+			showAlertPopup('error', 'Something went wrong while deleting the category');
+		} else if (status === 'delete category success') {
+			showAlertPopup('success', 'Category deleted successfully');
+		} else if (status === 'delete subcategory failed') {
+			showAlertPopup('error', 'Something went wrong while deleting the sub category');
+		} else if (status === 'delete subcategory success') {
+			showAlertPopup('success', 'Sub category deleted successfully');
+		}
 	}, [status]);
 
-	const showAlertPopup = () => {
-		setAlertDisplay(true);
+	const showAlertPopup = (type,message) => {
+		setAlertType(type);
+		setAlertMessage(message);
+		setAlertDisplay(true);;
 	};
 
 	// Additional function to be written wherever AlertPopup component is used
@@ -135,41 +162,42 @@ export default function Categories(props) {
 	};
 
 	return (
-		<PageContainer>
+		<>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
-
-			<p className="pageHeaders blackFont">Categories</p>
-			<AddCategoryWrapper>
-				<Input placeholder="Add Category" onChange={handleInputChange} value={newCategory} disabled={disableInput} />
-				{disableInput ? (
-					<div className={classes.root}>
-						<CircularProgress size={20} />
-					</div>
+			<PageContainer>
+				<p className="pageHeaders blackFont">Categories</p>
+				<AddCategoryWrapper>
+					<Input placeholder="Add Category" onChange={handleInputChange} value={newCategory} disabled={disableInput} />
+					{disableInput ? (
+						<div className={classes.root}>
+							<CircularProgress size={20} />
+						</div>
+					) : (
+						<>
+							{disableAdd ? (
+								<IconButton aria-label="expand row" size="small">
+									<AddBoxRoundedIcon color="disabled" fontSize="large" />
+								</IconButton>
+							) : (
+								<IconButton aria-label="expand row" size="small" disabled={disableAdd} onClick={addNewCategory}>
+									<AddBoxRoundedIcon className={classes.addIcon} fontSize="large" />
+								</IconButton>
+							)}
+						</>
+					)}
+				</AddCategoryWrapper>
+				{showLoading ? (
+					<SpinnerDiv>
+						<BounceLoader size={100} color={'#5673E8'} loading={showLoading} />
+					</SpinnerDiv>
+				) : props.searchValue ? (
+					categoryList
+						.filter((category) => category.name.toLowerCase().includes(props.searchValue.toLowerCase()))
+						.map((each) => <CategoryCard key={each.id + each.name} category={each} />)
 				) : (
-					<>
-						{disableAdd ? (
-							<IconButton aria-label="expand row" size="small">
-								<AddBoxRoundedIcon color="disabled" fontSize="large" />
-							</IconButton>
-						) : (
-							<IconButton aria-label="expand row" size="small" disabled={disableAdd} onClick={addNewCategory}>
-								<AddBoxRoundedIcon className={classes.addIcon} fontSize="large" />
-							</IconButton>
-						)}
-					</>
+					categoryList.map((each) => <CategoryCard key={each.id + each.name} category={each} />)
 				)}
-			</AddCategoryWrapper>
-			{showLoading ? (
-				<SpinnerDiv>
-					<BounceLoader size={100} color={'#5673E8'} loading={showLoading} />
-				</SpinnerDiv>
-			) : props.searchValue ? (
-				categoryList
-					.filter((category) => category.name.toLowerCase().includes(props.searchValue.toLowerCase()))
-					.map((each) => <CategoryCard key={each.id + each.name} category={each} />)
-			) : (
-				categoryList.map((each) => <CategoryCard key={each.id + each.name} category={each} />)
-			)}
-		</PageContainer>
+			</PageContainer>
+		</>
 	);
 }
