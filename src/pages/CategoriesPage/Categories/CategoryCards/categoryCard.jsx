@@ -302,6 +302,7 @@ export default function CategoryCard(props) {
 			<DeleteConfirmPopup
 				id={props.category.id}
 				isOpen={deletePopupIsOpen}
+				customMessage="You are about to delete all sub categories and products under this category"
 				onDelete={deleteCategory}
 				onRequestClose={closeDeleteModal}
 			/>
