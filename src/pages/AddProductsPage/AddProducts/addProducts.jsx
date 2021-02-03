@@ -90,7 +90,7 @@ const ImagePlaceHolder = styled.div`
 
 export default function AddProducts(props) {
 	const { categoryList } = useSelector((state) => state.categoryListSlice);
-	const {status:loadingStatus}  = useSelector((state) => state.productListSlice);
+	const { status: loadingStatus } = useSelector((state) => state.productListSlice);
 	const classes = useStyle();
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -147,7 +147,17 @@ export default function AddProducts(props) {
 	useEffect(() => {
 		if (loadingStatus === 'add product success') {
 			showAlertPopup('success', 'Product added successfully');
-		}else if (loadingStatus === 'edit product success') {
+			setProductName('');
+			setPrice('');
+			setStatus('');
+			setQuantity('');
+			setCategory('');
+			setCurrentCategory('');
+			setCurrentCategoryHasSubcategory(false);
+			setSubCategory('');
+			setDescription('');
+			setPicture([]);
+		} else if (loadingStatus === 'edit product success') {
 			showAlertPopup('success', 'Product edited successfully');
 		} else if (loadingStatus === 'add product failed' || loadingStatus === 'edit product failed') {
 			showAlertPopup('error', 'Sorry, Something went wrong.');
@@ -329,8 +339,7 @@ export default function AddProducts(props) {
 									onChange={handleStatusChange}
 									variant="outlined"
 									color="#5673E8"
-									required
-								>
+									required>
 									<MenuItem value="active">Active</MenuItem>
 									<MenuItem value="inactive">Inactive</MenuItem>
 								</TextField>
@@ -360,8 +369,7 @@ export default function AddProducts(props) {
 									color="#5673E8"
 									required
 									error={categoryError}
-									helperText={categoryError ? 'This is a required field' : ''}
-								>
+									helperText={categoryError ? 'This is a required field' : ''}>
 									{categoryList.map((item) => (
 										<MenuItem key={item.id} value={item.name}>
 											{item.name}
@@ -381,8 +389,7 @@ export default function AddProducts(props) {
 										color="#5673E8"
 										required
 										error={subcategoryError}
-										helperText={subcategoryError ? 'This is a required field' : ''}
-									>
+										helperText={subcategoryError ? 'This is a required field' : ''}>
 										{currentCategory?.Subcategories.map((item) => (
 											<MenuItem key={item.id} value={item.name}>
 												{item.name}
@@ -415,8 +422,7 @@ export default function AddProducts(props) {
 								className={classes.leftButton}
 								variant="outlined"
 								color="primary"
-								onClick={returnToProductListingPage}
-							>
+								onClick={returnToProductListingPage}>
 								Back to listing
 							</Button>
 							<Button variant="contained" color="primary" disableElevation onClick={addProductValidate}>

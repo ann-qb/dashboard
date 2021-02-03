@@ -148,17 +148,13 @@ export default function Categories(props) {
 				) : (
 					<>
 						{disableAdd ? (
-							<Grow in={disableAdd} {...(disableAdd ? { timeout: 1000 } : {})}>
-								<IconButton aria-label="expand row" size="small">
-									<AddBoxRoundedIcon color="disabled" fontSize="large" />
-								</IconButton>
-							</Grow>
+							<IconButton aria-label="expand row" size="small">
+								<AddBoxRoundedIcon color="disabled" fontSize="large" />
+							</IconButton>
 						) : (
-							<Grow in={!disableAdd} disabled={disableAdd} {...(disableAdd ? { timeout: 1000 } : {})}>
-								<IconButton aria-label="expand row" size="small" disabled={disableAdd} onClick={addNewCategory}>
-									<AddBoxRoundedIcon className={classes.addIcon} fontSize="large" />
-								</IconButton>
-							</Grow>
+							<IconButton aria-label="expand row" size="small" disabled={disableAdd} onClick={addNewCategory}>
+								<AddBoxRoundedIcon className={classes.addIcon} fontSize="large" />
+							</IconButton>
 						)}
 					</>
 				)}

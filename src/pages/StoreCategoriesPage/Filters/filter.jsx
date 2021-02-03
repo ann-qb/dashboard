@@ -2,6 +2,10 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { sortProductListing } from '../../../slices/storeproductlisting.slice';
+import { useLocation } from 'react-router-dom';
 
 const FiltersWrapper = styled.div`
 	width: 270px;
@@ -44,6 +48,7 @@ const PriceFieldWrapper = styled.div`
 `;
 
 export default function Filter(props) {
+	const dispatch = useDispatch();
 	const [checked, setChecked] = useState(false);
 	const [filterLowToHigh, setFilterLowToHigh] = useState(false);
 	const [filterHighToLow, setFilterHighToLow] = useState(false);
@@ -56,6 +61,32 @@ export default function Filter(props) {
 		setFilterLowToHigh(false);
 		setFilterHighToLow(event.target.checked);
 	};
+
+	useEffect(() => {
+		if (filterLowToHigh) {
+			dispatch(sortProductListing({ sortProperty: 'price', sortOrder: 'ASC' }));
+		} else if (filterHighToLow) {
+			dispatch(sortProductListing({ sortProperty: 'price', sortOrder: 'DESC' }));
+		} else {
+			dispatch(sortProductListing({ sortProperty: 'nil', sortOrder: 'nil' }));
+		}
+	}, [filterLowToHigh, filterHighToLow]);
+
+	const location = useLocation();
+	const useQuery = () => {
+		return new URLSearchParams(location.search);
+	};
+	let query = useQuery();
+
+	// Query data
+	const searchTerm = query.get('search');
+	const category = query.get('category');
+	let subCategory = query.get('subCategory');
+
+	useEffect(() => {
+		setFilterLowToHigh(false);
+		setFilterHighToLow(false);
+	}, [category, subCategory, searchTerm]);
 
 	return (
 		<FiltersWrapper className="cards">

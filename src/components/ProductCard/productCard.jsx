@@ -135,7 +135,7 @@ export default function ProductCard(props) {
 				{props.editable ? (
 					<>
 						<IconButton onClick={sendToEditProductsPage}>
-							<CreateOutlinedIcon fontSize="small" productId={props?.data?.id} />
+							<CreateOutlinedIcon fontSize="small" />
 						</IconButton>
 						<IconButton onClick={askForDeleteConfirmation}>
 							<DeleteOutlineOutlinedIcon fontSize="small" />
