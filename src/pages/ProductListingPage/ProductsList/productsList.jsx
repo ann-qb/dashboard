@@ -34,16 +34,17 @@ const FailureWrapper = styled.div`
 	width: 100%;
 	height: fit-content;
 	padding: 10px;
-	margin-top: 20px;
+	margin: 20px 0 30px 0;
 	background-color: #fff;
 `;
 const FailureImage = styled.img`
 	width: 50%;
 	height: auto;
+	margin-bottom: 20px;
 `;
 const FailureText = styled.p`
 	font-size: 120%;
-	margin-top: 20px;
+	
 `;
 
 export default function ProductsList(props) {
@@ -158,6 +159,7 @@ export default function ProductsList(props) {
 					<FailureWrapper>
 						<FailureImage src={ErrorImg} alt="Error Image" />
 						<FailureText>Sorry, failed to load products.</FailureText>
+						<FailureText>This might be some server side issue</FailureText>
 					</FailureWrapper>
 				) : (
 					<>
