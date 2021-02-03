@@ -280,6 +280,16 @@ const GlobalStyle = createGlobalStyle`
     height:500px;
   }
 
+  /*------------ Animations ---------------*/
+  @keyframes shine{
+    0%{
+      background-position:-290px 0;
+    }
+    40%, 100%{
+      background-position:0px 0;
+    }
+  }
+
 `;
 
 export default GlobalStyle;

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import StoreHeader from '../../components/StoreHeader';
 import ProductCards from '../../components/ProductCard';
 import StoreFooter from '../../components/StoreFooter';
+import ProductCardPreLoader from '../../components/ProductCardPreLoader'
 import Filters from './Filters';
 import { useLocation, useHistory } from 'react-router-dom';
 import Pagination from '@material-ui/lab/Pagination';
@@ -167,9 +168,9 @@ export default function StoreCategoriesPage(props) {
 					</p>
 					<SectionHeading>{subCategory}</SectionHeading>
 					{showLoading ? (
-						<SpinnerDiv>
-							<BounceLoader size={100} color={'#5673E8'} />
-						</SpinnerDiv>
+						<ProductCardWrapper>
+							<ProductCardPreLoader cardCount="8" margin="5px 5px" />
+						</ProductCardWrapper>
 					) : (
 						<ProductCardWrapper>
 							{productListing.length === 0 ? (
@@ -201,3 +202,8 @@ export default function StoreCategoriesPage(props) {
 		</>
 	);
 }
+/**
+ * <SpinnerDiv>
+							<BounceLoader size={100} color={'#5673E8'} />
+						</SpinnerDiv>
+ */
