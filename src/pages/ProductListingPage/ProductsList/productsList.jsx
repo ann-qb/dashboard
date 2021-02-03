@@ -105,7 +105,7 @@ export default function ProductsList(props) {
 
 	useEffect(() => {
 		console.log(status);
-		if (status === 'loading product list') {
+		if (status === 'loading product list' || status === 'searching all store products') {
 			setShowLoading(true);
 		} else {
 			setShowLoading(false);
@@ -122,7 +122,6 @@ export default function ProductsList(props) {
 
 	useEffect(() => {
 		const pageContainer = document.querySelector('#scrollToTop');
-		console.log('>>>>>>>>>>> page Change');
 		pageContainer['scrollTo']({ top: 0, behavior: 'smooth' });
 	}, [currentPage]);
 
