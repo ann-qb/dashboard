@@ -9,6 +9,7 @@ import AlertPopup from '../../../components/Popups/AlertPopups';
 import IconButton from '@material-ui/core/IconButton';
 import AddBoxRoundedIcon from '@material-ui/icons/AddBoxRounded';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ErrorImg from '../../../assets/Images/sadError.png';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grow from '@material-ui/core/Grow';
@@ -75,6 +76,26 @@ const SpinnerDiv = styled.div`
 	margin: auto 0;
 `;
 
+const FailureWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: fit-content;
+	padding: 10px;
+	margin: 20px 0 30px 0;
+	background-color: #fff;
+`;
+const FailureImage = styled.img`
+	width: 50%;
+	height: auto;
+	margin-bottom: 20px;
+`;
+const FailureText = styled.p`
+	font-size: 120%;
+`;
+
 export default function Categories(props) {
 	const classes = useStyles();
 	// States for search and filter
@@ -93,16 +114,24 @@ export default function Categories(props) {
 		}
 	}, []);
 
+	const [loadingFailed, setLoadingFailed] = useState(false);
+
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
 	const [alertMessage, setAlertMessage] = useState('');
 	const [showLoading, setShowLoading] = useState(false);
 
 	useEffect(() => {
+		console.log(status)
+		if (status === 'loading category list failed') {
+			setLoadingFailed(true);
+		} 
+
 		if (status === 'loading category list over') {
 			setNewCategory('');
 			setDisableInput(false);
 		}
+
 		if (status === 'add category success') {
 			showAlertPopup('success', 'Category added successfully');
 		} else if (status === 'add category failed') {
@@ -130,10 +159,10 @@ export default function Categories(props) {
 		}
 	}, [status]);
 
-	const showAlertPopup = (type,message) => {
+	const showAlertPopup = (type, message) => {
 		setAlertType(type);
 		setAlertMessage(message);
-		setAlertDisplay(true);;
+		setAlertDisplay(true);
 	};
 
 	// Additional function to be written wherever AlertPopup component is used
@@ -190,6 +219,12 @@ export default function Categories(props) {
 					<SpinnerDiv>
 						<BounceLoader size={100} color={'#5673E8'} loading={showLoading} />
 					</SpinnerDiv>
+				) : loadingFailed ? (
+					<FailureWrapper>
+						<FailureImage src={ErrorImg} alt="Error Image" />
+						<FailureText>Sorry, failed to load Categories.</FailureText>
+						<FailureText>This might be some server side issue</FailureText>
+					</FailureWrapper>
 				) : props.searchValue ? (
 					categoryList
 						.filter((category) => category.name.toLowerCase().includes(props.searchValue.toLowerCase()))

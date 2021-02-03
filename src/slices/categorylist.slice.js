@@ -35,15 +35,16 @@ export const onGetCategoryList = () => async(dispatch) => {
         console.log(response);
         if (response.status === 200) {
             dispatch(storeCategoryList({ categoryList: response.data.data }));
+            dispatch(updateStatus({ status: 'loading category list over' }));
         } else {
             console.log('Failed to fetch category list');
+            dispatch(updateStatus({ status: 'loading category list failed' }));
         }
     } catch (error) {
         console.log(error);
         console.log(error.response);
-    }
-    // end loading
-    dispatch(updateStatus({ status: 'loading category list over' }));
+        dispatch(updateStatus({ status: 'loading category list failed' }));
+    }  
     // reset
     dispatch(resetStatus());
 };
