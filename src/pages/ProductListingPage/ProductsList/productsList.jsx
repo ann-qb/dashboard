@@ -110,6 +110,12 @@ export default function ProductsList(props) {
 		}
 	}, [status]);
 
+	useEffect(() => {
+		const pageContainer = document.querySelector('#scrollToTop');
+		console.log('>>>>>>>>>>> page Change')
+		pageContainer['scrollTo']({ top: 0, behavior: 'smooth' });
+	}, [currentPage]);
+
 	const redirectToAddProductPage = () => {
 		history.push('/addProducts');
 	};
@@ -129,7 +135,7 @@ export default function ProductsList(props) {
 	return (
 		<>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
-			<PageContainer>
+			<PageContainer id="scrollToTop">
 				<p className="pageHeaders blackFont">Product List</p>
 				<AddButton className="button-primary" onClick={redirectToAddProductPage}>
 					+ Add Products

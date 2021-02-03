@@ -131,6 +131,7 @@ export default function StoreCategoriesPage(props) {
 				dispatch(onGetStoreProductListing({ subCategory, currentPage, update: true, sortProperty, sortOrder }));
 			}
 		}
+		window['scrollTo']({ top: 0, behavior: 'smooth' });
 	}, [currentPage]);
 
 	const redirectToAddProductsPage = () => {
