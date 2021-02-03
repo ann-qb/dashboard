@@ -12,6 +12,7 @@ import Banner3 from '../../assets/Images/banner3.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { onGetHomePageData } from '../../slices/storehomepage.slice';
 import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const BannerImage = styled.img`
 	width: 100%;
@@ -45,6 +46,7 @@ const SeeMore = styled.p`
 `;
 
 export default function StoreHomePage(props) {
+	const history = useHistory()
 	// Multi Carousel props
 	const MultiCarouselProps = {
 		additionalTransfrom: 0,
@@ -73,6 +75,11 @@ export default function StoreHomePage(props) {
 		}
 	}, []);
 
+	const seeMore = (e) => {
+		console.log(e.target.dataset['name']);
+		history.push(`/store-category?subCategory=${e.target.dataset['name']}`);
+	};
+
 	return (
 		<div>
 			<StoreHeader />
@@ -87,7 +94,7 @@ export default function StoreHomePage(props) {
 					<NewCategoryWrapper className="cards" key={each.id + each.name}>
 						<SectionHeadWrapper>
 							<SectionHeading>{each.name}</SectionHeading>
-							<SeeMore>See more</SeeMore>
+							<SeeMore data-name={each.name} onClick={seeMore}>See more</SeeMore>
 						</SectionHeadWrapper>
 						<MultiCarousel {...MultiCarouselProps}>
 							{each.Products.map((item) => (
