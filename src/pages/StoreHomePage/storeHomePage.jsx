@@ -9,9 +9,10 @@ import Carousel from 'react-material-ui-carousel';
 import Banner1 from '../../assets/Images/banner1.png';
 import Banner2 from '../../assets/Images/banner2.png';
 import Banner3 from '../../assets/Images/banner3.png';
+import ProductCardPreLoader from '../../components/ProductCardPreLoader';
 import { useDispatch, useSelector } from 'react-redux';
 import { onGetHomePageData } from '../../slices/storehomepage.slice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const BannerImage = styled.img`
@@ -46,7 +47,8 @@ const SeeMore = styled.p`
 `;
 
 export default function StoreHomePage(props) {
-	const history = useHistory()
+	const displayedRowsOnScreen = [1, 2, 3];
+	const history = useHistory();
 	// Multi Carousel props
 	const MultiCarouselProps = {
 		additionalTransfrom: 0,
@@ -67,13 +69,23 @@ export default function StoreHomePage(props) {
 		swipeable: true,
 	};
 
-	const { homePageData } = useSelector((state) => state.homePageDataSlice);
+	const [showLoading, setShowLoading] = useState(false);
+
+	const { homePageData, status } = useSelector((state) => state.homePageDataSlice);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		if (homePageData.length === 0) {
 			dispatch(onGetHomePageData());
 		}
 	}, []);
+
+	useEffect(() => {
+		if (status === 'loading home page data') {
+			setShowLoading(true);
+		} else {
+			setShowLoading(false);
+		}
+	}, [status]);
 
 	const seeMore = (e) => {
 		console.log(e.target.dataset['name']);
@@ -90,19 +102,34 @@ export default function StoreHomePage(props) {
 				<BannerImage src={Banner3} />
 			</Carousel>
 			<ProductsWrapper>
-				{homePageData.map((each) => (
-					<NewCategoryWrapper className="cards" key={each.id + each.name}>
-						<SectionHeadWrapper>
-							<SectionHeading>{each.name}</SectionHeading>
-							<SeeMore data-name={each.name} onClick={seeMore}>See more</SeeMore>
-						</SectionHeadWrapper>
-						<MultiCarousel {...MultiCarouselProps}>
-							{each.Products.map((item) => (
-								<ProductCard key={item.id + item.name} data={item} />
-							))}
-						</MultiCarousel>
-					</NewCategoryWrapper>
-				))}
+				{showLoading
+					? displayedRowsOnScreen.map((row) => (
+							<NewCategoryWrapper className="cards" key={row}>
+								
+								<MultiCarousel {...MultiCarouselProps}>
+									<ProductCardPreLoader />
+									<ProductCardPreLoader />
+									<ProductCardPreLoader />
+									<ProductCardPreLoader />
+									<ProductCardPreLoader />
+								</MultiCarousel>
+							</NewCategoryWrapper>
+					  ))
+					: homePageData.map((each) => (
+							<NewCategoryWrapper className="cards" key={each.id + each.name}>
+								<SectionHeadWrapper>
+									<SectionHeading>{each.name}</SectionHeading>
+									<SeeMore data-name={each.name} onClick={seeMore}>
+										See more
+									</SeeMore>
+								</SectionHeadWrapper>
+								<MultiCarousel {...MultiCarouselProps}>
+									{each.Products.map((item) => (
+										<ProductCard key={item.id + item.name} data={item} />
+									))}
+								</MultiCarousel>
+							</NewCategoryWrapper>
+					  ))}
 			</ProductsWrapper>
 			<StoreFooter />
 		</div>
