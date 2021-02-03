@@ -97,7 +97,7 @@ export default function Header(props) {
 		<HeaderBar>
 			{props.page === 'error' ? (
 				<LogoImage src={Logo} />
-			) : (
+			) : props.page === 'addProducts' ? <SearchBox/> : (
 				<SearchBox>
 					<span style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
 						<FontAwesomeIcon style={{ color: '#74788d' }} icon="search" />

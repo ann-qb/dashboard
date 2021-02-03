@@ -9,7 +9,7 @@ const ContentContainer = styled.div`
 export default function Content() {
 	return (
 		<ContentContainer>
-			<Header />
+			<Header page="addProducts" />
 			<AddProducts />
 		</ContentContainer>
 	);
