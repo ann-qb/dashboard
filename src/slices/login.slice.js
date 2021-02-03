@@ -66,7 +66,7 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 			console.log('Something went wrong while checking username!');
 		}
 	} catch (error) {
-		console.log(error);
+		console.log('>>>', error);
 		console.log(error.response);
 		if (error?.response?.status === 400) {
 			console.log(error.response.data);
@@ -76,7 +76,7 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 			dispatch(updateVerifiedUser({ verifiedUserStatus: 'inactive' }));
 		}
 	}
-	// dispatch(resetStatus()); // to indicate API call is over
+	dispatch(resetStatus()); // to indicate API call is over
 };
 
 export const onLogin = (data) => async (dispatch) => {

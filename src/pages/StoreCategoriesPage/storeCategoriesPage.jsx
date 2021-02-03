@@ -41,7 +41,8 @@ const FiltersWrapper = styled.div`
 `;
 const ProductsWrapper = styled.div`
 	width: 1060px;
-	height: 100%;
+	// height: 100%;
+	min-height: 80vh;
 	margin: 0 5px;
 `;
 
@@ -178,7 +179,8 @@ export default function StoreCategoriesPage(props) {
 											variant="contained"
 											className={classes.button}
 											disableElevation
-											onClick={redirectToAddProductsPage}>
+											onClick={redirectToAddProductsPage}
+										>
 											Add Products
 										</Button>
 									</ShowIfAuth>
@@ -189,7 +191,7 @@ export default function StoreCategoriesPage(props) {
 							))}
 						</ProductCardWrapper>
 					)}
-					{pageCount === 1 ? null : (
+					{pageCount === 1 || showLoading ? null : (
 						<Pagination page={currentPage} count={pageCount} shape="rounded" onChange={handlePageChange} />
 					)}
 				</ProductsWrapper>
