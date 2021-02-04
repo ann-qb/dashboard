@@ -24,6 +24,7 @@ const StatCardWrapper = styled.div`
 `;
 
 export default function UserPage() {
+	const { loggedUser, role } = useSelector((state) => state.loginSlice);
 	const [alertDisplay, setAlertDisplay] = useState(false);
 	const [alertType, setAlertType] = useState('');
 	const [alertMessage, setAlertMessage] = useState('');
@@ -38,15 +39,19 @@ export default function UserPage() {
 	const [pendingUsers, setPendingUsers] = useState(0);
 	const [inactiveUsers, setInactiveUsers] = useState(0);
 	useEffect(() => {
-		setTotalUsers(userList.filter((each) => each.Role.name !== 'admin' || !each.Role).length);
-		setActiveUsers(
-			userList.reduce(
-				(acc, item) => (item.status === 'active' && (item.Role.name !== 'admin' || !item.Role) ? acc + 1 : acc),
-				0
-			)
-		);
-		setPendingUsers(userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0));
-		setInactiveUsers(userList.reduce((acc, item) => (item.status === 'inactive' ? acc + 1 : acc), 0));
+		if(role && role === 'admin'){
+			console.log(role);
+			console.log(userList[1]);
+			setTotalUsers(userList.filter((each) => each.Role.name !== 'admin' || !each.Role).length);
+			setActiveUsers(
+				userList.reduce(
+					(acc, item) => (item.status === 'active' && (item.Role.name !== 'admin' || !item.Role) ? acc + 1 : acc),
+					0
+				)
+			);
+			setPendingUsers(userList.reduce((acc, item) => (item.status === 'pending' ? acc + 1 : acc), 0));
+			setInactiveUsers(userList.reduce((acc, item) => (item.status === 'inactive' ? acc + 1 : acc), 0));
+		}
 	}, [userList]);
 
 	console.log(totalUsers);
