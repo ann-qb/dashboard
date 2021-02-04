@@ -122,10 +122,9 @@ export default function Categories(props) {
 	const [showLoading, setShowLoading] = useState(false);
 
 	useEffect(() => {
-		console.log(status)
 		if (status === 'loading category list failed') {
 			setLoadingFailed(true);
-		} 
+		}
 
 		if (status === 'loading category list over') {
 			setNewCategory('');
@@ -187,7 +186,6 @@ export default function Categories(props) {
 	const addNewCategory = () => {
 		setDisableInput(true);
 		dispatch(onAddCategory({ category: newCategory }));
-		console.log({ category: newCategory });
 	};
 
 	return (

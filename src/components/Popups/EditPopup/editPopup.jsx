@@ -127,7 +127,6 @@ export default function EditModal(props) {
 			transform: 'translate(-50%,-50%)',
 		},
 	};
-	console.log('Modal called');
 	return (
 		<Modal style={modalStyle} isOpen={props.isOpen} onRequestClose={props.onRequestClose}>
 			<Title>{props.title}</Title>
@@ -165,8 +164,7 @@ export default function EditModal(props) {
 							id="status_dropdown"
 							value={userData.status}
 							onChange={handleInputChange}
-							disabled={props.editSelf}
-						>
+							disabled={props.editSelf}>
 							{props.data && props.data.status !== 'pending' ? (
 								<>
 									<option value="active">Active</option>
@@ -187,8 +185,7 @@ export default function EditModal(props) {
 					onClick={() => {
 						cancelEdit();
 						props.onRequestClose();
-					}}
-				>
+					}}>
 					Cancel
 				</button>
 				<button
@@ -197,8 +194,7 @@ export default function EditModal(props) {
 					onClick={() => {
 						validateData();
 						props.onRequestClose();
-					}}
-				>
+					}}>
 					Submit
 				</button>
 			</ButtonWrapper>

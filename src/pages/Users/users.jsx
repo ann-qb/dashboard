@@ -8,8 +8,6 @@ const style = {
 };
 
 export default function Users(props) {
-	console.log('dp');
-	console.log(useHistory());
 	return (
 		<div style={style}>
 			<SideNavigation parentPage="users" />

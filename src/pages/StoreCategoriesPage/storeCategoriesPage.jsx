@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import StoreHeader from '../../components/StoreHeader';
 import ProductCards from '../../components/ProductCard';
 import StoreFooter from '../../components/StoreFooter';
-import ProductCardPreLoader from '../../components/ProductCardPreLoader'
+import ProductCardPreLoader from '../../components/ProductCardPreLoader';
 import Filters from './Filters';
 import { useLocation, useHistory } from 'react-router-dom';
 import Pagination from '@material-ui/lab/Pagination';
@@ -93,12 +93,11 @@ export default function StoreCategoriesPage(props) {
 	let subCategory = query.get('subCategory');
 	if (category === subCategory) subCategory = null;
 	const dispatch = useDispatch();
-	const { productListing, totalPages, status, sortProperty, sortOrder } = useSelector(
+	const { productListing, totalPages, status, sortProperty, sortOrder, limit: range } = useSelector(
 		(state) => state.storeProductListingSlice
 	);
 	const [showLoading, setShowLoading] = useState(true);
 	useEffect(() => {
-		console.log(status);
 		if (status === 'loading product listing' || status === 'searching store') {
 			setShowLoading(true);
 		} else if (status === 'loading product listing over' || status === 'searching store over') {
@@ -146,7 +145,7 @@ export default function StoreCategoriesPage(props) {
 	useEffect(() => {
 		setPageCount(totalPages);
 	}, [totalPages]);
-	const range = 4;
+
 	// const productListForCurrentPage = productListing.slice((currentPage - 1) * range, range * currentPage)[0];
 	return (
 		<>
@@ -181,8 +180,7 @@ export default function StoreCategoriesPage(props) {
 											variant="contained"
 											className={classes.button}
 											disableElevation
-											onClick={redirectToAddProductsPage}
-										>
+											onClick={redirectToAddProductsPage}>
 											Add Products
 										</Button>
 									</ShowIfAuth>

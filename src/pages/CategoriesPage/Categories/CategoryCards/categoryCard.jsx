@@ -123,8 +123,10 @@ export default function CategoryCard(props) {
 
 	useEffect(() => {
 		if (status === 'add subcategory loading') {
-			setDisableAddNewSubCategory(true);
-		} else if (status === 'add subcategory success' || status === 'add subcategory failed') {
+		} else if (
+			(status === 'add subcategory success' && disableAddNewSubCategory) ||
+			(status === 'add subcategory failed' && disableAddNewSubCategory)
+		) {
 			setNewSubCategory('');
 			setDisableAddNewSubCategory(false);
 		}
@@ -139,6 +141,7 @@ export default function CategoryCard(props) {
 	};
 
 	const addNewSubCategory = () => {
+		setDisableAddNewSubCategory(true);
 		dispatch(onAddSubCategory({ subcategory: newSubCategory, parentCategory: props.category.name }));
 	};
 
@@ -148,13 +151,19 @@ export default function CategoryCard(props) {
 	const [disableInput, setDisableInput] = useState(false);
 	const [disableDiv, setDisableDiv] = useState(false);
 
+	useEffect(() => {
+		if (status === 'edit category failed') {
+			setEdit(false);
+			setDisableInput(false);
+		}
+	}, [status]);
+
 	const handleEditCategoryInputChange = (e) => {
 		setEditedCategory(e.target.value);
 	};
 
 	const keyPress = (e) => {
 		if (e.key === 'Enter') {
-			console.log('enter pressed');
 			if (editedCategory.trim().length !== 0) {
 				setDisableInput(true);
 				dispatch(
@@ -164,10 +173,6 @@ export default function CategoryCard(props) {
 					})
 				);
 			}
-			console.log({
-				category: editedCategory,
-				categoryId: props.category.id,
-			});
 		}
 	};
 
@@ -199,10 +204,6 @@ export default function CategoryCard(props) {
 				categoryId: props.category.id,
 			})
 		);
-		console.log({
-			category: props.category.name,
-			categoryId: props.category.id,
-		});
 		setDisableDiv(true);
 		setOpen(false);
 	};
@@ -253,8 +254,7 @@ export default function CategoryCard(props) {
 							style={{ marginRight: '15px' }}
 							aria-label="expand row"
 							size="small"
-							onClick={toggleEnableEditCategory}
-						>
+							onClick={toggleEnableEditCategory}>
 							<ClearRoundedIcon />
 						</IconButton>
 					</>
@@ -264,8 +264,7 @@ export default function CategoryCard(props) {
 							style={{ marginRight: '15px' }}
 							aria-label="expand row"
 							size="small"
-							onClick={toggleEnableEditCategory}
-						>
+							onClick={toggleEnableEditCategory}>
 							<CreateOutlinedIcon />
 						</IconButton>
 
@@ -302,7 +301,7 @@ export default function CategoryCard(props) {
 			<DeleteConfirmPopup
 				id={props.category.id}
 				isOpen={deletePopupIsOpen}
-				customMessage="You are about to delete all sub categories and products under this category"
+				customMessage="You are about to delete all sub categories and products under this category."
 				onDelete={deleteCategory}
 				onRequestClose={closeDeleteModal}
 			/>

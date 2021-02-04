@@ -96,7 +96,6 @@ export default function ProductCard(props) {
 	const dispatch = useDispatch();
 
 	const sendToProductPage = (e) => {
-		console.log(e.target.id);
 		history.push(`/product/${props.data.id}`);
 	};
 	const sendToEditProductsPage = () => {

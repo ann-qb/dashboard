@@ -75,6 +75,9 @@ export default function SubCategoryCard(props) {
 
 	useEffect(() => {
 		if (status === 'edit subcategory loading') {
+		} else if (status === 'edit subcategory failed') {
+			setEdit(false);
+			setDisableInput(false);
 		} else if (status === 'loading category list success') {
 			setEdit(false);
 			setDisableInput(false);
@@ -87,7 +90,6 @@ export default function SubCategoryCard(props) {
 
 	const keyPress = (e) => {
 		if (e.key === 'Enter') {
-			console.log('enter pressed');
 			if (editedSubcategory.trim().length !== 0) {
 				setDisableInput(true);
 				dispatch(
@@ -111,11 +113,6 @@ export default function SubCategoryCard(props) {
 					parentCategoryId: props.subcategory.category,
 				})
 			);
-			console.log({
-				subcategory: editedSubcategory,
-				subcategoryId: props.subcategory.id,
-				parentCategoryId: props.subcategory.category,
-			});
 		}
 	};
 	const toggleEnableEditSubcategory = () => {
@@ -138,11 +135,6 @@ export default function SubCategoryCard(props) {
 				subcategoryId: props.subcategory.id,
 			})
 		);
-		console.log({
-			subcategory: props.subcategory.name,
-			subcategoryId: props.subcategory.id,
-			parentCategoryId: props.subcategory.category,
-		});
 		setDisableDiv(true);
 	};
 
@@ -190,16 +182,14 @@ export default function SubCategoryCard(props) {
 									style={{ marginRight: '15px' }}
 									aria-label="expand row"
 									size="small"
-									onClick={editSubcategory}
-								>
+									onClick={editSubcategory}>
 									<DoneRoundedIcon />
 								</IconButton>
 								<IconButton
 									style={{ marginRight: '15px' }}
 									aria-label="expand row"
 									size="small"
-									onClick={toggleEnableEditSubcategory}
-								>
+									onClick={toggleEnableEditSubcategory}>
 									<ClearRoundedIcon />
 								</IconButton>
 							</>
@@ -211,8 +201,7 @@ export default function SubCategoryCard(props) {
 							style={{ marginRight: '15px' }}
 							aria-label="expand row"
 							size="small"
-							onClick={toggleEnableEditSubcategory}
-						>
+							onClick={toggleEnableEditSubcategory}>
 							<CreateOutlinedIcon />
 						</IconButton>
 

@@ -44,12 +44,11 @@ const FailureImage = styled.img`
 `;
 const FailureText = styled.p`
 	font-size: 120%;
-	
 `;
 
 export default function ProductsList(props) {
 	const history = useHistory();
-	const { productList, totalPages, status } = useSelector((state) => state.productListSlice);
+	const { productList, totalPages, status, limit: range } = useSelector((state) => state.productListSlice);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageCount, setPageCount] = useState(1);
 
@@ -83,7 +82,6 @@ export default function ProductsList(props) {
 	useEffect(() => {
 		setCurrentPage(1);
 		if (props.searchTerm === '') {
-			console.log(props.searchTerm);
 			dispatch(onGetProductList({ currentPage: 1 }));
 		} else {
 			dispatch(onSearchAllProductsList({ searchTerm: props.searchTerm, currentPage: 1 }));
@@ -105,7 +103,6 @@ export default function ProductsList(props) {
 	const [loadingListFailed, setLoadingListFailed] = useState(false);
 
 	useEffect(() => {
-		console.log(status);
 		if (status === 'loading product list' || status === 'searching all store products') {
 			setShowLoading(true);
 		} else {
@@ -141,7 +138,7 @@ export default function ProductsList(props) {
 	useEffect(() => {
 		setPageCount(totalPages);
 	}, [totalPages]);
-	const range = 16;
+
 	return (
 		<>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />

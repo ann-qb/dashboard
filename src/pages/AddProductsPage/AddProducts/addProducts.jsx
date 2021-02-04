@@ -244,10 +244,6 @@ export default function AddProducts(props) {
 			if (picture[0]) {
 				formData.append('avatar', picture[0]);
 			}
-
-			for (const v of formData.entries()) {
-				console.log(v);
-			}
 			if (productId) {
 				dispatch(onEditProduct({ productId, formData }));
 			} else {
@@ -270,7 +266,6 @@ export default function AddProducts(props) {
 	useEffect(() => {
 		if (productId !== null) {
 			const productToBeEdited = productList.find((each) => each.id === productId);
-			console.log(productToBeEdited);
 			if (productToBeEdited) {
 				const category = categoryList.find((each) => each.id === productToBeEdited.category_id);
 				const subcategory = category?.Subcategories.find((each) => each.id === productToBeEdited.subcategory_id);

@@ -40,7 +40,6 @@ export default function CreateNewPassword(props) {
 
 	const uploadNewPassword = () => {
 		newPassword = document.querySelector('#new_pass').value;
-		console.log(newPassword);
 		dispatch(onChangePassword({ oldPassword, newPassword }));
 		setOldPasswordEntered(false);
 		props.close();

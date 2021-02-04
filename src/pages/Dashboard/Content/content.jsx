@@ -9,10 +9,6 @@ const ContentContainer = styled.div`
 	width: 100%;
 `;
 export default function Content() {
-	console.log('cp');
-	console.log(useHistory());
-	console.log(useLocation());
-	const { path } = useRouteMatch();
 	return (
 		<ContentContainer>
 			<Header />

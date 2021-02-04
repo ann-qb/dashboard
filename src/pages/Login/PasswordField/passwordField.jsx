@@ -82,9 +82,6 @@ export default function PasswordField(props) {
 			) : (
 				<ion-icon style={eyeIconStyle} name="eye-off-outline" onClick={changePasswordState}></ion-icon>
 			)}
-			{console.log('Rerender')}
-			{console.log('FV' + props.fieldValue)}
-			{console.log('FC' + props.fieldContent)}
 			<InputField
 				onFocus={changeInputBorderOnFocus}
 				onBlur={changeInputBorderOnBlur}

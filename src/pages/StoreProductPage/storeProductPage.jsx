@@ -87,14 +87,12 @@ export default function StoreProductPage(props) {
 	const { loggedUser } = useSelector((state) => state.loginSlice);
 	const [productToCart, setProductToCart] = useState(null);
 	const { id } = useParams();
-	console.log(id);
 	const [productDetails, setProductDetails] = useState('');
 
 	useEffect(() => {
 		const fetchProductDetails = async () => {
 			try {
 				const response = await fetch.get(`${baseURL}/product?id=${id}`);
-				console.log(response);
 				if (response.status === 200) {
 					setProductDetails(response.data.data);
 				} else {
@@ -110,7 +108,6 @@ export default function StoreProductPage(props) {
 
 	const addToCart = () => {
 		const existingNumber = JSON.parse(localStorage.getItem('productsInCart'))?.numberOfProducts;
-		console.log(localStorage.getItem('productsInCart'));
 		let newNumber;
 		existingNumber ? (newNumber = parseInt(existingNumber) + 1) : (newNumber = 1);
 
@@ -141,8 +138,7 @@ export default function StoreProductPage(props) {
 							className={classes.button}
 							startIcon={<AddShoppingCartOutlinedIcon />}
 							onClick={addToCart}
-							disableElevation
-						>
+							disableElevation>
 							Add To Cart
 						</Button>
 						<Button variant="contained" className={classes.button} startIcon={<ShopOutlinedIcon />} disableElevation>

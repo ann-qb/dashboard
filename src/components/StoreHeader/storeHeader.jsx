@@ -202,7 +202,6 @@ export default function StoreHeader(props) {
 
 	// Query data
 	const search = query.get('search');
-	console.log(search);
 	useEffect(() => {
 		if (search === null) {
 			setSearchTerm('');
@@ -223,7 +222,6 @@ export default function StoreHeader(props) {
 	useEffect(() => {
 		try {
 			const productsInCart = JSON.parse(localStorage.getItem('productsInCart'));
-			console.log(productsInCart);
 			if (loggedUser.email === productsInCart.user) {
 				setProductsInCart(productsInCart.numberOfProducts);
 			} else {
@@ -278,7 +276,6 @@ export default function StoreHeader(props) {
 
 	const keyPress = (e) => {
 		if (e.key === 'Enter') {
-			console.log('enter pressed');
 			if (searchTerm.trim().length !== 0) {
 				history.push(`/store-category?search=${searchTerm.trim()}`);
 			}

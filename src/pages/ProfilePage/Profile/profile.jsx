@@ -135,8 +135,7 @@ export default function ProfilePage() {
 	const editDetailsModal = () => {
 		setEditDetailsIsOpen(true);
 	};
-	console.log('Prp');
-	console.log(useHistory());
+
 	return (
 		<PageContainer>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />

@@ -88,7 +88,6 @@ export default function StoreHomePage(props) {
 	}, [status]);
 
 	const seeMore = (e) => {
-		console.log(e.target.dataset['name']);
 		history.push(`/store-category?subCategory=${e.target.dataset['name']}`);
 	};
 
@@ -105,7 +104,6 @@ export default function StoreHomePage(props) {
 				{showLoading
 					? displayedRowsOnScreen.map((row) => (
 							<NewCategoryWrapper className="cards" key={row}>
-								
 								<MultiCarousel {...MultiCarouselProps}>
 									<ProductCardPreLoader />
 									<ProductCardPreLoader />

@@ -4,7 +4,7 @@ import fetch from '../utils/axios';
 
 // Number of products to be displayed per page
 const limit = 16;
-const initialState = { productList: [], status: 'idle', totalPages: 1, currentPage: 1 };
+const initialState = { productList: [], status: 'idle', totalPages: 1, currentPage: 1, limit };
 
 const productListSlice = createSlice({
 	name: 'productList',
