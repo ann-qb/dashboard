@@ -214,7 +214,7 @@ export default function SubCategoryCard(props) {
 			<DeleteConfirmPopup
 				id={props.subcategory.id}
 				isOpen={deletePopupIsOpen}
-				customMessage="You are about to delete all products under this sub category"
+				customMessage="You are about to delete all products under this subcategory."
 				onDelete={deleteSubCategory}
 				onRequestClose={closeDeleteModal}
 			/>
