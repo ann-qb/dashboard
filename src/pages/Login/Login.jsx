@@ -48,7 +48,7 @@ export default function Login() {
 				history.replace(location?.state?.from || '/dashboard');
 			}
 		}
-	}, [status, loggedUser]);
+	}, [status, loggedUser, role]);
 
 	useEffect(() => {
 		status === 'loading' ? setShowLoading(true) : setShowLoading(false);
