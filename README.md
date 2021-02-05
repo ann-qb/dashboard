@@ -1,4 +1,4 @@
-# Dashboard Project 
+# Oddy E-commerce Project 
 > Authors: Ann Susan, Thejus S
 
 ## Technology used
@@ -14,6 +14,6 @@
 
 
 ## Dummy site
-> Not implemented yet.
+> [Oddy](https://ann-qb.github.io/dashboard)
 ---
 > For more information visit the [wiki](https://github.com/ann-qb/dashboard/wiki)
