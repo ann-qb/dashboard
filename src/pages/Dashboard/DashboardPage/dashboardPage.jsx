@@ -40,7 +40,8 @@ export default function UserPage() {
 	const [inactiveUsers, setInactiveUsers] = useState(0);
 	useEffect(() => {
 		if (role && role === 'admin') {
-			setTotalUsers(userList.filter((each) => each.Role.name !== 'admin' || !each.Role).length);
+			console.log(userList[3],'||')
+			setTotalUsers(userList.filter((each) => each.Role.name !== 'admin' || !(each.Role)).length);
 			setActiveUsers(
 				userList.reduce(
 					(acc, item) => (item.status === 'active' && (item.Role.name !== 'admin' || !item.Role) ? acc + 1 : acc),
