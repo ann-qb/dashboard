@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/dashboard/static/css/main.2e7919c8.chunk.css",
-    "main.js": "/dashboard/static/js/main.3420b4a9.chunk.js",
-    "main.js.map": "/dashboard/static/js/main.3420b4a9.chunk.js.map",
+    "main.js": "/dashboard/static/js/main.4e88d5c2.chunk.js",
+    "main.js.map": "/dashboard/static/js/main.4e88d5c2.chunk.js.map",
     "runtime-main.js": "/dashboard/static/js/runtime-main.9f48176e.js",
     "runtime-main.js.map": "/dashboard/static/js/runtime-main.9f48176e.js.map",
     "static/css/2.f64b6e61.chunk.css": "/dashboard/static/css/2.f64b6e61.chunk.css",
@@ -27,6 +27,7 @@
     "static/media/profilePic_small.d2baeaa3.png": "/dashboard/static/media/profilePic_small.d2baeaa3.png",
     "static/media/styles.css": "/dashboard/static/media/revicons.e8746a62.woff",
     "static/media/sadError.f91689e1.png": "/dashboard/static/media/sadError.f91689e1.png",
+    "static/media/sad_bag.5406950e.png": "/dashboard/static/media/sad_bag.5406950e.png",
     "static/media/server_down.6b76524c.png": "/dashboard/static/media/server_down.6b76524c.png",
     "static/media/unknown_error.13cc2e4b.png": "/dashboard/static/media/unknown_error.13cc2e4b.png"
   },
@@ -35,6 +36,6 @@
     "static/css/2.f64b6e61.chunk.css",
     "static/js/2.7f7c6594.chunk.js",
     "static/css/main.2e7919c8.chunk.css",
-    "static/js/main.3420b4a9.chunk.js"
+    "static/js/main.4e88d5c2.chunk.js"
   ]
 }
