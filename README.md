@@ -14,6 +14,6 @@
 
 
 ## Dummy site
-> [Oddy](https://ann-qb.github.io/dashboard)
+> [Oddy](https://ann-qb.github.io/dashboard){:target="_blank"}
 ---
 > For more information visit the [wiki](https://github.com/ann-qb/dashboard/wiki)
