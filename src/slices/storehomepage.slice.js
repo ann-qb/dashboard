@@ -36,15 +36,15 @@ export const onGetHomePageData = () => async (dispatch) => {
 		console.log(response);
 		if (response.status === 200) {
 			dispatch(storeHomePageData({ homePageData: response.data.data }));
+			dispatch(updateStatus({ status: 'loading home page data success' }));
 		} else {
 			console.log('Failed to fetch home page data');
+			dispatch(updateStatus({ status: 'loading home page data failed' }));
 		}
 	} catch (error) {
 		console.log(error);
 		console.log(error.response);
+		dispatch(updateStatus({ status: 'loading home page data failed' }));
 	}
-	// end loading
-	dispatch(updateStatus({ status: 'loading home page data over' }));
-	// reset
 	dispatch(resetStatus());
 };
