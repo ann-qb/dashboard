@@ -38,7 +38,7 @@ function App() {
 						<PrivateRoute path="/store">
 							<StoreHomePage />
 						</PrivateRoute>
-						<PrivateRoute exact path="/dashboard">
+						<PrivateRoute exact path="/dashboard" allowedRoles={['admin']}>
 							<DashboardPage />
 						</PrivateRoute>
 						<PrivateRoute exact path="/users">

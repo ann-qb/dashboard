@@ -28,7 +28,7 @@ export default function Login() {
 	const [showLoading, setShowLoading] = useState(false);
 	const [message, setMessage] = useState('');
 
-	const { loggedUser, status, verifiedUser, errorMessage } = useSelector((state) => state.loginSlice);
+	const { loggedUser, role, status, verifiedUser, errorMessage } = useSelector((state) => state.loginSlice);
 
 	useEffect(() => {
 		const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -42,7 +42,11 @@ export default function Login() {
 		if (status === 'idle' && loggedUser !== null) {
 			dispatch(resetStatus());
 			dispatch(updateErrorMessage({ errorMessage: '' }));
-			history.replace(location?.state?.from || '/store');
+			if (role === 'user') {
+				history.replace(location?.state?.from || '/store');
+			} else if (role === 'admin') {
+				history.replace(location?.state?.from || '/dashboard');
+			}
 		}
 	}, [status, loggedUser]);
 
