@@ -4,18 +4,6 @@ import { onDeleteUser } from '../../../slices/userlist.slice';
 import { useDispatch } from 'react-redux';
 
 /**---------------- Styles ------------------*/
-const modalStyle = {
-	overlay: {},
-	content: {
-		top: '50%',
-		left: '50%',
-		height: 'fit-content',
-		width: '300px',
-		border: 'none',
-		boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19)',
-		transform: 'translate(-50%,-50%)',
-	},
-};
 
 const TextWrapper = styled.div`
 	display: flex;
@@ -27,6 +15,7 @@ const TextWrapper = styled.div`
 
 const P = styled.p`
 	font-size: 130%;
+	text-align: center;
 `;
 
 const ButtonWrapper = styled.div`
@@ -41,20 +30,56 @@ const iconStyle = {
 };
 
 export default function DeleteModal(props) {
+	let customMsg = false
+		const modalStyle = {
+			overlay: {},
+			content: {
+				top: '50%',
+				left: '50%',
+				height: 'fit-content',
+				width: '300px',
+				border: 'none',
+				boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.19)',
+				transform: 'translate(-50%,-50%)',
+			},
+		};
+	if(props.customMessage){
+		modalStyle.content.width = '500px'
+		customMsg = true;
+	}
+	
+
 	const dispatch = useDispatch();
 	return (
 		<Modal style={modalStyle} isOpen={props.isOpen} onRequestClose={props.onRequestClose}>
-			<TextWrapper>
-				<ion-icon style={iconStyle} name="alert-circle-outline"></ion-icon>
-				<P>Delete User?</P>
-			</TextWrapper>
+			{props.customMessage ? (
+				<TextWrapper>
+					<P>
+						{props.customMessage}
+						<br /> Are you sure?
+					</P>
+				</TextWrapper>
+			) : (
+				<TextWrapper>
+					<ion-icon style={iconStyle} name="alert-circle-outline"></ion-icon>
+					<P>Are you sure?</P>
+				</TextWrapper>
+			)}
 			<ButtonWrapper>
-				<button
-					style={{ marginRight: '10px' }}
-					className="button-danger"
-					onClick={() => (dispatch(onDeleteUser({ id: props.id })))}>
-					Delete
-				</button>
+				{props.onDelete ? (
+					<button style={{ marginRight: '10px' }} className="button-danger" onClick={props.onDelete}>
+						Delete
+					</button>
+				) : (
+					<button
+						style={{ marginRight: '10px' }}
+						className="button-danger"
+						onClick={() => dispatch(onDeleteUser({ id: props.id }))}
+					>
+						Delete
+					</button>
+				)}
+
 				<button style={{ marginLeft: '10px' }} className="button-danger-secondary" onClick={props.onRequestClose}>
 					Cancel
 				</button>

@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import LoginBackdrop from '../assets/Images/backdrop.png'
+import LoginBackdrop from '../assets/Images/backdrop.png';
 
 /**------ Colors ------*/
 const PRIMARY_PURPLE = '#5673E8',
@@ -35,6 +35,7 @@ const GlobalStyle = createGlobalStyle`
   /* Hide scrollbar */
   ::-webkit-scrollbar{
     width: 0px;
+    height:0px;
     background: transparent;
   }
 
@@ -162,6 +163,24 @@ const GlobalStyle = createGlobalStyle`
     
   }
 
+  /*-- Image Upload --*/
+  .imageUploadBtn{
+    // padding:5px !important;
+    outline: none !important;
+    cursor:pointer;
+    padding:5px 10px !important;
+    transition: all ease 0.2s !important;
+    font-size:90% !important;
+    background-color:${PRIMARY_PURPLE} !important;
+    color:#fff !important;
+    border: 1px solid ${PRIMARY_PURPLE} !important;
+    border-radius:5px !important;
+  }
+
+  uploadCard{
+    margin:auto 0;
+  }
+
   /*------------ Cards ---------------*/
 
   .cards{
@@ -190,6 +209,7 @@ const GlobalStyle = createGlobalStyle`
   .navigationText{
     font-family: 'IBM Plex Sans', sans-serif;
     color:#9398a4;
+    margin-left:20px;
   }
   
   .navLinks{
@@ -202,7 +222,8 @@ const GlobalStyle = createGlobalStyle`
   .navLinks:hover{
     background-color:#f3f8fb;
   }
-  .navLinks:hover .navigationText
+  .navLinks:hover .navigationText,
+  .navLinks:hover .MuiSvgIcon-root
   {
     color:${PRIMARY_PURPLE};
   }
@@ -227,7 +248,7 @@ const GlobalStyle = createGlobalStyle`
   /*------------ dashboard main header ---------------*/
 
   .pageHeaders{
-    font-size:120%;
+    font-size:150%;
     font-weight:500;
     letter-spacing: 1px;
   }
@@ -239,7 +260,7 @@ const GlobalStyle = createGlobalStyle`
   /*------------ Popup Alert ---------------*/
   .alertWrapper{
     position:absolute;
-    top:20px;
+    top:60px;
     right:20px;
     align-items:center;
     height:80px;
@@ -252,6 +273,21 @@ const GlobalStyle = createGlobalStyle`
 
  .navLinks:hover .md{
     color:${PRIMARY_PURPLE};
+  }
+
+  /*------------ Carousal ---------------*/
+  .carousal{
+    height:500px;
+  }
+
+  /*------------ Animations ---------------*/
+  @keyframes shine{
+    0%{
+      background-position:-290px 0;
+    }
+    40%, 100%{
+      background-position:0px 0;
+    }
   }
 
 `;

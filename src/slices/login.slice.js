@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { baseRedirectURL, baseURL } from '../config/constants';
 import fetch from './../utils/axios';
 
 const initialState = { verifiedUser: null, loggedUser: null, role: null, status: 'idle', errorMessage: '' };
@@ -12,10 +13,7 @@ const loginSlice = createSlice({
 			state.loggedUser = action.payload.loggedUser;
 			state.role = action.payload.role;
 			state.status = 'success';
-			if (!localStorage.getItem('currentUser')) {
-				localStorage.setItem('currentUser', JSON.stringify({ loggedUser: state.loggedUser, role: state.role }));
-				// Handle reset token expiry
-			}
+			localStorage.setItem('currentUser', JSON.stringify({ loggedUser: state.loggedUser, role: state.role }));
 		},
 		logout(state) {
 			state = initialState;
@@ -49,7 +47,7 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/check', {
+		const response = await axios.post(`${baseURL}/user/check`, {
 			email: data.userName,
 		});
 		if (response.status === 200) {
@@ -68,7 +66,7 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 			console.log('Something went wrong while checking username!');
 		}
 	} catch (error) {
-		console.log(error);
+		console.log('>>>', error);
 		console.log(error.response);
 		if (error?.response?.status === 400) {
 			console.log(error.response.data);
@@ -78,7 +76,7 @@ export const onVerifyUserName = (data) => async (dispatch) => {
 			dispatch(updateVerifiedUser({ verifiedUserStatus: 'inactive' }));
 		}
 	}
-	// dispatch(resetStatus()); // to indicate API call is over
+	dispatch(resetStatus()); // to indicate API call is over
 };
 
 export const onLogin = (data) => async (dispatch) => {
@@ -88,7 +86,7 @@ export const onLogin = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await axios.post('http://user-dashboard.qburst.build:3002/user/login', {
+		const response = await axios.post(`${baseURL}/user/login`, {
 			email: data.userName,
 			password: data.password,
 		});
@@ -117,7 +115,7 @@ export const onLogout = () => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await fetch.post('http://user-dashboard.qburst.build:3002/user/logout');
+		const response = await fetch.post(`${baseURL}/user/logout`);
 		if (response.status === 200) {
 			console.log(response.data);
 			// dispatch to store
@@ -138,7 +136,7 @@ export const onSetPassword = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await axios.put(`http://user-dashboard.qburst.build:3002/password?${data.query}`, {
+		const response = await axios.put(`${baseURL}/user/password?${data.query}`, {
 			password: data.password,
 		});
 		console.log(response);
@@ -163,9 +161,9 @@ export const onForgotPassword = (data) => async (dispatch) => {
 	dispatch(updateStatus({ status: 'loading' }));
 	// try-catch fetch API
 	try {
-		const response = await axios.put('http://user-dashboard.qburst.build:3002/user/password/forgot', {
+		const response = await axios.put(`${baseURL}/user/password/forgot`, {
 			email: data.email,
-			link: 'http://localhost:3001/user/set-password',
+			link: `${baseRedirectURL}/user/set-password`,
 		});
 		console.log(response);
 		console.log(response.data);

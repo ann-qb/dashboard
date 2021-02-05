@@ -28,7 +28,7 @@ export default function Login() {
 	const [showLoading, setShowLoading] = useState(false);
 	const [message, setMessage] = useState('');
 
-	const { loggedUser, status, verifiedUser, errorMessage } = useSelector((state) => state.loginSlice);
+	const { loggedUser, role, status, verifiedUser, errorMessage } = useSelector((state) => state.loginSlice);
 
 	useEffect(() => {
 		const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -42,9 +42,13 @@ export default function Login() {
 		if (status === 'idle' && loggedUser !== null) {
 			dispatch(resetStatus());
 			dispatch(updateErrorMessage({ errorMessage: '' }));
-			history.replace(location?.state?.from || '/dashboard');
+			if (role === 'user') {
+				history.replace(location?.state?.from || '/store');
+			} else if (role === 'admin') {
+				history.replace(location?.state?.from || '/dashboard');
+			}
 		}
-	}, [status, loggedUser]);
+	}, [status, loggedUser, role]);
 
 	useEffect(() => {
 		status === 'loading' ? setShowLoading(true) : setShowLoading(false);
@@ -114,7 +118,9 @@ export default function Login() {
 
 	const onHandlePasswordChange = (e) => {
 		const value = e.target.value;
-		setPassword(value);
+		if (value !== undefined) {
+			setPassword(value);
+		}
 		password.trim().length ? setDisableSubmit(false) : setDisableSubmit(true);
 	};
 
@@ -131,13 +137,6 @@ export default function Login() {
 		dispatch(onForgotPassword({ email: userName }));
 		// displayForgotPasswordMessage();
 	};
-
-	// const displayForgotPasswordMessage = () => {
-	// 	setMessage('A link to reset the password has been sent to your registered email id');
-	// 	setShowUsername(false);
-	// 	setShowPassword(false);
-	// 	setDisplayMessage(true);
-	// };
 
 	const takeBackToLoginFromDisplayMessage = () => {
 		setMessage('');

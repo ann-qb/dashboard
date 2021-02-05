@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 /** Expected props
@@ -20,7 +20,7 @@ export default function PasswordField(props) {
 		width: ${props.width};
 		height: ${props.height};
 		margin: ${props.margin};
-		margin-top:20px;
+		margin-top: 20px;
 	`;
 
 	const eyeIconStyle = {
@@ -40,6 +40,10 @@ export default function PasswordField(props) {
 	let fieldId;
 	if (props.id) fieldId = props.id;
 	else fieldId = 'passwordInputField';
+
+	useEffect(() => {
+		setFieldContent(null);
+	}, [props.id]);
 
 	const changePasswordState = () => {
 		setPasswordShown(passwordShown ? false : true);
@@ -71,7 +75,6 @@ export default function PasswordField(props) {
 		var errorField = null;
 	}
 
-
 	return (
 		<InputDiv>
 			{passwordShown ? (
@@ -79,9 +82,6 @@ export default function PasswordField(props) {
 			) : (
 				<ion-icon style={eyeIconStyle} name="eye-off-outline" onClick={changePasswordState}></ion-icon>
 			)}
-			{console.log('Rerender')}
-			{console.log('FV' + props.fieldValue)}
-			{console.log('FC' + props.fieldContent)}
 			<InputField
 				onFocus={changeInputBorderOnFocus}
 				onBlur={changeInputBorderOnBlur}

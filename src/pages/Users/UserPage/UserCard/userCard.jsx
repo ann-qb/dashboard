@@ -15,12 +15,17 @@ const CardContainer = styled.div`
 	margin: 10px 0;
 	padding: 10px 10px;
 	background-color: #fff;
+
+	// -youbkit-touch-callout: none;
+	// -youbkit-user-select: none;
+	// -moz-user-select: none;
+	// -ms-user-select: none;
+	// user-select: none;
 `;
 
 const UserTabs = styled.div`
 	display: flex;
 	width: 100%;
-
 	height: 100%;
 `;
 
@@ -28,13 +33,14 @@ const DetailsTabs = styled.div`
 	display: flex;
 	align-items: center;
 	width: 25%;
+	height: 100%;
 `;
 
 const StatusText = styled.p`
 	width: fit-content;
 	height: fit-content;
 	padding: 2px 5px;
-	font-size: 65%;
+	font-size: 80%;
 	border-radius: 5px;
 	border: none;
 	color: ${(props) => props.textColor};
@@ -64,12 +70,18 @@ const deleteIconStyle = {
 
 const ProfilePicHolder = styled.span`
 	height: 30px;
-	width: 30px;
+	width: 35px;
 	background-image: url(${ProfilePic});
 	background-position: center;
 	background-size: cover;
 	border-radius: 50%;
 	margin-right: 10px;
+`;
+
+const DetailsText = styled.p`
+	width: 100%;
+	margin-right: 10px;
+	overflow: scroll;
 `;
 
 export default function UserCard(props) {
@@ -83,11 +95,11 @@ export default function UserCard(props) {
 	const [deletePopupIsOpen, setDeletePopupIsOpen] = useState(false);
 
 	useEffect(() => {
-		if (editPopupIsOpen && status === 'edit user success') {
+		if (!editPopupIsOpen && status === 'edit user success') {
 			setAlertType('success');
 			setAlertMessage('User details updated successfully!');
 			showAlertPopup();
-		} else if (editPopupIsOpen && status === 'edit user failed') {
+		} else if (!editPopupIsOpen && status === 'edit user failed') {
 			setAlertType('error');
 			setAlertMessage('Could not update user details');
 			showAlertPopup();
@@ -100,7 +112,6 @@ export default function UserCard(props) {
 
 	const showAlertPopup = () => {
 		setAlertDisplay(true);
-		setEditPopupIsOpen(false);
 	};
 
 	// Additional function to be written wherever AlertPopup component is used
@@ -149,12 +160,12 @@ export default function UserCard(props) {
 		<CardContainer>
 			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
 			<UserTabs>
-				<DetailsTabs>
+				<DetailsTabs style={{ width: '30%' }}>
 					<ProfilePicHolder />
-					<p>{data.firstname + ' ' + data.lastname}</p>
+					<DetailsText>{data.firstname + ' ' + data.lastname}</DetailsText>
 				</DetailsTabs>
-				<DetailsTabs>
-					<p>{data.email}</p>
+				<DetailsTabs style={{ width: '50%' }}>
+					<DetailsText>{data.email}</DetailsText>
 				</DetailsTabs>
 				<DetailsTabs>
 					<StatusText bgColor={bgColor} textColor={textColor}>
@@ -167,7 +178,7 @@ export default function UserCard(props) {
 				<CreateAdminTaskTabs />
 			</ShowIfAuth>
 
-			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} data={data} />
+			<EditPopup isOpen={editPopupIsOpen} onRequestClose={closeEditModal} data={data} title="Edit User" />
 			<DeleteConfirmPopup id={data.id} isOpen={deletePopupIsOpen} onRequestClose={closeDeleteModal} />
 		</CardContainer>
 	);

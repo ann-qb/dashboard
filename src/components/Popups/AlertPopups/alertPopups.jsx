@@ -19,7 +19,6 @@ import styled from 'styled-components';
  */
 
 export default function AlertPopup(props) {
-
 	let backgroundColor, borderColor;
 
 	// Setup background color based on type of alert
@@ -51,13 +50,14 @@ export default function AlertPopup(props) {
 	};
 
 	// Set type of display based on props
-	let display = 'none'
+	let display = 'none';
 	props.display ? (display = 'flex') : (display = 'none');
 
 	const AlertWrapper = styled.div`
 		display: ${display};
 		background-color: ${backgroundColor};
-		border: 1px solid ${borderColor};
+		border-left: 5px solid ${borderColor};
+		z-index: 9999999999;
 	`;
 
 	const AlertTextBox = styled.div`

@@ -1,36 +1,81 @@
 import './App.css';
 import './components/Icons/icons';
 import GlobalStyle from './GlobalStyleSheet/globalStyleSheet';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
+import { Offline, Online } from 'react-detect-offline';
 import PrivateRoute from './components/PrivateRoute';
+
 import LoginPage from './pages/Login';
 import DashboardPage from './pages/Dashboard';
+import Users from './pages/Users';
+import ProfilePage from './pages/ProfilePage';
 import ErrorPage from './pages/ErrorPage';
+import OfflinePage from './pages/OfflinePage';
 import SetPasswordPage from './pages/SetPasswordPage';
+import CategoriesPage from './pages/CategoriesPage';
+import AddProductsPage from './pages/AddProductsPage';
+import ProductListingPage from './pages/ProductListingPage';
+import StoreHomePage from './pages/StoreHomePage';
+import StoreCategoryPage from './pages/StoreCategoriesPage';
+import StoreProductPage from './pages/StoreProductPage';
 
 function App() {
 	return (
 		<div>
-			<GlobalStyle />
-			<Router>
-				<Switch>
-					<Route path="/" exact>
-						<LoginPage />
-					</Route>
-					<Route path="/login">
-						<LoginPage />
-					</Route>
-					<Route path="/user/set-password">
-						<SetPasswordPage />
-					</Route>
-					<PrivateRoute path="/dashboard">
-						<DashboardPage />
-					</PrivateRoute>
-					<PrivateRoute path="/errorpage">
-						<ErrorPage errorType="100" />
-					</PrivateRoute>
-				</Switch>
-			</Router>
+			<Online>
+				<GlobalStyle />
+				<Router>
+					<Switch>
+						<Route path="/" exact>
+							<LoginPage />
+						</Route>
+						<Route path="/login">
+							<LoginPage />
+						</Route>
+						<Route path="/user/set-password">
+							<SetPasswordPage />
+						</Route>
+						<PrivateRoute path="/store">
+							<StoreHomePage />
+						</PrivateRoute>
+						<PrivateRoute exact path="/dashboard" allowedRoles={['admin']}>
+							<DashboardPage />
+						</PrivateRoute>
+						<PrivateRoute exact path="/users">
+							<Users />
+						</PrivateRoute>
+						<PrivateRoute path="/profile">
+							<ProfilePage />
+						</PrivateRoute>
+						<PrivateRoute path="/categories">
+							<CategoriesPage />
+						</PrivateRoute>
+						<PrivateRoute path="/addProducts">
+							<AddProductsPage />
+						</PrivateRoute>
+						<PrivateRoute path="/editProducts">
+							<AddProductsPage />
+						</PrivateRoute>
+						<PrivateRoute path="/productListing">
+							<ProductListingPage />
+						</PrivateRoute>
+
+						<PrivateRoute path="/store-category">
+							<StoreCategoryPage />
+						</PrivateRoute>
+						<PrivateRoute path="/product/:id">
+							<StoreProductPage />
+						</PrivateRoute>
+						<PrivateRoute path="/errorpage">
+							<ErrorPage errorType="404" />
+						</PrivateRoute>
+						<Redirect to="/errorpage" />
+					</Switch>
+				</Router>
+			</Online>
+			<Offline>
+				<OfflinePage />
+			</Offline>
 		</div>
 	);
 }

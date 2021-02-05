@@ -4,6 +4,9 @@ import CreateNewPassword from '../../../components/Popups/CreateNewPassword';
 import EditPopup from '../../../components/Popups/EditPopup';
 import ProfilePic from '../../../assets/Images/profilePic_large.png';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import AlertPopup from '../../../components/Popups/AlertPopups';
+import { useHistory } from 'react-router-dom';
 
 const PageContainer = styled.div`
 	padding: 25px;
@@ -22,6 +25,11 @@ const ProfileCardWrapper = styled.div`
 const RoleText = styled.p`
 	width: fit-content;
 	margin: 10px auto;
+	text-transform: capitalize;
+`;
+const NameText = styled.p`
+	width: fit-content;
+	margin: 10px auto;
 	font-size: 110%;
 	color: #000;
 	text-transform: capitalize;
@@ -38,7 +46,7 @@ const ProfileDetailsWrapper = styled.div`
 	width: 100%;
 	// width: 32%;
 	// height: 100%;
-	padding: 25px;
+	padding: 25px !important;
 `;
 
 const ProfilePicContainer = styled.div`
@@ -75,14 +83,50 @@ const DetailsText = styled.p`
 	text-transform: capitalize;
 `;
 const iconStyle = {
+	color: '#000',
 	cursor: 'pointer',
 };
 
-export default function ProfilePage(props) {
+export default function ProfilePage() {
 	const [createPassIsOpen, setCreatePassIsOpen] = useState(false);
 	const [editDetailsIsOpen, setEditDetailsIsOpen] = useState(false);
 
 	const { loggedUser, role } = useSelector((state) => state.loginSlice);
+	const { status } = useSelector((state) => state.userListSlice);
+	useEffect(() => {
+		if (status === 'edit user success') {
+			setAlertType('success');
+			setAlertMessage('User profile updated successfully!');
+			setAlertDisplay(true);
+		} else if (status === 'edit user failed') {
+			setAlertType('error');
+			setAlertMessage('Could not update user profile');
+			setAlertDisplay(true);
+		} else if (status === 'change password success') {
+			setAlertType('success');
+			setAlertMessage('Updated password successfully!');
+			setAlertDisplay(true);
+		} else if (status === 'change password failed') {
+			setAlertType('error');
+			setAlertMessage('Could not update password');
+			setAlertDisplay(true);
+		} else if (status === 'old password was wrong') {
+			setAlertType('error');
+			setAlertMessage('Could not update password. The current password entered was incorrect.');
+			setAlertDisplay(true);
+		}
+	}, [status]);
+
+	const [alertDisplay, setAlertDisplay] = useState(false);
+	const [alertType, setAlertType] = useState('');
+	const [alertMessage, setAlertMessage] = useState('');
+
+	// Additional function to be written wherever AlertPopup component is used
+	if (alertDisplay) {
+		setTimeout(() => {
+			setAlertDisplay(false);
+		}, 5000);
+	}
 
 	const openCreatePasswordModal = () => {
 		setCreatePassIsOpen(true);
@@ -94,11 +138,13 @@ export default function ProfilePage(props) {
 
 	return (
 		<PageContainer>
+			<AlertPopup alertType={alertType} message={alertMessage} display={alertDisplay} />
 			<p className="pageHeaders blackFont">Profile</p>
 			<ProfileCardWrapper>
 				<ProfileDetailsWrapper className="cards">
 					<PictureAreaWrapper>
 						<ProfilePicContainer />
+						<NameText>{loggedUser.firstname}</NameText>
 						<RoleText>{role}</RoleText>
 					</PictureAreaWrapper>
 
@@ -113,14 +159,10 @@ export default function ProfilePage(props) {
 							<p>Email</p>
 						</DetailsLabel>
 						<DetailsText style={{ textTransform: 'none' }}>{loggedUser.email}</DetailsText>
-
-						{/* Kinda redundant - pending and inactive users can't see it
-						Admins won't edit it for themselves
-						Users can't edit it */}
 						<DetailsLabel>
-							<p>Status</p>
+							<p>Mobile</p>
 						</DetailsLabel>
-						<DetailsText>{loggedUser.status}</DetailsText>
+						<DetailsText>9874563201</DetailsText>
 						<button className="button-primary" onClick={openCreatePasswordModal}>
 							Change password
 						</button>
@@ -141,24 +183,8 @@ export default function ProfilePage(props) {
 				}}
 				data={loggedUser}
 				editSelf={true}
+				title="Edit Profile"
 			/>
 		</PageContainer>
 	);
 }
-
-/**
- * <ProfileActionWrapper className="cards">
-					<p>Change Password</p>
-					<SeparationLine />
-					<PasswordFieldsWrapper>
-						<PasswordFieldContainer style={{ marginRight: '10px' }}>
-							<p style={{ marginBottom: '-15px' }}>Old Password</p>
-							<PasswordField onChange={() => null} id="new_password" />
-						</PasswordFieldContainer>
-						<PasswordFieldContainer style={{ marginLeft: '10px' }}>
-							<p style={{ marginBottom: '-15px' }}>New Password</p>
-							<PasswordField onChange={() => null} id="new_password" />
-						</PasswordFieldContainer>
-					</PasswordFieldsWrapper>
-				</ProfileActionWrapper>
- */
